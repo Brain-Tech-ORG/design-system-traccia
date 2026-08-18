@@ -1,0 +1,84 @@
+/* ==========================================================================
+   LA TRACCIA — Design Tokens
+   Fonte unica di verità per colori, tipografia, spaziatura e geometria.
+   Regola: mai introdurre altri hue; varianti solo in oklch mantenendo
+   lo stesso hue del blu logo (#4194d7).
+   ========================================================================== */
+
+:root {
+  /* ---- Colore · Brand (unico accento ammesso) ---- */
+  --tr-brand-500: #4194d7; /* blu logo: evidenze, numeri, quote, dot, icone */
+  --tr-brand-300: #8fc0e7; /* linee secondarie */
+  --tr-brand-100: #d0e4f5; /* tinta pallida decorativa */
+
+  /* ---- Colore · Superfici ---- */
+  --tr-paper: #fbfbfd;        /* sfondo pagina */
+  --tr-surface-tint: #eff2f9; /* SOLO riempimenti piccoli (cerchietti, silhouette) */
+
+  /* ---- Colore · Bordi ---- */
+  --tr-border-soft: #dde2ee;   /* filetti leggeri */
+  --tr-border-soft-2: #c9cede; /* filetti leggeri, variante più scura */
+
+  /* ---- Colore · Inchiostro ---- */
+  --tr-ink-900: #1b1f2a; /* testo primario, tratti disegni tecnici */
+  --tr-ink-600: #3a4050; /* testo secondario / body */
+  --tr-ink-400: #565c6b; /* didascalie e metadati */
+
+  /* ---- Tipografia · Famiglie ---- */
+  --tr-font-display: "Archivo", system-ui, sans-serif;   /* display / UI / body */
+  --tr-font-mono: "IBM Plex Mono", ui-monospace, monospace; /* tecnico / etichette */
+
+  /* ---- Tipografia · Pesi ---- */
+  --tr-weight-body: 400;
+  --tr-weight-semibold: 600;
+  --tr-weight-display: 800;
+
+  /* ---- Tipografia · Tracking ---- */
+  --tr-tracking-display: -0.015em; /* titoli maiuscoli */
+  --tr-tracking-mono: 0.08em;      /* etichette mono base (range 0.06–0.3em) */
+  --tr-tracking-mono-wide: 0.22em; /* eyebrow / kicker */
+  --tr-tracking-wordmark: 0.08em;  /* wordmark LA TRACCIA */
+
+  /* ---- Tipografia · Interlinea ---- */
+  --tr-leading-display: 1.08; /* range 1.04–1.15 */
+  --tr-leading-body: 1.6;     /* range 1.5–1.65 */
+
+  /* ---- Tipografia · Scala (UI, px) ---- */
+  --tr-text-caption: 12px;
+  --tr-text-mono: 13px;
+  --tr-text-body: 15px;   /* UI 14–16px */
+  --tr-text-lead: 18px;
+  --tr-text-h3: 22px;
+  --tr-text-h2: 32px;
+  --tr-text-h1: 48px;
+
+  /* ---- Spaziatura ---- */
+  --tr-space-1: 4px;
+  --tr-space-2: 8px;
+  --tr-space-3: 12px;
+  --tr-space-4: 16px;
+  --tr-space-5: 24px;
+  --tr-space-6: 32px;
+  --tr-space-7: 48px;
+  --tr-space-8: 64px;
+  --tr-space-9: 96px;
+
+  /* ---- Geometria · Raggi ---- */
+  --tr-radius-line: 99px;  /* estremità stondate di filetti e segmenti */
+  --tr-radius-pill: 999px; /* chip a pillola */
+  --tr-radius-soft: 20px;  /* angoli smussati (range 16–26px) */
+  --tr-radius-photo: 28px; /* cornice foto ambientata (range 22–36px) */
+
+  /* ---- Geometria · Tratti ---- */
+  --tr-rule-thin: 1px;     /* filetti orizzontali */
+  --tr-rule-medium: 2px;   /* segmenti decorativi verticali */
+  --tr-rule-accent: 3px;   /* tratti d'accento e linee di quota */
+  --tr-stroke-drawing: 2.25px; /* tratto disegni tecnici (2–2.5px) */
+
+  /* ---- Geometria · Misure ricorrenti ---- */
+  --tr-accent-dash-w: 64px; /* tratto d'accento sopra i titoli di sezione */
+  --tr-dot-size: 8px;       /* dot bullet (range 6–13px) */
+  --tr-circle-sm: 28px;     /* cerchietto numerato piccolo (range 24–52px) */
+  --tr-circle-md: 40px;
+  --tr-circle-lg: 52px;
+}

@@ -1,0 +1,488 @@
+/* ==========================================================================
+   LA TRACCIA — Componenti
+   Richiede tokens/tokens.css.
+   Linguaggio: layout aperti, niente box, niente ombre, niente gradienti.
+   La struttura la danno filetti sottili, spaziatura e allineamenti a griglia.
+   Prefisso classi: .tr-
+   ========================================================================== */
+
+/* ---- Base pagina ---- */
+.tr-page {
+  background: var(--tr-paper);
+  color: var(--tr-ink-600);
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-body);
+  font-size: var(--tr-text-body);
+  line-height: var(--tr-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   Primitive geometriche
+   ========================================================================== */
+
+/* Filetto orizzontale sottile, estremità stondate */
+.tr-rule {
+  border: 0;
+  height: var(--tr-rule-thin);
+  background: var(--tr-border-soft);
+  border-radius: var(--tr-radius-line);
+  margin: 0;
+}
+.tr-rule--2 { height: var(--tr-rule-medium); }
+.tr-rule--dark { background: var(--tr-border-soft-2); }
+.tr-rule--brand-300 { background: var(--tr-brand-300); }
+
+/* Tratto d'accento corto sopra i titoli di sezione (al posto di bordi full-width) */
+.tr-accent-dash {
+  display: block;
+  width: var(--tr-accent-dash-w);
+  height: var(--tr-rule-accent);
+  background: var(--tr-brand-500);
+  border-radius: var(--tr-radius-line);
+}
+
+/* Segmento decorativo verticale: pieno sopra il contenuto, tinta chiara sotto.
+   La linea "si interrompe" al testo e riprende dopo. */
+.tr-vseg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tr-space-2);
+  width: var(--tr-rule-medium);
+}
+.tr-vseg::before,
+.tr-vseg::after {
+  content: "";
+  width: var(--tr-rule-medium);
+  border-radius: var(--tr-radius-line);
+}
+.tr-vseg::before { flex: 1 1 auto; background: var(--tr-brand-500); }
+.tr-vseg::after  { flex: 1 1 auto; background: var(--tr-brand-100); }
+
+/* Dot bullet pieno blu */
+.tr-dot {
+  display: inline-block;
+  width: var(--tr-dot-size);
+  height: var(--tr-dot-size);
+  border-radius: 50%;
+  background: var(--tr-brand-500);
+  flex: none;
+}
+
+/* Cerchietto numerato: tinta + cifra mono blu, oppure solo bordo blu */
+.tr-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tr-circle-md);
+  height: var(--tr-circle-md);
+  border-radius: 50%;
+  background: var(--tr-surface-tint);
+  color: var(--tr-brand-500);
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-mono);
+  flex: none;
+}
+.tr-circle--outline {
+  background: transparent;
+  border: 1.5px solid var(--tr-brand-500);
+}
+.tr-circle--solid {
+  background: var(--tr-brand-500);
+  color: #ffffff;
+}
+.tr-circle--sm { width: var(--tr-circle-sm); height: var(--tr-circle-sm); font-size: 12px; }
+.tr-circle--lg { width: var(--tr-circle-lg); height: var(--tr-circle-lg); font-size: 16px; }
+
+/* ==========================================================================
+   Tipografia
+   ========================================================================== */
+
+/* Etichetta mono tecnica: sempre maiuscola, tracking ampio */
+.tr-mono {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-mono);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-600);
+}
+.tr-mono--brand { color: var(--tr-brand-500); }
+.tr-mono--muted { color: var(--tr-ink-400); font-weight: var(--tr-weight-body); }
+.tr-mono--wide { letter-spacing: var(--tr-tracking-mono-wide); }
+
+/* H1 / H2: maiuscolo, weight 800; la parola chiave finale in blu logo (<em>) */
+.tr-h1,
+.tr-h2,
+.tr-h3 {
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-display);
+  text-transform: uppercase;
+  letter-spacing: var(--tr-tracking-display);
+  line-height: var(--tr-leading-display);
+  color: var(--tr-ink-900);
+  margin: 0;
+}
+.tr-h1 { font-size: var(--tr-text-h1); }
+.tr-h2 { font-size: var(--tr-text-h2); }
+.tr-h3 { font-size: var(--tr-text-h3); }
+.tr-h1 em,
+.tr-h2 em,
+.tr-h3 em {
+  font-style: normal;
+  color: var(--tr-brand-500);
+}
+
+.tr-body { color: var(--tr-ink-600); max-width: 62ch; }
+.tr-caption {
+  font-size: var(--tr-text-caption);
+  color: var(--tr-ink-400);
+}
+
+/* ==========================================================================
+   1 · Header di pagina
+   logo + wordmark a sinistra, eyebrow mono blu a destra, filetto sotto
+   ========================================================================== */
+.tr-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tr-space-5);
+  padding-bottom: var(--tr-space-4);
+  border-bottom: var(--tr-rule-thin) solid var(--tr-border-soft);
+}
+.tr-brandmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tr-space-3);
+}
+.tr-brandmark__logo { height: 28px; width: auto; display: block; }
+.tr-brandmark__wordmark {
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-display);
+  font-size: 17px;
+  letter-spacing: var(--tr-tracking-wordmark);
+  text-transform: uppercase;
+  color: var(--tr-ink-900);
+}
+
+/* ==========================================================================
+   2 · Eyebrow / kicker
+   etichetta mono blu + filetto stondato 2px che riempie la riga;
+   variante con nota mono grigia in coda a destra
+   ========================================================================== */
+.tr-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--tr-space-4);
+}
+.tr-eyebrow__label {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-mono);
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-brand-500);
+  white-space: nowrap;
+}
+.tr-eyebrow__line {
+  flex: 1 1 auto;
+  height: var(--tr-rule-medium);
+  background: var(--tr-border-soft);
+  border-radius: var(--tr-radius-line);
+}
+.tr-eyebrow__note {
+  font-family: var(--tr-font-mono);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   3 · Chip / pill
+   bordo 1px blu, testo mono blu, raggio 999px
+   ========================================================================== */
+.tr-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tr-space-2);
+  padding: 6px 16px;
+  border: 1px solid var(--tr-brand-500);
+  border-radius: var(--tr-radius-pill);
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-brand-500);
+  background: transparent;
+  white-space: nowrap;
+}
+.tr-chip .tr-dot { width: 6px; height: 6px; }
+
+/* ==========================================================================
+   4 · Voce elenco numerata (settori, funzioni)
+   cerchietto + label semibold o titolo maiuscolo + body breve; senza box
+   ========================================================================== */
+.tr-numbered {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tr-space-4);
+}
+.tr-numbered__title {
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-body);
+  color: var(--tr-ink-900);
+  margin: 0 0 var(--tr-space-1);
+}
+.tr-numbered__title--caps {
+  font-weight: var(--tr-weight-display);
+  text-transform: uppercase;
+  letter-spacing: var(--tr-tracking-display);
+}
+.tr-numbered__body {
+  margin: 0;
+  font-size: 14px;
+  color: var(--tr-ink-600);
+}
+
+/* ==========================================================================
+   5 · Step di processo
+   cerchietti numerati (l'ultimo pieno blu), in riga da 4,
+   su slide collegati da una linea orizzontale sottile brand/300
+   ========================================================================== */
+.tr-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--tr-space-5);
+  position: relative;
+}
+.tr-steps--linked::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--tr-circle-md) / 2);
+  left: calc(12.5% + var(--tr-circle-md) / 2);
+  right: calc(12.5% + var(--tr-circle-md) / 2);
+  height: var(--tr-rule-thin);
+  background: var(--tr-brand-300);
+  border-radius: var(--tr-radius-line);
+}
+.tr-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--tr-space-3);
+  position: relative; /* sopra la linea di collegamento */
+}
+.tr-step .tr-circle { background: var(--tr-paper); border: 1.5px solid var(--tr-brand-500); }
+.tr-step:last-child .tr-circle { background: var(--tr-brand-500); border-color: var(--tr-brand-500); color: #fff; }
+.tr-step__title {
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-display);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: var(--tr-tracking-display);
+  color: var(--tr-ink-900);
+  margin: 0;
+}
+.tr-step__sub {
+  margin: 0;
+  font-size: 13px;
+  color: var(--tr-ink-400);
+  max-width: 22ch;
+}
+
+/* ==========================================================================
+   6 · Riga specifiche
+   voci con dot bullet mono distribuite su una riga, filetto sottile sopra
+   ========================================================================== */
+.tr-specs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tr-space-4) var(--tr-space-6);
+  padding-top: var(--tr-space-4);
+  border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
+}
+.tr-specs__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tr-space-3);
+  font-family: var(--tr-font-mono);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-600);
+}
+
+/* Elenco tecnico verticale con dot bullet */
+.tr-dotlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tr-space-3);
+}
+.tr-dotlist li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--tr-space-3);
+  font-family: var(--tr-font-mono);
+  font-size: var(--tr-text-mono);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-600);
+}
+.tr-dotlist li .tr-dot { transform: translateY(-1px); }
+
+/* ==========================================================================
+   7 · Tabella dati
+   label mono grigia a sinistra / valore mono ink a destra,
+   filetti 1px; nota d'unità mono piccola in basso a destra
+   ========================================================================== */
+.tr-datatable { width: 100%; }
+.tr-datatable__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--tr-space-5);
+  padding: var(--tr-space-3) 0;
+  border-bottom: var(--tr-rule-thin) solid var(--tr-border-soft);
+}
+.tr-datatable__row:first-child { border-top: var(--tr-rule-thin) solid var(--tr-border-soft); }
+.tr-datatable__label {
+  font-family: var(--tr-font-mono);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+}
+.tr-datatable__value {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-mono);
+  letter-spacing: 0.04em;
+  color: var(--tr-ink-900);
+  text-align: right;
+}
+.tr-datatable__value--brand { color: var(--tr-brand-500); }
+.tr-datatable__unit-note {
+  display: block;
+  text-align: right;
+  margin-top: var(--tr-space-2);
+  font-family: var(--tr-font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+}
+
+/* ==========================================================================
+   8 · Disegno tecnico quotato (contenitore + convenzioni SVG)
+   silhouette: tratto ink 2–2.5px, riempimento surface/tint;
+   quote: linee blu 1.5–3px con tacche, valore mono blu (virgola italiana)
+   ========================================================================== */
+.tr-drawing { display: block; }
+.tr-drawing svg { display: block; max-width: 100%; height: auto; }
+.tr-drawing .silhouette {
+  fill: var(--tr-surface-tint);
+  stroke: var(--tr-ink-900);
+  stroke-width: var(--tr-stroke-drawing);
+  stroke-linejoin: round;
+}
+.tr-drawing .quota {
+  stroke: var(--tr-brand-500);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+.tr-drawing .quota-label {
+  font-family: var(--tr-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  fill: var(--tr-brand-500);
+}
+
+/* ==========================================================================
+   9 · Footer
+   filetto sopra, logo + wordmark a sinistra, contatti mono con dot blu
+   e/o riferimento prodotto mono blu a destra
+   ========================================================================== */
+.tr-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--tr-space-4) var(--tr-space-6);
+  padding-top: var(--tr-space-4);
+  border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
+}
+.tr-footer .tr-brandmark__logo { height: 20px; }
+.tr-footer .tr-brandmark__wordmark { font-size: 13px; }
+.tr-footer__contacts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--tr-space-4) var(--tr-space-5);
+}
+.tr-footer__contact {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tr-space-2);
+  font-family: var(--tr-font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+  text-decoration: none;
+}
+.tr-footer__contact .tr-dot { width: 6px; height: 6px; }
+.tr-footer__ref {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 11px;
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-brand-500);
+}
+
+/* ==========================================================================
+   Cornice foto ambientata
+   angoli 22–36px, bordo 1–2px border/soft, padding 7–14px.
+   I render/scontornati PNG invece fluttuano sul fondo pagina senza cornice.
+   ========================================================================== */
+.tr-photo-frame {
+  display: inline-block;
+  border: 1px solid var(--tr-border-soft);
+  border-radius: var(--tr-radius-photo);
+  padding: 10px;
+  background: transparent;
+}
+.tr-photo-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--tr-radius-photo) - 10px);
+}
+.tr-photo-float {
+  display: block;
+  max-width: 100%;
+  object-fit: contain; /* soggetto intero e centrato, fluttua sul paper */
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 720px) {
+  .tr-h1 { font-size: 34px; }
+  .tr-h2 { font-size: 26px; }
+  .tr-steps { grid-template-columns: repeat(2, 1fr); }
+  .tr-steps--linked::before { display: none; }
+}
