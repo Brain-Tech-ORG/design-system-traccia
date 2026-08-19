@@ -453,6 +453,41 @@
   color: var(--tr-brand-500);
 }
 
+/* Riga certificazioni: SEMPRE presente in calce.
+   Etichetta mono blu + elenco certificazioni mono grigio + filetto
+   che riempie la riga + badge (IMQ / SI Cert). */
+.tr-footer__certs {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--tr-space-3) var(--tr-space-4);
+  margin-top: var(--tr-space-2);
+}
+.tr-footer__certs-label {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tr-brand-500);
+  white-space: nowrap;
+}
+.tr-footer__certs-list {
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono);
+  color: var(--tr-ink-400);
+  white-space: nowrap;
+}
+.tr-footer__certs-line {
+  flex: 1 1 auto;
+  height: var(--tr-rule-thin);
+  background: var(--tr-border-soft);
+  border-radius: var(--tr-radius-line);
+}
+.tr-footer__certs-badges { height: 30px; width: auto; display: block; }
+
 /* ==========================================================================
    Cornice foto ambientata
    angoli 22–36px, bordo 1–2px border/soft, padding 7–14px.
@@ -478,6 +513,32 @@
 }
 
 /* ==========================================================================
+   Watermark logo (sagoma negli sfondi)
+   Versione outline del logo (assets/logo-traccia-outline.svg: fill none,
+   tratto blu logo) in opacità 0.16 sul paper, negli sfondi di brochure
+   e pagine di presentazione. Sta dietro ai contenuti, tipicamente sborda
+   da un bordo pagina, e non intercetta il puntatore.
+   Il contenitore pagina deve avere position:relative e overflow:hidden.
+   ========================================================================== */
+.tr-watermark-host {
+  position: relative;
+  overflow: hidden;
+}
+.tr-watermark {
+  position: absolute;
+  width: 330px; /* indicativo: scala col formato pagina */
+  height: auto;
+  opacity: var(--tr-watermark-opacity);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.tr-watermark-host > :not(.tr-watermark) { position: relative; z-index: 1; }
+/* Posizioni ricorrenti: angolo alto-destra o basso-sinistra, sempre a sbordo */
+.tr-watermark--top-right { top: -74px; right: -40px; }
+.tr-watermark--bottom-left { bottom: -80px; left: -60px; }
+
+/* ==========================================================================
    Responsive
    ========================================================================== */
 @media (max-width: 720px) {
@@ -485,4 +546,6 @@
   .tr-h2 { font-size: 26px; }
   .tr-steps { grid-template-columns: repeat(2, 1fr); }
   .tr-steps--linked::before { display: none; }
+  .tr-footer__certs-list { white-space: normal; }
+  .tr-footer__certs-line { min-width: 40px; }
 }

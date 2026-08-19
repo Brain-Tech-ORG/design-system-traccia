@@ -75,6 +75,10 @@
   --tr-rule-accent: 3px;   /* tratti d'accento e linee di quota */
   --tr-stroke-drawing: 2.25px; /* tratto disegni tecnici (2–2.5px) */
 
+  /* ---- Watermark logo (sagoma outline negli sfondi) ---- */
+  --tr-watermark-opacity: 0.16;  /* opacità della sagoma sul paper */
+  --tr-watermark-stroke: 6px;    /* spessore tratto dell'outline (su viewBox 1280) */
+
   /* ---- Geometria · Misure ricorrenti ---- */
   --tr-accent-dash-w: 64px; /* tratto d'accento sopra i titoli di sezione */
   --tr-dot-size: 8px;       /* dot bullet (range 6–13px) */

@@ -8,12 +8,15 @@ niente gradienti, niente emoji, molto bianco.
 ## Struttura del repository
 
 ```
-├── assets/logo-traccia.svg   Logo (chevron blu)
+├── assets/
+│   ├── logo-traccia.svg          Logo (chevron blu, pieno)
+│   ├── logo-traccia-outline.svg  Sagoma outline per watermark negli sfondi
+│   └── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
 ├── tokens/
-│   ├── tokens.css            Design token come CSS custom properties
-│   └── tokens.json           Design token in formato W3C draft
-├── css/traccia.css           Libreria componenti (prefisso .tr-)
-└── index.html                Documentazione visiva / showcase
+│   ├── tokens.css                Design token come CSS custom properties
+│   └── tokens.json               Design token in formato W3C draft
+├── css/traccia.css               Libreria componenti (prefisso .tr-)
+└── index.html                    Documentazione visiva / showcase
 ```
 
 ## Uso rapido
@@ -32,6 +35,12 @@ niente gradienti, niente emoji, molto bianco.
 
 - **Logo**: chevron/freccia blu (`assets/logo-traccia.svg`). Compare sempre affiancato al wordmark
   **LA TRACCIA** in maiuscolo con letter-spacing 0.08em (componente `.tr-brandmark`).
+- **Logo nello sfondo (watermark)**: la sagoma outline del logo
+  (`assets/logo-traccia-outline.svg` — stessi tracciati, senza riempimento, tratto blu logo)
+  può essere usata negli sfondi delle brochure e delle pagine delle presentazioni:
+  opacità 0.16 sul paper, dietro ai contenuti, tipicamente a sbordo da un angolo pagina,
+  `pointer-events: none`. Componente `.tr-watermark` dentro un `.tr-watermark-host`
+  (position relative + overflow hidden), con varianti di posizione `--top-right` e `--bottom-left`.
 - **Tono**: tecnico, sobrio, istituzionale ma moderno.
 
 ## Palette
@@ -88,10 +97,18 @@ niente gradienti, niente emoji, molto bianco.
 | 6 | Riga specifiche / elenco tecnico | `.tr-specs`, `.tr-dotlist` |
 | 7 | Tabella dati (nota unità in basso a destra) | `.tr-datatable` |
 | 8 | Disegno tecnico quotato (convenzioni SVG) | `.tr-drawing` (`.silhouette`, `.quota`, `.quota-label`) |
-| 9 | Footer | `.tr-footer` |
+| 9 | Footer (con riga certificazioni sempre presente) | `.tr-footer` + `.tr-footer__certs` |
 | 10 | H1/H2 con parola chiave blu | `.tr-h1`, `.tr-h2` + `<em>` |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
+
+### Footer e certificazioni
+
+Il footer include **sempre** la riga certificazioni (`.tr-footer__certs`): etichetta
+`CERTIFICAZIONI` in mono blu (tracking 0.14em), elenco in mono grigio
+`ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125`, filetto stondato
+`border/soft` che riempie la riga e badge `assets/certificazioni.png`
+(IMQ Certified + SI Cert, altezza ~30px).
 
 ### Convenzioni disegno tecnico
 

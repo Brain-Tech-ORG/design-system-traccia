@@ -37,7 +37,8 @@
 </style>
 </head>
 <body class="tr-page">
-<div class="page">
+<div class="page tr-watermark-host">
+  <img class="tr-watermark tr-watermark--top-right" src="assets/logo-traccia-outline.svg" alt="" aria-hidden="true">
 
   <!-- 1 · HEADER DI PAGINA -->
   <header class="tr-header">
@@ -300,6 +301,31 @@
     </div>
   </section>
 
+  <!-- WATERMARK LOGO -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">Watermark logo negli sfondi</h2>
+      <p class="tr-body" style="margin-top:12px">
+        La sagoma outline del logo (<code style="font-family:var(--tr-font-mono);font-size:13px">assets/logo-traccia-outline.svg</code>,
+        tratto blu senza riempimento) si usa negli sfondi delle brochure e delle pagine delle presentazioni:
+        opacità 0,16 sul paper, dietro ai contenuti, tipicamente a sbordo da un angolo pagina.
+        In questa stessa pagina è attiva in alto a destra.
+      </p>
+    </div>
+    <div class="tr-photo-frame" style="display:block">
+      <div class="tr-watermark-host" style="border-radius:18px;background:var(--tr-paper);min-height:240px;padding:28px 32px">
+        <img class="tr-watermark tr-watermark--top-right" src="assets/logo-traccia-outline.svg" alt="" aria-hidden="true">
+        <span class="tr-mono tr-mono--brand tr-mono--wide">Pagina di esempio</span>
+        <h3 class="tr-h3" style="margin-top:12px">Contenuto sopra la <em>sagoma</em></h3>
+        <p class="tr-body" style="margin-top:12px; max-width:48ch">
+          Il watermark non intercetta il puntatore e resta sotto il contenuto
+          (z-index 0); il contenitore pagina ritaglia lo sbordo con overflow hidden.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- 9 · FOOTER -->
   <section class="section">
     <div class="section-head">
@@ -316,6 +342,12 @@
         <a class="tr-footer__contact" href="#"><span class="tr-dot"></span>+39 0422 000 000</a>
         <span class="tr-footer__ref">Tmas · A100</span>
       </span>
+      <div class="tr-footer__certs">
+        <span class="tr-footer__certs-label">Certificazioni</span>
+        <span class="tr-footer__certs-list">ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125</span>
+        <span class="tr-footer__certs-line"></span>
+        <img class="tr-footer__certs-badges" src="assets/certificazioni.png" alt="IMQ Certified ISO 9001:2015, ISO 13485:2016, ISO/IEC 27001:2022 — SI Cert UNI PdR 125">
+      </div>
     </footer>
   </section>
 
