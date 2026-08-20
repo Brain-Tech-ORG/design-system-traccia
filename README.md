@@ -418,6 +418,31 @@ elementi che dichiarano lo stesso ruolo confonderebbero gli screen reader. Il
 trigger resta un bottone con `aria-haspopup="listbox"`, e
 `aria-activedescendant` passa al campo.
 
+### Variante compatta
+
+I filtri che vivono dentro una barra non sono campi di form: non hanno attorno
+lo spazio di un'etichetta flottante ne' di una riga di servizio, e un campo da
+56px li sfonda. `.tr-field--compact` (con `.tr-select--compact` per il select)
+abbassa il campo a 40px, toglie l'etichetta interna e la riga di servizio.
+
+L'etichetta **resta comunque nel markup**: o scritta di fianco al campo, o resa
+con `.tr-sr-only` per le sole tecnologie assistive. Un filtro senza etichetta e'
+muto per chi non lo vede.
+
+Attenzione a non annidarla in un contenitore gia' bordato: il campo porta il
+proprio filetto e i due bordi si sommano.
+
+### Gruppi di opzioni
+
+`<optgroup>` nel select nativo, `group` sulla voce nella versione React. Le voci
+dello stesso gruppo vanno tenute contigue. Il gruppo e' reso con un
+`<ul role="group">` annidato — e' cosi' che ARIA ammette di raggruppare dentro
+una listbox — e l'intestazione e' un'etichetta tecnica, quindi mono maiuscola.
+
+Serve quando la stessa etichetta ricorre con significati diversi: "Medico" sotto
+"Registro Biopsie" e "Medico" sotto "Registro Dialisi" sono due ruoli distinti, e
+senza l'intestazione del gruppo diventano indistinguibili.
+
 ### Struttura
 
 ```html

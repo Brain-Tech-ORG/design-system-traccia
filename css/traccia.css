@@ -30,6 +30,7 @@
 .tr-select__search,
 .tr-select__search-input,
 .tr-select__option,
+.tr-select__group,
 .tr-fieldset,
 .tr-photo-frame { box-sizing: border-box; }
 
@@ -1123,6 +1124,28 @@ select.tr-field__control + .tr-field__label,
 .tr-select__option[aria-disabled="true"][aria-selected="true"] .tr-select__dot { opacity: 0; transform: scale(0.3); }
 .tr-select__option[aria-disabled="true"][aria-selected="true"] .tr-select__option-label { transform: none; }
 
+/* ---- Gruppi di opzioni ----
+   Il gruppo e' reso con un <ul role="group"> annidato: e' cosi' che ARIA
+   ammette di raggruppare dentro una listbox, e uno screen reader annuncia il
+   nome del gruppo insieme alla voce. L'intestazione e' un'etichetta tecnica,
+   quindi mono maiuscola come tutte le altre. */
+.tr-select__group {
+  display: block;
+  padding: 10px var(--tr-field-pad-x) 4px;
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-brand-600);
+}
+.tr-select__group-items { margin: 0; padding: 0; list-style: none; }
+.tr-select__group-wrap + .tr-select__group-wrap .tr-select__group {
+  margin-top: 4px;
+  border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
+  padding-top: 10px;
+}
+
 /* Separatore fra gruppi di opzioni */
 .tr-select__separator {
   height: var(--tr-rule-thin);
@@ -1144,6 +1167,43 @@ select.tr-field__control + .tr-field__label,
   .tr-select__option,
   .tr-select__option-label,
   .tr-select__chevron > * { transition: none; }
+}
+
+/* ---- Variante compatta ----
+   I filtri che vivono dentro una barra non sono campi di form: non hanno
+   attorno lo spazio di un'etichetta flottante ne' di una riga di servizio, e
+   un campo da 56px li sfonderebbe. La variante compatta abbassa il campo e
+   toglie l'etichetta interna; l'etichetta resta comunque nel markup, ma per le
+   sole tecnologie assistive (.tr-sr-only) o scritta di fianco. */
+.tr-field--compact .tr-field__control {
+  height: var(--tr-field-h-compact);
+  padding-top: 9px;
+  padding-bottom: 9px;
+  font-size: 14px;
+}
+.tr-field--compact textarea.tr-field__control { height: auto; }
+.tr-field--compact .tr-field__label { display: none; }
+.tr-field--compact .tr-field__assist { display: none; }
+.tr-field--compact .tr-field__prefix,
+.tr-field--compact .tr-field__suffix { height: var(--tr-field-h-compact); }
+.tr-select--compact .tr-select__panel { top: calc(var(--tr-field-h-compact) + 6px); }
+.tr-select--compact[data-drop="up"] .tr-select__panel {
+  top: auto;
+  bottom: calc(var(--tr-field-h-compact) + 6px);
+}
+
+/* Visibile solo alle tecnologie assistive: serve alle etichette che il layout
+   non puo' mostrare ma che il campo deve comunque avere. */
+.tr-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ---- Gruppo di opzioni (radio / checkbox) ----

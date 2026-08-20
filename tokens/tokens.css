@@ -94,6 +94,7 @@
 
   /* ---- Campi di form ---- */
   --tr-field-h: 56px;             /* altezza del campo con etichetta flottante */
+  --tr-field-h-compact: 40px;     /* variante compatta: filtri in barra, senza etichetta interna */
   --tr-field-radius: 10px;        /* angolo del campo */
   --tr-field-pad-x: 16px;         /* respiro orizzontale interno */
   --tr-field-label-rest: 20px;    /* quota dell'etichetta a riposo, dal filetto superiore */
