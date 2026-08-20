@@ -331,6 +331,14 @@ importati `tokens.css` e `traccia.css` a livello di applicazione
 | `.tr-field--float` | contenitore | Forza l'etichetta in alto (widget di framework) |
 | `.tr-field__control--code` | controllo | Cifre mono distanziate e centrate, per OTP |
 | `.tr-field__suffix--action` | suffisso | Rende il suffisso cliccabile (mostra password, cancella, apri calendario) |
+
+### Gruppo di opzioni
+
+Radio e checkbox non hanno un controllo unico su cui far salire l'etichetta: il
+gruppo tiene la sua etichetta sopra, statica, nello stesso stile mono del campo.
+Va reso con `<fieldset class="tr-fieldset">` e `<legend class="tr-fieldset__legend">` —
+non per stile, ma perche' e' il markup che lega le opzioni fra loro per le
+tecnologie assistive. In errore si usa `.tr-fieldset--error` sul contenitore.
 | `disabled` / `readonly` | controllo | Gestiti dagli attributi nativi, nessuna classe |
 
 

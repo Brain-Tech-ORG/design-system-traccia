@@ -23,6 +23,7 @@
 .tr-login__main,
 .tr-login__panel,
 .tr-login__footer,
+.tr-fieldset,
 .tr-photo-frame { box-sizing: border-box; }
 
 /* ---- Base pagina ---- */
@@ -803,6 +804,33 @@ select.tr-field__control + .tr-field__label,
   .tr-field__label,
   .tr-field__suffix--action { transition: none; }
 }
+
+/* ---- Gruppo di opzioni (radio / checkbox) ----
+   Qui non c'e' un controllo unico su cui far salire l'etichetta: il gruppo
+   tiene la sua etichetta sopra, statica, nello stesso stile mono del campo.
+   Va reso con <fieldset>/<legend>: e' il markup che lega le opzioni fra loro
+   per le tecnologie assistive. */
+.tr-fieldset {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.tr-fieldset__legend {
+  display: block;
+  float: left; /* Safari: <legend> ignora margin-bottom senza questo */
+  width: 100%;
+  margin: 0 0 var(--tr-space-3);
+  padding: 0;
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+}
+.tr-fieldset--error .tr-fieldset__legend { color: var(--tr-state-danger); }
 
 /* ---- Azione ---- */
 .tr-btn {
