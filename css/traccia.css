@@ -1261,10 +1261,14 @@ select.tr-field__control + .tr-field__label,
    Gerarchia, dalla piu' forte alla piu' debole:
      --primary    una sola per schermata: l'azione che porta avanti il compito
      --secondary  azioni pari grado, filetto blu su fondo trasparente
-     --soft       azioni frequenti ma non principali: tinta pallida, niente filetto
      --neutral    annulla, chiudi: il modo di uscire dal compito
      --quiet      azioni di servizio, senza scatola
      --danger     azioni distruttive, e solo quelle
+     --danger-outline  distruttiva di grado minore, contornata
+
+   Regola di contrasto: o testo bianco su superficie piena, o inchiostro scuro
+   su carta. Mai un fondo a tinta pallida con testo dello stesso hue: e' il
+   contrasto piu' debole che si possa scegliere, e a schermo si legge male.
    ========================================================================== */
 .tr-btn {
   /* Colore della velatura che entra da sinistra all'hover: ogni variante lo
@@ -1350,14 +1354,15 @@ select.tr-field__control + .tr-field__label,
   border-color: var(--tr-brand-500);
   color: var(--tr-brand-600);
 }
-.tr-btn--secondary { --tr-btn-wipe: var(--tr-brand-100); }
-
-.tr-btn--soft {
-  background: var(--tr-brand-100);
-  border-color: transparent;
-  color: var(--tr-brand-700);
+/* La velatura e' piena, non una tinta: il testo passa a bianco e il contrasto
+   resta netto anche a hover completato. Il colore cambia solo quando la
+   velatura ha quasi finito, altrimenti la meta' non ancora coperta resterebbe
+   bianco su bianco. */
+.tr-btn--secondary { --tr-btn-wipe: var(--tr-brand-600); }
+.tr-btn--secondary:hover:not(:disabled) {
+  color: #ffffff;
+  transition: color 80ms var(--tr-motion-ease) 150ms;
 }
-.tr-btn--soft { --tr-btn-wipe: var(--tr-brand-200); }
 
 /* Neutra: annulla, chiudi, torna indietro. Non e' un'azione secondaria del
    compito, e' il modo di uscirne — quindi niente blu, che qui darebbe un
@@ -1400,12 +1405,18 @@ select.tr-field__control + .tr-field__label,
 }
 .tr-btn--danger { --tr-btn-wipe: var(--tr-state-danger-dark); }
 .tr-btn--danger:hover:not(:disabled) { border-color: var(--tr-state-danger-dark); }
-.tr-btn--danger-soft {
-  background: var(--tr-state-danger-tint);
-  border-color: transparent;
+/* Distruttiva di grado minore: filetto e testo rossi su carta, non un fondo
+   rosso pallido con testo rosso — che e' lo stesso errore di contrasto. */
+.tr-btn--danger-outline {
+  background: transparent;
+  border-color: var(--tr-state-danger);
   color: var(--tr-state-danger);
+  --tr-btn-wipe: var(--tr-state-danger);
 }
-.tr-btn--danger-soft { --tr-btn-wipe: var(--tr-state-danger-tint-2); }
+.tr-btn--danger-outline:hover:not(:disabled) {
+  color: #ffffff;
+  transition: color 80ms var(--tr-motion-ease) 150ms;
+}
 
 /* ---- Misure ---- */
 .tr-btn--sm {

@@ -392,10 +392,21 @@ profondita'.
 |---|---|
 | `--primary` | **Una sola per schermata**: l'azione che porta avanti il compito |
 | `--secondary` | Azioni di pari grado, filetto blu su fondo trasparente |
-| `--soft` | Azioni frequenti ma non principali: tinta pallida, niente filetto |
 | `--neutral` | Annulla, chiudi, torna indietro |
 | `--quiet` | Azioni di servizio, senza scatola |
-| `--danger` / `--danger-soft` | Solo azioni distruttive |
+| `--danger` / `--danger-outline` | Solo azioni distruttive |
+
+### Contrasto
+
+**O testo bianco su superficie piena, o inchiostro scuro su carta.** Mai un
+fondo a tinta pallida con testo dello stesso hue — azzurrino con blu scuro,
+arancio chiaro con arancio scuro: e' il contrasto piu' debole che si possa
+scegliere, e a schermo si legge male. Vale anche all'hover: la secondaria e la
+distruttiva contornata si riempiono di **pieno** e passano al testo bianco, non
+a una tinta.
+
+Il colore cambia solo quando la velatura ha quasi finito di passare, altrimenti
+la meta' non ancora coperta resterebbe bianco su bianco.
 
 Due scelte che vale la pena motivare:
 
