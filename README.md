@@ -50,14 +50,21 @@ niente gradienti, niente emoji, molto bianco.
 | `brand/500` | `#4194d7` | Blu logo. **Unico accento**: evidenze, numeri, quote, dot, icone |
 | `brand/300` | `#8fc0e7` | Linee secondarie |
 | `brand/100` | `#d0e4f5` | Tinta pallida decorativa |
+| `brand/600` | `#2f7ab8` | Tinta scura, stesso hue: testo piccolo e fondi pieni con testo bianco (4,6:1) |
+| `brand/700` | `#266296` | Tinta scura, stesso hue: hover delle superfici piene |
 | `surface/tint` | `#eff2f9` | Solo riempimenti piccoli (cerchietti, silhouette). **Mai** sfondi di card/pannelli |
 | `border/soft` | `#dde2ee` / `#c9cede` | Filetti e bordi leggeri |
 | `ink/900` | `#1b1f2a` | Testo primario, tratti dei disegni tecnici |
 | `ink/600` | `#3a4050` | Testo secondario / body |
 | `ink/400` | `#565c6b` | Didascalie e metadati |
 | `paper` | `#fbfbfd` | Sfondo pagina |
+| `state/danger` | `#a53a3a` | **Solo UI software**: errore, campo non valido |
+| `state/warning` | `#99631d` | **Solo UI software**: avviso, azione da confermare |
+| `state/success` | `#2f6b45` | **Solo UI software**: esito positivo |
 
 **Regola**: mai introdurre altri hue. Per varianti usare oklch mantenendo lo stesso hue del blu logo.
+Unica eccezione, e solo nell'interfaccia software: le tre tinte `state/*` per la validazione
+dei form e gli esiti di sistema — vedi [Pagine di login](#pagine-di-login-prodotti-software).
 
 ## Tipografia
 
@@ -98,7 +105,8 @@ niente gradienti, niente emoji, molto bianco.
 | 7 | Tabella dati (nota unità in basso a destra) | `.tr-datatable` |
 | 8 | Disegno tecnico quotato (convenzioni SVG) | `.tr-drawing` (`.silhouette`, `.quota`, `.quota-label`) |
 | 9 | Footer (con riga certificazioni sempre presente) | `.tr-footer` + `.tr-footer__certs` |
-| 10 | H1/H2 con parola chiave blu | `.tr-h1`, `.tr-h2` + `<em>` |
+| 10 | Pagina di login (co-branding con il cliente) | `.tr-login` + `.tr-clientmark` |
+| 11 | H1/H2 con parola chiave blu | `.tr-h1`, `.tr-h2` + `<em>` |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -116,10 +124,96 @@ Silhouette con tratto `ink/900` 2–2.5px e riempimento `surface/tint`, angoli r
 Linee di quota blu 1.5–3px con tacche alle estremità; valore in mono blu con **virgola decimale
 italiana** (es. `1.580,0`).
 
+## Pagine di login (prodotti software)
+
+Le pagine di accesso ai prodotti sono l'unico punto in cui il sistema incontra
+il marchio di un **cliente**. Valgono le regole generali — layout aperto, niente
+card, niente ombre, niente gradienti — piu' le seguenti.
+
+### Co-branding: un solo marchio per lockup
+
+| Posizione | Marchio | Note |
+|---|---|---|
+| Testata | **Cliente** (`.tr-clientmark`) | La pagina e' il suo prodotto: il suo marchio sta in alto a sinistra, affiancato dal nome del prodotto in mono. |
+| Sfondo | La Traccia, sagoma outline (`.tr-watermark`) | Opzionale, opacita' 0,16, a sbordo da un angolo. E' la presenza di marchio "ambientale". |
+| Footer | La Traccia (`.tr-footer` + `.tr-brandmark`) | Firma del fornitore, sempre con la riga certificazioni. |
+
+**Mai i due marchi affiancati nello stesso lockup**: un logo cliente accanto al
+chevron La Traccia produce un blocco confuso e sposta l'identita' della pagina.
+La gerarchia e' sempre cliente in testa, La Traccia in calce.
+
+Il logo del cliente **non si ricolora, non si ridisegna e non si mette dentro un
+riquadro**: si appoggia sul paper alla sua altezza nominale
+(`--tr-client-logo-h`, 40px; 32px sotto i 720px). Se il file del cliente ha un
+margine trasparente proprio, va ritagliato prima di essere usato, non compensato
+con il padding.
+
+### Struttura
+
+```html
+<body class="tr-login tr-watermark-host">
+  <img class="tr-watermark tr-watermark--top-right" src="assets/logo-traccia-outline.svg" alt="" aria-hidden="true">
+
+  <header class="tr-login__header">
+    <div class="tr-header">
+      <a class="tr-clientmark" href="/">
+        <img class="tr-clientmark__logo" src="logo-cliente.svg" alt="Nome cliente">
+        <span class="tr-clientmark__sep"></span>
+        <span class="tr-clientmark__product">Nome prodotto</span>
+      </a>
+      <span class="tr-eyebrow__label">Accesso riservato</span>
+    </div>
+  </header>
+
+  <main class="tr-login__main">
+    <div class="tr-login__panel">
+      <div class="tr-eyebrow"><span class="tr-eyebrow__label">Accesso</span><span class="tr-eyebrow__line"></span></div>
+      <h1 class="tr-h2">Accedi al <em>registro</em></h1>
+      <!-- .tr-field / .tr-btn -->
+    </div>
+  </main>
+
+  <div class="tr-login__footer"><footer class="tr-footer">...</footer></div>
+</body>
+```
+
+Ogni passo del flusso — credenziali, secondo fattore, configurazione 2FA,
+cambio password obbligatorio, recupero credenziali — usa la **stessa
+intestazione**: eyebrow mono con filetto, titolo `.tr-h2` con la parola chiave
+in blu, testo di servizio in body. Cambia il contenuto, non la struttura.
+
+### Controlli
+
+La pagina di login introduce i tre controlli di interfaccia del sistema, riusabili
+ovunque nella UI software:
+
+| Componente | Classe | Nota |
+|---|---|---|
+| Campo | `.tr-field` + `__label` / `__control` / `__hint` / `__error` | Fondo trasparente e filetto 1px che vira al blu sul focus. Nessuna ombra, nessun ring. Varianti `--error` e `--code` (cifre OTP mono distanziate). |
+| Azione | `.tr-btn` + `--primary` / `--secondary` / `--quiet` / `--block` | Pillola 999px con etichetta mono maiuscola, come la chip. |
+| Avviso in linea | `.tr-notice` + `--danger` / `--warning` / `--success` | Filetto verticale colorato: il sistema non ammette pannelli con sfondo colorato dietro ai contenuti. |
+
+### Stati di validazione
+
+`--tr-state-danger` / `--tr-state-warning` / `--tr-state-success` sono l'**unica
+eccezione ammessa alla regola del singolo hue**, e valgono solo per
+l'interfaccia software: validazione dei form ed esiti di sistema. Sono tinte
+desaturate, scelte per convivere con il blu logo senza competere con esso. Su
+brochure, slide e materiale stampato non si usano.
+
+### Contrasto
+
+Il blu logo `#4194d7` non regge il testo bianco (2,9:1). Per le superfici piene
+con testo bianco e per il testo piccolo in blu si usano le tinte scure dello
+stesso hue: `--tr-brand-600` (`#2f7ab8`, 4,6:1 su bianco) e `--tr-brand-700`
+per l'hover. `#4194d7` resta per elementi non testuali — dot, filetti, icone —
+e per il testo grande in grassetto.
+
 ## Vincoli
 
 - **Minimalismo**: whitespace generoso; max un colore d'accento per composizione.
 - **Multi-formato**: lo stesso sistema serve brochure A4 stampata, schermo e slide 16:9.
 - **Accessibilità**: contrasto testo ≥ 4.5:1. Il blu `#4194d7` su bianco si usa solo a taglie
-  ≥ 12px bold o per elementi non testuali; il testo body è sempre in ink.
+  ≥ 12px bold o per elementi non testuali; il testo body è sempre in ink. Per testo piccolo in
+  blu e per i fondi pieni con testo bianco si usa `brand/600` (`#2f7ab8`).
 - Niente icone illustrative complesse; solo forme base (cerchi, linee, triangoli).

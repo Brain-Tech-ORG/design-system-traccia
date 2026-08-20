@@ -489,6 +489,201 @@
 .tr-footer__certs-badges { height: 30px; width: auto; display: block; }
 
 /* ==========================================================================
+   10 · Pagina di login
+   Testata con il marchio del CLIENTE, colonna del form senza box, footer
+   La Traccia. Vale la regola di co-branding: un solo marchio per lockup.
+   In testa sta il cliente — la pagina e' il suo prodotto; La Traccia firma
+   in basso nel footer e, quando serve presenza di marchio, compare come
+   sagoma outline nello sfondo (.tr-watermark). Mai i due marchi affiancati.
+   ========================================================================== */
+.tr-login {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--tr-paper);
+}
+.tr-login__header,
+.tr-login__main,
+.tr-login__footer {
+  padding-left: var(--tr-space-6);
+  padding-right: var(--tr-space-6);
+}
+.tr-login__header {
+  padding-top: var(--tr-space-5);
+  padding-bottom: var(--tr-space-5);
+}
+.tr-login__main {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  padding-top: var(--tr-space-7);
+  padding-bottom: var(--tr-space-7);
+}
+/* Colonna del form: nessuna card, nessuna ombra, nessun bordo contenitore.
+   La struttura la danno l'eyebrow, il titolo e i filetti. */
+.tr-login__panel {
+  width: 100%;
+  max-width: var(--tr-login-panel-w);
+}
+.tr-login__footer { padding-bottom: var(--tr-space-6); }
+
+/* Marchio del cliente: logo + nome del prodotto in mono, separati da un
+   filetto verticale stondato. Il logo del cliente non si ricolora, non si
+   ridisegna e non si mette dentro un riquadro: si appoggia sul paper. */
+.tr-clientmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tr-space-4);
+  text-decoration: none;
+}
+.tr-clientmark__logo {
+  height: var(--tr-client-logo-h);
+  width: auto;
+  display: block;
+  flex: none;
+}
+.tr-clientmark__sep {
+  width: var(--tr-rule-thin);
+  height: 28px;
+  background: var(--tr-border-soft);
+  border-radius: var(--tr-radius-line);
+  flex: none;
+}
+.tr-clientmark__product {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Controlli di interfaccia
+   Introdotti dalla pagina di login, riusabili in tutta la UI software.
+   Stesso linguaggio del resto del sistema: filetti al posto di ombre e ring,
+   etichette mono maiuscole, pillole per le azioni.
+   ========================================================================== */
+
+/* ---- Campo ---- */
+.tr-field {
+  display: flex;
+  flex-direction: column;
+}
+.tr-field__label {
+  margin-bottom: var(--tr-space-2);
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+  transition: color 0.2s;
+}
+.tr-field:focus-within .tr-field__label { color: var(--tr-brand-500); }
+.tr-field__control {
+  width: 100%;
+  padding: 12px 16px;
+  border: var(--tr-rule-thin) solid var(--tr-border-soft);
+  border-radius: 10px;
+  background: transparent;
+  font-family: var(--tr-font-display);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--tr-ink-900);
+  transition: border-color 0.2s;
+}
+.tr-field__control::placeholder { color: var(--tr-ink-400); opacity: 0.6; }
+.tr-field__control:hover { border-color: var(--tr-border-soft-2); }
+.tr-field__control:focus { border-color: var(--tr-brand-500); outline: none; }
+.tr-field__control:disabled {
+  background: var(--tr-surface-tint);
+  color: var(--tr-ink-400);
+  cursor: not-allowed;
+}
+.tr-field__control--error { border-color: var(--tr-state-danger); }
+/* Codice OTP e simili: cifre mono distanziate, allineate al centro */
+.tr-field__control--code {
+  text-align: center;
+  font-family: var(--tr-font-mono);
+  font-size: 24px;
+  letter-spacing: 0.5em;
+}
+.tr-field__hint,
+.tr-field__error {
+  margin: var(--tr-space-2) 0 0;
+  font-family: var(--tr-font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+}
+.tr-field__hint { color: var(--tr-ink-400); }
+.tr-field__error { color: var(--tr-state-danger); font-weight: var(--tr-weight-semibold); }
+
+/* ---- Azione ---- */
+.tr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tr-space-2);
+  padding: 12px 24px;
+  border: var(--tr-rule-thin) solid transparent;
+  border-radius: var(--tr-radius-pill);
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.tr-btn--primary {
+  background: var(--tr-brand-600);
+  border-color: var(--tr-brand-600);
+  color: #ffffff;
+}
+.tr-btn--primary:hover {
+  background: var(--tr-brand-700);
+  border-color: var(--tr-brand-700);
+}
+.tr-btn--secondary {
+  background: transparent;
+  border-color: var(--tr-brand-500);
+  color: var(--tr-brand-600);
+}
+.tr-btn--secondary:hover { background: var(--tr-brand-100); }
+.tr-btn--quiet {
+  background: transparent;
+  border-color: transparent;
+  color: var(--tr-ink-400);
+  padding-left: 0;
+  padding-right: 0;
+}
+.tr-btn--quiet:hover { color: var(--tr-brand-600); }
+.tr-btn--block { width: 100%; }
+.tr-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ---- Avviso in linea ----
+   Filetto verticale colorato al posto del pannello pieno: il sistema non
+   ammette sfondi colorati dietro ai contenuti. */
+.tr-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tr-space-3);
+  padding: var(--tr-space-1) 0 var(--tr-space-1) var(--tr-space-4);
+  border-left: var(--tr-rule-medium) solid var(--tr-border-soft);
+  border-radius: 0;
+  font-size: 14px;
+  color: var(--tr-ink-600);
+}
+.tr-notice--danger { border-left-color: var(--tr-state-danger); color: var(--tr-state-danger); }
+.tr-notice--warning { border-left-color: var(--tr-state-warning); color: var(--tr-state-warning); }
+.tr-notice--success { border-left-color: var(--tr-state-success); color: var(--tr-state-success); }
+.tr-notice p { margin: 0; }
+
+/* ==========================================================================
    Cornice foto ambientata
    angoli 22–36px, bordo 1–2px border/soft, padding 7–14px.
    I render/scontornati PNG invece fluttuano sul fondo pagina senza cornice.
@@ -548,4 +743,10 @@
   .tr-steps--linked::before { display: none; }
   .tr-footer__certs-list { white-space: normal; }
   .tr-footer__certs-line { min-width: 40px; }
+  .tr-login__header,
+  .tr-login__main,
+  .tr-login__footer { padding-left: var(--tr-space-5); padding-right: var(--tr-space-5); }
+  .tr-login__main { padding-top: var(--tr-space-6); padding-bottom: var(--tr-space-6); }
+  .tr-clientmark__logo { height: 32px; }
+  .tr-clientmark { gap: var(--tr-space-3); }
 }

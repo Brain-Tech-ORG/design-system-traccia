@@ -10,6 +10,19 @@
   --tr-brand-500: #4194d7; /* blu logo: evidenze, numeri, quote, dot, icone */
   --tr-brand-300: #8fc0e7; /* linee secondarie */
   --tr-brand-100: #d0e4f5; /* tinta pallida decorativa */
+  /* Tinte scure dello stesso hue: servono dove il blu logo non regge il
+     contrasto (testo piccolo, superfici piene con testo bianco). */
+  --tr-brand-600: #2f7ab8; /* testo e fondi pieni con testo bianco (>= 4.5:1) */
+  --tr-brand-700: #266296; /* hover delle superfici piene */
+
+  /* ---- Colore · Stati di validazione ----
+     Unica eccezione ammessa alla regola del singolo hue: serve solo
+     all'interfaccia software (validazione dei form, esiti di sistema).
+     Mai su brochure, slide o materiale stampato. Tinte desaturate perche'
+     convivano con il blu logo senza competere con esso. */
+  --tr-state-danger: #a53a3a;  /* errore, campo non valido */
+  --tr-state-warning: #99631d; /* avviso, azione da confermare */
+  --tr-state-success: #2f6b45; /* esito positivo */
 
   /* ---- Colore · Superfici ---- */
   --tr-paper: #fbfbfd;        /* sfondo pagina */
@@ -78,6 +91,10 @@
   /* ---- Watermark logo (sagoma outline negli sfondi) ---- */
   --tr-watermark-opacity: 0.16;  /* opacità della sagoma sul paper */
   --tr-watermark-stroke: 6px;    /* spessore tratto dell'outline (su viewBox 1280) */
+
+  /* ---- Pagina di login (co-branding con il cliente) ---- */
+  --tr-client-logo-h: 40px;   /* altezza del marchio cliente in testa (range 32-48px) */
+  --tr-login-panel-w: 420px;  /* larghezza della colonna del form */
 
   /* ---- Geometria · Misure ricorrenti ---- */
   --tr-accent-dash-w: 64px; /* tratto d'accento sopra i titoli di sezione */

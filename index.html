@@ -351,6 +351,153 @@
     </footer>
   </section>
 
+  <!-- 10 · PAGINA DI LOGIN -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">10 · Pagina di <em>login</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        Unico punto in cui il sistema incontra il marchio di un cliente.
+        <strong>Un solo marchio per lockup</strong>: il cliente sta in testa — la pagina è il
+        suo prodotto — e La Traccia firma nel footer, con la sagoma outline nello sfondo come
+        presenza di marchio ambientale. Mai i due marchi affiancati.
+      </p>
+    </div>
+
+    <div class="tr-photo-frame" style="display:block">
+      <div class="tr-watermark-host" style="border-radius:18px;background:var(--tr-paper);overflow:hidden">
+        <img class="tr-watermark tr-watermark--top-right" style="width:280px" src="assets/logo-traccia-outline.svg" alt="" aria-hidden="true">
+
+        <!-- Testata: marchio del cliente -->
+        <div style="padding:24px 32px">
+          <div class="tr-header">
+            <span class="tr-clientmark">
+              <!-- Segnaposto: al suo posto va il file fornito dal cliente, non ricolorato -->
+              <svg class="tr-clientmark__logo" viewBox="0 0 120 40" role="img" aria-label="Logo cliente">
+                <rect x="0.5" y="0.5" width="119" height="39" rx="10" fill="none" stroke="var(--tr-border-soft-2)" stroke-dasharray="4 4"></rect>
+                <text x="60" y="24" text-anchor="middle" font-family="var(--tr-font-mono)" font-size="10" letter-spacing="1.6" fill="var(--tr-ink-400)">LOGO CLIENTE</text>
+              </svg>
+              <span class="tr-clientmark__sep"></span>
+              <span class="tr-clientmark__product">Nome prodotto</span>
+            </span>
+            <span class="tr-eyebrow__label">Accesso riservato</span>
+          </div>
+        </div>
+
+        <!-- Colonna del form: nessuna card -->
+        <div style="display:flex;justify-content:center;padding:40px 32px 48px">
+          <div style="width:100%;max-width:var(--tr-login-panel-w)">
+            <div class="tr-eyebrow" style="margin-bottom:20px">
+              <span class="tr-eyebrow__label">Accesso</span>
+              <span class="tr-eyebrow__line"></span>
+            </div>
+            <h3 class="tr-h2" style="font-size:28px">Accedi al <em>registro</em></h3>
+            <p class="tr-body" style="margin-top:16px;font-size:14px">Inserisci le tue credenziali per accedere.</p>
+
+            <div class="tr-notice tr-notice--danger" style="margin-top:24px">
+              <p>Credenziali non riconosciute.</p>
+            </div>
+
+            <div class="tr-field" style="margin-top:24px">
+              <label class="tr-field__label" for="demo-email">Email</label>
+              <input class="tr-field__control" id="demo-email" type="email" placeholder="nome@esempio.it">
+            </div>
+
+            <div class="tr-field" style="margin-top:20px">
+              <label class="tr-field__label" for="demo-pw">Password</label>
+              <input class="tr-field__control tr-field__control--error" id="demo-pw" type="password" placeholder="••••••••">
+              <p class="tr-field__error">Password obbligatoria</p>
+            </div>
+
+            <button class="tr-btn tr-btn--primary tr-btn--block" type="button" style="margin-top:24px">Accedi</button>
+
+            <hr class="tr-rule" style="margin:28px 0">
+
+            <button class="tr-btn tr-btn--quiet" type="button">Credenziali dimenticate?</button>
+          </div>
+        </div>
+
+        <!-- Footer: firma La Traccia -->
+        <div style="padding:0 32px 24px">
+          <footer class="tr-footer">
+            <span class="tr-brandmark">
+              <img class="tr-brandmark__logo" src="assets/logo-traccia.svg" alt="La Traccia">
+              <span class="tr-brandmark__wordmark">La Traccia</span>
+            </span>
+            <span class="tr-footer__contacts">
+              <a class="tr-footer__contact" href="#"><span class="tr-dot"></span>info@latraccia.it</a>
+            </span>
+            <div class="tr-footer__certs">
+              <span class="tr-footer__certs-label">Certificazioni</span>
+              <span class="tr-footer__certs-list">ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125</span>
+              <span class="tr-footer__certs-line"></span>
+              <img class="tr-footer__certs-badges" src="assets/certificazioni.png" alt="IMQ Certified — SI Cert">
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <p class="tr-body demo-note" style="font-size:13px">
+      Il logo del cliente non si ricolora, non si ridisegna e non si mette dentro un riquadro:
+      si appoggia sul paper alla sua altezza nominale (<code style="font-family:var(--tr-font-mono);font-size:12px">--tr-client-logo-h</code>, 40px).
+    </p>
+  </section>
+
+  <!-- CONTROLLI DI INTERFACCIA -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">Controlli di <em>interfaccia</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        Introdotti dalla pagina di login, riusabili in tutta la UI software.
+        Filetti al posto di ombre e ring, etichette mono maiuscole, pillole per le azioni.
+      </p>
+    </div>
+
+    <div class="grid-3">
+      <div>
+        <span class="tr-mono tr-mono--muted">Campo</span>
+        <div class="demo-block">
+          <div class="tr-field">
+            <label class="tr-field__label" for="demo-f1">Etichetta</label>
+            <input class="tr-field__control" id="demo-f1" type="text" placeholder="Segnaposto">
+            <p class="tr-field__hint">Nota di servizio</p>
+          </div>
+          <div class="tr-field" style="margin-top:20px">
+            <label class="tr-field__label" for="demo-f2">Codice di verifica</label>
+            <input class="tr-field__control tr-field__control--code" id="demo-f2" type="text" maxlength="6" placeholder="000000">
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tr-mono tr-mono--muted">Azione</span>
+        <div class="demo-block" style="display:flex;flex-direction:column;align-items:flex-start;gap:16px">
+          <button class="tr-btn tr-btn--primary" type="button">Primaria</button>
+          <button class="tr-btn tr-btn--secondary" type="button">Secondaria</button>
+          <button class="tr-btn tr-btn--quiet" type="button">Terziaria</button>
+          <button class="tr-btn tr-btn--primary" type="button" disabled>Disabilitata</button>
+        </div>
+      </div>
+
+      <div>
+        <span class="tr-mono tr-mono--muted">Avviso in linea</span>
+        <div class="demo-block" style="display:flex;flex-direction:column;gap:16px">
+          <div class="tr-notice tr-notice--danger"><p>Errore: campo non valido.</p></div>
+          <div class="tr-notice tr-notice--warning"><p>Avviso: azione da confermare.</p></div>
+          <div class="tr-notice tr-notice--success"><p>Richiesta registrata.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="tr-body demo-note" style="font-size:13px">
+      Le tre tinte di stato sono l'unica eccezione ammessa alla regola del singolo hue,
+      e valgono solo per l'interfaccia software: su brochure, slide e stampa non si usano.
+    </p>
+  </section>
+
+
 </div>
 </body>
 </html>
