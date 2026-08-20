@@ -119,6 +119,21 @@ Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
 ### Footer e certificazioni
 
+Il footer sta **sempre in fondo alla pagina**, anche quando il contenuto non la
+riempie: un footer a mezz'aria sotto una pagina corta sembra un errore di
+caricamento, e la riga certificazioni deve chiudere la pagina, non fluttuarci
+dentro. Si ottiene con `.tr-shell` sul contenitore e `.tr-shell__body` sul
+corpo — il corpo si prende lo spazio che avanza e il footer scende. Vale sia
+quando a scorrere e' la pagina, sia quando a scorrere e' un pannello interno.
+
+```html
+<main class="tr-shell">
+  <div class="tr-shell__body"><!-- contenuto --></div>
+  <footer class="tr-footer">…</footer>
+</main>
+```
+
+
 Il footer include **sempre** la riga certificazioni (`.tr-footer__certs`): etichetta
 `CERTIFICAZIONI` in mono blu (tracking 0.14em), elenco in mono grigio
 `ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125`, filetto stondato
@@ -391,6 +406,23 @@ un'uscita. Filetto e inchiostro, niente accento.
 **Il rosso e' riservato a cio' che distrugge.** Un pulsante rosso che non
 cancella nulla svaluta quelli che lo fanno davvero, e quando conta l'utente non
 si ferma piu'.
+
+### Hover
+
+All'hover una **velatura piena entra da sinistra** e riempie la pillola: e' lo
+stesso gesto delle voci del select — l'accento che arriva da sinistra — e si
+muove solo un `transform`, quindi nessun reflow e il testo non si sposta. Un
+cambio secco di sfondo, a schermo, non si legge come un'interazione.
+
+La terziaria non ha scatola da riempire: al suo posto **cresce un filetto** da
+2px, che e' il modo del sistema di sottolineare.
+
+L'icona **in coda** accompagna il gesto spostandosi di 3px; quella in testa resta
+ferma, altrimenti scivolerebbe addosso al testo. Alla pressione il pulsante cede
+di un pixel: e' il solo riscontro tattile che il sistema si concede, non avendo
+ombre da schiacciare.
+
+Sotto `prefers-reduced-motion: reduce` lo stato finale resta, la corsa no.
 
 ### Misure e stati
 

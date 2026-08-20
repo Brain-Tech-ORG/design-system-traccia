@@ -16,6 +16,8 @@
 .tr-field__label,
 .tr-btn,
 .tr-btn-group,
+.tr-shell,
+.tr-shell__body,
 .tr-chip,
 .tr-circle,
 .tr-notice,
@@ -481,6 +483,22 @@
   text-transform: uppercase;
   color: var(--tr-brand-500);
 }
+
+/* Il footer sta SEMPRE in fondo alla pagina, anche quando il contenuto non la
+   riempie: un footer a mezz'aria sotto una pagina corta sembra un errore di
+   caricamento, e la riga certificazioni deve chiudere la pagina, non fluttuarci
+   dentro.
+
+   Il contenitore diventa una colonna e il corpo si prende lo spazio che avanza;
+   il footer resta l'ultimo elemento e finisce naturalmente in basso. Vale sia
+   quando a scorrere e' la pagina, sia quando a scorrere e' un pannello interno:
+   basta che .tr-shell sia alto quanto il suo contenitore. */
+.tr-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.tr-shell__body { flex: 1 1 auto; }
 
 /* Riga certificazioni: SEMPRE presente in calce.
    Etichetta mono blu + elenco certificazioni mono grigio + filetto
@@ -1249,6 +1267,12 @@ select.tr-field__control + .tr-field__label,
      --danger     azioni distruttive, e solo quelle
    ========================================================================== */
 .tr-btn {
+  /* Colore della velatura che entra da sinistra all'hover: ogni variante lo
+     ridefinisce. */
+  --tr-btn-wipe: transparent;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1270,6 +1294,35 @@ select.tr-field__control + .tr-field__label,
     border-color var(--tr-motion-fast) var(--tr-motion-ease),
     color var(--tr-motion-fast) var(--tr-motion-ease);
 }
+
+/* All'hover una velatura piena entra da sinistra e riempie la pillola.
+   E' lo stesso gesto delle voci del select — l'accento che arriva da sinistra —
+   e si muove solo un transform: nessun reflow, e il testo non si sposta.
+   Sostituisce il cambio secco di sfondo, che a schermo non si legge come
+   un'interazione. */
+.tr-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--tr-btn-wipe);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 220ms var(--tr-motion-ease);
+}
+.tr-btn:hover:not(:disabled):not([aria-busy="true"])::before { transform: scaleX(1); }
+
+/* L'icona in coda accompagna il gesto; quella in testa resta ferma, altrimenti
+   scivolerebbe addosso al testo. */
+.tr-btn > svg:last-child:not(:first-child) {
+  transition: transform var(--tr-motion-fast) var(--tr-motion-ease);
+}
+.tr-btn:hover:not(:disabled) > svg:last-child:not(:first-child) { transform: translateX(3px); }
+
+/* Alla pressione il pulsante cede di un pixel: e' il solo riscontro tattile
+   che il sistema si concede, non avendo ombre da schiacciare. */
+.tr-btn:active:not(:disabled) { transform: translateY(1px); }
+
 .tr-btn:focus-visible {
   outline: 2px solid var(--tr-brand-500);
   outline-offset: 2px;
@@ -1289,24 +1342,22 @@ select.tr-field__control + .tr-field__label,
   border-color: var(--tr-brand-600);
   color: #ffffff;
 }
-.tr-btn--primary:hover:not(:disabled) {
-  background: var(--tr-brand-700);
-  border-color: var(--tr-brand-700);
-}
+.tr-btn--primary { --tr-btn-wipe: var(--tr-brand-700); }
+.tr-btn--primary:hover:not(:disabled) { border-color: var(--tr-brand-700); }
 
 .tr-btn--secondary {
   background: transparent;
   border-color: var(--tr-brand-500);
   color: var(--tr-brand-600);
 }
-.tr-btn--secondary:hover:not(:disabled) { background: var(--tr-brand-100); }
+.tr-btn--secondary { --tr-btn-wipe: var(--tr-brand-100); }
 
 .tr-btn--soft {
   background: var(--tr-brand-100);
   border-color: transparent;
   color: var(--tr-brand-700);
 }
-.tr-btn--soft:hover:not(:disabled) { background: var(--tr-brand-200); }
+.tr-btn--soft { --tr-btn-wipe: var(--tr-brand-200); }
 
 /* Neutra: annulla, chiudi, torna indietro. Non e' un'azione secondaria del
    compito, e' il modo di uscirne — quindi niente blu, che qui darebbe un
@@ -1316,6 +1367,7 @@ select.tr-field__control + .tr-field__label,
   border-color: var(--tr-border-soft-2);
   color: var(--tr-ink-600);
 }
+.tr-btn--neutral { --tr-btn-wipe: var(--tr-surface-tint); }
 .tr-btn--neutral:hover:not(:disabled) {
   border-color: var(--tr-ink-400);
   color: var(--tr-ink-900);
@@ -1328,6 +1380,14 @@ select.tr-field__control + .tr-field__label,
   padding-left: 0;
   padding-right: 0;
 }
+/* La terziaria non ha scatola da riempire: al suo posto cresce un filetto,
+   che e' il modo del sistema di sottolineare. */
+.tr-btn--quiet::before {
+  inset: auto 0 0 0;
+  height: var(--tr-rule-medium);
+  border-radius: var(--tr-radius-line);
+  background: var(--tr-brand-500);
+}
 .tr-btn--quiet:hover:not(:disabled) { color: var(--tr-brand-600); }
 
 /* ---- Azioni distruttive ----
@@ -1338,16 +1398,14 @@ select.tr-field__control + .tr-field__label,
   border-color: var(--tr-state-danger);
   color: #ffffff;
 }
-.tr-btn--danger:hover:not(:disabled) {
-  background: var(--tr-state-danger-dark);
-  border-color: var(--tr-state-danger-dark);
-}
+.tr-btn--danger { --tr-btn-wipe: var(--tr-state-danger-dark); }
+.tr-btn--danger:hover:not(:disabled) { border-color: var(--tr-state-danger-dark); }
 .tr-btn--danger-soft {
   background: var(--tr-state-danger-tint);
   border-color: transparent;
   color: var(--tr-state-danger);
 }
-.tr-btn--danger-soft:hover:not(:disabled) { background: var(--tr-state-danger-tint-2); }
+.tr-btn--danger-soft { --tr-btn-wipe: var(--tr-state-danger-tint-2); }
 
 /* ---- Misure ---- */
 .tr-btn--sm {
@@ -1378,7 +1436,11 @@ select.tr-field__control + .tr-field__label,
 .tr-btn-group--end { justify-content: flex-end; }
 
 @media (prefers-reduced-motion: reduce) {
-  .tr-btn { transition: none; }
+  /* Lo stato finale resta, la corsa no: l'hover si vede lo stesso. */
+  .tr-btn,
+  .tr-btn::before,
+  .tr-btn > svg:last-child:not(:first-child) { transition: none; }
+  .tr-btn:active:not(:disabled) { transform: none; }
 }
 
 /* ---- Avviso in linea ----
