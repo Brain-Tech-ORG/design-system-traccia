@@ -265,6 +265,22 @@ senza corsa.
 - **Un solo accento**: il blu segnala il focus, il rosso di stato segnala l'errore.
   Niente altri colori dentro il campo.
 
+### Compilazione automatica del browser
+
+Quando il browser compila un campo da se', il valore si vede ma
+`:placeholder-shown` resta valido: nello stato di anteprima di Chrome il valore
+e' solo dipinto, non e' ancora nel DOM. Il foglio lo gestisce con `:autofill` e
+`:-webkit-autofill`, **ognuno in una regola separata** — un selettore non
+riconosciuto invaliderebbe l'intera lista, e con essa il comportamento sugli
+altri browser.
+
+Il fondo giallo/azzurro che Chrome dipinge sul campo compilato viene coperto:
+e' un pannello pieno dietro al contenuto, e il sistema non lo ammette. Non si
+rimuove con `background-color`, serve un'ombra interna piena — motivo per cui
+l'anello di focus va ridichiarato insieme a essa.
+
+Niente di tutto questo richiede codice nel componente: vale in ogni framework.
+
 ### Controlli senza `:placeholder-shown`
 
 `<select>` e gli input di data/ora mostrano sempre qualcosa e non conoscono

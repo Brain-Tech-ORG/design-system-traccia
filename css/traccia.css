@@ -706,6 +706,49 @@ select.tr-field__control + .tr-field__label,
 }
 .tr-field__control:focus + .tr-field__label { color: var(--tr-brand-500); }
 
+/* ---- Compilazione automatica del browser ----
+
+   Quando il browser compila un campo da se', il valore si vede ma
+   :placeholder-shown resta valido — nello stato di anteprima di Chrome il
+   valore e' solo dipinto, non e' ancora nel DOM. Senza queste regole
+   l'etichetta resterebbe a riposo, sopra al valore.
+
+   Ogni motore ha il suo selettore e ognuno sta in una REGOLA SEPARATA: un
+   selettore non riconosciuto invaliderebbe l'intera lista, e con essa anche
+   il comportamento sugli altri browser. Per lo stesso motivo la dichiarazione
+   e' ripetuta invece di essere raccolta in un elenco di selettori. */
+.tr-field__control:autofill + .tr-field__label {
+  transform: translateY(-50%) scale(0.84);
+  background: var(--tr-field-bg);
+}
+.tr-field__control:-webkit-autofill + .tr-field__label {
+  transform: translateY(-50%) scale(0.84);
+  background: var(--tr-field-bg);
+}
+
+/* Il fondo giallo/azzurro che Chrome dipinge sul campo compilato e' un pannello
+   pieno dietro al contenuto: il sistema non lo ammette. Non e' rimovibile con
+   background-color, si copre con un'ombra interna piena. */
+.tr-field__control:-webkit-autofill,
+.tr-field__control:-webkit-autofill:hover {
+  -webkit-text-fill-color: var(--tr-ink-900);
+  -webkit-box-shadow: 0 0 0 1000px var(--tr-field-bg) inset;
+  box-shadow: 0 0 0 1000px var(--tr-field-bg) inset;
+  caret-color: var(--tr-ink-900);
+  font-family: var(--tr-font-display);
+}
+/* Al focus l'anello va ridichiarato insieme alla copertura, altrimenti
+   l'ombra interna lo sostituirebbe. */
+.tr-field__control:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1px var(--tr-brand-500), 0 0 0 1000px var(--tr-field-bg) inset;
+  box-shadow: 0 0 0 1px var(--tr-brand-500), 0 0 0 1000px var(--tr-field-bg) inset;
+}
+.tr-field--error .tr-field__control:-webkit-autofill:focus,
+.tr-field__control--error:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1px var(--tr-state-danger), 0 0 0 1000px var(--tr-field-bg) inset;
+  box-shadow: 0 0 0 1px var(--tr-state-danger), 0 0 0 1000px var(--tr-field-bg) inset;
+}
+
 /* Asterisco del campo obbligatorio */
 .tr-field__required { color: var(--tr-state-danger); }
 
