@@ -390,6 +390,34 @@ La voce attiva da tastiera usa lo stesso stato della voce puntata dal mouse
 comportarsi in modo diverso. La voce scelta tiene dot ed etichetta indentata in
 modo permanente, in semibold.
 
+### Ricerca nelle liste lunghe
+
+Su un elenco lungo scorrere non basta, e la digitazione del select nativo cerca
+solo **dall'inizio** della voce: chi ha in testa "Cardarelli" non trova
+"Campania — Napoli, Cardarelli". Oltre le **10 voci** il pannello mostra quindi
+un campo di ricerca che filtra su tutta l'etichetta. Sotto la soglia non compare:
+su cinque voci sarebbe solo un ostacolo in piu'.
+
+Si forza o si esclude con `data-tr-select-search="true|false"` sul campo
+(`searchable` nella versione React).
+
+- **Confronto tollerante**: senza maiuscole e senza accenti. "elia" trova
+  "Sant'Elìa", "citta" trova "Citta'".
+- **Il fuoco entra nel campo**: si apre e si digita, senza un secondo gesto.
+  Frecce, `Home`/`End` e `Invio` continuano a valere mentre si scrive, quindi
+  non serve uscire dal campo per scegliere.
+- **Conteggio** delle voci rimaste, in mono, con `aria-live="polite"`.
+- **Nessun risultato** ha una riga dedicata, non un pannello vuoto.
+- Le voci escluse ricevono l'attributo `hidden`: restano nel DOM ma fuori
+  dall'albero di accessibilita', cosi' uno screen reader legge solo cio' che si
+  vede. Attenzione: `.tr-select__option` ha un `display` esplicito, che batte la
+  regola `[hidden]` del browser — il foglio la ridichiara apposta.
+
+Con la ricerca **il combobox e' il campo di testo**, non piu' il trigger: due
+elementi che dichiarano lo stesso ruolo confonderebbero gli screen reader. Il
+trigger resta un bottone con `aria-haspopup="listbox"`, e
+`aria-activedescendant` passa al campo.
+
 ### Struttura
 
 ```html
@@ -401,12 +429,15 @@ modo permanente, in semibold.
   </button>
   <label class="tr-field__label" for="coorte-trigger">Coorte</label>
   <span class="tr-field__suffix tr-select__chevron" aria-hidden="true"><!-- chevron --></span>
-  <ul class="tr-select__panel" id="coorte-listbox" role="listbox">
-    <li class="tr-select__option" role="option" aria-selected="true">
+  <div class="tr-select__panel">
+    <div class="tr-select__search"><!-- solo oltre le 10 voci --></div>
+    <ul class="tr-select__list" id="coorte-listbox" role="listbox">
+      <li class="tr-select__option" role="option" aria-selected="true">
       <span class="tr-select__dot"></span>
       <span class="tr-select__option-label">Prevalenti</span>
     </li>
-  </ul>
+    </ul>
+  </div>
   <div class="tr-field__assist"></div>
 </div>
 ```

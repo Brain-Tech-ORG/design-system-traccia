@@ -26,6 +26,9 @@
 .tr-select,
 .tr-select__trigger,
 .tr-select__panel,
+.tr-select__list,
+.tr-select__search,
+.tr-select__search-input,
 .tr-select__option,
 .tr-fieldset,
 .tr-photo-frame { box-sizing: border-box; }
@@ -937,19 +940,17 @@ select.tr-field__control + .tr-field__label,
 
 /* ---- Pannello ----
    Resta nel DOM anche da chiuso: e' cio' che permette di animare apertura e
-   chiusura senza passare da display:none, che non e' animabile. */
+   chiusura senza passare da display:none, che non e' animabile.
+   Il pannello e' il contenitore; la lista scorre al suo interno, cosi' il campo
+   di ricerca resta fermo in testa mentre le voci scorrono sotto. */
 .tr-select__panel {
   position: absolute;
   z-index: 20;
   left: 0;
   right: 0;
   top: calc(var(--tr-field-h) + 6px);
-  margin: 0;
-  padding: 6px 0;
-  list-style: none;
-  max-height: 268px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
   background: var(--tr-field-bg);
   border: var(--tr-rule-thin) solid var(--tr-border-soft);
   border-radius: var(--tr-radius-soft);
@@ -977,6 +978,66 @@ select.tr-field__control + .tr-field__label,
 }
 .tr-select[data-drop="up"][data-open="true"] .tr-select__panel { transform: none; }
 
+.tr-select__list {
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  max-height: 268px;
+  overflow-y: auto;
+  /* Senza questo, overflow-y:auto rende automatico anche l'asse orizzontale e
+     l'etichetta indentata fa comparire una barra di scorrimento. */
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+/* ---- Ricerca ----
+   Su un elenco lungo scorrere non basta e la digitazione del select nativo
+   cerca solo dall'inizio della voce: serve un filtro vero. Compare da sola
+   oltre la soglia, perche' su cinque voci sarebbe solo un ostacolo in piu'. */
+.tr-select__search {
+  display: flex;
+  align-items: center;
+  gap: var(--tr-space-3);
+  flex: none;
+  padding: 4px var(--tr-field-pad-x);
+  border-bottom: var(--tr-rule-thin) solid var(--tr-border-soft);
+}
+.tr-select__search-icon {
+  flex: none;
+  display: flex;
+  color: var(--tr-brand-500);
+}
+.tr-select__search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 10px 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--tr-font-display);
+  font-size: 14px;
+  color: var(--tr-ink-900);
+}
+.tr-select__search-input:focus { outline: none; }
+.tr-select__search-input::placeholder { color: var(--tr-ink-400); opacity: 0.7; }
+/* Quante voci restano dopo il filtro: mono, come tutti i metadati. */
+.tr-select__count {
+  flex: none;
+  font-family: var(--tr-font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tr-tracking-mono);
+  color: var(--tr-ink-400);
+  font-variant-numeric: tabular-nums;
+}
+.tr-select__empty {
+  margin: 0;
+  padding: 18px var(--tr-field-pad-x);
+  font-family: var(--tr-font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+}
+
 /* ---- Opzione ----
    Il dot entra da sinistra e l'etichetta scorre a destra. Si muovono solo
    opacity e transform: la voce sotto il puntatore non cambia dimensione e
@@ -986,7 +1047,9 @@ select.tr-field__control + .tr-field__label,
   position: relative;
   display: flex;
   align-items: center;
-  padding: 9px var(--tr-field-pad-x);
+  /* Il respiro a destra riserva lo spazio in cui l'etichetta scorre: cosi' il
+     testo non sborda e i puntini di sospensione restano visibili. */
+  padding: 9px calc(var(--tr-field-pad-x) + var(--tr-dot-size) + 10px) 9px var(--tr-field-pad-x);
   cursor: pointer;
   color: var(--tr-ink-600);
   font-family: var(--tr-font-display);
@@ -995,6 +1058,9 @@ select.tr-field__control + .tr-field__label,
   transition: color var(--tr-motion-fast) var(--tr-motion-ease);
   user-select: none;
 }
+/* Un display esplicito batte la regola [hidden] del browser: senza questa riga
+   le voci escluse dal filtro resterebbero visibili. */
+.tr-select__option[hidden] { display: none; }
 .tr-select__dot {
   position: absolute;
   left: var(--tr-field-pad-x);

@@ -34,6 +34,20 @@
     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
     'stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
 
+  var SEARCH_ICON =
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>';
+
+  /* Oltre questa soglia il pannello mostra il campo di ricerca. Sotto, sarebbe
+     solo un ostacolo in piu' fra l'utente e cinque voci. */
+  var SEARCH_THRESHOLD = 10;
+
+  /* Confronto tollerante: senza accenti e senza maiuscole. In italiano
+     "Emilia" deve trovare "Emìlia" e "citta" deve trovare "Citta'". */
+  function fold(text) {
+    return String(text).trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  }
+
   var uid = 0;
 
   function TrSelectInstance(field) {
@@ -91,11 +105,67 @@
     chevron.setAttribute('aria-hidden', 'true');
     if (!chevron.firstElementChild) { chevron.innerHTML = CHEVRON; }
 
-    this.panel = document.createElement('ul');
+    this.panel = document.createElement('div');
     this.panel.className = 'tr-select__panel';
-    this.panel.id = this.id + '-listbox';
-    this.panel.setAttribute('role', 'listbox');
-    if (label) { this.panel.setAttribute('aria-labelledby', label.id); }
+
+    this.list = document.createElement('ul');
+    this.list.className = 'tr-select__list';
+    this.list.id = this.id + '-listbox';
+    this.list.setAttribute('role', 'listbox');
+    if (label) { this.list.setAttribute('aria-labelledby', label.id); }
+
+    // La ricerca compare solo dove serve davvero: elenchi lunghi. Puo' essere
+    // forzata o esclusa con data-tr-select-search="true|false" sul campo.
+    var forced = f.getAttribute('data-tr-select-search');
+    this.searchable =
+      forced === 'true' ||
+      (forced !== 'false' && this.native.options.length >= SEARCH_THRESHOLD);
+
+    if (this.searchable) {
+      this.searchBox = document.createElement('div');
+      this.searchBox.className = 'tr-select__search';
+
+      var icon = document.createElement('span');
+      icon.className = 'tr-select__search-icon';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.innerHTML = SEARCH_ICON;
+
+      this.searchInput = document.createElement('input');
+      this.searchInput.type = 'text';
+      this.searchInput.className = 'tr-select__search-input';
+      this.searchInput.id = this.id + '-search';
+      this.searchInput.setAttribute('placeholder', 'Cerca...');
+      this.searchInput.setAttribute('autocomplete', 'off');
+      this.searchInput.setAttribute('spellcheck', 'false');
+      // Con la ricerca il combobox e' il campo di testo, non piu' il trigger:
+      // due elementi che dichiarano lo stesso ruolo confonderebbero gli screen
+      // reader. Il trigger resta un bottone che apre il pannello.
+      this.searchInput.setAttribute('role', 'combobox');
+      this.searchInput.setAttribute('aria-expanded', 'true');
+      this.searchInput.setAttribute('aria-controls', this.id + '-listbox');
+      this.searchInput.setAttribute('aria-autocomplete', 'list');
+      if (label) { this.searchInput.setAttribute('aria-labelledby', label.id); }
+
+      this.countEl = document.createElement('span');
+      this.countEl.className = 'tr-select__count';
+      this.countEl.setAttribute('aria-live', 'polite');
+
+      this.searchBox.appendChild(icon);
+      this.searchBox.appendChild(this.searchInput);
+      this.searchBox.appendChild(this.countEl);
+      this.panel.appendChild(this.searchBox);
+
+      this.emptyEl = document.createElement('p');
+      this.emptyEl.className = 'tr-select__empty';
+      this.emptyEl.textContent = 'Nessun risultato';
+      this.emptyEl.hidden = true;
+
+      this.trigger.setAttribute('role', 'button');
+      this.trigger.setAttribute('aria-haspopup', 'listbox');
+    }
+
+    this.panel.appendChild(this.list);
+    if (this.emptyEl) { this.panel.appendChild(this.emptyEl); }
 
     this.native.parentNode.insertBefore(this.trigger, this.native.nextSibling);
     f.appendChild(this.panel);
@@ -104,7 +174,7 @@
   /** Ricostruisce le voci dalle <option> del select nativo. */
   TrSelectInstance.prototype.sync = function () {
     var self = this;
-    this.panel.innerHTML = '';
+    this.list.innerHTML = '';
     this.optionEls = [];
 
     Array.prototype.forEach.call(this.native.options, function (opt, i) {
@@ -124,11 +194,46 @@
 
       li.appendChild(dot);
       li.appendChild(text);
-      self.panel.appendChild(li);
+      self.list.appendChild(li);
       self.optionEls.push(li);
     });
 
     this.renderValue();
+  };
+
+  /** Applica il filtro alle voci. Le voci escluse restano nel DOM ma fuori
+   *  dall'albero di accessibilita', cosi' anche uno screen reader legge solo
+   *  cio' che si vede. */
+  TrSelectInstance.prototype.filter = function (query) {
+    var needle = fold(query || '');
+    var visibili = 0;
+    var self = this;
+
+    this.optionEls.forEach(function (li, i) {
+      var match = !needle || fold(self.native.options[i].textContent).indexOf(needle) >= 0;
+      li.hidden = !match;
+      if (match) { visibili++; }
+    });
+
+    if (this.countEl) {
+      this.countEl.textContent = needle
+        ? visibili + ' / ' + this.optionEls.length
+        : String(this.optionEls.length);
+    }
+    if (this.emptyEl) { this.emptyEl.hidden = visibili > 0; }
+
+    // Se la voce attiva e' finita fuori dal filtro, si sposta sulla prima utile.
+    if (this.activeIndex < 0 || this.optionEls[this.activeIndex].hidden) {
+      this.setActive(this.firstVisible());
+    }
+    return visibili;
+  };
+
+  TrSelectInstance.prototype.firstVisible = function () {
+    for (var i = 0; i < this.optionEls.length; i++) {
+      if (!this.optionEls[i].hidden && !this.native.options[i].disabled) { return i; }
+    }
+    return -1;
   };
 
   TrSelectInstance.prototype.renderValue = function () {
@@ -161,6 +266,16 @@
         start = this.firstEnabled();
       }
       this.setActive(start);
+
+      if (this.searchInput) {
+        this.searchInput.value = '';
+        this.filter('');
+        this.setActive(start >= 0 && !this.optionEls[start].hidden ? start : this.firstVisible());
+        // Il fuoco va nel campo: si apre e si digita, senza un secondo gesto.
+        var input = this.searchInput;
+        setTimeout(function () { input.focus(); }, 0);
+      }
+
       // I listener sul documento vivono solo a pannello aperto.
       document.addEventListener('pointerdown', this.onDocPointer, true);
       window.addEventListener('resize', this.onDismiss, true);
@@ -175,7 +290,9 @@
 
   TrSelectInstance.prototype.firstEnabled = function () {
     for (var i = 0; i < this.native.options.length; i++) {
-      if (!this.native.options[i].disabled) { return i; }
+      if (!this.native.options[i].disabled && !(this.optionEls[i] && this.optionEls[i].hidden)) {
+        return i;
+      }
     }
     return -1;
   };
@@ -185,13 +302,14 @@
       this.optionEls[this.activeIndex].classList.remove('tr-select__option--active');
     }
     this.activeIndex = index;
+    var owner = this.searchInput || this.trigger;
     if (index < 0 || !this.optionEls[index]) {
-      this.trigger.removeAttribute('aria-activedescendant');
+      owner.removeAttribute('aria-activedescendant');
       return;
     }
     var li = this.optionEls[index];
     li.classList.add('tr-select__option--active');
-    this.trigger.setAttribute('aria-activedescendant', li.id);
+    owner.setAttribute('aria-activedescendant', li.id);
     if (li.scrollIntoView) { li.scrollIntoView({ block: 'nearest' }); }
   };
 
@@ -201,7 +319,7 @@
     var i = this.activeIndex;
     for (var k = 0; k < n; k++) {
       i = (i + step + n) % n;
-      if (!this.native.options[i].disabled) { this.setActive(i); return; }
+      if (!this.native.options[i].disabled && !this.optionEls[i].hidden) { this.setActive(i); return; }
     }
   };
 
@@ -292,7 +410,13 @@
           self.setOpen(false);
           break;
         default:
-          if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) { self.search(e.key); }
+          // Con il campo di ricerca la digitazione la gestisce il campo: qui
+        // resta solo la scorciatoia del select nativo, a pannello chiuso.
+        if (!self.searchable && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+          self.search(e.key);
+        } else if (self.searchable && !self.open && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+          self.setOpen(true);
+        }
       }
     };
     this.trigger.addEventListener('keydown', this.onKeyDown);
@@ -313,6 +437,36 @@
     };
     this.panel.addEventListener('pointermove', this.onPanelMove);
 
+    if (this.searchInput) {
+      this.onSearchInput = function () { self.filter(self.searchInput.value); };
+      this.searchInput.addEventListener('input', this.onSearchInput);
+
+      // Le frecce e la conferma valgono anche mentre si scrive: la tastiera
+      // non deve costringere a uscire dal campo per scegliere.
+      this.onSearchKey = function (e) {
+        switch (e.key) {
+          case 'ArrowDown': e.preventDefault(); self.move(1); break;
+          case 'ArrowUp': e.preventDefault(); self.move(-1); break;
+          case 'Home': e.preventDefault(); self.setActive(self.firstVisible()); break;
+          case 'End':
+            e.preventDefault();
+            for (var i = self.optionEls.length - 1; i >= 0; i--) {
+              if (!self.optionEls[i].hidden && !self.native.options[i].disabled) { self.setActive(i); break; }
+            }
+            break;
+          case 'Enter': e.preventDefault(); self.commit(self.activeIndex); break;
+          case 'Escape': e.preventDefault(); self.setOpen(false); self.trigger.focus(); break;
+          case 'Tab': self.setOpen(false); break;
+        }
+      };
+      this.searchInput.addEventListener('keydown', this.onSearchKey);
+
+      this.onSearchBlur = function (e) {
+        if (!self.field.contains(e.relatedTarget)) { self.setOpen(false); }
+      };
+      this.searchInput.addEventListener('blur', this.onSearchBlur);
+    }
+
     // Se il valore cambia da fuori (framework, reset del form), il trigger segue.
     this.onNativeChange = function () { self.renderValue(); };
     this.native.addEventListener('change', this.onNativeChange);
@@ -326,6 +480,11 @@
     this.panel.removeEventListener('click', this.onPanelClick);
     this.panel.removeEventListener('pointermove', this.onPanelMove);
     this.native.removeEventListener('change', this.onNativeChange);
+    if (this.searchInput) {
+      this.searchInput.removeEventListener('input', this.onSearchInput);
+      this.searchInput.removeEventListener('keydown', this.onSearchKey);
+      this.searchInput.removeEventListener('blur', this.onSearchBlur);
+    }
     clearTimeout(this.typeaheadTimer);
 
     this.trigger.parentNode.removeChild(this.trigger);
