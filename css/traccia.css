@@ -23,6 +23,10 @@
 .tr-login__main,
 .tr-login__panel,
 .tr-login__footer,
+.tr-select,
+.tr-select__trigger,
+.tr-select__panel,
+.tr-select__option,
 .tr-fieldset,
 .tr-photo-frame { box-sizing: border-box; }
 
@@ -846,6 +850,234 @@ select.tr-field__control + .tr-field__label,
   .tr-field__control::placeholder,
   .tr-field__label,
   .tr-field__suffix--action { transition: none; }
+}
+
+/* ---- Select ----
+
+   Il menu di un <select> nativo lo disegna il sistema operativo: non e'
+   stilabile, in nessun browser. Dove serve il linguaggio del sistema anche
+   nel menu, il select viene affiancato da una listbox costruita a parte.
+
+   Il <select> nativo pero' RESTA NEL DOM ed e' lui a tenere il valore: form
+   nativi, reactive forms di Angular e componenti controllati di React
+   continuano a funzionare senza sapere nulla di questo componente. Ed e' anche
+   il ripiego: finche' l'enhancement non e' avvenuto — JS non caricato, errore,
+   markup parziale — la classe .tr-select--ready non c'e' e resta in campo il
+   select nativo, funzionante.
+
+   Struttura:
+     .tr-field.tr-select [.tr-select--ready] [data-open="true"]
+       select.tr-field__control.tr-select__native   <- il valore vive qui
+       label.tr-field__label
+       button.tr-field__control.tr-select__trigger  <- role="combobox"
+         span.tr-select__value
+       span.tr-field__suffix.tr-select__chevron
+       ul.tr-select__panel                          <- role="listbox"
+         li.tr-select__option                       <- role="option"
+           span.tr-select__dot
+           span.tr-select__option-label
+   ========================================================================== */
+.tr-select { position: relative; }
+
+/* L'etichetta di un select sta sempre in alto: non c'e' uno stato a riposo. */
+.tr-select .tr-field__label {
+  transform: translateY(-50%) scale(0.84);
+  background: var(--tr-field-bg);
+}
+
+/* Prima dell'enhancement esiste solo il select nativo. */
+.tr-select__trigger,
+.tr-select__panel { display: none; }
+
+.tr-select--ready .tr-select__native {
+  /* Fuori dalla vista ma dentro il form: continua a portare il valore. */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.tr-select--ready .tr-select__trigger { display: flex; }
+.tr-select--ready .tr-select__panel { display: block; }
+
+/* ---- Trigger ----
+   Riusa .tr-field__control: stessa scatola, stesso filetto, stesso anello di
+   focus del resto dei campi. */
+.tr-select__trigger {
+  align-items: center;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--tr-font-display);
+}
+.tr-select__value {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tr-select__value--placeholder { color: var(--tr-ink-400); }
+.tr-select__trigger:disabled { cursor: not-allowed; }
+
+/* Il chevron ruota all'apertura. Ruota l'icona, non il contenitore: il
+   contenitore e' posizionato in assoluto e ruotarlo sposterebbe la scatola. */
+.tr-select__chevron > * {
+  display: block;
+  transition: transform var(--tr-motion-fast) var(--tr-motion-ease);
+}
+.tr-select[data-open="true"] .tr-select__chevron > * { transform: rotate(180deg); }
+.tr-select[data-open="true"] .tr-select__trigger {
+  border-color: var(--tr-brand-500);
+  box-shadow: 0 0 0 1px var(--tr-brand-500);
+}
+
+/* ---- Pannello ----
+   Resta nel DOM anche da chiuso: e' cio' che permette di animare apertura e
+   chiusura senza passare da display:none, che non e' animabile. */
+.tr-select__panel {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  top: calc(var(--tr-field-h) + 6px);
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  max-height: 268px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--tr-field-bg);
+  border: var(--tr-rule-thin) solid var(--tr-border-soft);
+  border-radius: var(--tr-radius-soft);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition:
+    opacity var(--tr-motion-fast) var(--tr-motion-ease),
+    transform var(--tr-motion-fast) var(--tr-motion-ease),
+    visibility 0s linear var(--tr-motion-fast);
+}
+.tr-select[data-open="true"] .tr-select__panel {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+/* Se non c'e' spazio sotto, il pannello si apre verso l'alto. */
+.tr-select[data-drop="up"] .tr-select__panel {
+  top: auto;
+  bottom: calc(var(--tr-field-h) + 6px);
+  transform: translateY(4px);
+}
+.tr-select[data-drop="up"][data-open="true"] .tr-select__panel { transform: none; }
+
+/* ---- Opzione ----
+   Il dot entra da sinistra e l'etichetta scorre a destra. Si muovono solo
+   opacity e transform: la voce sotto il puntatore non cambia dimensione e
+   non si sposta, quindi il puntatore non "perde" la riga che stava mirando —
+   e' il motivo per cui l'indentazione non si fa con padding o width. */
+.tr-select__option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 9px var(--tr-field-pad-x);
+  cursor: pointer;
+  color: var(--tr-ink-600);
+  font-family: var(--tr-font-display);
+  font-size: 14px;
+  line-height: 1.4;
+  transition: color var(--tr-motion-fast) var(--tr-motion-ease);
+  user-select: none;
+}
+.tr-select__dot {
+  position: absolute;
+  left: var(--tr-field-pad-x);
+  width: var(--tr-dot-size);
+  height: var(--tr-dot-size);
+  border-radius: 50%;
+  background: var(--tr-brand-500);
+  opacity: 0;
+  transform: scale(0.3);
+  transition:
+    opacity var(--tr-motion-fast) var(--tr-motion-ease),
+    transform var(--tr-motion-fast) var(--tr-motion-ease);
+}
+.tr-select__option-label {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: transform var(--tr-motion-fast) var(--tr-motion-ease);
+}
+
+/* Voce puntata dal mouse e voce attiva da tastiera: stesso stato, cosi' le due
+   navigazioni si somigliano invece di comportarsi in modo diverso. */
+.tr-select__option:hover,
+.tr-select__option--active {
+  color: var(--tr-ink-900);
+}
+.tr-select__option:hover .tr-select__dot,
+.tr-select__option--active .tr-select__dot {
+  opacity: 1;
+  transform: none;
+}
+.tr-select__option:hover .tr-select__option-label,
+.tr-select__option--active .tr-select__option-label {
+  transform: translateX(calc(var(--tr-dot-size) + 10px));
+}
+
+/* Voce scelta: il dot resta, l'etichetta resta indentata. */
+.tr-select__option[aria-selected="true"] {
+  color: var(--tr-ink-900);
+  font-weight: var(--tr-weight-semibold);
+}
+.tr-select__option[aria-selected="true"] .tr-select__dot { opacity: 1; transform: none; }
+.tr-select__option[aria-selected="true"] .tr-select__option-label {
+  transform: translateX(calc(var(--tr-dot-size) + 10px));
+}
+
+.tr-select__option[aria-disabled="true"] {
+  color: var(--tr-ink-400);
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.tr-select__option[aria-disabled="true"]:hover { color: var(--tr-ink-400); }
+.tr-select__option[aria-disabled="true"]:hover .tr-select__dot { opacity: 0; transform: scale(0.3); }
+.tr-select__option[aria-disabled="true"]:hover .tr-select__option-label { transform: none; }
+/* Un segnaposto disabilitato non e' una scelta: niente dot ne' indentazione,
+   anche quando il nativo lo riporta come selezionato. */
+.tr-select__option[aria-disabled="true"][aria-selected="true"] { font-weight: var(--tr-weight-body); }
+.tr-select__option[aria-disabled="true"][aria-selected="true"] .tr-select__dot { opacity: 0; transform: scale(0.3); }
+.tr-select__option[aria-disabled="true"][aria-selected="true"] .tr-select__option-label { transform: none; }
+
+/* Separatore fra gruppi di opzioni */
+.tr-select__separator {
+  height: var(--tr-rule-thin);
+  margin: 6px var(--tr-field-pad-x);
+  background: var(--tr-border-soft);
+  border-radius: var(--tr-radius-line);
+}
+
+/* Stato di errore ereditato dal campo */
+.tr-field--error .tr-select__trigger { border-color: var(--tr-state-danger); }
+.tr-field--error.tr-select[data-open="true"] .tr-select__trigger {
+  border-color: var(--tr-state-danger);
+  box-shadow: 0 0 0 1px var(--tr-state-danger);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-select__panel,
+  .tr-select__dot,
+  .tr-select__option,
+  .tr-select__option-label,
+  .tr-select__chevron > * { transition: none; }
 }
 
 /* ---- Gruppo di opzioni (radio / checkbox) ----

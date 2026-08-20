@@ -16,6 +16,7 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── tokens.css                Design token come CSS custom properties
 │   └── tokens.json               Design token in formato W3C draft
 ├── css/traccia.css               Libreria componenti (prefisso .tr-)
+├── js/tr-select.js               Listbox del select (vanilla, per Angular e HTML)
 ├── email/
 │   ├── firma-email.html          Firma email (tabelle + stili inline)
 │   └── firma-email.txt           Firma email, versione testo semplice
@@ -111,6 +112,7 @@ dei form e gli esiti di sistema — vedi [Pagine di login](#pagine-di-login-prod
 | 10 | Pagina di login (co-branding con il cliente) | `.tr-login` + `.tr-clientmark` |
 | 11 | H1/H2 con parola chiave blu | `.tr-h1`, `.tr-h2` + `<em>` |
 | 12 | Campo con etichetta flottante | `.tr-field` + `__control` / `__label` |
+| 13 | Select con listbox | `.tr-select` + `js/tr-select.js` |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -359,6 +361,115 @@ Va reso con `<fieldset class="tr-fieldset">` e `<legend class="tr-fieldset__lege
 non per stile, ma perche' e' il markup che lega le opzioni fra loro per le
 tecnologie assistive. In errore si usa `.tr-fieldset--error` sul contenitore.
 | `disabled` / `readonly` | controllo | Gestiti dagli attributi nativi, nessuna classe |
+
+
+## Select
+
+Il menu di un `<select>` nativo lo disegna il sistema operativo: non e' stilabile,
+in nessun browser. Dove serve il linguaggio del sistema anche dentro al menu, il
+select viene affiancato da una listbox costruita a parte (`.tr-select`).
+
+**Il `<select>` nativo pero' resta nel DOM ed e' lui a tenere il valore.** Si
+aggiorna e riemette `input` e `change`, quindi form nativi, reactive forms di
+Angular, `ngModel` e qualunque codice in ascolto continuano a funzionare senza
+sapere nulla di questo componente. Ed e' anche il ripiego: finche' la classe
+`.tr-select--ready` non c'e' — script non caricato, errore, markup parziale —
+resta in campo il select nativo, funzionante. Non e' una sostituzione, e' un
+miglioramento progressivo.
+
+### Il comportamento delle voci
+
+La voce puntata dal mouse mostra un dot blu che entra da sinistra mentre
+l'etichetta scorre a destra. **Si muovono solo `opacity` e `transform`**: la riga
+non cambia dimensione e non si sposta, quindi il puntatore non "perde" la voce
+che stava mirando. E' il motivo per cui l'indentazione non si fa con `padding` o
+`width`, che sono la scelta istintiva ma fanno saltare la riga sotto il cursore.
+
+La voce attiva da tastiera usa lo stesso stato della voce puntata dal mouse
+(`.tr-select__option--active`), cosi' le due navigazioni si somigliano invece di
+comportarsi in modo diverso. La voce scelta tiene dot ed etichetta indentata in
+modo permanente, in semibold.
+
+### Struttura
+
+```html
+<div class="tr-field tr-select tr-field--with-suffix" data-open="false">
+  <select class="tr-field__control tr-select__native" id="coorte">…</select>
+  <button class="tr-field__control tr-select__trigger" role="combobox"
+          aria-haspopup="listbox" aria-expanded="false" aria-controls="coorte-listbox">
+    <span class="tr-select__value">Prevalenti</span>
+  </button>
+  <label class="tr-field__label" for="coorte-trigger">Coorte</label>
+  <span class="tr-field__suffix tr-select__chevron" aria-hidden="true"><!-- chevron --></span>
+  <ul class="tr-select__panel" id="coorte-listbox" role="listbox">
+    <li class="tr-select__option" role="option" aria-selected="true">
+      <span class="tr-select__dot"></span>
+      <span class="tr-select__option-label">Prevalenti</span>
+    </li>
+  </ul>
+  <div class="tr-field__assist"></div>
+</div>
+```
+
+`.tr-select` sta **sul contenitore del campo**, non su un elemento interno: e'
+da li' che l'etichetta flottante e lo stato di errore raggiungono il trigger.
+
+### Uso per framework
+
+**HTML semplice, Angular, Vue, Svelte** — l'enhancer costruisce trigger e
+pannello a partire dal solo `<select>`:
+
+```html
+<div class="tr-field tr-select tr-field--with-suffix">
+  <select class="tr-field__control" id="coorte" [formControl]="coorte">
+    <option value="" disabled selected>Seleziona una coorte</option>
+    <option value="prev">Prevalenti</option>
+  </select>
+  <label class="tr-field__label" for="coorte">Coorte</label>
+  <div class="tr-field__assist"></div>
+</div>
+
+<script src="js/tr-select.js"></script>
+<script>TrSelect.enhanceAll();</script>
+```
+
+In Angular va chiamato in `ngAfterViewInit` sul sottoalbero del componente
+(`TrSelect.enhanceAll(this.host.nativeElement)`), e `destroy()` in `ngOnDestroy`.
+Dopo aver cambiato le `<option>` a runtime serve `sync()`.
+
+**React / Next** — l'enhancer **non** va usato: la scrittura diretta su `.value`
+non attraversa il value tracker di React e un componente controllato non se ne
+accorgerebbe. La' si scrive un componente che rende le stesse classi e gli stessi
+attributi ARIA, con lo stato tenuto da React. Il contratto condiviso e' il
+markup, non il file JS.
+
+Attenzione, in React, al `<select>` nascosto: se il valore corrente e' la stringa
+vuota e fra le `<option>` non ce n'e' una di valore vuoto, il browser ripiega
+sulla prima voce e il nativo finisce per dire una cosa diversa dallo stato del
+componente — con il risultato che un invio nativo del form manderebbe un valore
+che l'utente non ha mai scelto.
+
+### Tastiera
+
+| Tasto | Effetto |
+|---|---|
+| `↓` / `↑` | Apre il pannello; a pannello aperto sposta la voce attiva, saltando le disabilitate |
+| `Home` / `End` | Prima / ultima voce selezionabile |
+| `Invio` / `Spazio` | Apre, oppure conferma la voce attiva |
+| `Esc` | Chiude senza scegliere |
+| `Tab` | Chiude e prosegue |
+| lettere | Salta alla voce che inizia cosi', come nel select nativo |
+
+### Dettagli
+
+- **Apertura verso l'alto**: se sotto il trigger non c'e' spazio, il pannello si
+  apre in su (`data-drop="up"`). Deciso all'apertura, sulla posizione reale.
+- **Segnaposto**: una `<option>` disabilitata di valore vuoto resta visibile nel
+  pannello, come nel select nativo, ma senza dot ne' indentazione — non e' una
+  scelta. All'apertura la voce attiva parte dalla prima realmente selezionabile.
+- **Liste lunghe**: il pannello scorre (max 268px) e la voce attiva resta in vista.
+- **Nessun listener globale permanente**: quelli sul documento esistono solo
+  mentre un pannello e' aperto e vengono rimossi alla chiusura.
 
 
 ## Firma email

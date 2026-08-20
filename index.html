@@ -554,6 +554,53 @@
   </section>
 
 
+  <!-- 13 · SELECT -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">13 · <em>Select</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        Il menu di un <code style="font-family:var(--tr-font-mono);font-size:13px">&lt;select&gt;</code> nativo
+        lo disegna il sistema operativo: non e' stilabile. La listbox lo affianca, ma il select nativo
+        resta nel DOM ed e' lui a tenere il valore — e a fare da ripiego se lo script non parte.
+        La voce puntata muove solo <code style="font-family:var(--tr-font-mono);font-size:13px">opacity</code>
+        e <code style="font-family:var(--tr-font-mono);font-size:13px">transform</code>: la riga non cambia
+        dimensione, quindi il puntatore non perde la voce che stava mirando.
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <div class="tr-field tr-select tr-field--with-suffix">
+        <select class="tr-field__control" id="ds-coorte">
+          <option value="" disabled selected>Seleziona una coorte</option>
+          <option value="prev">Prevalenti</option>
+          <option value="inc">Incidenti</option>
+          <option value="tut">Tutti i pazienti</option>
+          <option value="na" disabled>Voce non disponibile</option>
+        </select>
+        <label class="tr-field__label" for="ds-coorte">Coorte</label>
+        <div class="tr-field__assist"><p class="tr-field__hint">Con segnaposto e voce disabilitata</p></div>
+      </div>
+
+      <div class="tr-field tr-select tr-field--with-suffix">
+        <select class="tr-field__control" id="ds-regione">
+          <option>Basilicata</option><option>Puglia</option><option>Campania</option>
+          <option>Calabria</option><option>Sicilia</option><option>Lazio</option>
+          <option>Toscana</option><option>Emilia-Romagna</option><option>Lombardia</option>
+          <option>Veneto</option><option>Piemonte</option><option>Liguria</option>
+        </select>
+        <label class="tr-field__label" for="ds-regione">Regione</label>
+        <div class="tr-field__assist"><p class="tr-field__hint">Lista lunga: scorre e accetta la digitazione</p></div>
+      </div>
+    </div>
+
+    <p class="tr-body demo-note" style="font-size:13px">
+      Tastiera: <span class="tr-mono">&darr; &uarr;</span> per muoversi saltando le voci disabilitate,
+      <span class="tr-mono">Home / End</span> agli estremi, <span class="tr-mono">Invio</span> per confermare,
+      <span class="tr-mono">Esc</span> per chiudere, e le lettere per saltare alla voce che inizia cosi'.
+    </p>
+  </section>
+
   <!-- FIRMA EMAIL -->
   <section class="section">
     <div class="section-head">
@@ -669,6 +716,8 @@
   </section>
 
 
+  <script src="js/tr-select.js"></script>
+  <script>TrSelect.enhanceAll();</script>
 </div>
 </body>
 </html>
