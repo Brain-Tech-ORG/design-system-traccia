@@ -6,6 +6,25 @@
    Prefisso classi: .tr-
    ========================================================================== */
 
+/* I componenti del sistema non possono dipendere dal box-sizing del progetto
+   ospite: se lo dichiarano da se', le misure valgono identiche ovunque. */
+.tr-field,
+.tr-field__control,
+.tr-field__prefix,
+.tr-field__suffix,
+.tr-field__assist,
+.tr-field__label,
+.tr-btn,
+.tr-chip,
+.tr-circle,
+.tr-notice,
+.tr-login,
+.tr-login__header,
+.tr-login__main,
+.tr-login__panel,
+.tr-login__footer,
+.tr-photo-frame { box-sizing: border-box; }
+
 /* ---- Base pagina ---- */
 .tr-page {
   background: var(--tr-paper);
@@ -566,53 +585,173 @@
    etichette mono maiuscole, pillole per le azioni.
    ========================================================================== */
 
-/* ---- Campo ---- */
+/* ---- Campo con etichetta flottante ----
+
+   L'etichetta parte dentro il campo, al posto del placeholder, e sale sul
+   filetto superiore quando il campo riceve il focus o contiene un valore.
+   Il placeholder vero resta invisibile finche' l'etichetta non e' salita, cosi'
+   i due testi non si sovrappongono mai.
+
+   IL COMPORTAMENTO E' IN CSS PURO. Si regge su tre cose soltanto:
+     1. l'ordine nel DOM — il CONTROLLO viene prima, l'ETICHETTA dopo;
+     2. la pseudo-classe :placeholder-shown, quindi il controllo deve sempre
+        avere un placeholder (anche solo uno spazio: placeholder=" ");
+     3. :focus.
+   Nessun JavaScript, nessuno stato di framework: lo stesso markup vale identico
+   in HTML, React/Next, Angular, Vue, Svelte. Per i controlli che un framework
+   rimpiazza con un widget proprio (autocomplete, ng-select, react-select) c'e'
+   la classe di forzatura .tr-field--float sul contenitore.
+
+   Struttura:
+     .tr-field [.tr-field--with-prefix] [.tr-field--error]
+       .tr-field__control     <- input | select | textarea, con placeholder
+       .tr-field__label       <- SEMPRE dopo il controllo
+       .tr-field__prefix      <- icona a sinistra (facoltativa)
+       .tr-field__suffix      <- icona/azione a destra (facoltativa)
+       .tr-field__assist      <- riga di servizio: hint o errore + contatore
+   ========================================================================== */
 .tr-field {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  display: block;
 }
+
+.tr-field__control {
+  width: 100%;
+  height: var(--tr-field-h);
+  /* Il respiro in alto e' quello che libera la corsia dell'etichetta. */
+  padding: 22px var(--tr-field-pad-x) 6px;
+  border: var(--tr-rule-thin) solid var(--tr-border-soft);
+  border-radius: var(--tr-field-radius);
+  background: transparent;
+  font-family: var(--tr-font-display);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--tr-ink-900);
+  transition:
+    border-color var(--tr-motion-fast) var(--tr-motion-ease),
+    box-shadow var(--tr-motion-fast) var(--tr-motion-ease);
+}
+textarea.tr-field__control {
+  height: auto;
+  min-height: calc(var(--tr-field-h) + 32px);
+  padding-top: 24px;
+  padding-bottom: 12px;
+  resize: vertical;
+}
+select.tr-field__control {
+  appearance: none;
+  padding-right: var(--tr-field-affix);
+  cursor: pointer;
+}
+
+/* Il placeholder resta invisibile finche' l'etichetta occupa il suo posto:
+   compare solo quando il campo ha il focus e l'etichetta e' salita. */
+.tr-field__control::placeholder {
+  color: transparent;
+  transition: color var(--tr-motion-fast) var(--tr-motion-ease);
+}
+.tr-field__control:focus::placeholder { color: var(--tr-ink-400); opacity: 0.6; }
+
+.tr-field__control:hover { border-color: var(--tr-border-soft-2); }
+/* Al focus il filetto vira al blu e raddoppia otticamente con un anello da 1px:
+   non e' un'ombra decorativa ed evita lo scatto di 1px di un border piu' spesso. */
+.tr-field__control:focus {
+  border-color: var(--tr-brand-500);
+  box-shadow: 0 0 0 1px var(--tr-brand-500);
+}
+.tr-field__control:focus,
+.tr-field__control:focus-visible { outline: none; }
+
+/* ---- Etichetta ---- */
 .tr-field__label {
-  margin-bottom: var(--tr-space-2);
+  position: absolute;
+  top: 0;
+  left: calc(var(--tr-field-pad-x) - 4px);
+  z-index: 1;
+  max-width: calc(100% - var(--tr-field-pad-x) * 2);
+  padding: 0 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateY(var(--tr-field-label-rest));
+  transform-origin: left center;
   font-family: var(--tr-font-mono);
   font-weight: var(--tr-weight-semibold);
   font-size: var(--tr-text-caption);
   letter-spacing: var(--tr-tracking-mono);
   text-transform: uppercase;
   color: var(--tr-ink-400);
-  transition: color 0.2s;
+  /* Si animano solo transform e colore: nessun reflow, nessuno sfarfallio. */
+  transition:
+    transform var(--tr-motion-fast) var(--tr-motion-ease),
+    color var(--tr-motion-fast) var(--tr-motion-ease);
 }
-.tr-field:focus-within .tr-field__label { color: var(--tr-brand-500); }
-.tr-field__control {
-  width: 100%;
-  padding: 12px 16px;
-  border: var(--tr-rule-thin) solid var(--tr-border-soft);
-  border-radius: 10px;
-  background: transparent;
-  font-family: var(--tr-font-display);
-  font-size: 14px;
-  line-height: 1.4;
-  color: var(--tr-ink-900);
-  transition: border-color 0.2s;
+
+/* Stato salito: il centro dell'etichetta si appoggia sul filetto superiore e
+   la sua tacca ricopre il filetto. Solo transform, quindi interpola pulito. */
+.tr-field__control:focus + .tr-field__label,
+.tr-field__control:not(:placeholder-shown) + .tr-field__label,
+/* Controlli che mostrano sempre un valore e non conoscono :placeholder-shown */
+select.tr-field__control + .tr-field__label,
+.tr-field__control[type="date"] + .tr-field__label,
+.tr-field__control[type="time"] + .tr-field__label,
+.tr-field__control[type="month"] + .tr-field__label,
+.tr-field__control[type="datetime-local"] + .tr-field__label,
+/* Forzatura per i widget di framework che non sono un <input> vero */
+.tr-field--float .tr-field__label {
+  transform: translateY(-50%) scale(0.84);
+  background: var(--tr-field-bg);
 }
-.tr-field__control::placeholder { color: var(--tr-ink-400); opacity: 0.6; }
-.tr-field__control:hover { border-color: var(--tr-border-soft-2); }
-.tr-field__control:focus { border-color: var(--tr-brand-500); outline: none; }
-.tr-field__control:disabled {
-  background: var(--tr-surface-tint);
-  color: var(--tr-ink-400);
-  cursor: not-allowed;
+.tr-field__control:focus + .tr-field__label { color: var(--tr-brand-500); }
+
+/* Asterisco del campo obbligatorio */
+.tr-field__required { color: var(--tr-state-danger); }
+
+/* ---- Prefisso / suffisso ---- */
+.tr-field__prefix,
+.tr-field__suffix {
+  position: absolute;
+  top: 0;
+  height: var(--tr-field-h);
+  display: flex;
+  align-items: center;
+  color: var(--tr-brand-500);
+  pointer-events: none;
 }
-.tr-field__control--error { border-color: var(--tr-state-danger); }
-/* Codice OTP e simili: cifre mono distanziate, allineate al centro */
-.tr-field__control--code {
-  text-align: center;
-  font-family: var(--tr-font-mono);
-  font-size: 24px;
-  letter-spacing: 0.5em;
+.tr-field__prefix { left: var(--tr-field-pad-x); }
+.tr-field__suffix { right: var(--tr-field-pad-x); color: var(--tr-ink-400); }
+/* Suffisso cliccabile (mostra/nascondi password, cancella, apri calendario) */
+.tr-field__suffix--action {
+  pointer-events: auto;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  transition: color var(--tr-motion-fast) var(--tr-motion-ease);
+}
+.tr-field__suffix--action:hover { color: var(--tr-brand-600); }
+
+.tr-field--with-prefix .tr-field__control { padding-left: var(--tr-field-affix); }
+.tr-field--with-prefix .tr-field__label { left: calc(var(--tr-field-affix) - 4px); }
+.tr-field--with-suffix .tr-field__control { padding-right: var(--tr-field-affix); }
+
+/* ---- Riga di servizio ----
+   Altezza riservata anche quando e' vuota: la comparsa di un errore non deve
+   far saltare il layout del form. */
+.tr-field__assist {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--tr-space-3);
+  min-height: 18px;
+  margin-top: var(--tr-space-2);
+  padding: 0 var(--tr-field-pad-x);
 }
 .tr-field__hint,
-.tr-field__error {
-  margin: var(--tr-space-2) 0 0;
+.tr-field__error,
+.tr-field__counter {
+  margin: 0;
   font-family: var(--tr-font-mono);
   font-size: 11px;
   letter-spacing: var(--tr-tracking-mono);
@@ -620,6 +759,50 @@
 }
 .tr-field__hint { color: var(--tr-ink-400); }
 .tr-field__error { color: var(--tr-state-danger); font-weight: var(--tr-weight-semibold); }
+.tr-field__counter { color: var(--tr-ink-400); margin-left: auto; flex: none; }
+
+/* ---- Stati ---- */
+.tr-field--error .tr-field__control,
+.tr-field__control--error { border-color: var(--tr-state-danger); }
+.tr-field--error .tr-field__control:focus,
+.tr-field__control--error:focus {
+  border-color: var(--tr-state-danger);
+  box-shadow: 0 0 0 1px var(--tr-state-danger);
+}
+.tr-field--error .tr-field__label,
+.tr-field--error .tr-field__control:focus + .tr-field__label,
+.tr-field__control--error + .tr-field__label,
+.tr-field__control--error:focus + .tr-field__label { color: var(--tr-state-danger); }
+.tr-field--error .tr-field__prefix { color: var(--tr-state-danger); }
+
+.tr-field__control:disabled {
+  background: var(--tr-surface-tint);
+  color: var(--tr-ink-400);
+  cursor: not-allowed;
+}
+.tr-field__control:disabled + .tr-field__label { color: var(--tr-ink-400); opacity: 0.7; }
+.tr-field--disabled .tr-field__label { --tr-field-bg: var(--tr-surface-tint); }
+
+/* Sola lettura: nessun fondo, filetto piu' tenue */
+.tr-field__control:read-only:not(:disabled) { border-color: var(--tr-border-soft); color: var(--tr-ink-600); }
+
+/* Codice OTP e simili: cifre mono distanziate, allineate al centro */
+.tr-field__control--code {
+  text-align: center;
+  font-family: var(--tr-font-mono);
+  font-size: 24px;
+  letter-spacing: 0.5em;
+  /* La spaziatura sposta otticamente il testo a destra: si compensa. */
+  text-indent: 0.5em;
+}
+
+/* Chi ha chiesto meno movimento vede lo stesso stato finale, senza corsa. */
+@media (prefers-reduced-motion: reduce) {
+  .tr-field__control,
+  .tr-field__control::placeholder,
+  .tr-field__label,
+  .tr-field__suffix--action { transition: none; }
+}
 
 /* ---- Azione ---- */
 .tr-btn {

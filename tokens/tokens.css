@@ -92,6 +92,20 @@
   --tr-watermark-opacity: 0.16;  /* opacità della sagoma sul paper */
   --tr-watermark-stroke: 6px;    /* spessore tratto dell'outline (su viewBox 1280) */
 
+  /* ---- Campi di form ---- */
+  --tr-field-h: 56px;             /* altezza del campo con etichetta flottante */
+  --tr-field-radius: 10px;        /* angolo del campo */
+  --tr-field-pad-x: 16px;         /* respiro orizzontale interno */
+  --tr-field-label-rest: 20px;    /* quota dell'etichetta a riposo, dal filetto superiore */
+  --tr-field-affix: 46px;         /* spazio riservato a icona prefisso/suffisso */
+  --tr-field-bg: var(--tr-paper); /* superficie su cui poggia il campo: la tacca
+                                     dell'etichetta flottante la ricopre. Va
+                                     ridefinita sui contenitori con fondo diverso. */
+
+  /* ---- Movimento ---- */
+  --tr-motion-fast: 160ms;
+  --tr-motion-ease: cubic-bezier(0.2, 0, 0.2, 1);
+
   /* ---- Pagina di login (co-branding con il cliente) ---- */
   --tr-client-logo-h: 40px;   /* altezza del marchio cliente in testa (range 32-48px) */
   --tr-login-panel-w: 420px;  /* larghezza della colonna del form */

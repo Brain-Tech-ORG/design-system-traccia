@@ -399,14 +399,15 @@
             </div>
 
             <div class="tr-field" style="margin-top:24px">
-              <label class="tr-field__label" for="demo-email">Email</label>
               <input class="tr-field__control" id="demo-email" type="email" placeholder="nome@esempio.it">
+              <label class="tr-field__label" for="demo-email">Email</label>
+              <div class="tr-field__assist"></div>
             </div>
 
-            <div class="tr-field" style="margin-top:20px">
+            <div class="tr-field tr-field--error" style="margin-top:20px">
+              <input class="tr-field__control" id="demo-pw" type="password" placeholder=" ">
               <label class="tr-field__label" for="demo-pw">Password</label>
-              <input class="tr-field__control tr-field__control--error" id="demo-pw" type="password" placeholder="••••••••">
-              <p class="tr-field__error">Password obbligatoria</p>
+              <div class="tr-field__assist"><p class="tr-field__error">Password obbligatoria</p></div>
             </div>
 
             <button class="tr-btn tr-btn--primary tr-btn--block" type="button" style="margin-top:24px">Accedi</button>
@@ -455,22 +456,77 @@
       </p>
     </div>
 
-    <div class="grid-3">
+    <div class="grid-2">
       <div>
         <span class="tr-mono tr-mono--muted">Campo</span>
+        <p class="tr-body" style="margin:8px 0 0;font-size:13px">
+          Clicca dentro: l'etichetta sale sul filetto e il placeholder compare al suo posto.
+        </p>
         <div class="demo-block">
           <div class="tr-field">
+            <input class="tr-field__control" id="demo-f1" type="text" placeholder="Esempio di formato">
             <label class="tr-field__label" for="demo-f1">Etichetta</label>
-            <input class="tr-field__control" id="demo-f1" type="text" placeholder="Segnaposto">
-            <p class="tr-field__hint">Nota di servizio</p>
+            <div class="tr-field__assist">
+              <p class="tr-field__hint">Nota di servizio</p>
+            </div>
           </div>
-          <div class="tr-field" style="margin-top:20px">
-            <label class="tr-field__label" for="demo-f2">Codice di verifica</label>
-            <input class="tr-field__control tr-field__control--code" id="demo-f2" type="text" maxlength="6" placeholder="000000">
+
+          <div class="tr-field tr-field--with-prefix tr-field--with-suffix" style="margin-top:8px">
+            <input class="tr-field__control" id="demo-f2" type="email" placeholder="nome@esempio.it">
+            <label class="tr-field__label" for="demo-f2">Email <span class="tr-field__required">*</span></label>
+            <span class="tr-field__prefix" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+            </span>
+            <button class="tr-field__suffix tr-field__suffix--action" type="button" aria-label="Cancella">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+            <div class="tr-field__assist"></div>
+          </div>
+
+          <div class="tr-field tr-field--error" style="margin-top:8px">
+            <input class="tr-field__control" id="demo-f3" type="password" value="abc" placeholder=" ">
+            <label class="tr-field__label" for="demo-f3">Password</label>
+            <div class="tr-field__assist">
+              <p class="tr-field__error">Almeno 12 caratteri</p>
+            </div>
+          </div>
+
+          <div class="tr-field" style="margin-top:8px">
+            <select class="tr-field__control" id="demo-f4">
+              <option>Prevalenti</option>
+              <option>Incidenti</option>
+            </select>
+            <label class="tr-field__label" for="demo-f4">Coorte</label>
+            <span class="tr-field__suffix" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+            <div class="tr-field__assist">
+              <p class="tr-field__hint">Il select tiene l'etichetta sempre in alto</p>
+            </div>
+          </div>
+
+          <div class="tr-field" style="margin-top:8px">
+            <input class="tr-field__control tr-field__control--code" id="demo-f5" type="text" maxlength="6" placeholder=" ">
+            <label class="tr-field__label" for="demo-f5">Codice di verifica</label>
+            <div class="tr-field__assist"></div>
+          </div>
+
+          <div class="tr-field" style="margin-top:8px">
+            <textarea class="tr-field__control" id="demo-f6" rows="3" placeholder="Descrivi brevemente"></textarea>
+            <label class="tr-field__label" for="demo-f6">Note</label>
+            <div class="tr-field__assist">
+              <p class="tr-field__hint">Facoltativo</p>
+              <span class="tr-field__counter">0 / 1000</span>
+            </div>
+          </div>
+
+          <div class="tr-field" style="margin-top:8px">
+            <input class="tr-field__control" id="demo-f7" type="text" value="Non modificabile" placeholder=" " disabled>
+            <label class="tr-field__label" for="demo-f7">Campo disabilitato</label>
+            <div class="tr-field__assist"></div>
           </div>
         </div>
       </div>
-
       <div>
         <span class="tr-mono tr-mono--muted">Azione</span>
         <div class="demo-block" style="display:flex;flex-direction:column;align-items:flex-start;gap:16px">

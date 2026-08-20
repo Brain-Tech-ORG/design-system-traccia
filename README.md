@@ -107,6 +107,7 @@ dei form e gli esiti di sistema — vedi [Pagine di login](#pagine-di-login-prod
 | 9 | Footer (con riga certificazioni sempre presente) | `.tr-footer` + `.tr-footer__certs` |
 | 10 | Pagina di login (co-branding con il cliente) | `.tr-login` + `.tr-clientmark` |
 | 11 | H1/H2 con parola chiave blu | `.tr-h1`, `.tr-h2` + `<em>` |
+| 12 | Campo con etichetta flottante | `.tr-field` + `__control` / `__label` |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -189,7 +190,7 @@ ovunque nella UI software:
 
 | Componente | Classe | Nota |
 |---|---|---|
-| Campo | `.tr-field` + `__label` / `__control` / `__hint` / `__error` | Fondo trasparente e filetto 1px che vira al blu sul focus. Nessuna ombra, nessun ring. Varianti `--error` e `--code` (cifre OTP mono distanziate). |
+| Campo | `.tr-field` + `__control` / `__label` / `__prefix` / `__suffix` / `__assist` | Etichetta flottante, fondo trasparente, filetto 1px che vira al blu sul focus. Vedi sotto. |
 | Azione | `.tr-btn` + `--primary` / `--secondary` / `--quiet` / `--block` | Pillola 999px con etichetta mono maiuscola, come la chip. |
 | Avviso in linea | `.tr-notice` + `--danger` / `--warning` / `--success` | Filetto verticale colorato: il sistema non ammette pannelli con sfondo colorato dietro ai contenuti. |
 
@@ -208,6 +209,130 @@ con testo bianco e per il testo piccolo in blu si usano le tinte scure dello
 stesso hue: `--tr-brand-600` (`#2f7ab8`, 4,6:1 su bianco) e `--tr-brand-700`
 per l'hover. `#4194d7` resta per elementi non testuali — dot, filetti, icone —
 e per il testo grande in grassetto.
+
+## Campo: etichetta flottante
+
+L'etichetta parte **dentro** il campo, al posto del placeholder, e sale sul filetto
+superiore quando il campo riceve il focus o contiene un valore. E' la transizione
+che ci si aspetta da un form moderno; qui e' resa nel linguaggio del sistema —
+etichetta mono maiuscola, filetto al posto della cornice piena, un solo accento.
+
+### Il comportamento e' in CSS puro
+
+Nessun JavaScript, nessuno stato di componente: **lo stesso markup vale identico in
+HTML, React/Next, Angular, Vue, Svelte**. Il meccanismo si regge su tre cose sole:
+
+1. **l'ordine nel DOM**: il controllo viene **prima**, l'etichetta **dopo**
+   (il CSS le raggiunge con il combinatore `+`);
+2. **`:placeholder-shown`**: il controllo deve quindi avere **sempre** un
+   placeholder — se non c'e' niente di utile da mostrare, `placeholder=" "`;
+3. **`:focus`**.
+
+Il legame etichetta/controllo resta quello standard (`for` / `id`), quindi
+l'ordine invertito non cambia nulla per gli screen reader.
+
+Si animano solo `transform` e `color`: nessun reflow, nessuno sfarfallio, e sotto
+`prefers-reduced-motion: reduce` l'etichetta raggiunge lo stesso stato finale
+senza corsa.
+
+### Struttura
+
+```html
+<div class="tr-field tr-field--with-prefix">
+  <input class="tr-field__control" id="email" type="email" placeholder="nome@esempio.it">
+  <label class="tr-field__label" for="email">Email <span class="tr-field__required">*</span></label>
+  <span class="tr-field__prefix"><!-- icona --></span>
+  <div class="tr-field__assist">
+    <p class="tr-field__hint">Nota di servizio</p>
+  </div>
+</div>
+```
+
+### Regole
+
+- **Il placeholder resta invisibile** finche' l'etichetta occupa il suo posto:
+  compare solo a etichetta salita. Cosi' i due testi non si sovrappongono mai e
+  il placeholder puo' tornare a fare il suo mestiere — mostrare un **esempio di
+  formato** (`nome@esempio.it`, `1.580,0`), non ripetere l'etichetta.
+- **La riga di servizio ha altezza riservata** anche da vuota: la comparsa di un
+  errore non deve far saltare il layout del form.
+- **Al focus il filetto vira al blu** e raddoppia otticamente con un anello da 1px.
+  Non e' un'ombra decorativa: e' l'anello di focus, e serve a non far scattare il
+  layout di 1px come farebbe un bordo piu' spesso.
+- **La tacca dell'etichetta** salita ricopre il filetto con `--tr-field-bg`, che
+  vale `paper`. Se il campo poggia su una superficie diversa, ridefinisci quella
+  variabile sul contenitore: `.mia-superficie { --tr-field-bg: #fff; }`.
+- **Un solo accento**: il blu segnala il focus, il rosso di stato segnala l'errore.
+  Niente altri colori dentro il campo.
+
+### Controlli senza `:placeholder-shown`
+
+`<select>` e gli input di data/ora mostrano sempre qualcosa e non conoscono
+`:placeholder-shown`: il foglio li riconosce da solo e ne tiene l'etichetta
+sempre in alto. Nessuna classe da aggiungere.
+
+Per i **widget che un framework rende con un componente proprio** — autocomplete,
+`ng-select`, `react-select`, date picker custom — non esiste un `<input>` da
+interrogare: in quel caso il componente aggiunge `tr-field--float` al contenitore
+quando ha un valore. E' l'unico punto in cui serve una riga di codice, ed e'
+la stessa in ogni framework.
+
+### Uso per framework
+
+Il markup e' identico ovunque; cambia solo la sintassi degli attributi.
+
+**HTML / Vue / Svelte**
+
+```html
+<div class="tr-field">
+  <input class="tr-field__control" id="nome" placeholder=" ">
+  <label class="tr-field__label" for="nome">Nome</label>
+</div>
+```
+
+**React / Next**
+
+```jsx
+<div className={`tr-field ${error ? 'tr-field--error' : ''}`}>
+  <input className="tr-field__control" id="nome" placeholder=" "
+         value={value} onChange={(e) => setValue(e.target.value)} />
+  <label className="tr-field__label" htmlFor="nome">Nome</label>
+  <div className="tr-field__assist">
+    {error ? <p className="tr-field__error">{error}</p> : <p className="tr-field__hint">{hint}</p>}
+  </div>
+</div>
+```
+
+**Angular** (reactive forms)
+
+```html
+<div class="tr-field" [class.tr-field--error]="nome.invalid && nome.touched">
+  <input class="tr-field__control" id="nome" placeholder=" " [formControl]="nome">
+  <label class="tr-field__label" for="nome">Nome</label>
+  <div class="tr-field__assist">
+    <p class="tr-field__error" *ngIf="nome.invalid && nome.touched">Campo obbligatorio</p>
+    <p class="tr-field__hint" *ngIf="nome.valid || !nome.touched">Nota di servizio</p>
+  </div>
+</div>
+```
+
+Nota per Angular: se incapsuli il campo in un componente, ricorda che
+l'incapsulamento di stile predefinito (`Emulated`) riscrive i selettori del
+componente ma **non** tocca `traccia.css` caricato globalmente — vanno quindi
+importati `tokens.css` e `traccia.css` a livello di applicazione
+(`angular.json` → `styles`), non dentro il singolo componente.
+
+### Stati e modificatori
+
+| Classe | Su | Effetto |
+|---|---|---|
+| `.tr-field--with-prefix` / `--with-suffix` | contenitore | Riserva lo spazio per l'icona e sposta l'etichetta di conseguenza |
+| `.tr-field--error` | contenitore | Filetto, etichetta, prefisso e messaggio in `state/danger` |
+| `.tr-field--float` | contenitore | Forza l'etichetta in alto (widget di framework) |
+| `.tr-field__control--code` | controllo | Cifre mono distanziate e centrate, per OTP |
+| `.tr-field__suffix--action` | suffisso | Rende il suffisso cliccabile (mostra password, cancella, apri calendario) |
+| `disabled` / `readonly` | controllo | Gestiti dagli attributi nativi, nessuna classe |
+
 
 ## Vincoli
 
