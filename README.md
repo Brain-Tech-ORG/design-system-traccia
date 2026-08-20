@@ -88,6 +88,7 @@ dei form e gli esiti di sistema — vedi [Pagine di login](#pagine-di-login-prod
 - **Tratti d'accento** ~64×3px stondati sopra i titoli di sezione (`.tr-accent-dash`),
   al posto di bordi a larghezza piena.
 - **Pillole** (radius 999px) e angoli smussati 16–26px solo dove serve un contenitore vero.
+  Fa eccezione l'**azione**, che e' a spigolo vivo: vedi [Azioni](#azioni).
 - **Cerchietti numerati** 24–52px (`.tr-circle`): tinta + cifra mono blu, solo bordo blu
   (`--outline`) o pieno blu (`--solid`).
 - **Dot bullet**: pallino pieno blu 6–13px + voce mono (`.tr-dot`, `.tr-dotlist`).
@@ -381,10 +382,13 @@ tecnologie assistive. In errore si usa `.tr-fieldset--error` sul contenitore.
 
 ## Azioni
 
-Pillola con etichetta mono maiuscola: e' la stessa forma della chip, e nel
-sistema la pillola e' l'unico contenitore ammesso per un'azione. Niente ombre,
-niente gradienti — la gerarchia la fanno il riempimento e il filetto, non la
-profondita'.
+Rettangolo a spigolo vivo con etichetta mono maiuscola. Niente ombre, niente
+gradienti: la gerarchia la fanno il riempimento e il filetto, non la profondita'.
+
+**L'azione e' l'unico componente del sistema senza raggio**, e la ragione e' il
+suo hover: il filetto che cresce lungo il bordo inferiore ha bisogno di un lato
+dritto per leggersi — su una pillola si perde nella curva. Forma e comportamento
+vanno insieme: se un giorno cade il filetto, torna il raggio.
 
 ### Gerarchia
 
@@ -401,13 +405,7 @@ profondita'.
 **O testo bianco su superficie piena, o inchiostro scuro su carta.** Mai un
 fondo a tinta pallida con testo dello stesso hue — azzurrino con blu scuro,
 arancio chiaro con arancio scuro: e' il contrasto piu' debole che si possa
-scegliere, e a schermo si legge male. Vale anche all'hover: la secondaria e la
-distruttiva contornata si riempiono di **pieno** e passano al testo bianco, non
-a una tinta.
-
-Il colore cambia solo quando la velatura ha quasi finito di passare, altrimenti
-la meta' non ancora coperta resterebbe bianco su bianco.
-
+scegliere, e a schermo si legge male. 
 Due scelte che vale la pena motivare:
 
 **`--neutral` non e' `--secondary`.** Annulla non e' un'azione secondaria del
@@ -420,20 +418,22 @@ si ferma piu'.
 
 ### Hover
 
-All'hover una **velatura piena entra da sinistra** e riempie la pillola: e' lo
-stesso gesto delle voci del select — l'accento che arriva da sinistra — e si
-muove solo un `transform`, quindi nessun reflow e il testo non si sposta. Un
-cambio secco di sfondo, a schermo, non si legge come un'interazione.
+All'hover **cresce un filetto da sinistra lungo il bordo inferiore**: e' il modo
+del sistema di sottolineare, ed e' l'unica cosa che si muove. Solo un
+`transform`, quindi nessun reflow e il testo resta fermo.
 
-La terziaria non ha scatola da riempire: al suo posto **cresce un filetto** da
-2px, che e' il modo del sistema di sottolineare.
+Sulle superfici piene il filetto e' bianco — l'unico colore che si stacca dal
+fondo senza introdurre un'altra tinta. Sulle contornate prende il colore del
+filetto del pulsante. La neutra fa eccezione e usa l'inchiostro: e' un'uscita,
+non un'azione da richiamare, e l'accento le darebbe un peso che non merita.
 
 L'icona **in coda** accompagna il gesto spostandosi di 3px; quella in testa resta
 ferma, altrimenti scivolerebbe addosso al testo. Alla pressione il pulsante cede
 di un pixel: e' il solo riscontro tattile che il sistema si concede, non avendo
 ombre da schiacciare.
 
-Sotto `prefers-reduced-motion: reduce` lo stato finale resta, la corsa no.
+Sotto `prefers-reduced-motion: reduce` lo stato finale resta, la corsa no. E su
+touch l'hover non esiste: il pulsante deve reggersi gia' da fermo.
 
 ### Misure e stati
 

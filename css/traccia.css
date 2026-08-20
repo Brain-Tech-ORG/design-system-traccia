@@ -243,7 +243,7 @@
   gap: var(--tr-space-2);
   padding: 6px 16px;
   border: 1px solid var(--tr-brand-500);
-  border-radius: var(--tr-radius-pill);
+  border-radius: 0;
   font-family: var(--tr-font-mono);
   font-weight: var(--tr-weight-semibold);
   font-size: var(--tr-text-caption);
@@ -1253,10 +1253,14 @@ select.tr-field__control + .tr-field__label,
 .tr-fieldset--error .tr-fieldset__legend { color: var(--tr-state-danger); }
 
 /* ---- Azione ----
-   Pillola con etichetta mono maiuscola, come la chip: e' la stessa forma, e
-   nel sistema la pillola e' l'unico contenitore ammesso per un'azione.
-   Niente ombre, niente gradienti: la gerarchia la fanno il riempimento e il
-   filetto, non la profondita'.
+   Rettangolo a spigolo vivo con etichetta mono maiuscola. Niente ombre, niente
+   gradienti: la gerarchia la fanno il riempimento e il filetto, non la
+   profondita'.
+
+   L'azione e' l'unico componente del sistema senza raggio, e la ragione e' il
+   suo hover: il filetto che cresce lungo il bordo inferiore ha bisogno di un
+   lato dritto per leggersi: su una pillola si perde nella curva. Forma e
+   comportamento vanno insieme — se un giorno cade il filetto, torna il raggio.
 
    Gerarchia, dalla piu' forte alla piu' debole:
      --primary    una sola per schermata: l'azione che porta avanti il compito
@@ -1271,12 +1275,9 @@ select.tr-field__control + .tr-field__label,
    contrasto piu' debole che si possa scegliere, e a schermo si legge male.
    ========================================================================== */
 .tr-btn {
-  /* Colore della velatura che entra da sinistra all'hover: ogni variante lo
-     ridefinisce. */
-  --tr-btn-wipe: transparent;
+  /* Colore del filetto che cresce all'hover: ogni variante lo ridefinisce. */
+  --tr-btn-rule: var(--tr-brand-500);
   position: relative;
-  isolation: isolate;
-  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1284,7 +1285,7 @@ select.tr-field__control + .tr-field__label,
   height: var(--tr-btn-h);
   padding: 0 22px;
   border: var(--tr-rule-thin) solid transparent;
-  border-radius: var(--tr-radius-pill);
+  border-radius: 0;
   font-family: var(--tr-font-mono);
   font-weight: var(--tr-weight-semibold);
   font-size: var(--tr-text-caption);
@@ -1299,22 +1300,20 @@ select.tr-field__control + .tr-field__label,
     color var(--tr-motion-fast) var(--tr-motion-ease);
 }
 
-/* All'hover una velatura piena entra da sinistra e riempie la pillola.
-   E' lo stesso gesto delle voci del select — l'accento che arriva da sinistra —
-   e si muove solo un transform: nessun reflow, e il testo non si sposta.
-   Sostituisce il cambio secco di sfondo, che a schermo non si legge come
-   un'interazione. */
-.tr-btn::before {
+/* All'hover cresce un filetto da sinistra lungo il bordo inferiore: e' il modo
+   del sistema di sottolineare, ed e' l'unica cosa che si muove. Solo un
+   transform, quindi nessun reflow e il testo resta fermo. */
+.tr-btn::after {
   content: "";
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--tr-btn-wipe);
+  inset: auto 0 0 0;
+  height: var(--tr-rule-accent);
+  background: var(--tr-btn-rule);
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 220ms var(--tr-motion-ease);
+  transition: transform 180ms var(--tr-motion-ease);
 }
-.tr-btn:hover:not(:disabled):not([aria-busy="true"])::before { transform: scaleX(1); }
+.tr-btn:hover:not(:disabled):not([aria-busy="true"])::after { transform: scaleX(1); }
 
 /* L'icona in coda accompagna il gesto; quella in testa resta ferma, altrimenti
    scivolerebbe addosso al testo. */
@@ -1346,23 +1345,17 @@ select.tr-field__control + .tr-field__label,
   border-color: var(--tr-brand-600);
   color: #ffffff;
 }
-.tr-btn--primary { --tr-btn-wipe: var(--tr-brand-700); }
-.tr-btn--primary:hover:not(:disabled) { border-color: var(--tr-brand-700); }
+/* Sulle superfici piene il filetto e' bianco: e' l'unico colore che si stacca
+   dal fondo senza introdurre un'altra tinta. */
+.tr-btn--primary { --tr-btn-rule: rgba(255, 255, 255, 0.92); }
 
 .tr-btn--secondary {
   background: transparent;
   border-color: var(--tr-brand-500);
   color: var(--tr-brand-600);
 }
-/* La velatura e' piena, non una tinta: il testo passa a bianco e il contrasto
-   resta netto anche a hover completato. Il colore cambia solo quando la
-   velatura ha quasi finito, altrimenti la meta' non ancora coperta resterebbe
-   bianco su bianco. */
-.tr-btn--secondary { --tr-btn-wipe: var(--tr-brand-600); }
-.tr-btn--secondary:hover:not(:disabled) {
-  color: #ffffff;
-  transition: color 80ms var(--tr-motion-ease) 150ms;
-}
+.tr-btn--secondary { --tr-btn-rule: var(--tr-brand-500); }
+.tr-btn--secondary:hover:not(:disabled) { color: var(--tr-brand-700); }
 
 /* Neutra: annulla, chiudi, torna indietro. Non e' un'azione secondaria del
    compito, e' il modo di uscirne — quindi niente blu, che qui darebbe un
@@ -1372,7 +1365,9 @@ select.tr-field__control + .tr-field__label,
   border-color: var(--tr-border-soft-2);
   color: var(--tr-ink-600);
 }
-.tr-btn--neutral { --tr-btn-wipe: var(--tr-surface-tint); }
+/* La neutra non prende l'accento nemmeno all'hover: e' un'uscita, non
+   un'azione da richiamare. */
+.tr-btn--neutral { --tr-btn-rule: var(--tr-ink-900); }
 .tr-btn--neutral:hover:not(:disabled) {
   border-color: var(--tr-ink-400);
   color: var(--tr-ink-900);
@@ -1385,14 +1380,6 @@ select.tr-field__control + .tr-field__label,
   padding-left: 0;
   padding-right: 0;
 }
-/* La terziaria non ha scatola da riempire: al suo posto cresce un filetto,
-   che e' il modo del sistema di sottolineare. */
-.tr-btn--quiet::before {
-  inset: auto 0 0 0;
-  height: var(--tr-rule-medium);
-  border-radius: var(--tr-radius-line);
-  background: var(--tr-brand-500);
-}
 .tr-btn--quiet:hover:not(:disabled) { color: var(--tr-brand-600); }
 
 /* ---- Azioni distruttive ----
@@ -1403,19 +1390,14 @@ select.tr-field__control + .tr-field__label,
   border-color: var(--tr-state-danger);
   color: #ffffff;
 }
-.tr-btn--danger { --tr-btn-wipe: var(--tr-state-danger-dark); }
-.tr-btn--danger:hover:not(:disabled) { border-color: var(--tr-state-danger-dark); }
+.tr-btn--danger { --tr-btn-rule: rgba(255, 255, 255, 0.92); }
 /* Distruttiva di grado minore: filetto e testo rossi su carta, non un fondo
    rosso pallido con testo rosso — che e' lo stesso errore di contrasto. */
 .tr-btn--danger-outline {
   background: transparent;
   border-color: var(--tr-state-danger);
   color: var(--tr-state-danger);
-  --tr-btn-wipe: var(--tr-state-danger);
-}
-.tr-btn--danger-outline:hover:not(:disabled) {
-  color: #ffffff;
-  transition: color 80ms var(--tr-motion-ease) 150ms;
+  --tr-btn-rule: var(--tr-state-danger);
 }
 
 /* ---- Misure ---- */
@@ -1449,7 +1431,7 @@ select.tr-field__control + .tr-field__label,
 @media (prefers-reduced-motion: reduce) {
   /* Lo stato finale resta, la corsa no: l'hover si vede lo stesso. */
   .tr-btn,
-  .tr-btn::before,
+  .tr-btn::after,
   .tr-btn > svg:last-child:not(:first-child) { transition: none; }
   .tr-btn:active:not(:disabled) { transform: none; }
 }
