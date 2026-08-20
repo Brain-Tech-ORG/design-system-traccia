@@ -15,6 +15,7 @@
 .tr-field__assist,
 .tr-field__label,
 .tr-btn,
+.tr-btn-group,
 .tr-chip,
 .tr-circle,
 .tr-notice,
@@ -1233,13 +1234,27 @@ select.tr-field__control + .tr-field__label,
 }
 .tr-fieldset--error .tr-fieldset__legend { color: var(--tr-state-danger); }
 
-/* ---- Azione ---- */
+/* ---- Azione ----
+   Pillola con etichetta mono maiuscola, come la chip: e' la stessa forma, e
+   nel sistema la pillola e' l'unico contenitore ammesso per un'azione.
+   Niente ombre, niente gradienti: la gerarchia la fanno il riempimento e il
+   filetto, non la profondita'.
+
+   Gerarchia, dalla piu' forte alla piu' debole:
+     --primary    una sola per schermata: l'azione che porta avanti il compito
+     --secondary  azioni pari grado, filetto blu su fondo trasparente
+     --soft       azioni frequenti ma non principali: tinta pallida, niente filetto
+     --neutral    annulla, chiudi: il modo di uscire dal compito
+     --quiet      azioni di servizio, senza scatola
+     --danger     azioni distruttive, e solo quelle
+   ========================================================================== */
 .tr-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--tr-space-2);
-  padding: 12px 24px;
+  height: var(--tr-btn-h);
+  padding: 0 22px;
   border: var(--tr-rule-thin) solid transparent;
   border-radius: var(--tr-radius-pill);
   font-family: var(--tr-font-mono);
@@ -1248,24 +1263,64 @@ select.tr-field__control + .tr-field__label,
   letter-spacing: var(--tr-tracking-mono);
   text-transform: uppercase;
   text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  transition:
+    background-color var(--tr-motion-fast) var(--tr-motion-ease),
+    border-color var(--tr-motion-fast) var(--tr-motion-ease),
+    color var(--tr-motion-fast) var(--tr-motion-ease);
 }
+.tr-btn:focus-visible {
+  outline: 2px solid var(--tr-brand-500);
+  outline-offset: 2px;
+}
+.tr-btn:disabled,
+.tr-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* Mentre l'azione e' in corso il pulsante resta leggibile ma non ricliccabile:
+   il testo cambia, non la scatola, cosi' la riga non salta. */
+.tr-btn[aria-busy="true"] { cursor: progress; pointer-events: none; }
+
+/* ---- Gerarchia ---- */
 .tr-btn--primary {
   background: var(--tr-brand-600);
   border-color: var(--tr-brand-600);
   color: #ffffff;
 }
-.tr-btn--primary:hover {
+.tr-btn--primary:hover:not(:disabled) {
   background: var(--tr-brand-700);
   border-color: var(--tr-brand-700);
 }
+
 .tr-btn--secondary {
   background: transparent;
   border-color: var(--tr-brand-500);
   color: var(--tr-brand-600);
 }
-.tr-btn--secondary:hover { background: var(--tr-brand-100); }
+.tr-btn--secondary:hover:not(:disabled) { background: var(--tr-brand-100); }
+
+.tr-btn--soft {
+  background: var(--tr-brand-100);
+  border-color: transparent;
+  color: var(--tr-brand-700);
+}
+.tr-btn--soft:hover:not(:disabled) { background: var(--tr-brand-200); }
+
+/* Neutra: annulla, chiudi, torna indietro. Non e' un'azione secondaria del
+   compito, e' il modo di uscirne — quindi niente blu, che qui darebbe un
+   richiamo che non merita. Solo filetto e inchiostro. */
+.tr-btn--neutral {
+  background: transparent;
+  border-color: var(--tr-border-soft-2);
+  color: var(--tr-ink-600);
+}
+.tr-btn--neutral:hover:not(:disabled) {
+  border-color: var(--tr-ink-400);
+  color: var(--tr-ink-900);
+}
+
 .tr-btn--quiet {
   background: transparent;
   border-color: transparent;
@@ -1273,9 +1328,58 @@ select.tr-field__control + .tr-field__label,
   padding-left: 0;
   padding-right: 0;
 }
-.tr-btn--quiet:hover { color: var(--tr-brand-600); }
+.tr-btn--quiet:hover:not(:disabled) { color: var(--tr-brand-600); }
+
+/* ---- Azioni distruttive ----
+   Il rosso di stato e' l'unica altra tinta ammessa, e solo qui: un pulsante
+   rosso che non cancella nulla svaluta quelli che lo fanno davvero. */
+.tr-btn--danger {
+  background: var(--tr-state-danger);
+  border-color: var(--tr-state-danger);
+  color: #ffffff;
+}
+.tr-btn--danger:hover:not(:disabled) {
+  background: var(--tr-state-danger-dark);
+  border-color: var(--tr-state-danger-dark);
+}
+.tr-btn--danger-soft {
+  background: var(--tr-state-danger-tint);
+  border-color: transparent;
+  color: var(--tr-state-danger);
+}
+.tr-btn--danger-soft:hover:not(:disabled) { background: var(--tr-state-danger-tint-2); }
+
+/* ---- Misure ---- */
+.tr-btn--sm {
+  height: var(--tr-btn-h-sm);
+  padding: 0 16px;
+  font-size: 11px;
+}
+.tr-btn--lg { height: var(--tr-btn-h-lg); padding: 0 28px; font-size: 13px; }
 .tr-btn--block { width: 100%; }
-.tr-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Sola icona: quadrato, e serve sempre un aria-label — senza, il pulsante e'
+   muto per chi non vede l'icona. */
+.tr-btn--icon {
+  width: var(--tr-btn-h);
+  height: var(--tr-btn-h);
+  padding: 0;
+}
+.tr-btn--icon.tr-btn--sm { width: var(--tr-btn-h-sm); height: var(--tr-btn-h-sm); }
+.tr-btn--icon.tr-btn--quiet { width: var(--tr-btn-h-sm); height: var(--tr-btn-h-sm); padding: 0; }
+
+/* Gruppo di azioni: spaziatura coerente, senza margini sparsi sui singoli. */
+.tr-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--tr-space-3);
+}
+.tr-btn-group--end { justify-content: flex-end; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-btn { transition: none; }
+}
 
 /* ---- Avviso in linea ----
    Filetto verticale colorato al posto del pannello pieno: il sistema non

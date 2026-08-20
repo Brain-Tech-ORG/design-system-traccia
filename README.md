@@ -113,6 +113,7 @@ dei form e gli esiti di sistema — vedi [Pagine di login](#pagine-di-login-prod
 | 11 | H1/H2 con parola chiave blu | `.tr-h1`, `.tr-h2` + `<em>` |
 | 12 | Campo con etichetta flottante | `.tr-field` + `__control` / `__label` |
 | 13 | Select con listbox | `.tr-select` + `js/tr-select.js` |
+| 14 | Azione | `.tr-btn` + `--primary` / `--secondary` / `--soft` / `--neutral` / `--quiet` / `--danger` |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -362,6 +363,48 @@ non per stile, ma perche' e' il markup che lega le opzioni fra loro per le
 tecnologie assistive. In errore si usa `.tr-fieldset--error` sul contenitore.
 | `disabled` / `readonly` | controllo | Gestiti dagli attributi nativi, nessuna classe |
 
+
+## Azioni
+
+Pillola con etichetta mono maiuscola: e' la stessa forma della chip, e nel
+sistema la pillola e' l'unico contenitore ammesso per un'azione. Niente ombre,
+niente gradienti — la gerarchia la fanno il riempimento e il filetto, non la
+profondita'.
+
+### Gerarchia
+
+| Variante | Quando |
+|---|---|
+| `--primary` | **Una sola per schermata**: l'azione che porta avanti il compito |
+| `--secondary` | Azioni di pari grado, filetto blu su fondo trasparente |
+| `--soft` | Azioni frequenti ma non principali: tinta pallida, niente filetto |
+| `--neutral` | Annulla, chiudi, torna indietro |
+| `--quiet` | Azioni di servizio, senza scatola |
+| `--danger` / `--danger-soft` | Solo azioni distruttive |
+
+Due scelte che vale la pena motivare:
+
+**`--neutral` non e' `--secondary`.** Annulla non e' un'azione secondaria del
+compito, e' il modo di uscirne: darle il blu significa richiamare l'occhio su
+un'uscita. Filetto e inchiostro, niente accento.
+
+**Il rosso e' riservato a cio' che distrugge.** Un pulsante rosso che non
+cancella nulla svaluta quelli che lo fanno davvero, e quando conta l'utente non
+si ferma piu'.
+
+### Misure e stati
+
+`--sm` (32px) per barre, tabelle e azioni di riga; misura standard 42px; `--lg`
+(48px) per l'azione principale a piena larghezza. `--block` occupa la riga,
+`--icon` rende il pulsante quadrato — e li' **`aria-label` e' obbligatorio**,
+altrimenti il pulsante e' muto per chi non vede l'icona.
+
+Durante un'azione in corso si usa `aria-busy="true"`: il pulsante resta
+leggibile ma non ricliccabile. Cambia il testo, non la scatola, cosi' la riga
+non salta mentre si attende.
+
+`.tr-btn-group` tiene insieme piu' azioni con una spaziatura coerente, invece di
+margini sparsi sui singoli pulsanti.
 
 ## Select
 

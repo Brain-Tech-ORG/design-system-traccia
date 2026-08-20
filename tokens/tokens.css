@@ -14,6 +14,7 @@
      contrasto (testo piccolo, superfici piene con testo bianco). */
   --tr-brand-600: #2f7ab8; /* testo e fondi pieni con testo bianco (>= 4.5:1) */
   --tr-brand-700: #266296; /* hover delle superfici piene */
+  --tr-brand-200: #b0d2ee; /* hover delle tinte pallide */
 
   /* ---- Colore · Stati di validazione ----
      Unica eccezione ammessa alla regola del singolo hue: serve solo
@@ -21,6 +22,9 @@
      Mai su brochure, slide o materiale stampato. Tinte desaturate perche'
      convivano con il blu logo senza competere con esso. */
   --tr-state-danger: #a53a3a;  /* errore, campo non valido */
+  --tr-state-danger-dark: #872f2f;   /* hover delle superfici piene rosse */
+  --tr-state-danger-tint: #fadfdf;   /* fondo tenue delle azioni distruttive */
+  --tr-state-danger-tint-2: #f3c2c2; /* hover del fondo tenue */
   --tr-state-warning: #99631d; /* avviso, azione da confermare */
   --tr-state-success: #2f6b45; /* esito positivo */
 
@@ -95,6 +99,11 @@
   /* ---- Campi di form ---- */
   --tr-field-h: 56px;             /* altezza del campo con etichetta flottante */
   --tr-field-h-compact: 40px;     /* variante compatta: filtri in barra, senza etichetta interna */
+
+  /* ---- Azioni ---- */
+  --tr-btn-h: 42px;               /* altezza standard */
+  --tr-btn-h-sm: 32px;            /* barre, tabelle, azioni di riga */
+  --tr-btn-h-lg: 48px;            /* azione principale a piena larghezza */
   --tr-field-radius: 10px;        /* angolo del campo */
   --tr-field-pad-x: 16px;         /* respiro orizzontale interno */
   --tr-field-label-rest: 20px;    /* quota dell'etichetta a riposo, dal filetto superiore */
