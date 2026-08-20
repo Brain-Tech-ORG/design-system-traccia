@@ -16,6 +16,9 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── tokens.css                Design token come CSS custom properties
 │   └── tokens.json               Design token in formato W3C draft
 ├── css/traccia.css               Libreria componenti (prefisso .tr-)
+├── email/
+│   ├── firma-email.html          Firma email (tabelle + stili inline)
+│   └── firma-email.txt           Firma email, versione testo semplice
 └── index.html                    Documentazione visiva / showcase
 ```
 
@@ -356,6 +359,83 @@ Va reso con `<fieldset class="tr-fieldset">` e `<legend class="tr-fieldset__lege
 non per stile, ma perche' e' il markup che lega le opzioni fra loro per le
 tecnologie assistive. In errore si usa `.tr-fieldset--error` sul contenitore.
 | `disabled` / `readonly` | controllo | Gestiti dagli attributi nativi, nessuna classe |
+
+
+## Firma email
+
+File pronti da incollare: [`email/firma-email.html`](email/firma-email.html) e
+[`email/firma-email.txt`](email/firma-email.txt). Si sostituiscono solo tre
+segnaposto — **NOME COGNOME**, **RUOLO**, ed eventualmente il telefono. Il blocco
+societario e la riga certificazioni sono dati d'impresa e non si personalizzano.
+
+### Perche' e' un componente a se'
+
+La firma e' l'unico pezzo del sistema che non puo' usare `traccia.css`. I client
+di posta non sono browser: Gmail rimuove i blocchi `<style>` e le classi,
+Outlook per Windows compone con il motore di Word, molti client bloccano le
+immagini remote finche' il destinatario non le sblocca. Da qui quattro vincoli
+che ribaltano le abitudini del resto del sistema:
+
+| Nel resto del sistema | Nella firma |
+|---|---|
+| Classi `.tr-` e `traccia.css` | Tabelle e **stili inline**, nessuna classe |
+| `var(--tr-...)` | Colori in **esadecimale**: il motore Word non conosce le custom properties |
+| Archivo e IBM Plex Mono da Google Fonts | Stack `Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif`, che degrada su Arial |
+| Logo e badge certificazioni come immagini | **Nessuna immagine** |
+| Layout fluido con media query | Larghezze in pixel; il filetto usa `width:100%` con `max-width:470px` |
+
+**Niente immagini** non e' una scelta estetica: i client le bloccano di default,
+quindi la firma arriverebbe monca; e una risorsa remota caricata all'apertura
+segnala al mittente che il messaggio e' stato letto — una conferma di lettura
+implicita che il destinatario non ha concesso. Il marchio e le certificazioni si
+reggono quindi sulla sola tipografia.
+
+### Come il linguaggio si traduce in tipografia
+
+Senza IBM Plex Mono, il ruolo delle etichette tecniche lo fa il **maiuscolo con
+tracking ampio** nel font di sistema. Il resto del linguaggio resta riconoscibile:
+
+| Elemento | Trattamento | Token |
+|---|---|---|
+| Nome | 15px bold | `ink/900` `#1b1f2a` |
+| Ruolo e societa' | 12px | `ink/400` `#565c6b` |
+| Punti separatori `·` | fra le voci di una riga | `brand/500` `#4194d7` |
+| Recapiti | 12px, interlinea 1,65 | `ink/600` `#3a4050` |
+| Link | senza sottolineatura | `brand/700` `#266296` |
+| Filetto divisorio | 1px, max 470px | `border/soft` `#dde2ee` |
+| Ragione sociale | 12,5px bold, maiuscolo, tracking 1,4px | `ink/900` |
+| Etichette (Sede legale, Headquarter) | 9,5px bold, maiuscolo, tracking 1,2px | `brand/700` |
+| Indirizzi | 11,5px, interlinea 1,55 | `ink/600` |
+| Tratto d'accento | 64 × 3px, come `.tr-accent-dash` | `brand/500` |
+| Certificazioni: sigla | 11px bold | `ink/900` |
+| Certificazioni: descrizione | 11px | `ink/400` |
+
+### Contrasto
+
+Il blu logo `#4194d7` compare solo sui **punti separatori** e sul **tratto
+d'accento**, cioe' su elementi non testuali: a 9,5px non reggerebbe il 4,5:1.
+Tutto il blu che porta testo — link ed etichette — usa `brand/700` `#266296`,
+che su bianco fa 6,5:1.
+
+> La firma in uso oggi impiega due blu fuori palette, `#0063a1` per i link e
+> `#1c75b6` per le etichette. Contrastano a sufficienza, ma introducono due hue
+> che il sistema non prevede: i file qui li riportano entrambi su `brand/700`.
+> E' l'unica differenza rispetto alla firma attualmente configurata.
+
+### Versione testo semplice
+
+La parte HTML va sempre accompagnata da quella testuale, che alcuni client
+mostrano al posto sua. Deve reggersi da sola: nessun carattere decorativo oltre
+al punto medio e al trattino lungo, nessun rientro con tabulazione, righe sotto
+i 72 caratteri.
+
+### Prima di distribuirla
+
+Le firme si rompono in modi che il browser non mostra. Prima di adottarne una
+versione nuova va vista almeno su **Gmail web**, **Gmail su Android o iOS**,
+**Outlook per Windows** (il motore Word e' quello che rompe di piu') e su un
+client in **tema scuro**, dove alcuni motori invertono i colori del testo ma non
+gli sfondi.
 
 
 ## Vincoli

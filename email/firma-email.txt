@@ -1,0 +1,32 @@
+LA TRACCIA — Firma email, versione testo semplice
+Da usare nei client configurati in solo testo e come ripiego della parte HTML.
+Sostituire solo NOME COGNOME, RUOLO e, se diverso, il telefono.
+
+Regole: nessun carattere decorativo oltre al punto medio · e al trattino lungo —,
+nessun rientro con tabulazione (i client li rendono in modo imprevedibile),
+righe sotto i 72 caratteri.
+
+--- da qui in poi ---
+
+NOME COGNOME
+RUOLO · Cooperativa E.D.P. La Traccia · Brain Tech S.r.l.
+T +39 0835 336836 · F +39 0835 336825
+info@latraccia.it
+
+Cooperativa E.D.P. La Traccia
+Sede legale  Recinto II Fiorentini, 10 — 75100 Matera (MT), Italy
+Altre sedi   Via G. D'Annunzio 6 — 70022 Altamura (BA), Italy
+             Via La Spezia 90 — 43125 Parma (PR), Italy
+             Via Tora 23 — 85100 Potenza (PZ), Italy
+             Via Vittorio Veneto 146 — 00187 Roma (RM), Italy
+latraccia.it · P.IVA 00317370773
+
+Brain Tech S.r.l.
+Headquarter  Recinto II Fiorentini, 10 — 75100 Matera (MT), Italy
+braintech.software
+
+Sistema di gestione certificato — Cooperativa E.D.P. La Traccia
+ISO 9001:2015       Qualità
+ISO 13485:2016      Dispositivi medici
+ISO/IEC 27001:2022  Sicurezza delle informazioni
+UNI/PdR 125         Parità di genere
