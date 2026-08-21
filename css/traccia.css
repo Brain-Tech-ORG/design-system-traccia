@@ -505,7 +505,10 @@
 }
 .tr-shell__body { flex: 1 1 auto; }
 
-/* Riga certificazioni: SEMPRE presente in calce.
+/* Riga certificazioni: solo sulle superfici pubbliche — sito, brochure,
+   pagina di accesso — dove chi guarda non sa ancora con chi ha a che fare.
+   Dentro l'applicazione si omette: l'ha gia' letta entrando, e ripeterla sotto
+   ogni schermata la trasforma in rumore.
    Etichetta mono blu + elenco certificazioni mono grigio + filetto
    che riempie la riga + badge (IMQ / SI Cert). */
 .tr-footer__certs {

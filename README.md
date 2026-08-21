@@ -152,7 +152,7 @@ scegliendo colori nuovi.
 | 6 | Riga specifiche / elenco tecnico | `.tr-specs`, `.tr-dotlist` |
 | 7 | Tabella dati (nota unità in basso a destra) | `.tr-datatable` |
 | 8 | Disegno tecnico quotato (convenzioni SVG) | `.tr-drawing` (`.silhouette`, `.quota`, `.quota-label`) |
-| 9 | Footer (con riga certificazioni sempre presente) | `.tr-footer` + `.tr-footer__certs` |
+| 9 | Footer (riga certificazioni solo sulle superfici pubbliche) | `.tr-footer` + `.tr-footer__certs` |
 | 10 | Pagina di login (co-branding con il cliente) | `.tr-login` + `.tr-clientmark` |
 | 11 | H1/H2 con parola chiave blu | `.tr-h1`, `.tr-h2` + `<em>` |
 | 12 | Campo con etichetta flottante | `.tr-field` + `__control` / `__label` |
@@ -179,11 +179,28 @@ quando a scorrere e' la pagina, sia quando a scorrere e' un pannello interno.
 ```
 
 
-Il footer include **sempre** la riga certificazioni (`.tr-footer__certs`): etichetta
+La riga certificazioni (`.tr-footer__certs`) e' composta da etichetta
 `CERTIFICAZIONI` in mono blu (tracking 0.14em), elenco in mono grigio
 `ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125`, filetto stondato
 `border/soft` che riempie la riga e badge `assets/certificazioni.png`
 (IMQ Certified + SI Cert, altezza ~30px).
+
+**Dove va e dove non va.** Le certificazioni sono una credenziale: servono a chi
+non sa ancora con chi ha a che fare. Stanno quindi sulle **superfici pubbliche**
+— sito, brochure, pagina di accesso — e si fermano sulla soglia.
+
+**Dentro l'applicazione la riga si omette.** Chi e' entrato l'ha gia' letta, e
+ripeterla in calce a ogni schermata non aggiunge fiducia: la consuma. Una
+credenziale ripetuta trenta volte al giorno smette di essere letta come una
+credenziale e diventa rumore in fondo allo schermo, per giunta nel punto dove
+servirebbe silenzio. Dentro resta il footer nudo: firma del fornitore a
+sinistra, contatto e riferimento del prodotto a destra.
+
+| Superficie | Riga certificazioni |
+|---|---|
+| Sito, brochure, slide | Sì |
+| Pagina di accesso | Sì — e' ancora la soglia |
+| Qualunque schermata dopo l'accesso | **No** |
 
 ### Convenzioni disegno tecnico
 
@@ -203,7 +220,7 @@ card, niente ombre, niente gradienti — piu' le seguenti.
 |---|---|---|
 | Testata | **Cliente** (`.tr-clientmark`) | La pagina e' il suo prodotto: il suo marchio sta in alto a sinistra, affiancato dal nome del prodotto in mono. |
 | Sfondo | La Traccia, sagoma outline (`.tr-watermark`) | Opzionale, opacita' 0,16, a sbordo da un angolo. E' la presenza di marchio "ambientale". |
-| Footer | La Traccia (`.tr-footer` + `.tr-brandmark`) | Firma del fornitore, sempre con la riga certificazioni. |
+| Footer | La Traccia (`.tr-footer` + `.tr-brandmark`) | Firma del fornitore. La riga certificazioni solo sulle superfici pubbliche, non dentro l'applicazione. |
 
 **Mai i due marchi affiancati nello stesso lockup**: un logo cliente accanto al
 chevron La Traccia produce un blocco confuso e sposta l'identita' della pagina.
