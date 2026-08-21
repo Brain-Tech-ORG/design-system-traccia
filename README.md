@@ -114,7 +114,8 @@ dei form e gli esiti di sistema — vedi [Pagine di login](#pagine-di-login-prod
 | 11 | H1/H2 con parola chiave blu | `.tr-h1`, `.tr-h2` + `<em>` |
 | 12 | Campo con etichetta flottante | `.tr-field` + `__control` / `__label` |
 | 13 | Select con listbox | `.tr-select` + `js/tr-select.js` |
-| 14 | Azione | `.tr-btn` + `--primary` / `--secondary` / `--soft` / `--neutral` / `--quiet` / `--danger` |
+| 14 | Card | `.tr-card` + `__head` / `__title` / `__foot` |
+| 15 | Azione | `.tr-btn` + `--primary` / `--secondary` / `--neutral` / `--quiet` / `--danger` |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -379,6 +380,49 @@ non per stile, ma perche' e' il markup che lega le opzioni fra loro per le
 tecnologie assistive. In errore si usa `.tr-fieldset--error` sul contenitore.
 | `disabled` / `readonly` | controllo | Gestiti dagli attributi nativi, nessuna classe |
 
+
+## Card
+
+Prima di mettere una card, chiedersi se bastano un filetto e un po' di spazio: il
+sistema preferisce i layout aperti, e la maggior parte di cio' che viene chiamato
+"card" e' in realta' una sezione di pagina. La card serve dove un gruppo di
+contenuti e' davvero **un'unita'** — una scheda, un pannello, un riepilogo.
+
+Quando serve, e' fatta di una cosa sola: **un filetto da 1px con angoli smussati**.
+
+| Cosa non ha | Perche' |
+|---|---|
+| Fondo bianco | Sul paper non separa nulla, e aggiunge una seconda tinta dove ne basta zero |
+| Ombra | Il sistema non ha profondita' da simulare |
+| Secondo bordo | Il filetto piu' l'anello d'ombra facevano un doppio contorno slavato |
+
+### Parti
+
+`__head` (con `--bare` per toglierne il filetto), `__title` — Archivo maiuscolo,
+con la parola chiave in blu tramite `<em>` come i titoli di sezione — `__sub`,
+`__aside` per il metadato in coda, `__foot` per le azioni, `__empty` per lo stato
+vuoto: mono, centrato, senza illustrazioni.
+
+`.tr-card-grid` dispone piu' card con una spaziatura coerente, senza margini sui
+singoli elementi.
+
+### Varianti
+
+`--plain` toglie il filetto e lascia solo il ritmo verticale: e' la scelta giusta
+per i blocchi impilati, dove a dividere basta lo spazio.
+
+`--action` rende la card cliccabile. All'hover il filetto vira all'accento e il
+titolo si scurisce: **nessun sollevamento**, perche' un'ombra che cresce
+simulerebbe una profondita' che il sistema non ha.
+
+### Gruppi di opzioni: non usare `<fieldset>`/`<legend>`
+
+Il gruppo di radio o checkbox va reso con `<div role="group">` e un'etichetta
+collegata da `aria-labelledby`. Il legame per le tecnologie assistive e' lo
+stesso di `<fieldset>`/`<legend>`, ma `<legend>` ha regole di rendering tutte sue
+dentro un `<fieldset>` e non si comporta come un normale blocco: qualunque
+tentativo di dargli un margine affidabile ne rompe il flusso, e dentro una
+griglia le opzioni finiscono per scavalcare la colonna accanto.
 
 ## Azioni
 
