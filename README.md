@@ -88,7 +88,7 @@ dei form e gli esiti di sistema — vedi [Pagine di login](#pagine-di-login-prod
 - **Tratti d'accento** ~64×3px stondati sopra i titoli di sezione (`.tr-accent-dash`),
   al posto di bordi a larghezza piena.
 - **Pillole** (radius 999px) e angoli smussati 16–26px solo dove serve un contenitore vero.
-  Fa eccezione l'**azione**, che e' a spigolo vivo: vedi [Azioni](#azioni).
+  L'**azione** non ha ne' raggio ne' contenitore: vedi [Azioni](#azioni).
 - **Cerchietti numerati** 24–52px (`.tr-circle`): tinta + cifra mono blu, solo bordo blu
   (`--outline`) o pieno blu (`--solid`).
 - **Dot bullet**: pallino pieno blu 6–13px + voce mono (`.tr-dot`, `.tr-dotlist`).
@@ -382,22 +382,28 @@ tecnologie assistive. In errore si usa `.tr-fieldset--error` sul contenitore.
 
 ## Azioni
 
-Rettangolo a spigolo vivo con etichetta mono maiuscola. Niente ombre, niente
-gradienti: la gerarchia la fanno il riempimento e il filetto, non la profondita'.
+**Nessuno sfondo, nessuna cornice**: solo l'etichetta mono maiuscola e un
+filetto. E' la stessa regola del resto del sistema — la struttura la danno i
+filetti, la spaziatura e gli allineamenti, non le scatole — applicata finalmente
+anche alle azioni, che erano rimaste l'ultimo elemento con un contenitore pieno.
 
-**L'azione e' l'unico componente del sistema senza raggio**, e la ragione e' il
-suo hover: il filetto che cresce lungo il bordo inferiore ha bisogno di un lato
-dritto per leggersi — su una pillola si perde nella curva. Forma e comportamento
-vanno insieme: se un giorno cade il filetto, torna il raggio.
+La gerarchia si legge da due cose sole: **il colore dell'inchiostro** e **se il
+filetto sotto l'etichetta e' acceso da fermo oppure no**.
+
+Va detto: senza fondo e senza bordo l'azione somiglia a un collegamento. E' un
+compromesso voluto in favore della quiete della pagina, e regge finche' le
+etichette restano in mono maiuscolo, che nel sistema significa "comando". Dove
+un'azione deve farsi trovare a colpo d'occhio in mezzo a molto testo, il posto
+giusto e' in cima al blocco o in fondo a un gruppo, non annegata nel mezzo.
 
 ### Gerarchia
 
 | Variante | Quando |
 |---|---|
-| `--primary` | **Una sola per schermata**: l'azione che porta avanti il compito |
-| `--secondary` | Azioni di pari grado, filetto blu su fondo trasparente |
-| `--neutral` | Annulla, chiudi, torna indietro |
-| `--quiet` | Azioni di servizio, senza scatola |
+| `--primary` | Filetto acceso e inchiostro blu. **Una sola per schermata** |
+| `--secondary` | Filetto tenue acceso, inchiostro scuro |
+| `--neutral` | Nessun filetto: annulla, chiudi, torna indietro |
+| `--quiet` | Nessun filetto: azioni di servizio |
 | `--danger` / `--danger-outline` | Solo azioni distruttive |
 
 ### Contrasto
@@ -418,14 +424,13 @@ si ferma piu'.
 
 ### Hover
 
-All'hover **cresce un filetto da sinistra lungo il bordo inferiore**: e' il modo
-del sistema di sottolineare, ed e' l'unica cosa che si muove. Solo un
-`transform`, quindi nessun reflow e il testo resta fermo.
+All'hover **cresce un filetto da sinistra sotto l'etichetta**, sopra quello a
+riposo dove c'e'. E' l'unica cosa che si muove: solo un `transform`, quindi
+nessun reflow e il testo resta fermo.
 
-Sulle superfici piene il filetto e' bianco — l'unico colore che si stacca dal
-fondo senza introdurre un'altra tinta. Sulle contornate prende il colore del
-filetto del pulsante. La neutra fa eccezione e usa l'inchiostro: e' un'uscita,
-non un'azione da richiamare, e l'accento le darebbe un peso che non merita.
+La neutra fa eccezione e usa l'inchiostro invece dell'accento: e' un'uscita, non
+un'azione da richiamare. Il pulsante a sola icona non ha filetto — una
+sottolineatura sotto un simbolo non si legge come tale — e cambia inchiostro.
 
 L'icona **in coda** accompagna il gesto spostandosi di 3px; quella in testa resta
 ferma, altrimenti scivolerebbe addosso al testo. Alla pressione il pulsante cede
@@ -438,16 +443,16 @@ touch l'hover non esiste: il pulsante deve reggersi gia' da fermo.
 ### Misure e stati
 
 `--sm` (32px) per barre, tabelle e azioni di riga; misura standard 42px; `--lg`
-(48px) per l'azione principale a piena larghezza. `--block` occupa la riga,
-`--icon` rende il pulsante quadrato — e li' **`aria-label` e' obbligatorio**,
+(48px). `--block` occupa la riga, `--icon` rende l'area cliccabile quadrata — e li' **`aria-label` e' obbligatorio**,
 altrimenti il pulsante e' muto per chi non vede l'icona.
 
 Durante un'azione in corso si usa `aria-busy="true"`: il pulsante resta
 leggibile ma non ricliccabile. Cambia il testo, non la scatola, cosi' la riga
 non salta mentre si attende.
 
-`.tr-btn-group` tiene insieme piu' azioni con una spaziatura coerente, invece di
-margini sparsi sui singoli pulsanti.
+`.tr-btn-group` tiene insieme piu' azioni con una spaziatura coerente. Senza
+scatole serve piu' aria fra un comando e l'altro — 32px — altrimenti due
+etichette vicine si leggono come una sola riga di testo.
 
 ## Select
 

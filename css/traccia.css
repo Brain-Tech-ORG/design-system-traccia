@@ -1253,39 +1253,45 @@ select.tr-field__control + .tr-field__label,
 .tr-fieldset--error .tr-fieldset__legend { color: var(--tr-state-danger); }
 
 /* ---- Azione ----
-   Rettangolo a spigolo vivo con etichetta mono maiuscola. Niente ombre, niente
-   gradienti: la gerarchia la fanno il riempimento e il filetto, non la
-   profondita'.
+   Nessuno sfondo, nessuna cornice: solo l'etichetta mono maiuscola e un filetto.
+   E' la stessa regola del resto del sistema — la struttura la danno i filetti,
+   la spaziatura e gli allineamenti, non le scatole — applicata finalmente anche
+   alle azioni, che erano rimaste l'ultimo elemento con un contenitore pieno.
 
-   L'azione e' l'unico componente del sistema senza raggio, e la ragione e' il
-   suo hover: il filetto che cresce lungo il bordo inferiore ha bisogno di un
-   lato dritto per leggersi: su una pillola si perde nella curva. Forma e
-   comportamento vanno insieme — se un giorno cade il filetto, torna il raggio.
+   La gerarchia si legge da due cose sole:
+     - il colore dell'inchiostro
+     - se il filetto sotto l'etichetta e' acceso da fermo oppure no
 
    Gerarchia, dalla piu' forte alla piu' debole:
-     --primary    una sola per schermata: l'azione che porta avanti il compito
-     --secondary  azioni pari grado, filetto blu su fondo trasparente
-     --neutral    annulla, chiudi: il modo di uscire dal compito
-     --quiet      azioni di servizio, senza scatola
-     --danger     azioni distruttive, e solo quelle
-     --danger-outline  distruttiva di grado minore, contornata
+     --primary         filetto acceso, inchiostro blu: l'azione che porta avanti
+                       il compito, una sola per schermata
+     --secondary       filetto tenue acceso, inchiostro scuro
+     --neutral         nessun filetto: annulla, chiudi, torna indietro
+     --quiet           nessun filetto: azioni di servizio
+     --danger          filetto acceso, inchiostro rosso: solo cio' che distrugge
+     --danger-outline  distruttiva di grado minore
 
-   Regola di contrasto: o testo bianco su superficie piena, o inchiostro scuro
-   su carta. Mai un fondo a tinta pallida con testo dello stesso hue: e' il
-   contrasto piu' debole che si possa scegliere, e a schermo si legge male.
+   Va detto che senza fondo e senza bordo l'azione somiglia a un collegamento:
+   e' un compromesso voluto in favore della quiete della pagina, e regge finche'
+   le etichette restano in mono maiuscolo, che nel sistema significa "comando".
    ========================================================================== */
 .tr-btn {
-  /* Colore del filetto che cresce all'hover: ogni variante lo ridefinisce. */
+  /* Colore del filetto che cresce all'hover; ogni variante lo ridefinisce. */
   --tr-btn-rule: var(--tr-brand-500);
+  /* Colore del filetto acceso da fermo: trasparente dove la gerarchia non lo
+     prevede. */
+  --tr-btn-rule-idle: transparent;
+  --tr-btn-rule-h: 2px;
+
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--tr-space-2);
   height: var(--tr-btn-h);
-  padding: 0 22px;
-  border: var(--tr-rule-thin) solid transparent;
-  border-radius: 0;
+  padding: 0;
+  border: 0;
+  background: none;
   font-family: var(--tr-font-mono);
   font-weight: var(--tr-weight-semibold);
   font-size: var(--tr-text-caption);
@@ -1293,27 +1299,38 @@ select.tr-field__control + .tr-field__label,
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
+  color: var(--tr-ink-900);
   cursor: pointer;
-  transition:
-    background-color var(--tr-motion-fast) var(--tr-motion-ease),
-    border-color var(--tr-motion-fast) var(--tr-motion-ease),
-    color var(--tr-motion-fast) var(--tr-motion-ease);
+  transition: color var(--tr-motion-fast) var(--tr-motion-ease);
 }
 
-/* All'hover cresce un filetto da sinistra lungo il bordo inferiore: e' il modo
-   del sistema di sottolineare, ed e' l'unica cosa che si muove. Solo un
-   transform, quindi nessun reflow e il testo resta fermo. */
+/* Filetto a riposo */
 .tr-btn::after {
   content: "";
   position: absolute;
-  inset: auto 0 0 0;
-  height: var(--tr-rule-accent);
+  inset: auto 0 8px 0;
+  height: var(--tr-btn-rule-h);
+  background: var(--tr-btn-rule-idle);
+}
+/* Filetto che cresce all'hover, sopra quello a riposo */
+.tr-btn::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 8px 0;
+  z-index: 1;
+  height: var(--tr-btn-rule-h);
   background: var(--tr-btn-rule);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 180ms var(--tr-motion-ease);
 }
-.tr-btn:hover:not(:disabled):not([aria-busy="true"])::after { transform: scaleX(1); }
+.tr-btn:hover:not(:disabled):not([aria-busy="true"])::before { transform: scaleX(1); }
+
+.tr-btn:focus-visible { outline: 2px solid var(--tr-brand-500); outline-offset: 3px; }
+.tr-btn:disabled,
+.tr-btn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+.tr-btn[aria-busy="true"] { cursor: progress; pointer-events: none; }
+.tr-btn:active:not(:disabled) { transform: translateY(1px); }
 
 /* L'icona in coda accompagna il gesto; quella in testa resta ferma, altrimenti
    scivolerebbe addosso al testo. */
@@ -1322,63 +1339,32 @@ select.tr-field__control + .tr-field__label,
 }
 .tr-btn:hover:not(:disabled) > svg:last-child:not(:first-child) { transform: translateX(3px); }
 
-/* Alla pressione il pulsante cede di un pixel: e' il solo riscontro tattile
-   che il sistema si concede, non avendo ombre da schiacciare. */
-.tr-btn:active:not(:disabled) { transform: translateY(1px); }
-
-.tr-btn:focus-visible {
-  outline: 2px solid var(--tr-brand-500);
-  outline-offset: 2px;
-}
-.tr-btn:disabled,
-.tr-btn[aria-disabled="true"] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-/* Mentre l'azione e' in corso il pulsante resta leggibile ma non ricliccabile:
-   il testo cambia, non la scatola, cosi' la riga non salta. */
-.tr-btn[aria-busy="true"] { cursor: progress; pointer-events: none; }
-
 /* ---- Gerarchia ---- */
 .tr-btn--primary {
-  background: var(--tr-brand-600);
-  border-color: var(--tr-brand-600);
-  color: #ffffff;
+  color: var(--tr-brand-600);
+  --tr-btn-rule-idle: var(--tr-brand-500);
+  --tr-btn-rule: var(--tr-brand-700);
 }
-/* Sulle superfici piene il filetto e' bianco: e' l'unico colore che si stacca
-   dal fondo senza introdurre un'altra tinta. */
-.tr-btn--primary { --tr-btn-rule: rgba(255, 255, 255, 0.92); }
+.tr-btn--primary:hover:not(:disabled) { color: var(--tr-brand-700); }
 
 .tr-btn--secondary {
-  background: transparent;
-  border-color: var(--tr-brand-500);
-  color: var(--tr-brand-600);
+  color: var(--tr-ink-900);
+  --tr-btn-rule-idle: var(--tr-border-soft-2);
+  --tr-btn-rule: var(--tr-brand-500);
 }
-.tr-btn--secondary { --tr-btn-rule: var(--tr-brand-500); }
 .tr-btn--secondary:hover:not(:disabled) { color: var(--tr-brand-700); }
 
-/* Neutra: annulla, chiudi, torna indietro. Non e' un'azione secondaria del
-   compito, e' il modo di uscirne — quindi niente blu, che qui darebbe un
-   richiamo che non merita. Solo filetto e inchiostro. */
+/* Annulla e chiudi non sono azioni da richiamare: nessun filetto acceso, e
+   nemmeno l'accento sotto il puntatore. */
 .tr-btn--neutral {
-  background: transparent;
-  border-color: var(--tr-border-soft-2);
-  color: var(--tr-ink-600);
+  color: var(--tr-ink-400);
+  --tr-btn-rule: var(--tr-ink-400);
 }
-/* La neutra non prende l'accento nemmeno all'hover: e' un'uscita, non
-   un'azione da richiamare. */
-.tr-btn--neutral { --tr-btn-rule: var(--tr-ink-900); }
-.tr-btn--neutral:hover:not(:disabled) {
-  border-color: var(--tr-ink-400);
-  color: var(--tr-ink-900);
-}
+.tr-btn--neutral:hover:not(:disabled) { color: var(--tr-ink-900); }
 
 .tr-btn--quiet {
-  background: transparent;
-  border-color: transparent;
   color: var(--tr-ink-400);
-  padding-left: 0;
-  padding-right: 0;
+  --tr-btn-rule: var(--tr-brand-500);
 }
 .tr-btn--quiet:hover:not(:disabled) { color: var(--tr-brand-600); }
 
@@ -1386,52 +1372,55 @@ select.tr-field__control + .tr-field__label,
    Il rosso di stato e' l'unica altra tinta ammessa, e solo qui: un pulsante
    rosso che non cancella nulla svaluta quelli che lo fanno davvero. */
 .tr-btn--danger {
-  background: var(--tr-state-danger);
-  border-color: var(--tr-state-danger);
-  color: #ffffff;
+  color: var(--tr-state-danger);
+  --tr-btn-rule-idle: var(--tr-state-danger);
+  --tr-btn-rule: var(--tr-state-danger-dark);
 }
-.tr-btn--danger { --tr-btn-rule: rgba(255, 255, 255, 0.92); }
-/* Distruttiva di grado minore: filetto e testo rossi su carta, non un fondo
-   rosso pallido con testo rosso — che e' lo stesso errore di contrasto. */
+.tr-btn--danger:hover:not(:disabled) { color: var(--tr-state-danger-dark); }
+
 .tr-btn--danger-outline {
-  background: transparent;
-  border-color: var(--tr-state-danger);
   color: var(--tr-state-danger);
   --tr-btn-rule: var(--tr-state-danger);
 }
+.tr-btn--danger-outline:hover:not(:disabled) { color: var(--tr-state-danger-dark); }
 
 /* ---- Misure ---- */
-.tr-btn--sm {
-  height: var(--tr-btn-h-sm);
-  padding: 0 16px;
-  font-size: 11px;
-}
-.tr-btn--lg { height: var(--tr-btn-h-lg); padding: 0 28px; font-size: 13px; }
+.tr-btn--sm { height: var(--tr-btn-h-sm); font-size: 11px; }
+.tr-btn--sm::before,
+.tr-btn--sm::after { bottom: 5px; }
+.tr-btn--lg { height: var(--tr-btn-h-lg); font-size: 13px; }
+.tr-btn--lg::before,
+.tr-btn--lg::after { bottom: 11px; }
 .tr-btn--block { width: 100%; }
 
-/* Sola icona: quadrato, e serve sempre un aria-label — senza, il pulsante e'
-   muto per chi non vede l'icona. */
+/* Sola icona: nessun filetto sotto — una sottolineatura sotto un simbolo non
+   si legge come tale. Cambia l'inchiostro. Serve sempre un aria-label. */
 .tr-btn--icon {
   width: var(--tr-btn-h);
   height: var(--tr-btn-h);
-  padding: 0;
+  color: var(--tr-ink-400);
 }
+.tr-btn--icon::before,
+.tr-btn--icon::after { content: none; }
+.tr-btn--icon:hover:not(:disabled) { color: var(--tr-brand-600); }
+.tr-btn--icon.tr-btn--danger:hover:not(:disabled),
+.tr-btn--icon.tr-btn--danger-outline:hover:not(:disabled) { color: var(--tr-state-danger); }
 .tr-btn--icon.tr-btn--sm { width: var(--tr-btn-h-sm); height: var(--tr-btn-h-sm); }
-.tr-btn--icon.tr-btn--quiet { width: var(--tr-btn-h-sm); height: var(--tr-btn-h-sm); padding: 0; }
 
-/* Gruppo di azioni: spaziatura coerente, senza margini sparsi sui singoli. */
+/* Gruppo di azioni. Senza scatole servono piu' aria fra un comando e l'altro,
+   altrimenti due etichette vicine si leggono come una sola riga di testo. */
 .tr-btn-group {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--tr-space-3);
+  gap: var(--tr-space-3) var(--tr-space-6);
 }
 .tr-btn-group--end { justify-content: flex-end; }
 
 @media (prefers-reduced-motion: reduce) {
-  /* Lo stato finale resta, la corsa no: l'hover si vede lo stesso. */
+  /* Lo stato finale resta, la corsa no. */
   .tr-btn,
-  .tr-btn::after,
+  .tr-btn::before,
   .tr-btn > svg:last-child:not(:first-child) { transition: none; }
   .tr-btn:active:not(:disabled) { transform: none; }
 }
