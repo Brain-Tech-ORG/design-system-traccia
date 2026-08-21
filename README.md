@@ -478,6 +478,36 @@ lo stesso delle azioni: **un filetto che cresce da sinistra** lungo il bordo
 inferiore, e il titolo si scurisce. Nessun sollevamento — un'ombra che cresce
 simulerebbe una profondita' che il sistema non ha.
 
+#### Card scelta
+
+In una fila di card che si escludono a vicenda, una dev'essere riconoscibile
+come la scelta corrente. **Non si tinge il fondo e non si accende un bordo**: la
+card non ne ha, e una classe come `border-brand-500` su una superficie con
+`border: 0` non dipinge niente — e' l'errore piu' facile da commettere qui,
+perche' il codice sembra giusto.
+
+La scelta prende **il fianco sinistro**: filetto pieno da 3px in `brand/500`,
+titolo in `brand/700`. Il bordo inferiore e' gia' impegnato dall'hover, e i due
+segni non possono stare sullo stesso lato — uno coprirebbe l'altro, e a
+distinguerli resterebbe una sfumatura di blu. Cosi' invece si leggono per
+posizione: **sotto** vuol dire "ci sei sopra col mouse", **a sinistra** vuol
+dire "e' questa".
+
+E' lo stesso gesto dell'avviso in linea, ed e' l'unico segno presente a riposo:
+in una fila di quattro card la scelta si trova subito, senza confrontarle.
+
+```html
+<button class="tr-card tr-card--action" aria-pressed="true">…</button>
+<a class="tr-card tr-card--action" aria-current="true">…</a>
+<div class="tr-card tr-card--action is-selected">…</div>
+```
+
+Si dichiara con `aria-pressed` su un `<button>`, `aria-current` su un `<a>`, o
+`.is-selected` dove non c'e' semantica da esprimere. Anche qui lo stato passa
+dall'attributo e non da una classe di comodo: **niente pallino, niente spunta
+appesa a destra** — un segno staccato dal contenuto si legge come decorazione,
+non come stato.
+
 ### Gruppi di opzioni: non usare `<fieldset>`/`<legend>`
 
 Il gruppo di radio o checkbox va reso con `<div role="group">` e un'etichetta

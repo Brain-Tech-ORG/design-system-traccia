@@ -1304,6 +1304,36 @@ select.tr-field__control + .tr-field__label,
   outline-offset: 2px;
 }
 
+/* Selezionata. Il filetto in basso e' gia' impegnato dall'hover, e i due
+   segni non possono stare sullo stesso bordo: uno coprirebbe l'altro, e a
+   distinguerli resterebbe solo una sfumatura di blu. La scelta prende quindi
+   il fianco sinistro — lo stesso gesto dell'avviso in linea — cosi' le due
+   condizioni si leggono per posizione e non per tinta.
+
+   In una fila di card senza bordo e' l'unico segno a riposo: la card scelta
+   si trova senza doverle confrontare una a una.
+
+   Si dichiara con aria-pressed su un <button>, con aria-current su un <a>, o
+   con .is-selected dove non c'e' semantica da esprimere. */
+.tr-card--action::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--tr-rule-accent);
+  background: var(--tr-brand-500);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--tr-motion-fast) var(--tr-motion-ease);
+}
+.tr-card--action[aria-pressed="true"]::before,
+.tr-card--action[aria-current]:not([aria-current="false"])::before,
+.tr-card--action.is-selected::before { transform: scaleX(1); }
+
+.tr-card--action[aria-pressed="true"] .tr-card__title,
+.tr-card--action[aria-current]:not([aria-current="false"]) .tr-card__title,
+.tr-card--action.is-selected .tr-card__title { color: var(--tr-brand-700); }
+
+
 /* Testata: eyebrow mono, titolo, e il filetto che chiude l'intestazione.
    E' lo stesso impianto delle sezioni di pagina, in scala ridotta. */
 .tr-card__head {
