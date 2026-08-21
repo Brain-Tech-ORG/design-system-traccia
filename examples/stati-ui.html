@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>La Traccia — Stati semantici UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <link rel="stylesheet" href="../css/traccia.css">
+  <link rel="stylesheet" href="../css/traccia-states.css">
+  <style>
+    body { margin: 0; }
+    .demo { width: min(1040px, calc(100% - 48px)); margin: 0 auto; padding: 48px 0 80px; }
+    .demo__intro { margin: 32px 0 48px; }
+    .demo__section { margin-top: 56px; }
+    .demo__stack { display: grid; gap: 20px; margin-top: 24px; }
+    .demo__statuses { display: flex; flex-wrap: wrap; gap: 20px 32px; margin-top: 24px; }
+  </style>
+</head>
+<body class="tr-page">
+  <main class="demo">
+    <header class="tr-header">
+      <span class="tr-brandmark">
+        <img class="tr-brandmark__logo" src="../assets/logo-traccia.svg" alt="">
+        <span class="tr-brandmark__wordmark">La Traccia</span>
+      </span>
+      <span class="tr-mono tr-mono--brand">Design system · UI</span>
+    </header>
+
+    <section class="demo__intro">
+      <span class="tr-accent-dash"></span>
+      <h1 class="tr-h1" style="margin-top:16px">Stati <em>semantici</em></h1>
+      <p class="tr-body">Colori funzionali per informazioni, esiti, allerte, errori e allarmi. Il significato è sempre espresso anche da testo, icona o struttura.</p>
+    </section>
+
+    <section class="demo__section" aria-labelledby="notice-title">
+      <div class="tr-eyebrow">
+        <span class="tr-eyebrow__label" id="notice-title">Avvisi in linea</span>
+        <span class="tr-eyebrow__line"></span>
+      </div>
+
+      <div class="demo__stack">
+        <div class="tr-notice tr-notice--info" role="status">
+          <span class="tr-notice__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 10v7M12 7h.01"/></svg>
+          </span>
+          <div class="tr-notice__content">
+            <p class="tr-notice__title">Informazione</p>
+            <p class="tr-notice__body">I dati sono aggiornati alle 14:32.</p>
+          </div>
+        </div>
+
+        <div class="tr-notice tr-notice--success" role="status">
+          <span class="tr-notice__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.6 2.6L16.5 9"/></svg>
+          </span>
+          <div class="tr-notice__content">
+            <p class="tr-notice__title">Operazione completata</p>
+            <p class="tr-notice__body">La configurazione è stata salvata correttamente.</p>
+          </div>
+        </div>
+
+        <div class="tr-notice tr-notice--warning tr-notice--tint" role="status">
+          <span class="tr-notice__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5M12 17h.01"/></svg>
+          </span>
+          <div class="tr-notice__content">
+            <p class="tr-notice__title">Attenzione</p>
+            <p class="tr-notice__body">La sincronizzazione è in ritardo di 12 minuti.</p>
+          </div>
+        </div>
+
+        <div class="tr-notice tr-notice--danger tr-notice--solid" role="alert">
+          <span class="tr-notice__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>
+          </span>
+          <div class="tr-notice__content">
+            <p class="tr-notice__title">Errore bloccante</p>
+            <p class="tr-notice__body">Impossibile completare l'operazione richiesta.</p>
+          </div>
+        </div>
+
+        <div class="tr-notice tr-notice--alarm" role="alert" aria-live="assertive">
+          <span class="tr-notice__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 8v6M12 17h.01"/></svg>
+          </span>
+          <div class="tr-notice__content">
+            <p class="tr-notice__title">Allarme critico</p>
+            <p class="tr-notice__body">Servizio non raggiungibile. È richiesto un intervento immediato.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo__section" aria-labelledby="status-title">
+      <div class="tr-eyebrow">
+        <span class="tr-eyebrow__label" id="status-title">Indicatori compatti</span>
+        <span class="tr-eyebrow__line"></span>
+      </div>
+      <div class="demo__statuses">
+        <span class="tr-status tr-status--info">Informativo</span>
+        <span class="tr-status tr-status--success">Operativo</span>
+        <span class="tr-status tr-status--warning">Degradato</span>
+        <span class="tr-status tr-status--danger">Errore</span>
+        <span class="tr-status tr-status--critical">Allarme</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
