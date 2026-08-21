@@ -1350,6 +1350,13 @@ select.tr-field__control + .tr-field__label,
   border-bottom: 0;
   margin-bottom: var(--tr-space-4);
 }
+/* In frase, non in maiuscolo. Il titolo di una card e' contenuto — il nome di
+   un centro, di una misura, di un paziente — non un'etichetta di sistema. Il
+   maiuscolo appartiene alla voce mono, che dice "questo lo scrive il
+   programma", e ai titoli display di .tr-h1/h2/h3, che aprono una sezione e si
+   leggono una volta. Il titolo di una card si legge trenta volte al giorno e
+   spesso e' un nome proprio: in maiuscolo perde la sagoma della parola e
+   costringe a compitarlo. */
 .tr-card__title {
   margin: 0;
   font-family: var(--tr-font-display);
@@ -1357,7 +1364,6 @@ select.tr-field__control + .tr-field__label,
   font-size: var(--tr-text-h3);
   line-height: var(--tr-leading-display);
   letter-spacing: var(--tr-tracking-display);
-  text-transform: uppercase;
   color: var(--tr-ink-900);
   transition: color var(--tr-motion-fast) var(--tr-motion-ease);
 }

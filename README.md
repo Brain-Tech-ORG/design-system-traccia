@@ -117,6 +117,23 @@ scegliendo colori nuovi.
 - **Body — Archivo 400**: 12–14px stampa / 14–16px UI / 24–30px slide, line-height 1.5–1.65, ink/600.
 - **Slide 16:9 (1920×1080)**: mai testo sotto 17px; titoli 60–92px.
 
+### Dove finisce il maiuscolo
+
+Il maiuscolo e' una voce, non una decorazione, e ne ha due sole:
+
+1. **La voce mono** — eyebrow, etichette di campo, chip, comandi, tabs, quote,
+   contatti. Dice "questo lo scrive il programma": e' un'etichetta che l'occhio
+   scorre per orientarsi, non una frase che legge.
+2. **I titoli display** `.tr-h1/.tr-h2/.tr-h3`, che aprono una sezione e si
+   leggono una volta sola, in grande.
+
+**Fuori di li' si scrive in frase.** Il maiuscolo toglie ascendenti e
+discendenti, cioe' la sagoma con cui riconosciamo una parola senza compitarla;
+su un'etichetta breve e' un prezzo che si paga volentieri, su un contenuto no.
+In particolare il **titolo di una card sta in frase**: e' contenuto — il nome di
+un centro, di una misura — spesso e' un nome proprio, e si rilegge decine di
+volte al giorno.
+
 ## Linguaggio geometrico
 
 - **Layout aperti**: niente box, niente sfondi colorati dietro i contenuti, niente bordi-contenitore.
@@ -459,8 +476,9 @@ la pagina e' neutra, la card e' bianca. Vedi [Superfici](#superfici).
 
 ### Parti
 
-`__head` (con `--bare` per toglierne il filetto), `__title` — Archivo maiuscolo,
-con la parola chiave in blu tramite `<em>` come i titoli di sezione — `__sub`,
+`__head` (con `--bare` per toglierne il filetto), `__title` — Archivo **in
+frase**, con la parola chiave in blu tramite `<em>` come i titoli di sezione;
+il maiuscolo qui apparterrebbe alla voce sbagliata, [vedi sopra](#dove-finisce-il-maiuscolo) — `__sub`,
 `__aside` per il metadato in coda, `__foot` per le azioni, `__empty` per lo stato
 vuoto: mono, centrato, senza illustrazioni.
 
