@@ -16,6 +16,9 @@ niente gradienti, niente emoji, molto bianco.
 ├── tokens/
 │   ├── tokens.css                Design token come CSS custom properties
 │   └── tokens.json               Design token in formato W3C draft
+├── icons/
+│   ├── traccia-icons.json        Icone: sorgente unica (nome, tracciato, gruppo)
+│   └── traccia-icons.svg         Sprite di <symbol>, da incollare in pagina
 ├── css/traccia.css               Libreria componenti (prefisso .tr-)
 ├── js/tr-select.js               Listbox del select (vanilla, per Angular e HTML)
 ├── email/
@@ -178,6 +181,7 @@ volte al giorno.
 | 14 | Card | `.tr-card` + `__head` / `__title` / `__foot` |
 | 15 | Azione | `.tr-btn` + `--primary` / `--secondary` / `--neutral` / `--quiet` / `--danger` |
 | 16 | Spinner di caricamento | `.tr-spinner` + `__wipe` / `__track` / `__seq` / `__ring` |
+| 17 | Icone | `.tr-icon` + `--nav` / `--solo` / `--giu` / `--sinistra` / `--su` |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -1008,6 +1012,87 @@ Sotto `prefers-reduced-motion: reduce` vale la regola dell'etichetta flottante:
 **lo stato finale resta, la corsa no** — la traccia e' tracciata, la sequenza
 accesa, il marchio pieno, e niente si muove.
 
+
+## Icone
+
+Il sistema non aveva un set di icone, ma aveva gia' la regola per disegnarlo: il
+**marchio e' pieno** — due masse solide, spigoli vivi, nessun contorno. Un'icona
+a filo, per quanto ben disegnata, parla un'altra lingua, e le due cose stanno
+accanto su ogni schermata.
+
+I 29 tracciati stanno in [`icons/traccia-icons.json`](icons/traccia-icons.json),
+la sorgente unica; [`icons/traccia-icons.svg`](icons/traccia-icons.svg) e' lo
+stesso set in `<symbol>`, e [`examples/icone.html`](examples/icone.html) le mostra
+tutte.
+
+### Le regole del disegno
+
+1. **Massa, non contorno.** Nessun tratto, nessun capo stondato: solo superficie
+   e tagli netti.
+2. **Il dettaglio e' un vuoto.** Dove un'icona a filo aggiunge una linea, questa
+   toglie materia: le righe del documento, la croce della clinica, la spunta
+   dell'esito sono ritagli (`fill-rule: evenodd`). Il vuoto non scende sotto
+   **1,6 unita'**, o a 16px si richiude.
+3. **Riquadro 24, area viva 20.** Le 2 unita' di margine per lato tengono
+   allineate icone di peso diverso quando stanno in fila.
+4. **Solo forme base** — rettangolo, triangolo, cerchio, parallelogramma. Il
+   parallelogramma e' la forma del marchio e torna in ogni taglio obliquo: la
+   piega del foglio, l'angolo del salvataggio, la matita, l'ago.
+5. **Niente raggi, niente ombre, niente gradienti**, come per il resto del
+   sistema.
+
+### Taglie
+
+A massa piena **un solo tracciato serve tutte le taglie**: non c'e' spessore da
+compensare quando l'icona rimpicciolisce, ed e' il vantaggio che il filo non ha.
+
+| Classe | Taglia | Quando |
+|---|---:|---|
+| `.tr-icon` | 16px | accanto al testo, dentro un'azione, in una riga di elenco |
+| `.tr-icon--nav` | 20px | navigazione |
+| `.tr-icon--solo` | 24px | quando l'icona sta da sola |
+
+Il peso pero' cresce rispetto al filo: accanto a un'etichetta l'icona va in
+`ink/400` (`.tr-icon--didascalia`), non in `ink/900`. E dove porta dettaglio
+interno — `centro`, `esito`, `tabella` — **a 16px il ritaglio perde
+definizione**: li' conviene 20, oppure allargare il vuoto.
+
+### Uso
+
+Lo sprite si incolla **una volta per pagina** e ogni icona lo richiama con
+`<use>`: come per lo spinner, il riferimento a un file esterno non vale in tutti
+i browser.
+
+```html
+<link rel="stylesheet" href="css/traccia-icons.css">
+<!-- incollare qui il contenuto di icons/traccia-icons.svg -->
+
+<svg class="tr-icon" aria-hidden="true"><use href="#tr-i-documento"/></svg>
+```
+
+Il riempimento e' `currentColor`: l'icona prende il colore da cio' che la ospita
+e non ne porta uno suo. Il chevron e' **una forma sola per quattro versi** — a
+girare e' l'icona, non il disegno, perche' il marchio resti lo stesso in ogni
+direzione.
+
+### Accessibilita'
+
+L'icona e' **decorativa per difetto** (`aria-hidden="true"`): il senso lo porta
+l'etichetta che le sta accanto. Quando l'icona e' sola — un'azione a sola icona,
+uno stato in una cella — serve un nome: `role="img"` e `aria-label`, oppure
+l'`aria-label` sul controllo che la contiene.
+
+Le quattro icone di stato si distinguono **anche in bianco e nero** — disco con
+spunta, triangolo, disco con croce, disco con asta — perche' la forma dica
+quello che dice il colore, come prescrive
+[`COLORI-SEMANTICI.md`](COLORI-SEMANTICI.md).
+
+### Copertura
+
+Il set copre registri, persone, dati, azioni e stati: e' il nucleo che si vede
+di piu' e che dice di che prodotto si tratta. Le icone che mancano vanno prese
+da una libreria a filo e sostituite man mano che stonano — non allargate a
+occhio partendo da una forma di libreria.
 
 ## Grafici
 

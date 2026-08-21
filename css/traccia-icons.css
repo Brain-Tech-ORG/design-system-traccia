@@ -1,0 +1,37 @@
+/* ==========================================================================
+   LA TRACCIA — Icone
+   Caricare dopo tokens/tokens.css e css/traccia.css.
+
+   Il marchio e' pieno: due masse solide, spigoli vivi, nessun contorno. Le
+   icone lo seguono. Il dettaglio non e' un tratto aggiunto sopra la forma, e'
+   materia tolta da dentro (fill-rule evenodd sui tracciati).
+
+   A massa piena un solo tracciato serve tutte le taglie: non c'e' spessore da
+   compensare quando l'icona rimpicciolisce. Le taglie sono tre e non di piu' —
+   16 accanto al testo, 20 nella navigazione, 24 quando l'icona sta da sola.
+   ========================================================================== */
+
+.tr-icon {
+  --tr-icon-size: 16px;
+
+  display: block;
+  flex: none;
+  width: var(--tr-icon-size);
+  height: var(--tr-icon-size);
+  /* L'icona non sceglie il colore: lo prende da cio' che la ospita. */
+  fill: currentColor;
+}
+
+/* Le tre taglie del sistema. */
+.tr-icon--nav { --tr-icon-size: 20px; }
+.tr-icon--solo { --tr-icon-size: 24px; }
+
+/* Il chevron e' una forma sola per quattro versi: a girare e' l'icona, non il
+   disegno, perche' il marchio resti lo stesso in ogni direzione. */
+.tr-icon--giu { transform: rotate(90deg); }
+.tr-icon--sinistra { transform: rotate(180deg); }
+.tr-icon--su { transform: rotate(270deg); }
+
+/* Accanto a un'etichetta la massa piena pesa: l'inchiostro scende di un
+   gradino, altrimenti l'icona grida piu' della parola che accompagna. */
+.tr-icon--didascalia { color: var(--tr-ink-400); }
