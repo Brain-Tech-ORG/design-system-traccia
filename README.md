@@ -1039,6 +1039,13 @@ Tre accorgimenti, sempre insieme:
 - **Una riga sola, troncata.** L'etichetta si taglia con un `…` alla lunghezza
   che l'asse regge davvero. Il nome per intero resta nel tooltip, dove chi ha
   bisogno del dettaglio lo trova.
+
+  Attenzione: **troncare non basta.** Un formattatore di etichette accorcia la
+  stringa, ma la libreria la manda comunque a capo se non entra — si passa da
+  tre righe a due, non a una. Per averne una sola bisogna disegnare la tacca da
+  se': un `<text>` senza larghezza dichiarata non si spezza mai. Il taglio si
+  ricava dalla larghezza dell'asse, sbagliando per difetto — un'etichetta un po'
+  corta si legge, una un po' lunga la taglia il riquadro del grafico.
 - **L'altezza segue il numero di barre**, non il contrario: circa 40px per
   barra, con un minimo. Un grafico che cresce in basso e' sempre meglio di uno
   che si comprime fino a diventare illeggibile.
