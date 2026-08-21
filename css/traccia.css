@@ -38,6 +38,8 @@
 .tr-select__option,
 .tr-select__group,
 .tr-fieldset,
+.tr-tabs,
+.tr-tab,
 .tr-photo-frame { box-sizing: border-box; }
 
 /* ---- Base pagina ---- */
@@ -1645,6 +1647,103 @@ select.tr-field__control + .tr-field__label,
 .tr-watermark--bottom-left { bottom: -80px; left: -60px; }
 
 /* ==========================================================================
+   15. Tabs
+   Cambiare vista non e' navigare: le tabs restano dentro la pagina e non
+   pretendono la voce alta di un menu. Sono etichette mono in fila, e a dire
+   quale sia quella attiva e' un filetto — lo stesso gesto dei pulsanti, dove
+   pero' li' compare all'hover e qui resta acceso su quella scelta.
+
+   Niente pastiglie, niente fondo colorato, niente slab scura: la barra sta
+   sul piano dei componenti e si stacca dal contenuto con un filetto soltanto.
+
+   Markup:
+     <div class="tr-tabs" role="tablist">
+       <button class="tr-tab" role="tab" aria-selected="true">Etichetta</button>
+       <button class="tr-tab" role="tab" aria-selected="false">
+         Altra <span class="tr-tab__count">3</span>
+       </button>
+     </div>
+
+   `--bottom` per la barra ancorata in fondo: il filetto passa sopra, cosi'
+   punta al contenuto invece che al vuoto sotto.
+   ========================================================================== */
+.tr-tabs {
+  display: flex;
+  gap: var(--tr-space-5);
+  box-sizing: border-box;
+  padding: 0 var(--tr-space-5);
+  border-bottom: 1px solid var(--tr-border-soft);
+  background: var(--tr-surface);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tr-tabs::-webkit-scrollbar { display: none; }
+
+.tr-tabs--bottom {
+  border-bottom: 0;
+  border-top: 1px solid var(--tr-border-soft);
+}
+
+.tr-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tr-space-2);
+  box-sizing: border-box;
+  height: var(--tr-btn-h-lg);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  font-family: var(--tr-font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--tr-ink-400);
+  cursor: pointer;
+  transition: color var(--tr-motion-fast) var(--tr-motion-ease);
+}
+.tr-tab > svg { width: 15px; height: 15px; flex: none; }
+
+/* Il filetto: spento sulle tabs a riposo, accennato sotto il puntatore, pieno
+   su quella scelta. E' l'unico segno che distingue le tre condizioni. */
+.tr-tab::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--tr-rule-medium);
+  background: var(--tr-brand-500);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 180ms var(--tr-motion-ease);
+}
+.tr-tabs--bottom .tr-tab::after { inset: 0 0 auto 0; }
+
+.tr-tab:hover { color: var(--tr-ink-900); }
+.tr-tab:hover::after { transform: scaleX(1); background: var(--tr-border-soft-2); }
+
+.tr-tab[aria-selected="true"] { color: var(--tr-ink-900); }
+.tr-tab[aria-selected="true"]::after,
+.tr-tab[aria-selected="true"]:hover::after {
+  transform: scaleX(1);
+  background: var(--tr-brand-500);
+}
+
+.tr-tab:focus-visible { outline: 2px solid var(--tr-brand-500); outline-offset: -2px; }
+.tr-tab:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Il conteggio e' un dato, non una decorazione: cifre tabellari in coda
+   all'etichetta, senza pastiglia intorno. */
+.tr-tab__count {
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: var(--tr-ink-400);
+}
+.tr-tab[aria-selected="true"] .tr-tab__count { color: var(--tr-brand-600); }
+
+/* ==========================================================================
    Responsive
    ========================================================================== */
 @media (max-width: 720px) {
@@ -1660,4 +1759,8 @@ select.tr-field__control + .tr-field__label,
   .tr-login__main { padding-top: var(--tr-space-6); padding-bottom: var(--tr-space-6); }
   .tr-clientmark__logo { height: 32px; }
   .tr-clientmark { gap: var(--tr-space-3); }
+}
+@media (max-width: 720px) {
+  .tr-tabs { gap: var(--tr-space-4); padding: 0 var(--tr-space-4); }
+  .tr-tab { height: var(--tr-btn-h); font-size: 11px; }
 }

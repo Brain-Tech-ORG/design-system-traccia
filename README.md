@@ -725,6 +725,59 @@ che l'utente non ha mai scelto.
   mentre un pannello e' aperto e vengono rimossi alla chiusura.
 
 
+## Tabs
+
+Cambiare vista non e' navigare. Le tabs restano dentro la pagina e non
+pretendono la voce alta di un menu: sono etichette mono in fila, e a dire quale
+sia quella attiva e' **un filetto** — lo stesso gesto dei pulsanti, dove pero'
+li' compare all'hover e qui resta acceso su quella scelta.
+
+```html
+<div class="tr-tabs" role="tablist">
+  <button class="tr-tab" role="tab" aria-selected="true"  aria-controls="p1" id="t1">Inserimento</button>
+  <button class="tr-tab" role="tab" aria-selected="false" aria-controls="p2" id="t2">
+    Storico <span class="tr-tab__count">3</span>
+  </button>
+</div>
+<div role="tabpanel" id="p1" aria-labelledby="t1">…</div>
+```
+
+### Le tre condizioni
+
+| Stato | Etichetta | Filetto |
+|---|---|---|
+| A riposo | `ink/400` | spento |
+| Sotto il puntatore | `ink/900` | pieno, `border/soft-2` |
+| Attiva | `ink/900` | pieno, `brand/500` |
+
+Il filetto cresce da sinistra in 180ms, come quello dei pulsanti: e' la stessa
+grammatica, e chi ha gia' imparato a leggere l'una legge anche l'altra.
+
+### Regole
+
+- **Niente pastiglia, niente fondo colorato, niente slab scura.** Una tab attiva
+  disegnata come un blocco pieno diventa un pulsante premuto, e la fila smette
+  di leggersi come una fila. Il segno e' il filetto e basta.
+- **La barra sta sul piano dei componenti** (`surface`) e si stacca dal
+  contenuto con un filetto soltanto — mai con un'ombra, mai invertendo i colori.
+- **`--bottom` per la barra ancorata in fondo.** Il filetto passa sopra la tab
+  invece che sotto, cosi' punta al contenuto e non al vuoto sottostante.
+- **Il conteggio e' un dato**, non una decorazione: cifre tabellari in coda
+  all'etichetta con `.tr-tab__count`, senza pastiglia intorno. Sulla tab attiva
+  passa a `brand/600`.
+- **Su schermo stretto la fila scorre**, non va a capo: una tab tagliata a meta'
+  dal bordo dice che ce n'e' dell'altra, due righe di tabs non dicono niente.
+- L'icona in testa e' ammessa a 15px; quella in coda no, perche' li' il filetto
+  ha gia' il compito di chiudere l'etichetta.
+
+### Accessibilita'
+
+`role="tablist"` sul contenitore, `role="tab"` e `aria-selected` su ciascuna,
+`aria-controls` verso il pannello e `aria-labelledby` di ritorno. Lo stato
+attivo non si trasmette con una classe ma con `aria-selected="true"`: il CSS
+legge quello, quindi markup accessibile e aspetto giusto non possono divergere.
+
+
 ## Firma email
 
 File pronti da incollare: [`email/firma-email.html`](email/firma-email.html) e
