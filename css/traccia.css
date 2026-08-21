@@ -246,7 +246,7 @@
   gap: var(--tr-space-2);
   padding: 6px 16px;
   border: 1px solid var(--tr-brand-500);
-  border-radius: 0;
+  border-radius: var(--tr-radius-pill);
   font-family: var(--tr-font-mono);
   font-weight: var(--tr-weight-semibold);
   font-size: var(--tr-text-caption);
@@ -976,7 +976,7 @@ select.tr-field__control + .tr-field__label,
   flex-direction: column;
   background: var(--tr-field-bg);
   border: var(--tr-rule-thin) solid var(--tr-border-soft);
-  border-radius: var(--tr-radius-soft);
+  border-radius: var(--tr-radius-ui);
   visibility: hidden;
   opacity: 0;
   transform: translateY(-4px);
@@ -1234,8 +1234,8 @@ select.tr-field__control + .tr-field__label,
    contenuti e' davvero un'unita' — una scheda, un pannello, un riepilogo — e
    non semplicemente una sezione di pagina.
 
-   Quando serve, e' fatta di una cosa sola: un filetto da 1px con angoli
-   smussati. Nessun fondo bianco, perche' sul paper non separerebbe nulla e
+   Quando serve, e' fatta di una cosa sola: un filetto da 1px a spigolo vivo.
+   Nessun fondo bianco, perche' sul paper non separerebbe nulla e
    aggiungerebbe solo una seconda tinta; nessuna ombra, che il sistema non
    ammette; nessun secondo bordo.
    ========================================================================== */
@@ -1243,7 +1243,7 @@ select.tr-field__control + .tr-field__label,
   display: block;
   padding: var(--tr-space-5);
   border: var(--tr-rule-thin) solid var(--tr-border-soft);
-  border-radius: var(--tr-radius-soft);
+  border-radius: var(--tr-radius-ui);
   background: transparent;
 }
 @media (min-width: 720px) {

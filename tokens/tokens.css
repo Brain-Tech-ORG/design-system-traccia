@@ -80,10 +80,15 @@
   --tr-space-8: 64px;
   --tr-space-9: 96px;
 
-  /* ---- Geometria · Raggi ---- */
+  /* ---- Geometria · Raggi ----
+     A schermo le superfici dell'interfaccia — card, pannelli, campi, azioni —
+     sono a spigolo vivo: e' il taglio che il sistema ha scelto per la UI, e
+     tenerlo in un token solo permette di cambiarlo in un punto solo.
+     Gli angoli smussati restano dove sono nati, cioe' nella stampa. */
+  --tr-radius-ui: 0;       /* superfici dell'interfaccia */
   --tr-radius-line: 99px;  /* estremità stondate di filetti e segmenti */
-  --tr-radius-pill: 999px; /* chip a pillola */
-  --tr-radius-soft: 20px;  /* angoli smussati (range 16–26px) */
+  --tr-radius-pill: 999px; /* chip, dot e cerchietti: la pillola resta */
+  --tr-radius-soft: 20px;  /* angoli smussati, stampa (range 16–26px) */
   --tr-radius-photo: 28px; /* cornice foto ambientata (range 22–36px) */
 
   /* ---- Geometria · Tratti ---- */
@@ -104,7 +109,7 @@
   --tr-btn-h: 42px;               /* altezza standard */
   --tr-btn-h-sm: 32px;            /* barre, tabelle, azioni di riga */
   --tr-btn-h-lg: 48px;            /* azione principale a piena larghezza */
-  --tr-field-radius: 10px;        /* angolo del campo */
+  --tr-field-radius: var(--tr-radius-ui); /* angolo del campo */
   --tr-field-pad-x: 16px;         /* respiro orizzontale interno */
   --tr-field-label-rest: 20px;    /* quota dell'etichetta a riposo, dal filetto superiore */
   --tr-field-affix: 46px;         /* spazio riservato a icona prefisso/suffisso */

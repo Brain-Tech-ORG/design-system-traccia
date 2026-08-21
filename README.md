@@ -87,8 +87,13 @@ dei form e gli esiti di sistema — vedi [Pagine di login](#pagine-di-login-prod
   segmenti verticali 2px in brand — pieni sopra il contenuto, tinta chiara sotto (`.tr-vseg`).
 - **Tratti d'accento** ~64×3px stondati sopra i titoli di sezione (`.tr-accent-dash`),
   al posto di bordi a larghezza piena.
-- **Pillole** (radius 999px) e angoli smussati 16–26px solo dove serve un contenitore vero.
-  L'**azione** non ha ne' raggio ne' contenitore: vedi [Azioni](#azioni).
+- **A schermo le superfici sono a spigolo vivo**: card, pannelli, campi e azioni non
+  hanno raggio. Lo governa un token solo, `--tr-radius-ui`, per poterlo cambiare in un
+  punto solo.
+- **Pillole** (radius 999px) per chip, dot e cerchietti: la pillola e' una forma a se',
+  non un angolo smussato, e resta.
+- **Angoli smussati 16–26px** restano dove sono nati, cioe' nella stampa: cornici foto
+  e materiali A4.
 - **Cerchietti numerati** 24–52px (`.tr-circle`): tinta + cifra mono blu, solo bordo blu
   (`--outline`) o pieno blu (`--solid`).
 - **Dot bullet**: pallino pieno blu 6–13px + voce mono (`.tr-dot`, `.tr-dotlist`).
@@ -388,7 +393,7 @@ sistema preferisce i layout aperti, e la maggior parte di cio' che viene chiamat
 "card" e' in realta' una sezione di pagina. La card serve dove un gruppo di
 contenuti e' davvero **un'unita'** — una scheda, un pannello, un riepilogo.
 
-Quando serve, e' fatta di una cosa sola: **un filetto da 1px con angoli smussati**.
+Quando serve, e' fatta di una cosa sola: **un filetto da 1px a spigolo vivo**.
 
 | Cosa non ha | Perche' |
 |---|---|
