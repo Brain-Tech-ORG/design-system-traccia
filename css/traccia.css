@@ -1493,6 +1493,28 @@ select.tr-field__control + .tr-field__label,
 .tr-btn--danger:hover:not(:disabled) { color: var(--tr-state-danger-dark); }
 
 
+/* ---- Eccezione: l'azione della pagina di login ----
+   Ovunque l'azione e' senza fondo, e regge perche' attorno c'e' del contenuto
+   che le da' contesto. Nella pagina di login non c'e': una schermata quasi
+   vuota, un campo, e un solo comando. Li' un'etichetta senza superficie si
+   legge come un collegamento invece che come il pulsante che chiude il compito,
+   e su un accesso non ci si puo' permettere l'esitazione.
+
+   Qui, e solo qui, la primaria torna a essere una superficie piena. La regola e'
+   legata al blocco .tr-login: fuori da quello non esiste, cosi' non puo' essere
+   usata per sbaglio altrove — che e' il motivo per cui non e' una variante.
+   Lo spigolo vivo resta: cambia il fondo, non la geometria. */
+.tr-login .tr-btn--primary {
+  padding: 0 24px;
+  background: var(--tr-brand-600);
+  color: #ffffff;
+  --tr-btn-rule: rgba(255, 255, 255, 0.92);
+}
+.tr-login .tr-btn--primary:hover:not(:disabled) {
+  background: var(--tr-brand-700);
+  color: #ffffff;
+}
+
 /* ---- Misure ---- */
 .tr-btn--sm { height: var(--tr-btn-h-sm); font-size: 11px; }
 .tr-btn--sm::before { bottom: 5px; }

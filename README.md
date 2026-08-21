@@ -492,6 +492,19 @@ ombre da schiacciare.
 Sotto `prefers-reduced-motion: reduce` lo stato finale resta, la corsa no. E su
 touch l'hover non esiste: il pulsante deve reggersi gia' da fermo.
 
+### L'unica eccezione: la pagina di login
+
+Ovunque l'azione e' senza fondo, e regge perche' attorno c'e' del contenuto che
+le da' contesto. Nella pagina di login non c'e': una schermata quasi vuota, un
+campo, un solo comando. Li' un'etichetta senza superficie si legge come un
+collegamento invece che come il pulsante che chiude il compito — e su un accesso
+non ci si puo' permettere l'esitazione.
+
+Dentro `.tr-login`, e solo li', `--primary` torna a essere una superficie piena.
+**Non e' una variante**: e' una regola legata al blocco della pagina di login,
+proprio perche' non possa essere usata altrove per comodita'. Lo spigolo vivo
+resta — cambia il fondo, non la geometria.
+
 ### Misure e stati
 
 `--sm` (32px) per barre, tabelle e azioni di riga; misura standard 42px; `--lg`
