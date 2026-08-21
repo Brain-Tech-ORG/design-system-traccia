@@ -1009,6 +1009,47 @@ Sotto `prefers-reduced-motion: reduce` vale la regola dell'etichetta flottante:
 accesa, il marchio pieno, e niente si muove.
 
 
+## Grafici
+
+Il sistema non disegna i grafici — li disegna la libreria — ma detta due cose:
+i colori e il modo in cui si scrivono le etichette.
+
+### I colori si passano come valore, non come classe
+
+Le serie di un grafico, il disegno su canvas, i PDF e l'HTML delle stampe non
+passano da una classe CSS: prendono un colore come stringa. Sono l'unico posto
+del sistema dove il colore va copiato a mano, e quindi l'unico che puo' restare
+indietro quando la palette cambia. Vanno letti da una fonte sola — nell'hub e'
+`lib/design-tokens.ts` — mai scritti nel corpo della pagina.
+
+Piu' serie nello stesso grafico sono l'unica deroga ammessa al singolo accento:
+li' il colore distingue un dato da un altro, e non e' decorazione. Le sfumature
+restano vietate anche qui — una barra sfumata non dice niente in piu' di una
+barra piena.
+
+### L'etichetta di un asse non va a capo
+
+E' l'errore ricorrente dei grafici a barre orizzontali. La libreria divide su
+un'altezza fissa: se le categorie sono tante o i nomi lunghi, manda il testo a
+capo, le righe sbordano dalla propria banda e **le etichette si accavallano fra
+loro**, fino a non leggersene piu' nessuna.
+
+Tre accorgimenti, sempre insieme:
+
+- **Una riga sola, troncata.** L'etichetta si taglia con un `…` alla lunghezza
+  che l'asse regge davvero. Il nome per intero resta nel tooltip, dove chi ha
+  bisogno del dettaglio lo trova.
+- **L'altezza segue il numero di barre**, non il contrario: circa 40px per
+  barra, con un minimo. Un grafico che cresce in basso e' sempre meglio di uno
+  che si comprime fino a diventare illeggibile.
+- **Tutte le etichette, o nessuna**: `interval={0}` (o l'equivalente della
+  libreria), altrimenti la libreria ne salta alcune per far posto e il lettore
+  non capisce a quale barra corrisponda quella rimasta.
+
+Se dopo questi tre l'etichetta e' ancora troppo lunga, il problema non e' il
+grafico: sono troppe categorie in una vista sola.
+
+
 ## Firma email
 
 File pronti da incollare: [`email/firma-email.html`](email/firma-email.html) e
