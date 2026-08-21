@@ -1,32 +1,81 @@
 /* ==========================================================================
    LA TRACCIA — Design Tokens
    Fonte unica di verità per colori, tipografia, spaziatura e geometria.
-   Regola: mai introdurre altri hue; varianti solo in oklch mantenendo
-   lo stesso hue del blu logo (#4194d7).
+
+   Regola cromatica:
+   - identità, brochure, slide e materiali editoriali usano un solo hue,
+     derivato dal blu logo (#4194d7);
+   - le interfacce software possono introdurre esclusivamente colori semantici
+     di stato per comunicare stato, severità e urgenza;
+   - i colori di stato non sono accenti decorativi e non sostituiscono il blu
+     di marca.
    ========================================================================== */
 
 :root {
-  /* ---- Colore · Brand (unico accento ammesso) ---- */
-  --tr-brand-500: #4194d7; /* blu logo: evidenze, numeri, quote, dot, icone */
-  --tr-brand-300: #8fc0e7; /* linee secondarie */
+  /* ---- Colore · Brand (unico accento istituzionale) ---- */
+  --tr-brand-50: #edf6fd;  /* fondo brand appena accennato */
   --tr-brand-100: #d0e4f5; /* tinta pallida decorativa */
-  /* Tinte scure dello stesso hue: servono dove il blu logo non regge il
-     contrasto (testo piccolo, superfici piene con testo bianco). */
+  --tr-brand-200: #b0d2ee; /* hover delle tinte pallide */
+  --tr-brand-300: #8fc0e7; /* linee secondarie */
+  --tr-brand-400: #69aadf; /* icone e grafica secondaria */
+  --tr-brand-500: #4194d7; /* blu logo: evidenze, numeri, quote, dot, icone */
   --tr-brand-600: #2f7ab8; /* testo e fondi pieni con testo bianco (>= 4.5:1) */
   --tr-brand-700: #266296; /* hover delle superfici piene */
-  --tr-brand-200: #b0d2ee; /* hover delle tinte pallide */
+  --tr-brand-800: #1d4c76; /* sezioni scure */
+  --tr-brand-900: #153758; /* titoli istituzionali ad alto contrasto */
+  --tr-brand-950: #0d2339; /* massimo contrasto */
 
-  /* ---- Colore · Stati di validazione ----
-     Unica eccezione ammessa alla regola del singolo hue: serve solo
-     all'interfaccia software (validazione dei form, esiti di sistema).
-     Mai su brochure, slide o materiale stampato. Tinte desaturate perche'
-     convivano con il blu logo senza competere con esso. */
-  --tr-state-danger: #a53a3a;  /* errore, campo non valido */
-  --tr-state-danger-dark: #872f2f;   /* hover delle superfici piene rosse */
-  --tr-state-danger-tint: #fadfdf;   /* fondo tenue delle azioni distruttive */
-  --tr-state-danger-tint-2: #f3c2c2; /* hover del fondo tenue */
-  --tr-state-warning: #99631d; /* avviso, azione da confermare */
-  --tr-state-success: #2f6b45; /* esito positivo */
+  /* ---- Colore · Stati semantici UI ----
+     Eccezione controllata alla regola del singolo hue. Queste famiglie sono
+     riservate alle interfacce software e comunicano un significato preciso:
+       info     = informazione neutra;
+       success  = operazione completata / stato regolare;
+       warning  = attenzione richiesta, situazione non ancora bloccante;
+       danger   = errore, fallimento o condizione bloccante;
+       critical = allarme che richiede intervento immediato.
+
+     Ogni famiglia offre base, dark, tint, tint-2 e border. Non affidarsi mai
+     al solo colore: associare sempre icona, testo o forma e, per gli
+     aggiornamenti dinamici, il corretto ruolo ARIA. Mai usare questi hue su
+     brochure, slide o materiale stampato. */
+
+  /* Informazione: riusa il blu di marca, senza introdurre un nuovo hue. */
+  --tr-state-info: var(--tr-brand-600);
+  --tr-state-info-dark: var(--tr-brand-700);
+  --tr-state-info-tint: var(--tr-brand-50);
+  --tr-state-info-tint-2: var(--tr-brand-100);
+  --tr-state-info-border: var(--tr-brand-300);
+
+  /* Esito positivo. */
+  --tr-state-success: #2f6b45;
+  --tr-state-success-dark: #245537;
+  --tr-state-success-tint: #e5f2e9;
+  --tr-state-success-tint-2: #cde4d5;
+  --tr-state-success-border: #7faa8a;
+
+  /* Attenzione / allerta non bloccante. */
+  --tr-state-warning: #99631d;
+  --tr-state-warning-dark: #70470f;
+  --tr-state-warning-tint: #fff2d9;
+  --tr-state-warning-tint-2: #f3d49a;
+  --tr-state-warning-border: #c89446;
+
+  /* Errore / condizione bloccante. */
+  --tr-state-danger: #a53a3a;
+  --tr-state-danger-dark: #872f2f;
+  --tr-state-danger-tint: #fadfdf;
+  --tr-state-danger-tint-2: #f3c2c2;
+  --tr-state-danger-border: #c97878;
+
+  /* Allarme critico: stessa famiglia del pericolo, più scura e più urgente. */
+  --tr-state-critical: #702525;
+  --tr-state-critical-dark: #571b1b;
+  --tr-state-critical-tint: #f6dddd;
+  --tr-state-critical-tint-2: #eab5b5;
+  --tr-state-critical-border: #b86767;
+
+  /* Testo comune sulle superfici semantiche piene. */
+  --tr-state-on-solid: #ffffff;
 
   /* ---- Colore · Superfici ----
      Due piani, non uno. La PAGINA e' il fondo neutro; i COMPONENTI che

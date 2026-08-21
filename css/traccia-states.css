@@ -1,0 +1,199 @@
+/* ==========================================================================
+   LA TRACCIA — Stati semantici per interfacce software
+   Caricare dopo tokens/tokens.css e css/traccia.css.
+
+   I colori di stato comunicano significato, non decorazione. Ogni stato deve
+   essere accompagnato da testo, icona o forma; il colore da solo non basta.
+   ========================================================================== */
+
+/* Variabili locali del componente.
+   Le regole estendono i modificatori .tr-notice già esistenti senza cambiare
+   il markup corrente. */
+.tr-notice {
+  --tr-notice-accent: var(--tr-border-soft-2);
+  --tr-notice-dark: var(--tr-ink-900);
+  --tr-notice-tint: var(--tr-surface);
+  --tr-notice-tint-2: var(--tr-surface-tint);
+  --tr-notice-border: var(--tr-border-soft-2);
+
+  border-left-color: var(--tr-notice-border);
+}
+
+.tr-notice--info {
+  --tr-notice-accent: var(--tr-state-info);
+  --tr-notice-dark: var(--tr-state-info-dark);
+  --tr-notice-tint: var(--tr-state-info-tint);
+  --tr-notice-tint-2: var(--tr-state-info-tint-2);
+  --tr-notice-border: var(--tr-state-info-border);
+  color: var(--tr-state-info);
+}
+
+.tr-notice--success {
+  --tr-notice-accent: var(--tr-state-success);
+  --tr-notice-dark: var(--tr-state-success-dark);
+  --tr-notice-tint: var(--tr-state-success-tint);
+  --tr-notice-tint-2: var(--tr-state-success-tint-2);
+  --tr-notice-border: var(--tr-state-success-border);
+  color: var(--tr-state-success);
+}
+
+.tr-notice--warning {
+  --tr-notice-accent: var(--tr-state-warning);
+  --tr-notice-dark: var(--tr-state-warning-dark);
+  --tr-notice-tint: var(--tr-state-warning-tint);
+  --tr-notice-tint-2: var(--tr-state-warning-tint-2);
+  --tr-notice-border: var(--tr-state-warning-border);
+  color: var(--tr-state-warning);
+}
+
+.tr-notice--danger {
+  --tr-notice-accent: var(--tr-state-danger);
+  --tr-notice-dark: var(--tr-state-danger-dark);
+  --tr-notice-tint: var(--tr-state-danger-tint);
+  --tr-notice-tint-2: var(--tr-state-danger-tint-2);
+  --tr-notice-border: var(--tr-state-danger-border);
+  color: var(--tr-state-danger);
+}
+
+.tr-notice--critical {
+  --tr-notice-accent: var(--tr-state-critical);
+  --tr-notice-dark: var(--tr-state-critical-dark);
+  --tr-notice-tint: var(--tr-state-critical-tint);
+  --tr-notice-tint-2: var(--tr-state-critical-tint-2);
+  --tr-notice-border: var(--tr-state-critical-border);
+  border-left-width: var(--tr-rule-accent);
+  color: var(--tr-state-critical);
+}
+
+/* Markup strutturato facoltativo. Il testo lungo torna all'inchiostro neutro:
+   il colore semantico resta su icona, titolo e filetto. */
+.tr-notice__icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--tr-notice-accent);
+}
+
+.tr-notice__icon > svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.tr-notice__content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tr-notice__title {
+  margin: 0;
+  color: var(--tr-notice-accent);
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono);
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+.tr-notice__body {
+  margin: var(--tr-space-1) 0 0;
+  color: var(--tr-ink-600);
+}
+
+/* Pannello tenue: ammesso solo nelle UI, per messaggi persistenti o contestuali.
+   Non va trasferito a brochure e slide. */
+.tr-notice--tint {
+  padding: var(--tr-space-4);
+  border-left-color: var(--tr-notice-accent);
+  background: var(--tr-notice-tint);
+}
+
+.tr-notice--tint-strong {
+  background: var(--tr-notice-tint-2);
+}
+
+/* Superficie piena: solo per errori bloccanti e allarmi. */
+.tr-notice--solid {
+  padding: var(--tr-space-4);
+  border-left-color: var(--tr-notice-dark);
+  background: var(--tr-notice-accent);
+  color: var(--tr-state-on-solid);
+}
+
+.tr-notice--solid .tr-notice__icon,
+.tr-notice--solid .tr-notice__title,
+.tr-notice--solid .tr-notice__body,
+.tr-notice--solid a {
+  color: inherit;
+}
+
+.tr-notice--solid a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+/* Allarme ad alta priorità. Usare con role="alert" e, solo quando l'evento
+   dinamico richiede annuncio immediato, aria-live="assertive". */
+.tr-notice--alarm {
+  --tr-notice-accent: var(--tr-state-critical);
+  --tr-notice-dark: var(--tr-state-critical-dark);
+  --tr-notice-tint: var(--tr-state-critical-tint);
+  --tr-notice-tint-2: var(--tr-state-critical-tint-2);
+  --tr-notice-border: var(--tr-state-critical-border);
+
+  padding: var(--tr-space-4);
+  border-left: 6px solid var(--tr-state-critical-dark);
+  background: var(--tr-state-critical);
+  color: var(--tr-state-on-solid);
+}
+
+.tr-notice--alarm .tr-notice__icon,
+.tr-notice--alarm .tr-notice__title,
+.tr-notice--alarm .tr-notice__body,
+.tr-notice--alarm a {
+  color: inherit;
+}
+
+/* Indicatore compatto: il testo è obbligatorio, quindi il significato non
+   dipende dal solo pallino. */
+.tr-status {
+  --tr-status-color: var(--tr-ink-400);
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tr-space-2);
+  color: var(--tr-status-color);
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+}
+
+.tr-status::before {
+  content: "";
+  width: var(--tr-dot-size);
+  height: var(--tr-dot-size);
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+.tr-status--info { --tr-status-color: var(--tr-state-info); }
+.tr-status--success { --tr-status-color: var(--tr-state-success); }
+.tr-status--warning { --tr-status-color: var(--tr-state-warning); }
+.tr-status--danger { --tr-status-color: var(--tr-state-danger); }
+.tr-status--critical { --tr-status-color: var(--tr-state-critical); }
+
+/* Il colore non deve essere l'unico segnale negli ambienti ad alto rischio. */
+@media (forced-colors: active) {
+  .tr-notice,
+  .tr-notice--alarm {
+    border: 2px solid CanvasText;
+    forced-color-adjust: auto;
+  }
+
+  .tr-status::before {
+    border: 1px solid CanvasText;
+  }
+}
