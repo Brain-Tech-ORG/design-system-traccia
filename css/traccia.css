@@ -1258,18 +1258,19 @@ select.tr-field__control + .tr-field__label,
    la spaziatura e gli allineamenti, non le scatole — applicata finalmente anche
    alle azioni, che erano rimaste l'ultimo elemento con un contenitore pieno.
 
-   La gerarchia si legge da due cose sole:
-     - il colore dell'inchiostro
-     - se il filetto sotto l'etichetta e' acceso da fermo oppure no
+   A riposo il pulsante e' solo la sua etichetta: il filetto compare sotto il
+   puntatore. La gerarchia si legge quindi da una cosa sola, il colore
+   dell'inchiostro — ed e' il motivo per cui le varianti sono cinque e non di
+   piu': senza fondo, senza cornice e senza filetto fisso non ci sono altri
+   gradi da esprimere, e inventarne renderebbe solo indistinguibili due nomi.
 
    Gerarchia, dalla piu' forte alla piu' debole:
-     --primary         filetto acceso, inchiostro blu: l'azione che porta avanti
-                       il compito, una sola per schermata
-     --secondary       filetto tenue acceso, inchiostro scuro
-     --neutral         nessun filetto: annulla, chiudi, torna indietro
-     --quiet           nessun filetto: azioni di servizio
-     --danger          filetto acceso, inchiostro rosso: solo cio' che distrugge
-     --danger-outline  distruttiva di grado minore
+     --primary    inchiostro blu: l'azione che porta avanti il compito,
+                  una sola per schermata
+     --secondary  inchiostro scuro
+     --neutral    inchiostro tenue: annulla, chiudi, torna indietro
+     --quiet      inchiostro tenue, filetto blu: azioni di servizio
+     --danger     inchiostro rosso: solo cio' che distrugge
 
    Va detto che senza fondo e senza bordo l'azione somiglia a un collegamento:
    e' un compromesso voluto in favore della quiete della pagina, e regge finche'
@@ -1278,9 +1279,6 @@ select.tr-field__control + .tr-field__label,
 .tr-btn {
   /* Colore del filetto che cresce all'hover; ogni variante lo ridefinisce. */
   --tr-btn-rule: var(--tr-brand-500);
-  /* Colore del filetto acceso da fermo: trasparente dove la gerarchia non lo
-     prevede. */
-  --tr-btn-rule-idle: transparent;
   --tr-btn-rule-h: 2px;
 
   position: relative;
@@ -1304,20 +1302,12 @@ select.tr-field__control + .tr-field__label,
   transition: color var(--tr-motion-fast) var(--tr-motion-ease);
 }
 
-/* Filetto a riposo */
-.tr-btn::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 8px 0;
-  height: var(--tr-btn-rule-h);
-  background: var(--tr-btn-rule-idle);
-}
-/* Filetto che cresce all'hover, sopra quello a riposo */
+/* Il filetto non esiste a riposo: compare solo sotto il puntatore. A fermo il
+   pulsante e' solo la sua etichetta. */
 .tr-btn::before {
   content: "";
   position: absolute;
   inset: auto 0 8px 0;
-  z-index: 1;
   height: var(--tr-btn-rule-h);
   background: var(--tr-btn-rule);
   transform: scaleX(0);
@@ -1342,14 +1332,12 @@ select.tr-field__control + .tr-field__label,
 /* ---- Gerarchia ---- */
 .tr-btn--primary {
   color: var(--tr-brand-600);
-  --tr-btn-rule-idle: var(--tr-brand-500);
-  --tr-btn-rule: var(--tr-brand-700);
+  --tr-btn-rule: var(--tr-brand-500);
 }
 .tr-btn--primary:hover:not(:disabled) { color: var(--tr-brand-700); }
 
 .tr-btn--secondary {
   color: var(--tr-ink-900);
-  --tr-btn-rule-idle: var(--tr-border-soft-2);
   --tr-btn-rule: var(--tr-brand-500);
 }
 .tr-btn--secondary:hover:not(:disabled) { color: var(--tr-brand-700); }
@@ -1373,24 +1361,16 @@ select.tr-field__control + .tr-field__label,
    rosso che non cancella nulla svaluta quelli che lo fanno davvero. */
 .tr-btn--danger {
   color: var(--tr-state-danger);
-  --tr-btn-rule-idle: var(--tr-state-danger);
-  --tr-btn-rule: var(--tr-state-danger-dark);
+  --tr-btn-rule: var(--tr-state-danger);
 }
 .tr-btn--danger:hover:not(:disabled) { color: var(--tr-state-danger-dark); }
 
-.tr-btn--danger-outline {
-  color: var(--tr-state-danger);
-  --tr-btn-rule: var(--tr-state-danger);
-}
-.tr-btn--danger-outline:hover:not(:disabled) { color: var(--tr-state-danger-dark); }
 
 /* ---- Misure ---- */
 .tr-btn--sm { height: var(--tr-btn-h-sm); font-size: 11px; }
-.tr-btn--sm::before,
-.tr-btn--sm::after { bottom: 5px; }
+.tr-btn--sm::before { bottom: 5px; }
 .tr-btn--lg { height: var(--tr-btn-h-lg); font-size: 13px; }
-.tr-btn--lg::before,
-.tr-btn--lg::after { bottom: 11px; }
+.tr-btn--lg::before { bottom: 11px; }
 .tr-btn--block { width: 100%; }
 
 /* Sola icona: nessun filetto sotto — una sottolineatura sotto un simbolo non
@@ -1400,11 +1380,9 @@ select.tr-field__control + .tr-field__label,
   height: var(--tr-btn-h);
   color: var(--tr-ink-400);
 }
-.tr-btn--icon::before,
-.tr-btn--icon::after { content: none; }
+.tr-btn--icon::before { content: none; }
 .tr-btn--icon:hover:not(:disabled) { color: var(--tr-brand-600); }
-.tr-btn--icon.tr-btn--danger:hover:not(:disabled),
-.tr-btn--icon.tr-btn--danger-outline:hover:not(:disabled) { color: var(--tr-state-danger); }
+.tr-btn--icon.tr-btn--danger:hover:not(:disabled) { color: var(--tr-state-danger); }
 .tr-btn--icon.tr-btn--sm { width: var(--tr-btn-h-sm); height: var(--tr-btn-h-sm); }
 
 /* Gruppo di azioni. Senza scatole servono piu' aria fra un comando e l'altro,

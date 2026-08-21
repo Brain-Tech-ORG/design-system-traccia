@@ -387,8 +387,11 @@ filetto. E' la stessa regola del resto del sistema — la struttura la danno i
 filetti, la spaziatura e gli allineamenti, non le scatole — applicata finalmente
 anche alle azioni, che erano rimaste l'ultimo elemento con un contenitore pieno.
 
-La gerarchia si legge da due cose sole: **il colore dell'inchiostro** e **se il
-filetto sotto l'etichetta e' acceso da fermo oppure no**.
+A riposo il pulsante e' **solo la sua etichetta**: il filetto compare sotto il
+puntatore. La gerarchia si legge quindi da una cosa sola, **il colore
+dell'inchiostro** — ed e' il motivo per cui le varianti sono cinque e non di
+piu': senza fondo, senza cornice e senza filetto fisso non ci sono altri gradi
+da esprimere, e inventarne renderebbe solo indistinguibili due nomi.
 
 Va detto: senza fondo e senza bordo l'azione somiglia a un collegamento. E' un
 compromesso voluto in favore della quiete della pagina, e regge finche' le
@@ -400,11 +403,11 @@ giusto e' in cima al blocco o in fondo a un gruppo, non annegata nel mezzo.
 
 | Variante | Quando |
 |---|---|
-| `--primary` | Filetto acceso e inchiostro blu. **Una sola per schermata** |
-| `--secondary` | Filetto tenue acceso, inchiostro scuro |
-| `--neutral` | Nessun filetto: annulla, chiudi, torna indietro |
-| `--quiet` | Nessun filetto: azioni di servizio |
-| `--danger` / `--danger-outline` | Solo azioni distruttive |
+| `--primary` | Inchiostro blu. **Una sola per schermata** |
+| `--secondary` | Inchiostro scuro |
+| `--neutral` | Inchiostro tenue: annulla, chiudi, torna indietro |
+| `--quiet` | Inchiostro tenue, filetto blu: azioni di servizio |
+| `--danger` | Inchiostro rosso: solo cio' che distrugge |
 
 ### Contrasto
 
@@ -424,9 +427,9 @@ si ferma piu'.
 
 ### Hover
 
-All'hover **cresce un filetto da sinistra sotto l'etichetta**, sopra quello a
-riposo dove c'e'. E' l'unica cosa che si muove: solo un `transform`, quindi
-nessun reflow e il testo resta fermo.
+All'hover **cresce un filetto da sinistra sotto l'etichetta**. E' l'unica cosa
+che si muove, ed e' anche l'unica cosa che compare: a riposo non c'e' nulla
+sotto il testo. Solo un `transform`, quindi nessun reflow e il testo resta fermo.
 
 La neutra fa eccezione e usa l'inchiostro invece dell'accento: e' un'uscita, non
 un'azione da richiamare. Il pulsante a sola icona non ha filetto — una
