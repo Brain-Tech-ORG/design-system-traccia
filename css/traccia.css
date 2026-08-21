@@ -1,4 +1,4 @@
-/* ==========================================================================
+/* ========================================================================== 
    LA TRACCIA — Componenti
    Richiede tokens/tokens.css.
    Linguaggio: layout aperti, niente box, niente ombre, niente gradienti.
@@ -43,7 +43,11 @@
 .tr-photo-frame,
 .tr-spinner,
 .tr-spinner__track,
-.tr-spinner__ring { box-sizing: border-box; }
+.tr-spinner__ring,
+.tr-mark-clip,
+.tr-mark-clip__defs,
+.tr-mark-clip__img,
+.tr-mark-clip__echo { box-sizing: border-box; }
 
 /* ---- Base pagina ---- */
 .tr-page {
@@ -56,7 +60,7 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* ==========================================================================
+/* ========================================================================== 
    Primitive geometriche
    ========================================================================== */
 
@@ -135,7 +139,7 @@
 .tr-circle--sm { width: var(--tr-circle-sm); height: var(--tr-circle-sm); font-size: 12px; }
 .tr-circle--lg { width: var(--tr-circle-lg); height: var(--tr-circle-lg); font-size: 16px; }
 
-/* ==========================================================================
+/* ========================================================================== 
    Tipografia
    ========================================================================== */
 
@@ -180,7 +184,7 @@
   color: var(--tr-ink-400);
 }
 
-/* ==========================================================================
+/* ========================================================================== 
    1 · Header di pagina
    logo + wordmark a sinistra, eyebrow mono blu a destra, filetto sotto
    ========================================================================== */
@@ -207,7 +211,7 @@
   color: var(--tr-ink-900);
 }
 
-/* ==========================================================================
+/* ========================================================================== 
    2 · Eyebrow / kicker
    etichetta mono blu + filetto stondato 2px che riempie la riga;
    variante con nota mono grigia in coda a destra
@@ -241,7 +245,7 @@
   white-space: nowrap;
 }
 
-/* ==========================================================================
+/* ========================================================================== 
    3 · Chip / pill
    bordo 1px blu, testo mono blu, raggio 999px
    ========================================================================== */
@@ -263,7 +267,7 @@
 }
 .tr-chip .tr-dot { width: 6px; height: 6px; }
 
-/* ==========================================================================
+/* ========================================================================== 
    4 · Voce elenco numerata (settori, funzioni)
    cerchietto + label semibold o titolo maiuscolo + body breve; senza box
    ========================================================================== */
@@ -290,7 +294,7 @@
   color: var(--tr-ink-600);
 }
 
-/* ==========================================================================
+/* ========================================================================== 
    5 · Step di processo
    cerchietti numerati (l'ultimo pieno blu), in riga da 4,
    su slide collegati da una linea orizzontale sottile brand/300
@@ -337,7 +341,7 @@
   max-width: 22ch;
 }
 
-/* ==========================================================================
+/* ========================================================================== 
    6 · Riga specifiche
    voci con dot bullet mono distribuite su una riga, filetto sottile sopra
    ========================================================================== */
@@ -382,7 +386,7 @@
 }
 .tr-dotlist li .tr-dot { transform: translateY(-1px); }
 
-/* ==========================================================================
+/* ========================================================================== 
    7 · Tabella dati
    label mono grigia a sinistra / valore mono ink a destra,
    filetti 1px; nota d'unità mono piccola in basso a destra
@@ -424,7 +428,7 @@
   color: var(--tr-ink-400);
 }
 
-/* ==========================================================================
+/* ========================================================================== 
    8 · Disegno tecnico quotato (contenitore + convenzioni SVG)
    silhouette: tratto ink 2–2.5px, riempimento surface/tint;
    quote: linee blu 1.5–3px con tacche, valore mono blu (virgola italiana)
@@ -449,7 +453,7 @@
   fill: var(--tr-brand-500);
 }
 
-/* ==========================================================================
+/* ========================================================================== 
    9 · Footer
    filetto sopra, logo + wordmark a sinistra, contatti mono con dot blu
    e/o riferimento prodotto mono blu a destra
@@ -546,7 +550,7 @@
 }
 .tr-footer__certs-badges { height: 30px; width: auto; display: block; }
 
-/* ==========================================================================
+/* ========================================================================== 
    10 · Pagina di login
    Testata con il marchio del CLIENTE, colonna del form senza box, footer
    La Traccia. Vale la regola di co-branding: un solo marchio per lockup.
@@ -617,7 +621,7 @@
   white-space: nowrap;
 }
 
-/* ==========================================================================
+/* ========================================================================== 
    Controlli di interfaccia
    Introdotti dalla pagina di login, riusabili in tutta la UI software.
    Stesso linguaggio del resto del sistema: filetti al posto di ombre e ring,
@@ -1638,7 +1642,7 @@ select.tr-field__control + .tr-field__label,
 .tr-notice--success { border-left-color: var(--tr-state-success); color: var(--tr-state-success); }
 .tr-notice p { margin: 0; }
 
-/* ==========================================================================
+/* ========================================================================== 
    Cornice foto ambientata
    angoli 22–36px, bordo 1–2px border/soft, padding 7–14px.
    I render/scontornati PNG invece fluttuano sul fondo pagina senza cornice.
@@ -1662,7 +1666,83 @@ select.tr-field__control + .tr-field__label,
   object-fit: contain; /* soggetto intero e centrato, fluttua sul paper */
 }
 
-/* ==========================================================================
+/* ========================================================================== 
+   Ritaglio foto nella sagoma del marchio
+   Le due forme arrivano da assets/logo-traccia.svg. Il contenitore espone
+   dimensioni, scala e offset della maschera; MarkClip valorizza le variabili
+   tramite una classe di istanza e monta un clipPath con ID univoco.
+   ========================================================================== */
+.tr-mark-clip {
+  --tr-mark-clip-width: 640px;
+  --tr-mark-clip-height: 640px;
+  --tr-mark-clip-scale: 1;
+  --tr-mark-clip-mask-offset-x: 0px;
+  --tr-mark-clip-mask-offset-y: 0px;
+  --tr-mark-clip-object-position: 50% 50%;
+  --tr-mark-clip-path: url(#tracciaMarkClip);
+  --tr-mark-clip-canvas-left: 0px;
+  --tr-mark-clip-canvas-top: 0px;
+  --tr-mark-clip-canvas-width: 1280px;
+  --tr-mark-clip-canvas-height: 746.67px;
+  --tr-mark-clip-echo-offset-x: 24px;
+  --tr-mark-clip-echo-offset-y: 18px;
+  --tr-mark-clip-bleed-inline: var(--tr-space-7);
+
+  position: relative;
+  display: block;
+  flex: none;
+  isolation: isolate;
+  width: var(--tr-mark-clip-width);
+  height: var(--tr-mark-clip-height);
+  max-width: none;
+  margin: 0;
+  overflow: visible;
+}
+
+/* Le defs restano nel documento per risolvere url(#id), senza occupare spazio. */
+.tr-mark-clip__defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tr-mark-clip__img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: var(--tr-mark-clip-object-position);
+  clip-path: var(--tr-mark-clip-path, url(#tracciaMarkClip));
+  -webkit-clip-path: var(--tr-mark-clip-path, url(#tracciaMarkClip));
+}
+
+/* L'outline usa lo stesso canvas della maschera, sfalsato dietro alla foto. */
+.tr-mark-clip__echo {
+  position: absolute;
+  z-index: 0;
+  left: calc(var(--tr-mark-clip-canvas-left) + var(--tr-mark-clip-echo-offset-x));
+  top: calc(var(--tr-mark-clip-canvas-top) + var(--tr-mark-clip-echo-offset-y));
+  display: block;
+  width: var(--tr-mark-clip-canvas-width);
+  height: var(--tr-mark-clip-canvas-height);
+  max-width: none;
+  object-fit: contain;
+  opacity: var(--tr-watermark-opacity);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Sbordo logico a destra nei layout LTR e a sinistra nei layout RTL. */
+.tr-mark-clip--bleed {
+  margin-inline-end: calc(0px - var(--tr-mark-clip-bleed-inline));
+}
+
+/* ========================================================================== 
    Watermark logo (sagoma negli sfondi)
    Versione outline del logo (assets/logo-traccia-outline.svg: fill none,
    tratto blu logo) in opacità 0.16 sul paper, negli sfondi di brochure
@@ -1688,7 +1768,7 @@ select.tr-field__control + .tr-field__label,
 .tr-watermark--top-right { top: -74px; right: -40px; }
 .tr-watermark--bottom-left { bottom: -80px; left: -60px; }
 
-/* ==========================================================================
+/* ========================================================================== 
    15. Tabs
    Cambiare vista non e' navigare: le tabs restano dentro la pagina e non
    pretendono la voce alta di un menu. Sono etichette mono in fila, e a dire

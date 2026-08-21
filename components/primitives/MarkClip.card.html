@@ -1,0 +1,117 @@
+<!-- @dsCard group="Immagini" viewport="1280x720" name="Ritaglio nella sagoma del marchio" subtitle="Scala piena, sbordo e variante senza eco" -->
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../styles.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body, #root { width: 100%; height: 100%; margin: 0; }
+    body { background: var(--tr-paper); color: var(--tr-ink-900); }
+    .mark-clip-card {
+      width: 1280px;
+      height: 720px;
+      padding: 42px 48px;
+      overflow: hidden;
+      font-family: var(--tr-font-display);
+    }
+    .mark-clip-card__head { display: flex; align-items: center; gap: 18px; margin-bottom: 28px; }
+    .mark-clip-card__head span:first-child {
+      font: 600 12px/1 var(--tr-font-mono);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--tr-brand-500);
+    }
+    .mark-clip-card__head span:last-child { flex: 1; height: 1px; background: var(--tr-border-soft); }
+    .mark-clip-card__grid {
+      display: grid;
+      grid-template-columns: 560px 1fr;
+      gap: 42px;
+      align-items: start;
+    }
+    .mark-clip-card__main,
+    .mark-clip-card__sample { position: relative; overflow: hidden; background: var(--tr-surface); }
+    .mark-clip-card__main { height: 552px; padding: 22px; }
+    .mark-clip-card__side { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .mark-clip-card__sample { height: 330px; padding: 18px; }
+    .mark-clip-card__label {
+      position: absolute;
+      left: 18px;
+      bottom: 16px;
+      z-index: 3;
+      font: 600 11px/1 var(--tr-font-mono);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--tr-ink-600);
+    }
+    .mark-clip-card__main-clip { --tr-mark-clip-echo-offset-x: 20px; --tr-mark-clip-echo-offset-y: 16px; }
+    .mark-clip-card__bleed {
+      --tr-mark-clip-bleed-inline: 72px;
+      --tr-mark-clip-echo-offset-x: 16px;
+      --tr-mark-clip-echo-offset-y: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="../../_ds_bundle.js"></script>
+  <script>
+    const React = window.React;
+    const ReactDOM = window.ReactDOM;
+    const namespace = Object.values(window).find(
+      (value) => value && typeof value === "object" && typeof value.MarkClip === "function",
+    );
+    if (!React || !ReactDOM || !namespace) {
+      throw new Error("MarkClip non trovato nel bundle del design system.");
+    }
+    const { MarkClip } = namespace;
+    const h = React.createElement;
+
+    function Card() {
+      return h("main", { className: "mark-clip-card" },
+        h("header", { className: "mark-clip-card__head" },
+          h("span", null, "Immagini / MarkClip"), h("span", null)),
+        h("section", { className: "mark-clip-card__grid" },
+          h("div", { className: "mark-clip-card__main" },
+            h(MarkClip, {
+              src: "../../assets/sede.jpg",
+              alt: "Sede La Traccia",
+              width: 520,
+              height: 500,
+              objectPosition: "50% 50%",
+              echo: true,
+              echoSrc: "../../assets/logo-traccia-outline.svg",
+              className: "mark-clip-card__main-clip",
+            }),
+            h("span", { className: "mark-clip-card__label" }, "Scala piena + eco")),
+          h("div", { className: "mark-clip-card__side" },
+            h("div", { className: "mark-clip-card__sample" },
+              h(MarkClip, {
+                src: "../../assets/sede.jpg",
+                alt: "Sede La Traccia",
+                width: 330,
+                height: 290,
+                objectPosition: "50% 50%",
+                echo: true,
+                echoSrc: "../../assets/logo-traccia-outline.svg",
+                bleed: true,
+                className: "mark-clip-card__bleed",
+              }),
+              h("span", { className: "mark-clip-card__label" }, "A sbordo")),
+            h("div", { className: "mark-clip-card__sample" },
+              h(MarkClip, {
+                src: "../../assets/sede.jpg",
+                alt: "Sede La Traccia",
+                width: 260,
+                height: 250,
+                objectPosition: "50% 50%",
+                echo: false,
+              }),
+              h("span", { className: "mark-clip-card__label" }, "Senza eco")))));
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(h(Card));
+  </script>
+</body>
+</html>
