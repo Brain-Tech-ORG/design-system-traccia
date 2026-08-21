@@ -28,8 +28,16 @@
   --tr-state-warning: #99631d; /* avviso, azione da confermare */
   --tr-state-success: #2f6b45; /* esito positivo */
 
-  /* ---- Colore · Superfici ---- */
-  --tr-paper: #fbfbfd;        /* sfondo pagina */
+  /* ---- Colore · Superfici ----
+     Due piani, non uno. La PAGINA e' il fondo neutro; i COMPONENTI che
+     raccolgono contenuto — card, pannelli — stanno un gradino sopra, in bianco.
+     E' cosi' che un gruppo si stacca senza bisogno di un bordo o di un'ombra:
+     lo separa il piano su cui poggia.
+     Questi sono i valori della modalita' chiara. In una futura modalita' scura
+     il rapporto resta lo stesso e si invertono le tinte: la pagina scende al
+     fondo piu' scuro e i componenti salgono di un gradino verso la luce. */
+  --tr-paper: #fbfbfd;        /* piano 0: la pagina */
+  --tr-surface: #ffffff;      /* piano 1: card e pannelli */
   --tr-surface-tint: #eff2f9; /* SOLO riempimenti piccoli (cerchietti, silhouette) */
 
   /* ---- Colore · Bordi ---- */

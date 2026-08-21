@@ -974,7 +974,10 @@ select.tr-field__control + .tr-field__label,
   top: calc(var(--tr-field-h) + 6px);
   display: flex;
   flex-direction: column;
-  background: var(--tr-field-bg);
+  /* Il pannello galleggia sopra il contenuto: qui il filetto non e' decorazione
+     ma l'unica cosa che ne segna il confine, perche' bianco su bianco non si
+     staccherebbe. */
+  background: var(--tr-surface);
   border: var(--tr-rule-thin) solid var(--tr-border-soft);
   border-radius: var(--tr-radius-ui);
   visibility: hidden;
@@ -1184,6 +1187,7 @@ select.tr-field__control + .tr-field__label,
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .tr-card--action::after,
   .tr-select__panel,
   .tr-select__dot,
   .tr-select__option,
@@ -1234,25 +1238,32 @@ select.tr-field__control + .tr-field__label,
    contenuti e' davvero un'unita' — una scheda, un pannello, un riepilogo — e
    non semplicemente una sezione di pagina.
 
-   Quando serve, e' fatta di una cosa sola: un filetto da 1px a spigolo vivo.
-   Nessun fondo bianco, perche' sul paper non separerebbe nulla e
-   aggiungerebbe solo una seconda tinta; nessuna ombra, che il sistema non
-   ammette; nessun secondo bordo.
+   Quando serve, la card non ha ne' bordo ne' ombra: la separa il piano su cui
+   poggia. La pagina e' il fondo neutro, la card sta un gradino sopra, in
+   bianco. E' la stessa idea dei filetti — separare con il minimo — applicata
+   alla superficie invece che alla linea.
+
+   La card ridefinisce --tr-field-bg per i propri figli: la tacca dell'etichetta
+   flottante deve ricoprire il filetto del campo con il bianco della card, non
+   con il neutro della pagina.
    ========================================================================== */
 .tr-card {
+  --tr-field-bg: var(--tr-surface);
   display: block;
   padding: var(--tr-space-5);
-  border: var(--tr-rule-thin) solid var(--tr-border-soft);
+  border: 0;
   border-radius: var(--tr-radius-ui);
-  background: transparent;
+  background: var(--tr-surface);
 }
 @media (min-width: 720px) {
   .tr-card { padding: var(--tr-space-6); }
 }
 
-/* Senza filetto: per i blocchi impilati, dove a dividere basta lo spazio. */
+/* Riportata sul piano della pagina: per i blocchi impilati, dove a dividere
+   bastano lo spazio e i filetti che il contenuto ha gia'. */
 .tr-card--plain {
-  border-color: transparent;
+  --tr-field-bg: var(--tr-paper);
+  background: transparent;
   padding-left: 0;
   padding-right: 0;
 }
@@ -1268,7 +1279,20 @@ select.tr-field__control + .tr-field__label,
     border-color var(--tr-motion-fast) var(--tr-motion-ease),
     color var(--tr-motion-fast) var(--tr-motion-ease);
 }
-.tr-card--action:hover { border-color: var(--tr-brand-300); }
+/* Senza bordo da tingere, il richiamo e' lo stesso delle azioni: un filetto
+   che cresce da sinistra lungo il bordo inferiore. */
+.tr-card--action { position: relative; overflow: hidden; }
+.tr-card--action::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--tr-rule-accent);
+  background: var(--tr-brand-500);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 180ms var(--tr-motion-ease);
+}
+.tr-card--action:hover::after { transform: scaleX(1); }
 .tr-card--action:hover .tr-card__title { color: var(--tr-brand-700); }
 .tr-card--action:focus-visible {
   outline: 2px solid var(--tr-brand-500);

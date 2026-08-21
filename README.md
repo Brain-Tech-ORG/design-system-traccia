@@ -56,12 +56,13 @@ niente gradienti, niente emoji, molto bianco.
 | `brand/100` | `#d0e4f5` | Tinta pallida decorativa |
 | `brand/600` | `#2f7ab8` | Tinta scura, stesso hue: testo piccolo e fondi pieni con testo bianco (4,6:1) |
 | `brand/700` | `#266296` | Tinta scura, stesso hue: hover delle superfici piene |
-| `surface/tint` | `#eff2f9` | Solo riempimenti piccoli (cerchietti, silhouette). **Mai** sfondi di card/pannelli |
+| `surface/tint` | `#eff2f9` | Solo riempimenti piccoli (cerchietti, silhouette). **Non e' un piano**: le card usano `surface` |
 | `border/soft` | `#dde2ee` / `#c9cede` | Filetti e bordi leggeri |
 | `ink/900` | `#1b1f2a` | Testo primario, tratti dei disegni tecnici |
 | `ink/600` | `#3a4050` | Testo secondario / body |
 | `ink/400` | `#565c6b` | Didascalie e metadati |
-| `paper` | `#fbfbfd` | Sfondo pagina |
+| `paper` | `#fbfbfd` | **Piano 0**: lo sfondo della pagina |
+| `surface` | `#ffffff` | **Piano 1**: card e pannelli — vedi [Superfici](#superfici) |
 | `state/danger` | `#a53a3a` | **Solo UI software**: errore, campo non valido |
 | `state/warning` | `#99631d` | **Solo UI software**: avviso, azione da confermare |
 | `state/success` | `#2f6b45` | **Solo UI software**: esito positivo |
@@ -69,6 +70,43 @@ niente gradienti, niente emoji, molto bianco.
 **Regola**: mai introdurre altri hue. Per varianti usare oklch mantenendo lo stesso hue del blu logo.
 Unica eccezione, e solo nell'interfaccia software: le tre tinte `state/*` per la validazione
 dei form e gli esiti di sistema — vedi [Pagine di login](#pagine-di-login-prodotti-software).
+
+## Superfici
+
+**Due piani, non uno.** La **pagina** e' il fondo neutro; i **componenti** che
+raccolgono contenuto — card, pannelli — stanno un gradino sopra, in bianco.
+
+| Piano | Token | Cosa ci sta |
+|---|---|---|
+| 0 · pagina | `paper` `#fbfbfd` | Il fondo su cui si legge |
+| 1 · componente | `surface` `#ffffff` | Card, pannelli galleggianti |
+
+E' cosi' che un gruppo si stacca **senza bordo e senza ombra**: lo separa il
+piano su cui poggia. E' la stessa idea dei filetti — separare con il minimo —
+applicata alla superficie invece che alla linea.
+
+Ne discendono due regole pratiche:
+
+- **Una card non ha bordo.** Se serve un bordo per vederla, vuol dire che non e'
+  sul piano giusto.
+- **Chi cambia piano lo dichiara ai figli.** La card ridefinisce `--tr-field-bg`
+  sul proprio bianco, perche' la tacca dell'etichetta flottante deve ricoprire il
+  filetto del campo con il colore della superficie che ha sotto, non con quello
+  della pagina. Qualunque contenitore che cambi piano deve fare lo stesso.
+
+Fa eccezione il **pannello del select**, che galleggia sopra il contenuto: li' il
+filetto non e' decorazione ma l'unica cosa che ne segna il confine, perche'
+bianco su bianco non si staccherebbe.
+
+### Chiaro e scuro
+
+**I valori qui sopra sono quelli della modalita' chiara**, l'unica oggi definita.
+Il rapporto fra i piani e' pero' indipendente dal tema: il componente sta sempre
+**un gradino piu' vicino alla luce** della pagina che lo ospita. In una modalita'
+scura le tinte si invertono — la pagina scende al fondo piu' scuro e i componenti
+salgono — e restano validi struttura, filetti e gerarchia. La palette scura non
+e' ancora definita: quando servira', va ricavata da questo rapporto, non
+scegliendo colori nuovi.
 
 ## Tipografia
 
@@ -393,13 +431,14 @@ sistema preferisce i layout aperti, e la maggior parte di cio' che viene chiamat
 "card" e' in realta' una sezione di pagina. La card serve dove un gruppo di
 contenuti e' davvero **un'unita'** — una scheda, un pannello, un riepilogo.
 
-Quando serve, e' fatta di una cosa sola: **un filetto da 1px a spigolo vivo**.
+Quando serve, **non ha ne' bordo ne' ombra**: la separa il piano su cui poggia —
+la pagina e' neutra, la card e' bianca. Vedi [Superfici](#superfici).
 
 | Cosa non ha | Perche' |
 |---|---|
-| Fondo bianco | Sul paper non separa nulla, e aggiunge una seconda tinta dove ne basta zero |
+| Bordo | Se serve un bordo per vederla, non e' sul piano giusto |
 | Ombra | Il sistema non ha profondita' da simulare |
-| Secondo bordo | Il filetto piu' l'anello d'ombra facevano un doppio contorno slavato |
+| Raggio | Le superfici dell'interfaccia sono a spigolo vivo |
 
 ### Parti
 
@@ -413,11 +452,13 @@ singoli elementi.
 
 ### Varianti
 
-`--plain` toglie il filetto e lascia solo il ritmo verticale: e' la scelta giusta
-per i blocchi impilati, dove a dividere basta lo spazio.
+`--plain` riporta la card sul piano della pagina, togliendole la superficie: e'
+la scelta giusta per i blocchi impilati, dove a dividere bastano lo spazio e i
+filetti che il contenuto ha gia'.
 
-`--action` rende la card cliccabile. All'hover il filetto vira all'accento e il
-titolo si scurisce: **nessun sollevamento**, perche' un'ombra che cresce
+`--action` rende la card cliccabile. Non avendo bordo da tingere, il richiamo e'
+lo stesso delle azioni: **un filetto che cresce da sinistra** lungo il bordo
+inferiore, e il titolo si scurisce. Nessun sollevamento — un'ombra che cresce
 simulerebbe una profondita' che il sistema non ha.
 
 ### Gruppi di opzioni: non usare `<fieldset>`/`<legend>`
