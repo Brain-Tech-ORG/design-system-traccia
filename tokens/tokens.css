@@ -34,16 +34,10 @@
        danger   = errore, fallimento o condizione bloccante;
        critical = allarme che richiede intervento immediato.
 
-     Ogni famiglia offre:
-       base    = testo, icona e superfici piene con testo bianco;
-       dark    = hover / enfasi;
-       tint    = fondo informativo leggero;
-       tint-2  = fondo più evidente;
-       border  = filetto e separatore.
-
-     Non affidarsi mai al solo colore: associare sempre icona, testo o forma e,
-     per gli aggiornamenti dinamici, il corretto ruolo ARIA. Mai usare questi
-     hue su brochure, slide o materiale stampato. */
+     Ogni famiglia offre base, dark, tint, tint-2 e border. Non affidarsi mai
+     al solo colore: associare sempre icona, testo o forma e, per gli
+     aggiornamenti dinamici, il corretto ruolo ARIA. Mai usare questi hue su
+     brochure, slide o materiale stampato. */
 
   /* Informazione: riusa il blu di marca, senza introdurre un nuovo hue. */
   --tr-state-info: var(--tr-brand-600);
@@ -149,49 +143,53 @@
 
   /* ---- Geometria · Raggi ----
      A schermo le superfici dell'interfaccia — card, pannelli, campi, azioni —
-     sono a spigolo vivo. Gli angoli smussati restano nella stampa. */
-  --tr-radius-ui: 0;
-  --tr-radius-line: 99px;
-  --tr-radius-pill: 999px;
-  --tr-radius-soft: 20px;
-  --tr-radius-photo: 28px;
+     sono a spigolo vivo: e' il taglio che il sistema ha scelto per la UI, e
+     tenerlo in un token solo permette di cambiarlo in un punto solo.
+     Gli angoli smussati restano dove sono nati, cioe' nella stampa. */
+  --tr-radius-ui: 0;       /* superfici dell'interfaccia */
+  --tr-radius-line: 99px;  /* estremità stondate di filetti e segmenti */
+  --tr-radius-pill: 999px; /* chip, dot e cerchietti: la pillola resta */
+  --tr-radius-soft: 20px;  /* angoli smussati, stampa (range 16–26px) */
+  --tr-radius-photo: 28px; /* cornice foto ambientata (range 22–36px) */
 
   /* ---- Geometria · Tratti ---- */
-  --tr-rule-thin: 1px;
-  --tr-rule-medium: 2px;
-  --tr-rule-accent: 3px;
-  --tr-stroke-drawing: 2.25px;
+  --tr-rule-thin: 1px;     /* filetti orizzontali */
+  --tr-rule-medium: 2px;   /* segmenti decorativi verticali */
+  --tr-rule-accent: 3px;   /* tratti d'accento e linee di quota */
+  --tr-stroke-drawing: 2.25px; /* tratto disegni tecnici (2–2.5px) */
 
   /* ---- Watermark logo (sagoma outline negli sfondi) ---- */
-  --tr-watermark-opacity: 0.16;
-  --tr-watermark-stroke: 6px;
+  --tr-watermark-opacity: 0.16;  /* opacità della sagoma sul paper */
+  --tr-watermark-stroke: 6px;    /* spessore tratto dell'outline (su viewBox 1280) */
 
   /* ---- Campi di form ---- */
-  --tr-field-h: 56px;
-  --tr-field-h-compact: 40px;
+  --tr-field-h: 56px;             /* altezza del campo con etichetta flottante */
+  --tr-field-h-compact: 40px;     /* variante compatta: filtri in barra, senza etichetta interna */
 
   /* ---- Azioni ---- */
-  --tr-btn-h: 42px;
-  --tr-btn-h-sm: 32px;
-  --tr-btn-h-lg: 48px;
-  --tr-field-radius: var(--tr-radius-ui);
-  --tr-field-pad-x: 16px;
-  --tr-field-label-rest: 20px;
-  --tr-field-affix: 46px;
-  --tr-field-bg: var(--tr-paper);
+  --tr-btn-h: 42px;               /* altezza standard */
+  --tr-btn-h-sm: 32px;            /* barre, tabelle, azioni di riga */
+  --tr-btn-h-lg: 48px;            /* azione principale a piena larghezza */
+  --tr-field-radius: var(--tr-radius-ui); /* angolo del campo */
+  --tr-field-pad-x: 16px;         /* respiro orizzontale interno */
+  --tr-field-label-rest: 20px;    /* quota dell'etichetta a riposo, dal filetto superiore */
+  --tr-field-affix: 46px;         /* spazio riservato a icona prefisso/suffisso */
+  --tr-field-bg: var(--tr-paper); /* superficie su cui poggia il campo: la tacca
+                                     dell'etichetta flottante la ricopre. Va
+                                     ridefinita sui contenitori con fondo diverso. */
 
   /* ---- Movimento ---- */
   --tr-motion-fast: 160ms;
   --tr-motion-ease: cubic-bezier(0.2, 0, 0.2, 1);
 
   /* ---- Pagina di login (co-branding con il cliente) ---- */
-  --tr-client-logo-h: 40px;
-  --tr-login-panel-w: 420px;
+  --tr-client-logo-h: 40px;   /* altezza del marchio cliente in testa (range 32-48px) */
+  --tr-login-panel-w: 420px;  /* larghezza della colonna del form */
 
   /* ---- Geometria · Misure ricorrenti ---- */
-  --tr-accent-dash-w: 64px;
-  --tr-dot-size: 8px;
-  --tr-circle-sm: 28px;
+  --tr-accent-dash-w: 64px; /* tratto d'accento sopra i titoli di sezione */
+  --tr-dot-size: 8px;       /* dot bullet (range 6–13px) */
+  --tr-circle-sm: 28px;     /* cerchietto numerato piccolo (range 24–52px) */
   --tr-circle-md: 40px;
   --tr-circle-lg: 52px;
 }
