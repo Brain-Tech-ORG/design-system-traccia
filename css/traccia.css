@@ -40,7 +40,10 @@
 .tr-fieldset,
 .tr-tabs,
 .tr-tab,
-.tr-photo-frame { box-sizing: border-box; }
+.tr-photo-frame,
+.tr-spinner,
+.tr-spinner__track,
+.tr-spinner__ring { box-sizing: border-box; }
 
 /* ---- Base pagina ---- */
 .tr-page {
@@ -1781,6 +1784,174 @@ select.tr-field__control + .tr-field__label,
   color: var(--tr-ink-400);
 }
 .tr-tab[aria-selected="true"] .tr-tab__count { color: var(--tr-brand-600); }
+
+/* ==========================================================================
+   Spinner di caricamento
+   Quattro varianti, un solo gesto: muovere il chevron del marchio. Nessuna
+   forma nuova, nessun secondo colore, nessuna ombra e nessun gradiente —
+   si animano soltanto opacity e transform, cosi' l'attesa non fa reflow.
+
+   Il marchio non ha un contorno proprio: le varianti riusano i tracciati di
+   assets/logo-traccia-mark.svg attraverso un <symbol id="tr-mark"> incollato
+   una volta per pagina. E' l'unico modo perche' <use> valga in ogni browser.
+
+   Variabili locali (non sono token: vivono dentro il componente)
+   --tr-sp-dur   moltiplicatore di durata; 1 e' la velocita' nominale
+   --tr-sp-ease  curva; per difetto quella del sistema
+   --tr-sp-run   corsa del chevron nella variante Traccia
+   --tr-sp-ring  diametro dell'anello
+
+   La scelta della variante la fa la durata dell'attesa, non il gusto:
+   Riempimento a schermo intero oltre il secondo, Traccia sul caricamento di
+   una pagina o di un elenco, Sequenza per l'attesa breve accanto a un'azione,
+   Anello per l'attesa indeterminata al centro di un pannello.
+   ========================================================================== */
+.tr-spinner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tr-space-3);
+  color: var(--tr-brand-500);
+}
+.tr-spinner--stack { flex-direction: column; gap: var(--tr-space-5); }
+.tr-spinner--start { align-items: flex-start; }
+
+/* Dentro un pulsante il colore lo detta il testo che lo accompagna: due blu
+   diversi nella stessa etichetta sarebbero due voci per una cosa sola. */
+.tr-spinner--inherit { color: inherit; }
+
+.tr-spinner__mark { display: block; fill: currentColor; }
+
+/* Il wordmark accompagna il solo Riempimento: e' l'unica variante che occupa
+   la pagina. Nelle altre il marchio e' un indicatore dentro un'interfaccia
+   gia' firmata, e ripetere la firma non aggiunge nulla. */
+.tr-spinner__wordmark {
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-display);
+  font-size: var(--tr-text-mono);
+  letter-spacing: var(--tr-tracking-wordmark);
+  text-transform: uppercase;
+  color: var(--tr-ink-900);
+}
+.tr-spinner__label {
+  font-family: var(--tr-font-mono);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+}
+
+/* ---- Riempimento: il marchio si riempie dal basso sulla propria silhouette ----
+   La silhouette ferma sta in surface/tint, la stessa tinta dichiarata per i
+   riempimenti piccoli; sopra passa il marchio pieno, ritagliato da un rect che
+   sale. Ogni istanza vuole un id di clip suo, altrimenti la seconda ruba il
+   ritaglio alla prima. */
+.tr-spinner__wipe {
+  animation: tr-sp-fill calc(1900ms * var(--tr-sp-dur, 1))
+    var(--tr-sp-ease, var(--tr-motion-ease)) infinite;
+}
+@keyframes tr-sp-fill {
+  0%, 10%  { transform: translateY(760px); }
+  56%, 76% { transform: translateY(0); }
+  100%     { transform: translateY(-760px); }
+}
+
+/* ---- Traccia: il chevron percorre il filetto e lascia il segno dietro di se' ----
+   E' il filetto del sistema che si accende, non una barra di avanzamento: non
+   promette una percentuale, dice soltanto che qualcosa sta correndo. */
+.tr-spinner__track {
+  position: relative;
+  display: block;
+  width: calc(var(--tr-sp-run, 218px) + 18px);
+  height: 24px;
+}
+.tr-spinner__rule {
+  position: absolute;
+  inset: 11px 0 auto 0;
+  height: var(--tr-rule-medium);
+  border-radius: var(--tr-radius-line);
+  background: var(--tr-border-soft);
+}
+.tr-spinner__trail {
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 100%;
+  height: var(--tr-rule-medium);
+  border-radius: var(--tr-radius-line);
+  background: var(--tr-brand-500);
+  transform-origin: left center;
+  animation: tr-sp-trail calc(1800ms * var(--tr-sp-dur, 1))
+    var(--tr-sp-ease, var(--tr-motion-ease)) infinite;
+}
+.tr-spinner__runner {
+  position: absolute;
+  left: 0;
+  top: 1px;
+  animation: tr-sp-run calc(1800ms * var(--tr-sp-dur, 1))
+    var(--tr-sp-ease, var(--tr-motion-ease)) infinite;
+}
+@keyframes tr-sp-run {
+  0%       { transform: translateX(0); opacity: 0; }
+  8%       { transform: translateX(4px); opacity: 1; }
+  66%, 86% { transform: translateX(var(--tr-sp-run, 218px)); opacity: 1; }
+  100%     { transform: translateX(var(--tr-sp-run, 218px)); opacity: 0; }
+}
+@keyframes tr-sp-trail {
+  0%       { transform: scaleX(0.04); opacity: 0; }
+  8%       { transform: scaleX(0.06); opacity: 1; }
+  66%, 86% { transform: scaleX(0.962); opacity: 1; }
+  100%     { transform: scaleX(0.962); opacity: 0; }
+}
+
+/* ---- Sequenza: tre chevron in successione ----
+   Non ruotano e non rimbalzano: si accendono in fila, che e' il modo in cui il
+   marchio si ripete gia' sulle superfici stampate. */
+.tr-spinner__seq { display: inline-flex; align-items: center; gap: 7px; }
+.tr-spinner__seq > * {
+  animation: tr-sp-pulse calc(1200ms * var(--tr-sp-dur, 1))
+    var(--tr-sp-ease, var(--tr-motion-ease)) infinite;
+}
+.tr-spinner__seq > *:nth-child(2) { animation-delay: calc(150ms * var(--tr-sp-dur, 1)); }
+.tr-spinner__seq > *:nth-child(3) { animation-delay: calc(300ms * var(--tr-sp-dur, 1)); }
+@keyframes tr-sp-pulse {
+  0%        { opacity: 0.16; }
+  20%       { opacity: 1; }
+  52%, 100% { opacity: 0.16; }
+}
+
+/* ---- Anello: arco che ruota attorno al marchio fermo ----
+   A girare e' l'arco; il chevron resta dritto, perche' un marchio che ruota
+   smette di essere un marchio. */
+.tr-spinner__ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--tr-sp-ring, 112px);
+  height: var(--tr-sp-ring, 112px);
+}
+.tr-spinner__arc {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  animation: tr-sp-spin calc(1400ms * var(--tr-sp-dur, 1)) linear infinite;
+}
+@keyframes tr-sp-spin { to { transform: rotate(360deg); } }
+
+/* Come per l'etichetta flottante: lo stato finale resta, la corsa no. */
+@media (prefers-reduced-motion: reduce) {
+  .tr-spinner__wipe,
+  .tr-spinner__trail,
+  .tr-spinner__runner,
+  .tr-spinner__arc,
+  .tr-spinner__seq > * { animation: none; }
+  .tr-spinner__wipe { transform: none; }
+  .tr-spinner__seq > * { opacity: 1; }
+  .tr-spinner__trail { transform: scaleX(0.962); }
+  .tr-spinner__runner { transform: translateX(var(--tr-sp-run, 218px)); }
+}
 
 /* ==========================================================================
    Responsive

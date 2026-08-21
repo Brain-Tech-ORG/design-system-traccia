@@ -11,6 +11,7 @@ niente gradienti, niente emoji, molto bianco.
 ├── assets/
 │   ├── logo-traccia.svg          Logo (chevron blu, pieno)
 │   ├── logo-traccia-outline.svg  Sagoma outline per watermark negli sfondi
+│   ├── logo-traccia-mark.svg     Solo il marchio, normalizzato: sorgente dello spinner
 │   └── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
 ├── tokens/
 │   ├── tokens.css                Design token come CSS custom properties
@@ -176,6 +177,7 @@ volte al giorno.
 | 13 | Select con listbox | `.tr-select` + `js/tr-select.js` |
 | 14 | Card | `.tr-card` + `__head` / `__title` / `__foot` |
 | 15 | Azione | `.tr-btn` + `--primary` / `--secondary` / `--neutral` / `--quiet` / `--danger` |
+| 16 | Spinner di caricamento | `.tr-spinner` + `__wipe` / `__track` / `__seq` / `__ring` |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -863,6 +865,148 @@ grammatica, e chi ha gia' imparato a leggere l'una legge anche l'altra.
 `aria-controls` verso il pannello e `aria-labelledby` di ritorno. Lo stato
 attivo non si trasmette con una classe ma con `aria-selected="true"`: il CSS
 legge quello, quindi markup accessibile e aspetto giusto non possono divergere.
+
+
+## Spinner di caricamento
+
+L'attesa non ha bisogno di una forma nuova. Le quattro varianti muovono tutte
+il **chevron del marchio**: nessuna forma nuova, nessun secondo colore, nessuna
+ombra e nessun gradiente. Si animano soltanto `opacity` e `transform`, quindi
+l'attesa non fa reflow e non sposta niente attorno a se'.
+
+A scegliere la variante e' la **durata dell'attesa**, non il gusto.
+
+| Variante | Classe portante | Quando |
+|---|---|---|
+| Riempimento | `.tr-spinner__wipe` | schermo intero, attesa oltre il secondo |
+| Traccia | `.tr-spinner__track` | caricamento di una pagina o di un elenco |
+| Sequenza | `.tr-spinner__seq` | attesa breve accanto a un'azione o dentro un pulsante |
+| Anello | `.tr-spinner__ring` | attesa indeterminata al centro di un pannello |
+
+### Il simbolo, una volta per pagina
+
+Il marchio non compare mai con un contorno proprio: le varianti riusano i
+tracciati di [`assets/logo-traccia-mark.svg`](assets/logo-traccia-mark.svg),
+normalizzati su `viewBox="0 0 594 717"`. Si incollano una volta per pagina come
+`<symbol>`, poi ogni spinner li richiama con `<use>` — e' l'unico modo perche'
+il riferimento valga in ogni browser, `<use>` verso un file esterno no.
+
+```html
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <symbol id="tr-mark" viewBox="0 0 594 717">
+    <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+    <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+  </symbol>
+</svg>
+```
+
+### Le quattro varianti
+
+**Riempimento** — il marchio si riempie dal basso sulla propria silhouette: la
+sagoma ferma sta in `surface/tint`, sopra passa il marchio pieno ritagliato da
+un rect che sale. **Ogni istanza vuole un id di clip suo**, altrimenti la
+seconda ruba il ritaglio alla prima.
+
+```html
+<div class="tr-spinner tr-spinner--stack" role="status" aria-label="Caricamento">
+  <svg class="tr-spinner__mark" width="86" height="104" viewBox="0 0 594 717">
+    <use href="#tr-mark" fill="var(--tr-surface-tint)"/>
+    <g clip-path="url(#tr-wipe)"><use href="#tr-mark"/></g>
+    <clipPath id="tr-wipe" clipPathUnits="userSpaceOnUse">
+      <rect class="tr-spinner__wipe" x="-30" y="-10" width="654" height="760"/>
+    </clipPath>
+  </svg>
+  <span class="tr-spinner__wordmark">La Traccia</span>
+  <span class="tr-spinner__label">Caricamento</span>
+</div>
+```
+
+**Traccia** — il chevron percorre il filetto e lascia il segno dietro di se'.
+E' il filetto del sistema che si accende, non una barra di avanzamento: non
+promette una percentuale, dice soltanto che qualcosa sta correndo. La corsa si
+accorda al contenitore con `--tr-sp-run`.
+
+```html
+<div class="tr-spinner tr-spinner--stack tr-spinner--start" role="status" aria-label="Caricamento">
+  <div class="tr-spinner__track" style="--tr-sp-run:120px">
+    <span class="tr-spinner__rule"></span>
+    <span class="tr-spinner__trail"></span>
+    <span class="tr-spinner__runner">
+      <svg class="tr-spinner__mark" width="18" height="22" viewBox="0 0 594 717"><use href="#tr-mark"/></svg>
+    </span>
+  </div>
+</div>
+```
+
+**Sequenza** — tre chevron in successione: non ruotano e non rimbalzano, si
+accendono in fila, che e' il modo in cui il marchio si ripete gia' sulle
+superfici stampate.
+
+```html
+<button class="tr-btn tr-btn--primary" type="button" aria-busy="true">
+  <span class="tr-spinner tr-spinner--inherit">
+    <span class="tr-spinner__seq">
+      <svg class="tr-spinner__mark" width="12" height="15" viewBox="0 0 594 717"><use href="#tr-mark"/></svg>
+      <svg class="tr-spinner__mark" width="12" height="15" viewBox="0 0 594 717"><use href="#tr-mark"/></svg>
+      <svg class="tr-spinner__mark" width="12" height="15" viewBox="0 0 594 717"><use href="#tr-mark"/></svg>
+    </span>
+  </span>
+  Verifica in corso
+</button>
+```
+
+**Anello** — a girare e' l'arco, non il chevron: un marchio che ruota smette di
+essere un marchio. Il diametro lo regge `--tr-sp-ring` (112px per difetto).
+
+```html
+<div class="tr-spinner tr-spinner--stack" role="status" aria-label="Caricamento">
+  <div class="tr-spinner__ring">
+    <svg class="tr-spinner__arc" viewBox="0 0 112 112" aria-hidden="true">
+      <circle cx="56" cy="56" r="54" fill="none" stroke="var(--tr-border-soft)" stroke-width="1"/>
+      <circle cx="56" cy="56" r="54" fill="none" stroke="var(--tr-brand-500)" stroke-width="2"
+              stroke-linecap="round" stroke-dasharray="78 262"/>
+    </svg>
+    <svg class="tr-spinner__mark" width="33" height="40" viewBox="0 0 594 717"><use href="#tr-mark"/></svg>
+  </div>
+  <span class="tr-spinner__label">Caricamento</span>
+</div>
+```
+
+### Regole
+
+- **Il wordmark accompagna il solo Riempimento**, perche' e' l'unica variante
+  che occupa la pagina. Nelle altre il marchio e' un indicatore dentro
+  un'interfaccia gia' firmata, e ripetere la firma non aggiunge nulla.
+- **Dentro un pulsante il colore si eredita** (`.tr-spinner--inherit`): due blu
+  diversi nella stessa etichetta sarebbero due voci per una cosa sola. Lo stato
+  lo dichiara `aria-busy="true"`, che `.tr-btn` gia' conosce — spegne il filetto
+  dell'hover e mette il cursore d'attesa.
+- **In una riga di elenco lo spinner occupa la colonna** del valore che deve
+  ancora arrivare, cosi' la riga non cambia altezza quando il dato compare.
+- **Niente scala, niente ombra, niente gradiente**: il movimento e' solo
+  traslazione, rotazione e opacita'.
+- Le variabili `--tr-sp-*` **non sono token**: vivono dentro il componente e non
+  aggiungono nulla a `tokens/tokens.css`.
+
+### Durata e curva
+
+| Variabile | Difetto | Cosa regge |
+|---|---|---|
+| `--tr-sp-dur` | `1` | moltiplicatore di durata; `1` e' la velocita' nominale |
+| `--tr-sp-ease` | `var(--tr-motion-ease)` | la curva del sistema |
+| `--tr-sp-run` | `218px` | la corsa del chevron nella Traccia |
+| `--tr-sp-ring` | `112px` | il diametro dell'anello |
+
+L'attesa e' l'unica cosa del sistema che esce dai 160ms di `--tr-motion-fast`:
+ripete un ciclo di 1.200–1.900ms, ma sulla stessa curva di tutto il resto.
+
+### Accessibilita'
+
+`role="status"` e `aria-label` sul contenitore, cosi' il lettore di schermo
+annuncia l'attesa senza rubare il fuoco; le SVG interne restano decorative.
+Sotto `prefers-reduced-motion: reduce` vale la regola dell'etichetta flottante:
+**lo stato finale resta, la corsa no** — la traccia e' tracciata, la sequenza
+accesa, il marchio pieno, e niente si muove.
 
 
 ## Firma email

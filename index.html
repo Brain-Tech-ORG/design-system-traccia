@@ -708,6 +708,224 @@
     </p>
   </section>
 
+  <!-- 16 · SPINNER DI CARICAMENTO -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">16 · <em>Spinner</em> di caricamento</h2>
+      <p class="tr-body" style="margin-top:12px">
+        L'attesa non ha bisogno di una forma nuova: le quattro varianti muovono tutte il chevron
+        del marchio, e si animano soltanto <code style="font-family:var(--tr-font-mono);font-size:13px">opacity</code>
+        e <code style="font-family:var(--tr-font-mono);font-size:13px">transform</code> — nessun reflow,
+        nessun rimbalzo, nessun secondo colore. A scegliere la variante e' la durata dell'attesa,
+        non il gusto. Sotto <code style="font-family:var(--tr-font-mono);font-size:13px">prefers-reduced-motion: reduce</code>
+        lo stato finale resta, la corsa no.
+      </p>
+    </div>
+
+    <!-- Il simbolo del marchio: una volta per pagina, poi ogni spinner lo richiama con <use>. -->
+    <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+      <symbol id="tr-mark" viewBox="0 0 594 717">
+        <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"></path>
+        <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"></path>
+      </symbol>
+    </svg>
+
+    <div class="grid-2" style="gap:48px 40px">
+
+      <!-- 1A · RIEMPIMENTO -->
+      <div>
+        <span class="tr-accent-dash"></span>
+        <div style="display:flex;align-items:baseline;gap:12px;margin-top:16px">
+          <span class="tr-mono tr-mono--brand tr-mono--wide">1A</span>
+          <span class="tr-mono tr-mono--wide">Riempimento</span>
+        </div>
+        <div class="tr-rule" style="margin-top:16px"></div>
+        <div style="display:grid;place-items:center;padding:48px 0;min-height:236px">
+          <div class="tr-spinner tr-spinner--stack" role="status" aria-label="Caricamento">
+            <svg class="tr-spinner__mark" width="86" height="104" viewBox="0 0 594 717">
+              <use href="#tr-mark" fill="var(--tr-surface-tint)"></use>
+              <g clip-path="url(#tr-wipe-a)"><use href="#tr-mark"></use></g>
+              <clipPath id="tr-wipe-a" clipPathUnits="userSpaceOnUse">
+                <rect class="tr-spinner__wipe" x="-30" y="-10" width="654" height="760"></rect>
+              </clipPath>
+            </svg>
+            <span class="tr-spinner__wordmark">La Traccia</span>
+            <span class="tr-spinner__label">Caricamento</span>
+          </div>
+        </div>
+        <div class="tr-rule"></div>
+        <p class="tr-body demo-note" style="font-size:14px">
+          Il marchio si riempie dal basso sulla propria silhouette. Attesa a schermo intero, oltre
+          il secondo: e' l'unica variante che porta il wordmark accanto, perche' e' l'unica che
+          occupa la pagina.
+        </p>
+      </div>
+
+      <!-- 1B · TRACCIA -->
+      <div>
+        <span class="tr-accent-dash"></span>
+        <div style="display:flex;align-items:baseline;gap:12px;margin-top:16px">
+          <span class="tr-mono tr-mono--brand tr-mono--wide">1B</span>
+          <span class="tr-mono tr-mono--wide">Traccia</span>
+        </div>
+        <div class="tr-rule" style="margin-top:16px"></div>
+        <div style="display:grid;place-items:center;padding:48px 0;min-height:236px">
+          <div class="tr-spinner tr-spinner--stack tr-spinner--start" role="status" aria-label="Caricamento">
+            <div class="tr-spinner__track">
+              <span class="tr-spinner__rule"></span>
+              <span class="tr-spinner__trail"></span>
+              <span class="tr-spinner__runner">
+                <svg class="tr-spinner__mark" width="18" height="22" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+              </span>
+            </div>
+            <span class="tr-spinner__label">Caricamento</span>
+          </div>
+        </div>
+        <div class="tr-rule"></div>
+        <p class="tr-body demo-note" style="font-size:14px">
+          Il chevron percorre il filetto e lascia il segno dietro di se'. Caricamento di una pagina
+          o di un elenco. Non e' una barra di avanzamento: non promette una percentuale, dice solo
+          che qualcosa sta correndo. La corsa si adatta con
+          <code style="font-family:var(--tr-font-mono);font-size:12px">--tr-sp-run</code>.
+        </p>
+      </div>
+
+      <!-- 1C · SEQUENZA -->
+      <div>
+        <span class="tr-accent-dash"></span>
+        <div style="display:flex;align-items:baseline;gap:12px;margin-top:16px">
+          <span class="tr-mono tr-mono--brand tr-mono--wide">1C</span>
+          <span class="tr-mono tr-mono--wide">Sequenza</span>
+        </div>
+        <div class="tr-rule" style="margin-top:16px"></div>
+        <div style="display:grid;place-items:center;padding:48px 0;min-height:236px">
+          <span class="tr-spinner" role="status" aria-label="Verifica in corso">
+            <span class="tr-spinner__seq">
+              <svg class="tr-spinner__mark" width="16" height="19" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+              <svg class="tr-spinner__mark" width="16" height="19" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+              <svg class="tr-spinner__mark" width="16" height="19" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+            </span>
+            <span class="tr-spinner__label">Verifica in corso</span>
+          </span>
+        </div>
+        <div class="tr-rule"></div>
+        <p class="tr-body demo-note" style="font-size:14px">
+          Tre chevron in successione: non ruotano e non rimbalzano, si accendono in fila. Attesa
+          breve accanto a un'azione o dentro un pulsante.
+        </p>
+      </div>
+
+      <!-- 1D · ANELLO -->
+      <div>
+        <span class="tr-accent-dash"></span>
+        <div style="display:flex;align-items:baseline;gap:12px;margin-top:16px">
+          <span class="tr-mono tr-mono--brand tr-mono--wide">1D</span>
+          <span class="tr-mono tr-mono--wide">Anello</span>
+        </div>
+        <div class="tr-rule" style="margin-top:16px"></div>
+        <div style="display:grid;place-items:center;padding:48px 0;min-height:236px">
+          <div class="tr-spinner tr-spinner--stack" role="status" aria-label="Caricamento">
+            <div class="tr-spinner__ring">
+              <svg class="tr-spinner__arc" viewBox="0 0 112 112" aria-hidden="true">
+                <circle cx="56" cy="56" r="54" fill="none" stroke="var(--tr-border-soft)" stroke-width="1"></circle>
+                <circle cx="56" cy="56" r="54" fill="none" stroke="var(--tr-brand-500)" stroke-width="2" stroke-linecap="round" stroke-dasharray="78 262"></circle>
+              </svg>
+              <svg class="tr-spinner__mark" width="33" height="40" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+            </div>
+            <span class="tr-spinner__label">Caricamento</span>
+          </div>
+        </div>
+        <div class="tr-rule"></div>
+        <p class="tr-body demo-note" style="font-size:14px">
+          Arco che ruota attorno al marchio fermo — a girare e' l'arco, non il chevron: un marchio
+          che ruota smette di essere un marchio. Attesa indeterminata al centro di un pannello.
+        </p>
+      </div>
+
+    </div>
+
+    <h3 class="tr-h3" style="margin-top:64px">Dove finisce <em>ciascuna</em></h3>
+    <div class="tr-rule" style="margin-top:16px"></div>
+
+    <div class="grid-2" style="gap:48px 40px;margin-top:40px">
+
+      <div>
+        <span class="tr-mono tr-mono--wide">Dentro un pulsante</span>
+        <p class="tr-body demo-note" style="font-size:14px">
+          Il colore si eredita dal testo con <code style="font-family:var(--tr-font-mono);font-size:12px">--inherit</code>:
+          due blu diversi nella stessa etichetta sarebbero due voci per una cosa sola. Lo stato lo
+          dichiara <code style="font-family:var(--tr-font-mono);font-size:12px">aria-busy="true"</code>,
+          che il pulsante gia' conosce — spegne il filetto dell'hover e mette il cursore d'attesa.
+        </p>
+        <div class="demo-block" style="display:flex;flex-wrap:wrap;align-items:center;gap:32px">
+          <button class="tr-btn tr-btn--primary" type="button" aria-busy="true">
+            <span class="tr-spinner tr-spinner--inherit">
+              <span class="tr-spinner__seq">
+                <svg class="tr-spinner__mark" width="12" height="15" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+                <svg class="tr-spinner__mark" width="12" height="15" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+                <svg class="tr-spinner__mark" width="12" height="15" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+              </span>
+            </span>
+            Verifica in corso
+          </button>
+          <span class="tr-spinner" role="status" aria-label="In attesa">
+            <span class="tr-spinner__seq">
+              <svg class="tr-spinner__mark" width="16" height="19" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+              <svg class="tr-spinner__mark" width="16" height="19" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+              <svg class="tr-spinner__mark" width="16" height="19" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+            </span>
+            <span class="tr-spinner__label">In attesa</span>
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <span class="tr-mono tr-mono--wide">Riga di elenco</span>
+        <p class="tr-body demo-note" style="font-size:14px">
+          La Traccia occupa la colonna dello stato al posto del valore che deve ancora arrivare:
+          la riga non cambia altezza quando il dato compare. La corsa si accorda alla colonna con
+          <code style="font-family:var(--tr-font-mono);font-size:12px">--tr-sp-run</code>.
+        </p>
+        <div class="demo-block" style="max-width:320px">
+          <div style="display:flex;justify-content:space-between;gap:16px;padding-bottom:10px">
+            <span class="tr-mono tr-mono--muted tr-mono--wide" style="font-size:11px">Pratica</span>
+            <span class="tr-mono tr-mono--muted tr-mono--wide" style="font-size:11px">Stato</span>
+          </div>
+          <div class="tr-rule"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0">
+            <span class="tr-mono">PR-1042</span>
+            <span class="tr-mono tr-mono--muted">Registrata</span>
+          </div>
+          <div class="tr-rule"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0">
+            <span class="tr-mono">PR-1043</span>
+            <span class="tr-spinner" role="status" aria-label="Caricamento">
+              <span class="tr-spinner__track" style="--tr-sp-run:120px">
+                <span class="tr-spinner__rule"></span>
+                <span class="tr-spinner__trail"></span>
+                <span class="tr-spinner__runner">
+                  <svg class="tr-spinner__mark" width="18" height="22" viewBox="0 0 594 717"><use href="#tr-mark"></use></svg>
+                </span>
+              </span>
+            </span>
+          </div>
+          <div class="tr-rule"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="tr-body demo-note" style="font-size:13px;margin-top:40px">
+      Il simbolo <span class="tr-mono">&lt;symbol id="tr-mark"&gt;</span> si incolla una volta per
+      pagina (i tracciati stanno in <code style="font-family:var(--tr-font-mono);font-size:12px">assets/logo-traccia-mark.svg</code>);
+      ogni istanza del Riempimento vuole invece un id di clip suo, altrimenti la seconda ruba il
+      ritaglio alla prima. Le durate rispondono a
+      <code style="font-family:var(--tr-font-mono);font-size:12px">--tr-sp-dur</code>, la curva a
+      <code style="font-family:var(--tr-font-mono);font-size:12px">--tr-sp-ease</code>.
+    </p>
+  </section>
+
   <!-- FIRMA EMAIL -->
   <section class="section">
     <div class="section-head">
