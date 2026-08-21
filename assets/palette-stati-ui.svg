@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="0 0 1440 720" role="img" aria-labelledby="title desc">
+  <title id="title">Palette semantica UI La Traccia</title>
+  <desc id="desc">Cinque famiglie cromatiche per informazione, successo, allerta, errore e allarme critico.</desc>
+  <rect width="1440" height="720" fill="#fbfbfd"/>
+  <style>
+    .sans{font-family:Arial,Helvetica,sans-serif}
+    .mono{font-family:"Courier New",monospace}
+    .title{font-size:52px;font-weight:800;fill:#1b1f2a}
+    .sub{font-size:20px;fill:#3a4050}
+    .label{font-size:18px;font-weight:700}
+    .hex{font-size:16px}
+    .note{font-size:14px}
+  </style>
+  <text x="72" y="82" class="sans title">STATI SEMANTICI UI</text>
+  <text x="72" y="120" class="sans sub">Colori funzionali, separati dalla palette di marca La Traccia.</text>
+
+  <g transform="translate(72 178)">
+    <rect width="248" height="406" fill="#edf6fd"/>
+    <rect width="248" height="150" fill="#2f7ab8"/>
+    <text x="24" y="48" class="sans label" fill="#fff">INFORMAZIONE</text>
+    <text x="24" y="82" class="mono hex" fill="#fff">#2F7AB8</text>
+    <text x="24" y="198" class="sans note" fill="#1b1f2a">Aggiornamenti neutri</text>
+    <text x="24" y="226" class="sans note" fill="#1b1f2a">e indicazioni operative.</text>
+    <text x="24" y="356" class="mono note" fill="#3a4050">tint #EDF6FD</text>
+  </g>
+
+  <g transform="translate(334 178)">
+    <rect width="248" height="406" fill="#e5f2e9"/>
+    <rect width="248" height="150" fill="#2f6b45"/>
+    <text x="24" y="48" class="sans label" fill="#fff">SUCCESSO</text>
+    <text x="24" y="82" class="mono hex" fill="#fff">#2F6B45</text>
+    <text x="24" y="198" class="sans note" fill="#1b1f2a">Operazione completata</text>
+    <text x="24" y="226" class="sans note" fill="#1b1f2a">o stato regolare.</text>
+    <text x="24" y="356" class="mono note" fill="#3a4050">tint #E5F2E9</text>
+  </g>
+
+  <g transform="translate(596 178)">
+    <rect width="248" height="406" fill="#fff2d9"/>
+    <rect width="248" height="150" fill="#99631d"/>
+    <text x="24" y="48" class="sans label" fill="#fff">ALLERTA</text>
+    <text x="24" y="82" class="mono hex" fill="#fff">#99631D</text>
+    <text x="24" y="198" class="sans note" fill="#1b1f2a">Attenzione richiesta,</text>
+    <text x="24" y="226" class="sans note" fill="#1b1f2a">ma non bloccante.</text>
+    <text x="24" y="356" class="mono note" fill="#3a4050">tint #FFF2D9</text>
+  </g>
+
+  <g transform="translate(858 178)">
+    <rect width="248" height="406" fill="#fadfdf"/>
+    <rect width="248" height="150" fill="#a53a3a"/>
+    <text x="24" y="48" class="sans label" fill="#fff">ERRORE</text>
+    <text x="24" y="82" class="mono hex" fill="#fff">#A53A3A</text>
+    <text x="24" y="198" class="sans note" fill="#1b1f2a">Fallimento o condizione</text>
+    <text x="24" y="226" class="sans note" fill="#1b1f2a">che blocca il flusso.</text>
+    <text x="24" y="356" class="mono note" fill="#3a4050">tint #FADFDF</text>
+  </g>
+
+  <g transform="translate(1120 178)">
+    <rect width="248" height="406" fill="#f6dddd"/>
+    <rect width="248" height="150" fill="#702525"/>
+    <text x="24" y="48" class="sans label" fill="#fff">ALLARME</text>
+    <text x="24" y="82" class="mono hex" fill="#fff">#702525</text>
+    <text x="24" y="198" class="sans note" fill="#1b1f2a">Intervento immediato</text>
+    <text x="24" y="226" class="sans note" fill="#1b1f2a">ad alta priorità.</text>
+    <text x="24" y="356" class="mono note" fill="#3a4050">tint #F6DDDD</text>
+  </g>
+
+  <line x1="72" x2="1368" y1="638" y2="638" stroke="#dde2ee"/>
+  <text x="72" y="678" class="sans note" fill="#565c6b">Il colore non è mai l’unico segnale: associare testo, icona o forma e il ruolo ARIA corretto.</text>
+</svg>
