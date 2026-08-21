@@ -563,6 +563,28 @@ Dentro `.tr-login`, e solo li', `--primary` torna a essere una superficie piena.
 proprio perche' non possa essere usata altrove per comodita'. Lo spigolo vivo
 resta — cambia il fondo, non la geometria.
 
+### Tipografia dell'etichetta
+
+L'etichetta e' in mono maiuscolo, che nel sistema significa "comando". Ma il
+mono maiuscolo si legge bene solo se non lo si tratta come un'etichetta da
+scorrere:
+
+| | Valore | Perche' |
+|---|---|---|
+| Corpo | 13px (`--sm` 12px, `--lg` 14px) | Sotto i 12px il mono perde tratto: le aste si assottigliano e il maiuscolo, che non ha ascendenti ne' discendenti, non ha piu' niente con cui compensare |
+| Tracking | `--tr-tracking-mono-ui` (0.03em) | **Non** `--tr-tracking-mono` (0.08em) |
+| Peso | semibold | Il regular a queste misure e' troppo esile su fondo chiaro |
+
+Il tracking e' il punto che sbaglia piu' spesso. Il mono ha gia' le sue
+spaziature laterali generose — sono nel disegno del carattere, perche' ogni
+lettera occupa la stessa cassa. Aggiungerci gli 0.08em pensati per l'eyebrow
+stacca le lettere l'una dall'altra e disfa la parola: `ESPORTA TUTTO IN PDF`
+smette di essere quattro parole e diventa venti segni in fila. Su un'etichetta
+che l'occhio attraversa e' un pregio; su una parola che si legge e si clicca e'
+un difetto.
+
+Vale allo stesso modo per le [tabs](#tabs): stessa lingua, stessa cura.
+
 ### Misure e stati
 
 `--sm` (32px) per barre, tabelle e azioni di riga; misura standard 42px; `--lg`

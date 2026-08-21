@@ -62,6 +62,10 @@
   --tr-tracking-display: -0.015em; /* titoli maiuscoli */
   --tr-tracking-mono: 0.08em;      /* etichette mono base (range 0.06–0.3em) */
   --tr-tracking-mono-wide: 0.22em; /* eyebrow / kicker */
+  /* Mono da leggere, non da scorrere: comandi e navigazione. La spaziatura
+     ampia serve all'etichetta che l'occhio attraversa; sulla parola che si
+     legge e si clicca stacca le lettere l'una dall'altra e disfa la parola. */
+  --tr-tracking-mono-ui: 0.03em;
   --tr-tracking-wordmark: 0.08em;  /* wordmark LA TRACCIA */
 
   /* ---- Tipografia · Interlinea ---- */

@@ -1448,8 +1448,8 @@ select.tr-field__control + .tr-field__label,
   background: none;
   font-family: var(--tr-font-mono);
   font-weight: var(--tr-weight-semibold);
-  font-size: var(--tr-text-caption);
-  letter-spacing: var(--tr-tracking-mono);
+  font-size: var(--tr-text-mono);
+  letter-spacing: var(--tr-tracking-mono-ui);
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
@@ -1545,9 +1545,9 @@ select.tr-field__control + .tr-field__label,
 }
 
 /* ---- Misure ---- */
-.tr-btn--sm { height: var(--tr-btn-h-sm); font-size: 11px; }
+.tr-btn--sm { height: var(--tr-btn-h-sm); font-size: var(--tr-text-caption); }
 .tr-btn--sm::before { bottom: 5px; }
-.tr-btn--lg { height: var(--tr-btn-h-lg); font-size: 13px; }
+.tr-btn--lg { height: var(--tr-btn-h-lg); font-size: 14px; }
 .tr-btn--lg::before { bottom: 11px; }
 .tr-btn--block { width: 100%; }
 
@@ -1699,9 +1699,9 @@ select.tr-field__control + .tr-field__label,
   border-radius: 0;
   background: none;
   font-family: var(--tr-font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: var(--tr-tracking-mono);
+  font-size: var(--tr-text-mono);
+  font-weight: var(--tr-weight-semibold);
+  letter-spacing: var(--tr-tracking-mono-ui);
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--tr-ink-400);
@@ -1765,5 +1765,5 @@ select.tr-field__control + .tr-field__label,
 }
 @media (max-width: 720px) {
   .tr-tabs { gap: var(--tr-space-4); padding: 0 var(--tr-space-4); }
-  .tr-tab { height: var(--tr-btn-h); font-size: 11px; }
+  .tr-tab { height: var(--tr-btn-h); font-size: var(--tr-text-caption); }
 }
