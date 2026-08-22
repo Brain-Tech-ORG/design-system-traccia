@@ -1134,6 +1134,21 @@ client in **tema scuro**, dove alcuni motori invertono i colori del testo ma non
 gli sfondi.
 
 
+## Copertina documenti protocollati e preventivi
+
+Template A4 in [`examples/copertina-documenti.html`](examples/copertina-documenti.html),
+in due varianti dello stesso modello: **documento protocollato** e **preventivo**.
+E' una superficie pubblica, quindi il footer porta la riga certificazioni; il watermark
+outline sborda dall'angolo alto-destra e l'oggetto sta sul gradino H3 del sistema —
+e' un documento istituzionale, non una brochure.
+
+Campi previsti dal sistema di gestione: intestazione del cliente (Spett.le / c.a.),
+oggetto, data di emissione, numero di protocollo o di offerta, numero di revisione,
+codice modello (MOD-…), blocco **Redatto / Verificato / Approvato** con ruolo, firma e
+data, riga specifiche (classificazione, conservazione, pagine). La stampa della pagina
+emette le copertine in A4 a pieno formato (`@page` senza margini, filetto di anteprima
+rimosso).
+
 ## Vincoli
 
 - **Minimalismo**: whitespace generoso; max un colore d'accento per composizione.
