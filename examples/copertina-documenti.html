@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>La Traccia — Copertina documenti e preventivi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <link rel="stylesheet" href="../css/traccia.css">
+  <style>
+    body { margin: 0; }
+    .demo { width: min(900px, calc(100% - 48px)); margin: 0 auto; padding: 48px 0 80px; }
+    .demo__intro { margin: 32px 0 0; }
+    .demo__intro .tr-h3 { margin-top: 16px; }
+    .demo__fields {
+      list-style: none; margin: 24px 0 0; padding: 20px 0 0;
+      border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px 32px;
+    }
+    .demo__fields li {
+      display: flex; align-items: baseline; gap: var(--tr-space-3);
+      font-family: var(--tr-font-mono); font-size: var(--tr-text-caption);
+      letter-spacing: var(--tr-tracking-mono); text-transform: uppercase;
+      color: var(--tr-ink-600);
+    }
+    .demo__fields li .tr-dot { width: 6px; height: 6px; transform: translateY(-1px); }
+    .demo__variant { margin: 64px 0 20px; }
+    .demo__note {
+      margin: 24px 0 0; font-family: var(--tr-font-mono); font-size: 11px;
+      letter-spacing: var(--tr-tracking-mono); text-transform: uppercase;
+      color: var(--tr-ink-400);
+    }
+    .demo__scroll { overflow-x: auto; }
+
+    /* ==================================================================
+       Copertina A4 — 794 × 1123 px ≈ 210 × 297 mm a 96 dpi.
+       Superficie di stampa: pubblica, quindi il footer porta la riga
+       certificazioni; il watermark outline sborda dall'angolo alto-destra.
+       Il titolo dell'oggetto sta sul gradino H3 del sistema: e' un
+       documento istituzionale, non una brochure.
+       ================================================================== */
+    .doc-sheet {
+      width: 794px; height: 1123px;
+      margin: 0 auto;
+      background: var(--tr-paper);
+      color: var(--tr-ink-600);
+      border: var(--tr-rule-thin) solid var(--tr-border-soft);
+      padding: 52px 60px 40px;
+      display: flex; flex-direction: column;
+      font-size: 13px;
+      box-sizing: border-box;
+    }
+    .doc-sheet .tr-watermark { width: 470px; top: -48px; right: -140px; }
+
+    /* riga tipo documento + codice modello */
+    .doc-kind {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--tr-space-5); margin-top: 26px;
+    }
+    .doc-kind__mod {
+      font-family: var(--tr-font-mono); font-weight: var(--tr-weight-semibold);
+      font-size: 11px; letter-spacing: var(--tr-tracking-mono-wide);
+      text-transform: uppercase; color: var(--tr-brand-500);
+    }
+
+    /* etichetta mono blu dei blocchi */
+    .doc-lbl {
+      font-family: var(--tr-font-mono); font-weight: var(--tr-weight-semibold);
+      font-size: 10px; letter-spacing: var(--tr-tracking-mono-wide);
+      text-transform: uppercase; color: var(--tr-brand-500);
+      margin: 0 0 10px;
+    }
+
+    /* intestazione del cliente + dettagli del documento */
+    .doc-meta {
+      display: grid; grid-template-columns: 1fr 300px;
+      gap: var(--tr-space-7); margin-top: 34px; align-items: start;
+    }
+    .doc-dest__who {
+      font-weight: var(--tr-weight-semibold); font-size: 17px;
+      color: var(--tr-ink-900); margin: 0 0 2px;
+    }
+    .doc-dest__addr { margin: 0; font-size: 13px; color: var(--tr-ink-600); }
+    .doc-dest__att {
+      margin: 10px 0 0; font-family: var(--tr-font-mono); font-size: 11px;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--tr-ink-400);
+    }
+    .doc-meta .tr-datatable__row { padding: 9px 0; }
+    .doc-meta .tr-datatable__label { font-size: 10px; }
+    .doc-meta .tr-datatable__value { font-size: 12px; font-variant-numeric: tabular-nums; }
+
+    /* oggetto del documento */
+    .doc-subject { margin-top: 58px; }
+    .doc-subject .tr-eyebrow { margin-bottom: 18px; }
+    .doc-subject .tr-h3 { max-width: 30em; line-height: 1.15; }
+    .doc-subject__abstract { max-width: 60ch; margin: 18px 0 0; font-size: 13px; }
+
+    /* redazione e approvazione: redatto / verificato / approvato */
+    .doc-sign { margin-top: auto; padding-top: 36px; }
+    .doc-sign__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: var(--tr-space-6); margin-top: 14px;
+    }
+    .doc-sign__cell {
+      border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
+      padding-top: 12px;
+    }
+    .doc-sign__role {
+      font-family: var(--tr-font-mono); font-weight: var(--tr-weight-semibold);
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--tr-brand-500); margin: 0 0 8px;
+    }
+    .doc-sign__name {
+      font-weight: var(--tr-weight-semibold); font-size: 13.5px;
+      color: var(--tr-ink-900); margin: 0;
+    }
+    .doc-sign__fn { margin: 1px 0 0; font-size: 11.5px; color: var(--tr-ink-400); }
+    .doc-sign__sig {
+      margin-top: 26px; height: var(--tr-rule-thin);
+      background: var(--tr-border-soft); border-radius: var(--tr-radius-line);
+    }
+    .doc-sign__sig-lbl {
+      margin: 6px 0 0; font-family: var(--tr-font-mono); font-size: 9px;
+      letter-spacing: var(--tr-tracking-mono); text-transform: uppercase;
+      color: var(--tr-ink-400);
+      display: flex; justify-content: space-between; gap: var(--tr-space-3);
+    }
+
+    /* misure da documento per specifiche e footer */
+    .doc-sheet .tr-specs { margin-top: 30px; }
+    .doc-sheet .tr-specs__item { font-size: 10px; }
+    .doc-sheet .tr-footer { margin-top: 26px; }
+    .doc-sheet .tr-header .tr-header__note {
+      font-family: var(--tr-font-mono); font-size: 10px;
+      letter-spacing: var(--tr-tracking-mono); text-transform: uppercase;
+      color: var(--tr-ink-400); text-align: right;
+    }
+
+    /* ---- stampa: solo le copertine, A4 a pieno formato ---- */
+    @page { size: A4; margin: 0; }
+    @media print {
+      body { background: #fff; }
+      .demo__chrome, .demo__variant, .demo__note { display: none; }
+      .demo { width: auto; padding: 0; }
+      .demo__scroll { overflow: visible; }
+      .doc-sheet { border: none; break-after: page; }
+    }
+  </style>
+</head>
+<body class="tr-page">
+  <main class="demo">
+
+    <div class="demo__chrome">
+      <header class="tr-header">
+        <span class="tr-brandmark">
+          <img class="tr-brandmark__logo" src="../assets/logo-traccia.svg" alt="">
+          <span class="tr-brandmark__wordmark">La Traccia</span>
+        </span>
+        <span class="tr-mono tr-mono--brand">Design system · Documenti</span>
+      </header>
+
+      <section class="demo__intro">
+        <span class="tr-accent-dash"></span>
+        <h1 class="tr-h3">Copertina per documenti <em>protocollati</em> e preventivi</h1>
+        <p class="tr-body">
+          Pagina di copertina per i documenti in uscita, nel linguaggio del sistema: layout
+          aperto, filetti sottili, un solo accento, watermark outline a sbordo dall'angolo.
+          Il documento e' una superficie pubblica, quindi il footer porta la riga
+          certificazioni. I campi previsti dal sistema di gestione:
+        </p>
+        <ul class="demo__fields">
+          <li><span class="tr-dot"></span>Intestazione del cliente</li>
+          <li><span class="tr-dot"></span>Oggetto del documento</li>
+          <li><span class="tr-dot"></span>Data di emissione</li>
+          <li><span class="tr-dot"></span>Numero di protocollo / offerta</li>
+          <li><span class="tr-dot"></span>Numero di revisione</li>
+          <li><span class="tr-dot"></span>Redatto · Verificato · Approvato</li>
+          <li><span class="tr-dot"></span>Codice modello (MOD-…)</li>
+          <li><span class="tr-dot"></span>Classificazione e conservazione</li>
+        </ul>
+        <p class="demo__note">Stampa della pagina → le due copertine escono in A4 a pieno formato.</p>
+      </section>
+    </div>
+
+    <!-- ============ Variante A · Documento protocollato ============ -->
+    <div class="demo__variant">
+      <div class="tr-eyebrow">
+        <span class="tr-eyebrow__label">Variante A</span>
+        <span class="tr-eyebrow__line"></span>
+        <span class="tr-eyebrow__note">Documento protocollato · MOD-05.02</span>
+      </div>
+    </div>
+
+    <div class="demo__scroll">
+    <section class="doc-sheet tr-watermark-host" aria-label="Copertina documento protocollato">
+      <img class="tr-watermark tr-watermark--top-right" src="../assets/logo-traccia-outline.svg" alt="" aria-hidden="true">
+
+      <header class="tr-header">
+        <span class="tr-brandmark">
+          <img class="tr-brandmark__logo" src="../assets/logo-traccia.svg" alt="La Traccia">
+          <span class="tr-brandmark__wordmark">La Traccia</span>
+        </span>
+        <span class="tr-header__note">Documento controllato<br>Sistema di gestione certificato</span>
+      </header>
+
+      <div class="doc-kind">
+        <span class="tr-chip"><span class="tr-dot"></span>Documento protocollato</span>
+        <span class="doc-kind__mod">MOD-05.02 · Rev. 02</span>
+      </div>
+
+      <div class="doc-meta">
+        <div class="doc-dest">
+          <p class="doc-lbl">Spett.le</p>
+          <p class="doc-dest__who">Azienda Ospedaliera Regionale «San Carlo»</p>
+          <p class="doc-dest__addr">Via Potito Petrone — 85100 Potenza (PZ)</p>
+          <p class="doc-dest__att">c.a. Direzione Sistemi Informativi</p>
+        </div>
+        <div class="tr-datatable">
+          <div class="tr-datatable__row">
+            <span class="tr-datatable__label">Protocollo n.</span>
+            <span class="tr-datatable__value tr-datatable__value--brand">2026/0341/U</span>
+          </div>
+          <div class="tr-datatable__row">
+            <span class="tr-datatable__label">Data</span>
+            <span class="tr-datatable__value">22/08/2026</span>
+          </div>
+          <div class="tr-datatable__row">
+            <span class="tr-datatable__label">Revisione</span>
+            <span class="tr-datatable__value">02</span>
+          </div>
+          <div class="tr-datatable__row">
+            <span class="tr-datatable__label">Classificazione</span>
+            <span class="tr-datatable__value">Uso esterno</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-subject">
+        <div class="tr-eyebrow">
+          <span class="tr-eyebrow__label">Oggetto</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
+        <h2 class="tr-h3">Manutenzione evolutiva del registro <em>dialisi</em></h2>
+        <p class="doc-subject__abstract">
+          Relazione tecnica sugli interventi di manutenzione evolutiva pianificati per il
+          sistema Tmas A100 — modulo registro dialisi — con il dettaglio delle attivita',
+          dei rilasci previsti e dei riferimenti contrattuali.
+        </p>
+      </div>
+
+      <div class="doc-sign">
+        <p class="doc-lbl">Redazione e approvazione</p>
+        <div class="doc-sign__grid">
+          <div class="doc-sign__cell">
+            <p class="doc-sign__role">Redatto da</p>
+            <p class="doc-sign__name">M. Di Pede</p>
+            <p class="doc-sign__fn">Analista di sistema</p>
+            <div class="doc-sign__sig"></div>
+            <p class="doc-sign__sig-lbl"><span>Firma</span><span>Data 22/08/2026</span></p>
+          </div>
+          <div class="doc-sign__cell">
+            <p class="doc-sign__role">Verificato da</p>
+            <p class="doc-sign__name">G. Montemurro</p>
+            <p class="doc-sign__fn">Responsabile qualita'</p>
+            <div class="doc-sign__sig"></div>
+            <p class="doc-sign__sig-lbl"><span>Firma</span><span>Data 22/08/2026</span></p>
+          </div>
+          <div class="doc-sign__cell">
+            <p class="doc-sign__role">Approvato da</p>
+            <p class="doc-sign__name">V. Santarcangelo</p>
+            <p class="doc-sign__fn">Direzione tecnica</p>
+            <div class="doc-sign__sig"></div>
+            <p class="doc-sign__sig-lbl"><span>Firma</span><span>Data 22/08/2026</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tr-specs">
+        <span class="tr-specs__item"><span class="tr-dot"></span>Conservazione 10 anni</span>
+        <span class="tr-specs__item"><span class="tr-dot"></span>Distribuzione controllata</span>
+        <span class="tr-specs__item"><span class="tr-dot"></span>Pagina 1 di 12</span>
+      </div>
+
+      <footer class="tr-footer">
+        <span class="tr-brandmark">
+          <img class="tr-brandmark__logo" src="../assets/logo-traccia.svg" alt="La Traccia">
+          <span class="tr-brandmark__wordmark">La Traccia</span>
+        </span>
+        <span class="tr-footer__contacts">
+          <span class="tr-footer__contact"><span class="tr-dot"></span>info@latraccia.it</span>
+          <span class="tr-footer__contact"><span class="tr-dot"></span>+39 0835 336836</span>
+          <span class="tr-footer__contact"><span class="tr-dot"></span>P.IVA 00317370773</span>
+        </span>
+        <div class="tr-footer__certs">
+          <span class="tr-footer__certs-label">Certificazioni</span>
+          <span class="tr-footer__certs-list">ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125</span>
+          <span class="tr-footer__certs-line"></span>
+          <img class="tr-footer__certs-badges" src="../assets/certificazioni.png" alt="IMQ Certified — SI Cert">
+        </div>
+      </footer>
+    </section>
+    </div>
+
+    <!-- ============ Variante B · Preventivo ============ -->
+    <div class="demo__variant">
+      <div class="tr-eyebrow">
+        <span class="tr-eyebrow__label">Variante B</span>
+        <span class="tr-eyebrow__line"></span>
+        <span class="tr-eyebrow__note">Preventivo · MOD-07.03</span>
+      </div>
+    </div>
+
+    <div class="demo__scroll">
+    <section class="doc-sheet tr-watermark-host" aria-label="Copertina preventivo">
+      <img class="tr-watermark tr-watermark--top-right" src="../assets/logo-traccia-outline.svg" alt="" aria-hidden="true">
+
+      <header class="tr-header">
+        <span class="tr-brandmark">
+          <img class="tr-brandmark__logo" src="../assets/logo-traccia.svg" alt="La Traccia">
+          <span class="tr-brandmark__wordmark">La Traccia</span>
+        </span>
+        <span class="tr-header__note">Documento controllato<br>Sistema di gestione certificato</span>
+      </header>
+
+      <div class="doc-kind">
+        <span class="tr-chip"><span class="tr-dot"></span>Preventivo</span>
+        <span class="doc-kind__mod">MOD-07.03 · Rev. 01</span>
+      </div>
+
+      <div class="doc-meta">
+        <div class="doc-dest">
+          <p class="doc-lbl">Spett.le</p>
+          <p class="doc-dest__who">Comune di Matera</p>
+          <p class="doc-dest__addr">Via Aldo Moro, 32 — 75100 Matera (MT)</p>
+          <p class="doc-dest__att">c.a. Ufficio Innovazione e Transizione Digitale</p>
+        </div>
+        <div class="tr-datatable">
+          <div class="tr-datatable__row">
+            <span class="tr-datatable__label">Offerta n.</span>
+            <span class="tr-datatable__value tr-datatable__value--brand">2026/OFF-118</span>
+          </div>
+          <div class="tr-datatable__row">
+            <span class="tr-datatable__label">Data</span>
+            <span class="tr-datatable__value">22/08/2026</span>
+          </div>
+          <div class="tr-datatable__row">
+            <span class="tr-datatable__label">Revisione</span>
+            <span class="tr-datatable__value">01</span>
+          </div>
+          <div class="tr-datatable__row">
+            <span class="tr-datatable__label">Validita'</span>
+            <span class="tr-datatable__value">30 giorni</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-subject">
+        <div class="tr-eyebrow">
+          <span class="tr-eyebrow__label">Oggetto dell'offerta</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
+        <h2 class="tr-h3">Fornitura del sistema di protocollo <em>informatico</em></h2>
+        <p class="doc-subject__abstract">
+          Offerta economica per la fornitura, l'installazione e l'avviamento del sistema di
+          protocollo informatico, comprensiva di formazione del personale, migrazione dei
+          dati e assistenza per il primo anno di esercizio.
+        </p>
+      </div>
+
+      <div class="doc-sign">
+        <p class="doc-lbl">Redazione e approvazione</p>
+        <div class="doc-sign__grid">
+          <div class="doc-sign__cell">
+            <p class="doc-sign__role">Redatto da</p>
+            <p class="doc-sign__name">A. Festa</p>
+            <p class="doc-sign__fn">Ufficio commerciale</p>
+            <div class="doc-sign__sig"></div>
+            <p class="doc-sign__sig-lbl"><span>Firma</span><span>Data 22/08/2026</span></p>
+          </div>
+          <div class="doc-sign__cell">
+            <p class="doc-sign__role">Verificato da</p>
+            <p class="doc-sign__name">G. Montemurro</p>
+            <p class="doc-sign__fn">Responsabile qualita'</p>
+            <div class="doc-sign__sig"></div>
+            <p class="doc-sign__sig-lbl"><span>Firma</span><span>Data 22/08/2026</span></p>
+          </div>
+          <div class="doc-sign__cell">
+            <p class="doc-sign__role">Approvato da</p>
+            <p class="doc-sign__name">V. Santarcangelo</p>
+            <p class="doc-sign__fn">Direzione generale</p>
+            <div class="doc-sign__sig"></div>
+            <p class="doc-sign__sig-lbl"><span>Firma</span><span>Data 22/08/2026</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tr-specs">
+        <span class="tr-specs__item"><span class="tr-dot"></span>CIG Z3A1B2C3D4</span>
+        <span class="tr-specs__item"><span class="tr-dot"></span>Validita' 30 giorni</span>
+        <span class="tr-specs__item"><span class="tr-dot"></span>Pagina 1 di 6</span>
+      </div>
+
+      <footer class="tr-footer">
+        <span class="tr-brandmark">
+          <img class="tr-brandmark__logo" src="../assets/logo-traccia.svg" alt="La Traccia">
+          <span class="tr-brandmark__wordmark">La Traccia</span>
+        </span>
+        <span class="tr-footer__contacts">
+          <span class="tr-footer__contact"><span class="tr-dot"></span>info@latraccia.it</span>
+          <span class="tr-footer__contact"><span class="tr-dot"></span>+39 0835 336836</span>
+          <span class="tr-footer__contact"><span class="tr-dot"></span>P.IVA 00317370773</span>
+        </span>
+        <div class="tr-footer__certs">
+          <span class="tr-footer__certs-label">Certificazioni</span>
+          <span class="tr-footer__certs-list">ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125</span>
+          <span class="tr-footer__certs-line"></span>
+          <img class="tr-footer__certs-badges" src="../assets/certificazioni.png" alt="IMQ Certified — SI Cert">
+        </div>
+      </footer>
+    </section>
+    </div>
+
+  </main>
+</body>
+</html>
