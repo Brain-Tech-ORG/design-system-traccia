@@ -94,27 +94,29 @@
     <section class="tr-doc tr-doc--preview" aria-label="Copertina documento protocollato">
       <header class="tr-header">
         <span class="tr-brandmark">
-          <img class="tr-brandmark__logo" src="../assets/logo-traccia.svg" alt="La Traccia">
+          <img class="tr-brandmark__logo" src="../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
           <span class="tr-brandmark__wordmark">La Traccia</span>
         </span>
-        <span class="tr-doc__note">Documento controllato<br>Sistema di gestione certificato</span>
+        <div class="tr-doc__stamp"></div>
       </header>
 
       <div class="tr-doc__kind">
-        <span class="tr-chip"><span class="tr-dot"></span>Documento protocollato</span>
-        <span class="tr-doc__mod">MOD-05.02 · Rev. 02</span>
+        <div class="tr-eyebrow">
+          <span class="tr-eyebrow__label">Documento protocollato</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
       </div>
 
       <div class="tr-doc__meta">
         <div>
-          <p class="tr-doc__label">Spett.le</p>
+          <p class="tr-doc__dest-lead">Spett.le</p>
           <p class="tr-doc__dest-name">Azienda Ospedaliera Regionale «San Carlo»</p>
           <p class="tr-doc__dest-addr">Via Potito Petrone — 85100 Potenza (PZ)</p>
           <p class="tr-doc__dest-att">c.a. Direzione Sistemi Informativi</p>
         </div>
         <div>
           <div class="tr-doc__key">
-            <span class="tr-doc__key-label">Protocollo n.</span>
+            <span class="tr-doc__key-label">Ns. protocollo n.</span>
             <span class="tr-doc__key-value">2026/0341/U</span>
           </div>
           <div class="tr-datatable">
@@ -142,7 +144,7 @@
         <h2 class="tr-h3">Manutenzione evolutiva del registro <em>dialisi</em></h2>
         <p class="tr-doc__abstract">
           Relazione tecnica sugli interventi di manutenzione evolutiva pianificati per il
-          sistema Tmas A100 — modulo registro dialisi — con il dettaglio delle attivita',
+          sistema Tmas A100 — modulo registro dialisi — con il dettaglio delle attività,
           dei rilasci previsti e dei riferimenti contrattuali.
         </p>
       </div>
@@ -164,52 +166,49 @@
             <p class="tr-doc__sign-name">M. Di Pede</p>
             <p class="tr-doc__sign-fn">Analista di sistema</p>
             <div class="tr-doc__sign-rule"></div>
-            <p class="tr-doc__sign-caption"><span>Firma</span><span>22/08/2026</span></p>
+            <p class="tr-doc__sign-caption"><span>Firma</span><span>Data</span></p>
           </div>
           <div class="tr-doc__sign-cell">
             <p class="tr-doc__sign-role">Verificato da</p>
             <p class="tr-doc__sign-name">G. Montemurro</p>
-            <p class="tr-doc__sign-fn">Responsabile qualita'</p>
+            <p class="tr-doc__sign-fn">Responsabile qualità</p>
             <div class="tr-doc__sign-rule"></div>
-            <p class="tr-doc__sign-caption"><span>Firma</span><span>22/08/2026</span></p>
+            <p class="tr-doc__sign-caption"><span>Firma</span><span>Data</span></p>
           </div>
           <div class="tr-doc__sign-cell">
             <p class="tr-doc__sign-role">Approvato da</p>
             <p class="tr-doc__sign-name">V. Santarcangelo</p>
             <p class="tr-doc__sign-fn">Direzione tecnica</p>
             <div class="tr-doc__sign-rule"></div>
-            <p class="tr-doc__sign-caption"><span>Firma</span><span>22/08/2026</span></p>
+            <p class="tr-doc__sign-caption"><span>Firma</span><span>Data</span></p>
           </div>
         </div>
       </div>
 
-      <div class="tr-specs">
-        <span class="tr-specs__item"><span class="tr-dot"></span>Conservazione 10 anni</span>
-        <span class="tr-specs__item"><span class="tr-dot"></span>Distribuzione controllata</span>
-        <span class="tr-specs__item"><span class="tr-dot"></span>Pagina 1 di 12</span>
-      </div>
 
       <footer class="tr-doc-footer">
+        <div class="tr-doc-footer__model">
+          <span>MOD-05.02 · Rev. 02</span>
+          <span>Conservazione 10 anni</span>
+          <span>Pagina 1 di 12</span>
+        </div>
         <div class="tr-doc-footer__issuer">
-          <span class="tr-doc-footer__mark">
-            <img src="../assets/logo-traccia.svg" alt="" aria-hidden="true">
-            <span>
-              <span class="tr-doc-footer__name">Cooperativa E.D.P. La Traccia</span>
-              <span class="tr-doc-footer__seat">
-                Recinto II Fiorentini, 10 — 75100 Matera ·
-                <span class="tr-doc-footer__vat">P.IVA 00317370773</span>
-              </span>
-            </span>
-          </span>
-          <span class="tr-doc-footer__contacts">
+          <div class="tr-doc-footer__id">
+            <img class="tr-doc-footer__mark" src="../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
+            <span class="tr-doc-footer__name">Cooperativa E.D.P. La Traccia</span>
+            <span class="tr-doc-footer__seat">Recinto II Fiorentini, 10 — 75100 Matera</span>
+            <span class="tr-doc-footer__legal">P.IVA 00317370773</span>
+          </div>
+          <div class="tr-doc-footer__contacts">
             <a class="tr-doc-footer__contact" href="mailto:info@latraccia.it">info@latraccia.it</a>
             <span class="tr-doc-footer__contact">+39 0835 336836</span>
-          </span>
+          </div>
         </div>
         <div class="tr-doc-footer__certs">
           <span class="tr-doc-footer__certs-label">Certificazioni</span>
           <span class="tr-doc-footer__certs-list">ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125</span>
-          <img class="tr-doc-footer__certs-badges" src="../assets/certificazioni.png" alt="IMQ Certified — SI Cert">
+          <img class="tr-doc-footer__certs-badges" src="../assets/certificazioni.png"
+               alt="IMQ Certified ISO 9001:2015, ISO 13485:2016, ISO/IEC 27001:2022 — SI Cert UNI PdR 125">
         </div>
       </footer>
     </section>
@@ -228,20 +227,22 @@
     <section class="tr-doc tr-doc--preview" aria-label="Copertina preventivo">
       <header class="tr-header">
         <span class="tr-brandmark">
-          <img class="tr-brandmark__logo" src="../assets/logo-traccia.svg" alt="La Traccia">
+          <img class="tr-brandmark__logo" src="../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
           <span class="tr-brandmark__wordmark">La Traccia</span>
         </span>
-        <span class="tr-doc__note">Documento controllato<br>Sistema di gestione certificato</span>
+        <div class="tr-doc__stamp"></div>
       </header>
 
       <div class="tr-doc__kind">
-        <span class="tr-chip"><span class="tr-dot"></span>Preventivo</span>
-        <span class="tr-doc__mod">MOD-07.03 · Rev. 01</span>
+        <div class="tr-eyebrow">
+          <span class="tr-eyebrow__label">Preventivo</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
       </div>
 
       <div class="tr-doc__meta">
         <div>
-          <p class="tr-doc__label">Spett.le</p>
+          <p class="tr-doc__dest-lead">Spett.le</p>
           <p class="tr-doc__dest-name">Comune di Matera</p>
           <p class="tr-doc__dest-addr">Via Aldo Moro, 32 — 75100 Matera (MT)</p>
           <p class="tr-doc__dest-att">c.a. Ufficio Innovazione e Transizione Digitale</p>
@@ -261,7 +262,7 @@
               <span class="tr-datatable__value">01</span>
             </div>
             <div class="tr-datatable__row">
-              <span class="tr-datatable__label">Validita'</span>
+              <span class="tr-datatable__label">Validità</span>
               <span class="tr-datatable__value">30 giorni</span>
             </div>
           </div>
@@ -298,52 +299,49 @@
             <p class="tr-doc__sign-name">A. Festa</p>
             <p class="tr-doc__sign-fn">Ufficio commerciale</p>
             <div class="tr-doc__sign-rule"></div>
-            <p class="tr-doc__sign-caption"><span>Firma</span><span>22/08/2026</span></p>
+            <p class="tr-doc__sign-caption"><span>Firma</span><span>Data</span></p>
           </div>
           <div class="tr-doc__sign-cell">
             <p class="tr-doc__sign-role">Verificato da</p>
             <p class="tr-doc__sign-name">G. Montemurro</p>
-            <p class="tr-doc__sign-fn">Responsabile qualita'</p>
+            <p class="tr-doc__sign-fn">Responsabile qualità</p>
             <div class="tr-doc__sign-rule"></div>
-            <p class="tr-doc__sign-caption"><span>Firma</span><span>22/08/2026</span></p>
+            <p class="tr-doc__sign-caption"><span>Firma</span><span>Data</span></p>
           </div>
           <div class="tr-doc__sign-cell">
             <p class="tr-doc__sign-role">Approvato da</p>
             <p class="tr-doc__sign-name">V. Santarcangelo</p>
             <p class="tr-doc__sign-fn">Direzione generale</p>
             <div class="tr-doc__sign-rule"></div>
-            <p class="tr-doc__sign-caption"><span>Firma</span><span>22/08/2026</span></p>
+            <p class="tr-doc__sign-caption"><span>Firma</span><span>Data</span></p>
           </div>
         </div>
       </div>
 
-      <div class="tr-specs">
-        <span class="tr-specs__item"><span class="tr-dot"></span>Validita' 30 giorni</span>
-        <span class="tr-specs__item"><span class="tr-dot"></span>Distribuzione controllata</span>
-        <span class="tr-specs__item"><span class="tr-dot"></span>Pagina 1 di 6</span>
-      </div>
 
       <footer class="tr-doc-footer">
+        <div class="tr-doc-footer__model">
+          <span>MOD-07.03 · Rev. 01</span>
+          <span>Conservazione 10 anni</span>
+          <span>Pagina 1 di 6</span>
+        </div>
         <div class="tr-doc-footer__issuer">
-          <span class="tr-doc-footer__mark">
-            <img src="../assets/logo-traccia.svg" alt="" aria-hidden="true">
-            <span>
-              <span class="tr-doc-footer__name">Cooperativa E.D.P. La Traccia</span>
-              <span class="tr-doc-footer__seat">
-                Recinto II Fiorentini, 10 — 75100 Matera ·
-                <span class="tr-doc-footer__vat">P.IVA 00317370773</span>
-              </span>
-            </span>
-          </span>
-          <span class="tr-doc-footer__contacts">
+          <div class="tr-doc-footer__id">
+            <img class="tr-doc-footer__mark" src="../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
+            <span class="tr-doc-footer__name">Cooperativa E.D.P. La Traccia</span>
+            <span class="tr-doc-footer__seat">Recinto II Fiorentini, 10 — 75100 Matera</span>
+            <span class="tr-doc-footer__legal">P.IVA 00317370773</span>
+          </div>
+          <div class="tr-doc-footer__contacts">
             <a class="tr-doc-footer__contact" href="mailto:info@latraccia.it">info@latraccia.it</a>
             <span class="tr-doc-footer__contact">+39 0835 336836</span>
-          </span>
+          </div>
         </div>
         <div class="tr-doc-footer__certs">
           <span class="tr-doc-footer__certs-label">Certificazioni</span>
           <span class="tr-doc-footer__certs-list">ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125</span>
-          <img class="tr-doc-footer__certs-badges" src="../assets/certificazioni.png" alt="IMQ Certified — SI Cert">
+          <img class="tr-doc-footer__certs-badges" src="../assets/certificazioni.png"
+               alt="IMQ Certified ISO 9001:2015, ISO 13485:2016, ISO/IEC 27001:2022 — SI Cert UNI PdR 125">
         </div>
       </footer>
     </section>
