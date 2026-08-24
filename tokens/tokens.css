@@ -186,6 +186,21 @@
   --tr-client-logo-h: 40px;   /* altezza del marchio cliente in testa (range 32-48px) */
   --tr-login-panel-w: 420px;  /* larghezza della colonna del form */
 
+  /* ---- Documenti formali (stampa A4) ----
+     Preventivi, progetti tecnici, relazioni, documenti da protocollare.
+     Il foglio ha una misura fissa: 794x1123px sono 210x297mm a 96dpi. I
+     margini sono piu' larghi di quelli di una pagina a schermo perche' il
+     documento viene stampato, pinzato e archiviato, e il testo non deve mai
+     arrivare al taglio. */
+  --tr-doc-w: 794px;            /* 210mm a 96dpi */
+  --tr-doc-h: 1123px;           /* 297mm a 96dpi */
+  --tr-doc-pad-x: 64px;         /* ~17mm ai lati */
+  --tr-doc-pad-top: 56px;       /* ~15mm in testa */
+  --tr-doc-pad-bottom: 44px;    /* ~12mm al piede */
+  --tr-doc-text: 13px;          /* corpo del documento (stampa 12–14px) */
+  --tr-doc-meta-col: 288px;     /* colonna dei dati di protocollo */
+  --tr-doc-watermark-w: 420px;  /* sagoma outline sul foglio A4 */
+
   /* ---- Geometria · Misure ricorrenti ---- */
   --tr-accent-dash-w: 64px; /* tratto d'accento sopra i titoli di sezione */
   --tr-dot-size: 8px;       /* dot bullet (range 6–13px) */

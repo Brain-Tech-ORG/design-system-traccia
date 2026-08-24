@@ -16,7 +16,9 @@ niente gradienti, niente emoji, molto bianco.
 ├── tokens/
 │   ├── tokens.css                Design token come CSS custom properties
 │   └── tokens.json               Design token in formato W3C draft
-├── css/traccia.css               Libreria componenti (prefisso .tr-)
+├── css/
+│   ├── traccia.css               Libreria componenti (prefisso .tr-)
+│   └── traccia-doc.css           Documenti formali a stampa (prefisso .tr-doc)
 ├── js/tr-select.js               Listbox del select (vanilla, per Angular e HTML)
 ├── email/
 │   ├── firma-email.html          Firma email (tabelle + stili inline)
@@ -178,6 +180,7 @@ volte al giorno.
 | 14 | Card | `.tr-card` + `__head` / `__title` / `__foot` |
 | 15 | Azione | `.tr-btn` + `--primary` / `--secondary` / `--neutral` / `--quiet` / `--danger` |
 | 16 | Spinner di caricamento | `.tr-spinner` + `__wipe` / `__track` / `__seq` / `__ring` |
+| 17 | Foglio e piede del documento formale | `.tr-doc` + `.tr-doc-footer` — vedi [Documenti formali](#documenti-formali) |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -1134,20 +1137,117 @@ client in **tema scuro**, dove alcuni motori invertono i colori del testo ma non
 gli sfondi.
 
 
-## Copertina documenti protocollati e preventivi
+## Documenti formali
 
-Template A4 in [`examples/copertina-documenti.html`](examples/copertina-documenti.html),
-in due varianti dello stesso modello: **documento protocollato** e **preventivo**.
-E' una superficie pubblica, quindi il footer porta la riga certificazioni; il watermark
-outline sborda dall'angolo alto-destra e l'oggetto sta sul gradino H3 del sistema —
-e' un documento istituzionale, non una brochure.
+Preventivi, progetti tecnici, relazioni, documenti da protocollare. Componenti in
+[`css/traccia-doc.css`](css/traccia-doc.css), copertina d'esempio in due varianti in
+[`examples/copertina-documenti.html`](examples/copertina-documenti.html).
 
-Campi previsti dal sistema di gestione: intestazione del cliente (Spett.le / c.a.),
-oggetto, data di emissione, numero di protocollo o di offerta, numero di revisione,
-codice modello (MOD-…), blocco **Redatto / Verificato / Approvato** con ruolo, firma e
-data, riga specifiche (classificazione, conservazione, pagine). La stampa della pagina
-emette le copertine in A4 a pieno formato (`@page` senza margini, filetto di anteprima
-rimosso).
+```html
+<link rel="stylesheet" href="tokens/tokens.css">
+<link rel="stylesheet" href="css/traccia.css">
+<link rel="stylesheet" href="css/traccia-doc.css">
+
+<section class="tr-doc tr-doc--preview">…</section>
+```
+
+Vale il linguaggio del sistema — layout aperti, niente box, niente ombre, un solo
+accento — piu' due cose che il documento formale impone e la pagina a schermo no.
+
+### Il foglio ha una misura fissa
+
+794×1123px sono 210×297mm a 96dpi: il contenuto della copertina **deve stare in una
+pagina**, e quindi il ritmo verticale non puo' essere improvvisato. Ogni salto fra i
+blocchi viene dalla scala `--tr-space-*` — 24px fra i blocchi contigui, 32px dove si
+cambia argomento — e l'unico spazio elastico e' quello sopra il blocco firme, che
+`margin-top: auto` appoggia al piede della pagina.
+
+E' una gabbia stretta, e va detto: il **sommario dell'oggetto sta in due o tre righe**
+e i **riferimenti in tre voci**. Oltre, il foglio cresce e la copertina va a pagina due —
+che e' l'unico modo in cui il template puo' rompersi, ed e' preferibile a un
+troncamento silenzioso.
+
+| Token | Valore | |
+|---|---|---|
+| `--tr-doc-w` / `--tr-doc-h` | `794px` / `1123px` | Il foglio A4 a 96dpi |
+| `--tr-doc-pad-x` | `64px` (~17mm) | Margine laterale: il testo non arriva mai al taglio |
+| `--tr-doc-pad-top` / `--tr-doc-pad-bottom` | `56px` / `44px` | Testa e piede |
+| `--tr-doc-text` | `13px` | Corpo, dentro il range di stampa 12–14px |
+| `--tr-doc-meta-col` | `288px` | Colonna dei dati di protocollo |
+
+### Il piede identifica l'emittente
+
+**Non e' `.tr-footer`.** Il footer del sistema firma una superficie: marchio a sinistra,
+contatti e riferimento di prodotto a destra. Qui il compito e' un altro. Un documento
+esce dall'azienda, viene protocollato, fotocopiato, scansionato a pezzi e ritrovato mesi
+dopo dentro un fascicolo: il piede deve dire **chi lo ha emesso** anche a una pagina
+staccata dal suo contesto.
+
+`.tr-doc-footer` porta quindi **sempre**, senza varianti da cui toglierli:
+
+| Riga | Contenuto | Trattamento |
+|---|---|---|
+| Ragione sociale | Cooperativa E.D.P. La Traccia | Archivo 800, maiuscolo, tracking `--tr-tracking-wordmark`, `ink/900` |
+| Sede e partita IVA | Recinto II Fiorentini, 10 — 75100 Matera · P.IVA 00317370773 | Archivo 400 11px `ink/600`; la P.IVA in mono `ink/400` |
+| Recapiti | Email e telefono, allineati a destra | Mono 10px maiuscolo `ink/400` |
+| Certificazioni | ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125 + badge | Etichetta mono `brand/600`, elenco mono `ink/400` |
+
+**Il wordmark non compare nel piede**: la ragione sociale per esteso lo sostituisce. Due
+modi di scrivere lo stesso nome affiancati sarebbero un lockup confuso, e su un documento
+formale il nome che conta e' quello legale. Resta il solo marchio grafico.
+
+La riga certificazioni non e' opzionale come nel footer di sistema: un documento formale
+e' **per definizione** una superficie pubblica, e la credenziale ci sta sempre. Rispetto
+al footer di sistema cade pero' il filetto di riempimento — l'elenco delle quattro norme
+riempie gia' la riga, e infilarcelo manda il badge a capo da solo, staccato da cio' che
+certifica.
+
+### La chiave di protocollo esce dalla tabella
+
+Il numero di protocollo (o di offerta) e' il dato per cui il documento verra' cercato: in
+un fascicolo si scorre la colonna dei numeri, non i titoli. Dentro la tabella dei dati
+aveva lo stesso peso della classificazione, cioe' nessuno. `.tr-doc__key` lo porta in
+testa alla colonna destra, in mono semibold 19px `brand/600`, chiuso da un filetto da 2px
+in `brand/500`. Resta mono perche' e' un codice, e resta in `brand/600` perche' quel blu
+regge il contrasto anche in fotocopia.
+
+Sotto, `.tr-datatable` tiene gli altri dati — data, revisione, classificazione o validita' —
+tutti dello stesso peso, perche' fra loro nessuno conta piu' degli altri.
+
+Attenzione a non confondere **la revisione del modello** (`MOD-05.02 · Rev. 02`, in alto a
+destra) con **la revisione del documento** (nella tabella): sono due numeri diversi, e in
+audit vengono confusi di continuo. Il template li tiene volutamente lontani.
+
+### Niente watermark sul documento formale
+
+La sagoma outline e' un segno ambientale nato per brochure e slide, dove la pagina si
+guarda. Un documento formale invece si fotocopia, si scansiona e si passa all'OCR: una
+sagoma al 16% sotto il testo non aggiunge marchio — sporca il numero di protocollo e
+confonde il riconoscimento del testo. L'emittente e' gia' dichiarato due volte, dal
+marchio in testata e dalla ragione sociale nel piede.
+
+Ne discende anche una cosa pratica: la **zona alta a destra resta libera**, ed e' li' che
+l'ente ricevente appone il proprio timbro di protocollo in entrata.
+
+### Campi e struttura
+
+| Blocco | Classe | Contenuto |
+|---|---|---|
+| Testata | `.tr-header` + `.tr-doc__note` | Marchio e regime documentale |
+| Tipo di documento | `.tr-doc__kind` + `.tr-chip` + `.tr-doc__mod` | Tipo e codice del modello |
+| Destinatario e dati | `.tr-doc__meta`, `.tr-doc__key`, `.tr-datatable` | Spett.le / c.a., protocollo, data, revisione |
+| Oggetto | `.tr-doc__subject` + `.tr-h3` | Eyebrow, titolo e sommario |
+| Riferimenti | `.tr-doc__refs` | Vs. richiesta, contratto o CIG, allegati |
+| Redazione | `.tr-doc__sign` | Redatto · Verificato · Approvato, con firma e data |
+| Specifiche | `.tr-specs` | Conservazione, distribuzione, numero di pagina |
+| Piede | `.tr-doc-footer` | Emittente e certificazioni |
+
+I **riferimenti** non sono decorazione: sono cio' a cui il documento risponde. Senza,
+la copertina lascia un vuoto in mezzo alla pagina e costringe chi legge ad aprire il
+documento per capire di cosa sia il seguito.
+
+La stampa emette le copertine in **A4 a pieno formato** (`@page { size: A4; margin: 0 }`),
+senza il filetto che `.tr-doc--preview` usa solo a schermo per segnare il bordo del foglio.
 
 ## Vincoli
 

@@ -1,0 +1,457 @@
+/* ==========================================================================
+   LA TRACCIA — Documenti formali (stampa A4)
+   Richiede tokens/tokens.css e css/traccia.css.
+
+   Copertine e pagine dei documenti in uscita: preventivi, progetti tecnici,
+   relazioni, documenti da protocollare. Vale il linguaggio del sistema —
+   layout aperti, niente box, niente ombre, un solo accento — con in piu' le
+   regole che la stampa e la tracciabilita' documentale impongono.
+
+   Due cose distinguono un documento formale da una pagina del sito:
+
+   1. IL PIEDE IDENTIFICA L'EMITTENTE. Un documento esce dall'azienda, viene
+      protocollato, fotocopiato, scansionato a pezzi e ritrovato mesi dopo
+      dentro un fascicolo. Il piede deve dire chi lo ha emesso anche a una
+      pagina staccata dal suo contesto: ragione sociale, sede e partita IVA,
+      sempre, piu' le certificazioni. Non e' una firma di cortesia come nel
+      footer del sito: e' identificazione.
+
+   2. IL FOGLIO HA UNA MISURA FISSA. 794x1123px sono 210x297mm a 96dpi. Il
+      ritmo verticale non puo' essere lasciato al caso: ogni salto fra i
+      blocchi viene dalla scala --tr-space-*, e il piede resta ancorato in
+      fondo con .tr-shell.
+
+   Prefisso classi: .tr-doc
+   ========================================================================== */
+
+.tr-doc,
+.tr-doc__kind,
+.tr-doc__meta,
+.tr-doc__key,
+.tr-doc__subject,
+.tr-doc__refs,
+.tr-doc__sign,
+.tr-doc__sign-cell,
+.tr-doc-footer { box-sizing: border-box; }
+
+/* ==========================================================================
+   1 · Il foglio
+   Formato A4 a 96dpi. I margini sono piu' larghi di quelli di una pagina a
+   schermo: un documento istituzionale viene stampato, pinzato e archiviato,
+   e il testo non deve mai arrivare al taglio.
+   ========================================================================== */
+.tr-doc {
+  width: var(--tr-doc-w);
+  min-height: var(--tr-doc-h);
+  padding: var(--tr-doc-pad-top) var(--tr-doc-pad-x) var(--tr-doc-pad-bottom);
+  background: var(--tr-paper);
+  color: var(--tr-ink-600);
+  font-family: var(--tr-font-display);
+  font-size: var(--tr-doc-text);
+  line-height: var(--tr-leading-body);
+  display: flex;
+  flex-direction: column;
+}
+
+/* SUL DOCUMENTO FORMALE IL WATERMARK NON CI VA.
+   La sagoma outline e' un segno ambientale nato per brochure e slide, dove
+   la pagina si guarda. Un documento formale invece si fotocopia, si scansiona
+   e si passa all'OCR: una sagoma al 16% sotto il testo non aggiunge marchio —
+   sporca il numero di protocollo, che e' il dato per cui il foglio verra'
+   cercato, e confonde il riconoscimento del testo. L'emittente e' gia'
+   dichiarato due volte, dal marchio in testata e dalla ragione sociale nel
+   piede: non serve una terza volta in filigrana.
+   Tenere inoltre libera la zona alta a destra, dove l'ente ricevente appone
+   il proprio timbro di protocollo in entrata. */
+
+/* La nota di testata: due righe mono che dichiarano il regime documentale.
+   Sta a destra nel .tr-header, sotto il livello del wordmark. */
+.tr-doc__note {
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   2 · Riga del tipo di documento
+   Chip del tipo a sinistra, codice e revisione del MODELLO a destra.
+   Attenzione: la revisione del modello (MOD-05.02 · Rev. 02) non e' la
+   revisione del documento, che sta nella tabella dei dati. Sono due numeri
+   diversi e vanno tenuti lontani, altrimenti in audit si confondono.
+   ========================================================================== */
+.tr-doc__kind {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tr-space-5);
+  margin-top: var(--tr-space-5);
+}
+.tr-doc__mod {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 11px;
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-brand-600);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   3 · Intestazione del destinatario e dati del documento
+   Due colonne: a sinistra il destinatario, a destra la chiave di protocollo
+   e la tabella dei dati. La colonna destra e' larga quanto basta ai valori
+   piu' lunghi e non di piu': allargarla sposta il destinatario fuori asse.
+   ========================================================================== */
+.tr-doc__meta {
+  display: grid;
+  grid-template-columns: 1fr var(--tr-doc-meta-col);
+  gap: var(--tr-space-7);
+  margin-top: var(--tr-space-5);
+  align-items: start;
+}
+
+/* Etichetta mono blu che apre un blocco */
+.tr-doc__label {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-brand-600);
+  margin: 0 0 var(--tr-space-2);
+}
+
+.tr-doc__dest-name {
+  font-weight: var(--tr-weight-semibold);
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--tr-ink-900);
+  margin: 0 0 var(--tr-space-1);
+}
+.tr-doc__dest-addr {
+  margin: 0;
+  color: var(--tr-ink-600);
+}
+.tr-doc__dest-att {
+  margin: var(--tr-space-3) 0 0;
+  font-family: var(--tr-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+}
+
+/* ---- La chiave: numero di protocollo o di offerta ----
+   E' il dato per cui il documento verra' cercato: in un fascicolo si scorre
+   la colonna dei numeri, non i titoli. Nella tabella dei dati aveva lo
+   stesso peso della classificazione, cioe' nessuno. Qui esce dalla tabella,
+   prende la testa della colonna e un corpo suo. Resta mono, perche' e' un
+   codice, e resta in brand/600, che regge il contrasto anche in grigio. */
+.tr-doc__key {
+  padding-bottom: var(--tr-space-3);
+  border-bottom: var(--tr-rule-medium) solid var(--tr-brand-500);
+}
+.tr-doc__key-label {
+  display: block;
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+  margin-bottom: var(--tr-space-1);
+}
+.tr-doc__key-value {
+  display: block;
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 19px;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--tr-brand-600);
+  font-variant-numeric: tabular-nums;
+}
+
+/* La tabella dati sotto la chiave: misure da documento, non da interfaccia */
+.tr-doc__meta .tr-datatable { margin-top: var(--tr-space-3); }
+.tr-doc__meta .tr-datatable__row { padding: 7px 0; }
+.tr-doc__meta .tr-datatable__row:first-child { border-top: 0; }
+.tr-doc__meta .tr-datatable__label { font-size: 10px; }
+.tr-doc__meta .tr-datatable__value {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   4 · Oggetto
+   Eyebrow, titolo display e sommario. Il titolo sta su .tr-h3: un documento
+   istituzionale non ha bisogno della voce alta di una brochure, e a 22px
+   l'oggetto entra su due righe anche quando e' lungo.
+   ========================================================================== */
+.tr-doc__subject { margin-top: var(--tr-space-6); }
+.tr-doc__subject .tr-eyebrow { margin-bottom: var(--tr-space-3); }
+.tr-doc__subject .tr-h3 {
+  max-width: 26em;
+  line-height: 1.18;
+}
+.tr-doc__abstract {
+  max-width: 62ch;
+  margin: var(--tr-space-3) 0 0;
+  color: var(--tr-ink-600);
+}
+
+/* ==========================================================================
+   5 · Riferimenti
+   Cio' a cui il documento risponde: la richiesta dell'ente, il contratto,
+   gli allegati. Senza, la copertina lascia un vuoto in mezzo alla pagina e
+   costringe chi legge ad aprire il documento per capire di cosa sia il
+   seguito. Sono voci tecniche: mono, etichetta e valore sulla stessa riga.
+   ========================================================================== */
+.tr-doc__refs { margin-top: var(--tr-space-5); }
+.tr-doc__refs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--tr-space-2);
+}
+.tr-doc__refs-list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--tr-space-3);
+  font-family: var(--tr-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--tr-ink-600);
+}
+.tr-doc__refs-list .tr-dot {
+  width: 6px;
+  height: 6px;
+  transform: translateY(-1px);
+}
+.tr-doc__refs-key {
+  color: var(--tr-ink-400);
+  text-transform: uppercase;
+  flex: none;
+  min-width: 15ch;
+}
+
+/* ==========================================================================
+   6 · Redazione e approvazione
+   Le tre firme del controllo documentale. Il blocco e' ancorato in fondo con
+   .tr-shell__body sul corpo: sopra il corpo si prende lo spazio che avanza,
+   qui il gruppo resta appoggiato al piede invece di galleggiare a mezz'aria.
+   ========================================================================== */
+/* margin-top:auto appoggia il gruppo firme-specifiche-piede al fondo del
+   foglio; il padding garantisce che, su una copertina piena, non si incolli
+   comunque al blocco che lo precede. */
+.tr-doc__sign {
+  margin-top: auto;
+  padding-top: var(--tr-space-6);
+}
+.tr-doc__sign-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--tr-space-6);
+  margin-top: var(--tr-space-3);
+}
+.tr-doc__sign-cell {
+  border-top: var(--tr-rule-thin) solid var(--tr-border-soft-2);
+  padding-top: var(--tr-space-3);
+}
+.tr-doc__sign-role {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tr-brand-600);
+  margin: 0 0 var(--tr-space-2);
+}
+.tr-doc__sign-name {
+  font-weight: var(--tr-weight-semibold);
+  font-size: 13px;
+  color: var(--tr-ink-900);
+  margin: 0;
+}
+.tr-doc__sign-fn {
+  margin: 1px 0 0;
+  font-size: 11px;
+  color: var(--tr-ink-400);
+}
+/* Lo spazio della firma autografa: un filetto e la sua didascalia. Va tenuto
+   alto abbastanza da poterci scrivere sopra a penna. */
+.tr-doc__sign-rule {
+  margin-top: var(--tr-space-5);
+  height: var(--tr-rule-thin);
+  background: var(--tr-border-soft-2);
+  border-radius: var(--tr-radius-line);
+}
+.tr-doc__sign-caption {
+  margin: var(--tr-space-1) 0 0;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--tr-space-3);
+  font-family: var(--tr-font-mono);
+  font-size: 9px;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+}
+
+/* Riga specifiche del documento: conservazione, distribuzione, pagine */
+.tr-doc .tr-specs { margin-top: var(--tr-space-5); }
+.tr-doc .tr-specs__item { font-size: 10px; }
+
+/* ==========================================================================
+   7 · Piede del documento formale
+   NON e' .tr-footer. Il footer del sistema firma una superficie: marchio a
+   sinistra, contatti e riferimento di prodotto a destra, certificazioni solo
+   se la superficie e' pubblica. Qui il compito e' un altro: IDENTIFICARE
+   L'EMITTENTE. Ragione sociale, sede e partita IVA ci stanno sempre, perche'
+   sono cio' che rende il foglio attribuibile quando viene separato dagli
+   altri; le certificazioni ci stanno sempre, perche' un documento formale e'
+   per definizione una superficie pubblica.
+
+   Il wordmark non compare: la ragione sociale per esteso lo sostituisce. Due
+   modi di scrivere lo stesso nome uno accanto all'altro sarebbero un lockup
+   confuso, e su un documento formale il nome che conta e' quello legale.
+   ========================================================================== */
+.tr-doc-footer {
+  margin-top: var(--tr-space-4);
+  padding-top: var(--tr-space-4);
+  border-top: var(--tr-rule-thin) solid var(--tr-border-soft-2);
+}
+
+/* ---- Identificazione dell'emittente ---- */
+.tr-doc-footer__issuer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--tr-space-5);
+}
+.tr-doc-footer__mark {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tr-space-3);
+}
+.tr-doc-footer__mark img,
+.tr-doc-footer__mark svg {
+  height: 20px;
+  width: auto;
+  display: block;
+  flex: none;
+  transform: translateY(1px);
+}
+.tr-doc-footer__name {
+  display: block;
+  margin: 0;
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-display);
+  font-size: 12.5px;
+  letter-spacing: var(--tr-tracking-wordmark);
+  text-transform: uppercase;
+  color: var(--tr-ink-900);
+  line-height: 1.25;
+}
+.tr-doc-footer__seat {
+  display: block;
+  margin: 2px 0 0;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--tr-ink-600);
+}
+.tr-doc-footer__vat {
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono);
+  color: var(--tr-ink-400);
+}
+/* I recapiti restano, ma sotto la ragione sociale nella gerarchia: servono a
+   rispondere, non a identificare. */
+.tr-doc-footer__contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  text-align: right;
+}
+.tr-doc-footer__contact {
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* ---- Riga certificazioni ----
+   Stessa composizione del footer di sistema — etichetta mono blu, elenco
+   mono grigio, filetto che riempie la riga, badge — perche' e' la stessa
+   credenziale e non deve avere due aspetti diversi in due posti. */
+.tr-doc-footer__certs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--tr-space-3);
+  margin-top: var(--tr-space-3);
+  padding-top: var(--tr-space-3);
+  border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
+}
+.tr-doc-footer__certs-label {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tr-brand-600);
+  white-space: nowrap;
+}
+/* L'elenco e' l'unico elemento elastico della riga: prende lo spazio che
+   resta fra l'etichetta e il badge. Se un giorno le norme diventassero
+   cinque, va a capo dentro il proprio riquadro invece di scaricare il badge
+   su una riga sua, staccato da cio' che certifica. */
+.tr-doc-footer__certs-list {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono);
+  color: var(--tr-ink-400);
+}
+/* Niente filetto di riempimento qui: nel footer di sistema serve a chiudere
+   una riga corta, ma l'elenco delle quattro norme la riempie gia' tutta, e
+   infilarcelo manda il badge a capo da solo, staccato da cio' che certifica.
+   Il badge si appoggia invece al margine destro. */
+.tr-doc-footer__certs-badges {
+  height: 24px;
+  width: auto;
+  display: block;
+  flex: none;
+  margin-left: auto;
+}
+
+/* ==========================================================================
+   8 · Stampa
+   Il foglio esce a pieno formato, senza il filetto che in anteprima ne segna
+   il bordo. .tr-doc--preview porta quel filetto solo a schermo.
+   ========================================================================== */
+.tr-doc--preview {
+  border: var(--tr-rule-thin) solid var(--tr-border-soft);
+  margin-inline: auto;
+}
+
+@page { size: A4; margin: 0; }
+
+@media print {
+  .tr-doc--preview { border: 0; }
+  .tr-doc { break-after: page; }
+  .tr-doc:last-of-type { break-after: auto; }
+  /* Il watermark e i filetti chiari si perdono in fotocopia: in stampa
+     l'outline sale di opacita' e i filetti passano alla tinta piu' scura. */
+  .tr-doc .tr-watermark { opacity: 0.22; }
+}
