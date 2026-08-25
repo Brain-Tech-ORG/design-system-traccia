@@ -33,7 +33,6 @@
 .tr-doc__key,
 .tr-doc__stamp,
 .tr-doc__subject,
-.tr-doc__refs,
 .tr-doc__sign,
 .tr-doc__sign-cell,
 .tr-doc-footer { box-sizing: border-box; }
@@ -137,7 +136,7 @@
    L'etichetta dell'eyebrow e' brand/500 di serie: a 13px fa 3,15:1 e non
    regge. Nel documento passa a brand/600, che su bianco fa 4,57:1.
    ========================================================================== */
-.tr-doc__kind { margin-top: var(--tr-space-5); }
+.tr-doc__kind { margin-top: var(--tr-space-7); }
 .tr-doc .tr-eyebrow__label { color: var(--tr-brand-600); }
 
 /* ==========================================================================
@@ -146,7 +145,7 @@
    dei dati, sulle verticali della gabbia.
    ========================================================================== */
 .tr-doc__meta {
-  margin-top: var(--tr-space-5);
+  margin-top: var(--tr-space-7);
   align-items: start;
 }
 
@@ -237,7 +236,7 @@
    istituzionale non ha bisogno della voce alta di una brochure, e a 22px
    l'oggetto entra su due righe anche quando e' lungo.
    ========================================================================== */
-.tr-doc__subject { margin-top: var(--tr-space-6); }
+.tr-doc__subject { margin-top: var(--tr-space-7); }
 .tr-doc__subject .tr-eyebrow { margin-bottom: var(--tr-space-3); }
 .tr-doc__subject .tr-h3 {
   max-width: 26em;
@@ -250,43 +249,7 @@
 }
 
 /* ==========================================================================
-   6 · Riferimenti
-   Cio' a cui il documento risponde: la richiesta dell'ente, il contratto,
-   gli allegati. Senza, la copertina lascia un vuoto in mezzo alla pagina e
-   costringe chi legge ad aprire il documento per capire di cosa sia il
-   seguito. Sono voci tecniche: mono, etichetta e valore sulla stessa riga.
-   ========================================================================== */
-.tr-doc__refs { margin-top: var(--tr-space-5); }
-.tr-doc__refs-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--tr-space-2);
-}
-.tr-doc__refs-list li {
-  display: flex;
-  align-items: baseline;
-  gap: var(--tr-space-3);
-  font-family: var(--tr-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  color: var(--tr-ink-600);
-}
-.tr-doc__refs-list .tr-dot {
-  width: 6px;
-  height: 6px;
-  transform: translateY(-1px);
-}
-.tr-doc__refs-key {
-  color: var(--tr-ink-400);
-  text-transform: uppercase;
-  flex: none;
-  min-width: 15ch;
-}
-
-/* ==========================================================================
-   7 · Redazione e approvazione
+   6 · Redazione e approvazione
    Le tre firme del controllo documentale, sulle verticali della gabbia: il
    campo si spezza in due e la terza cella cade sulla corsia di controllo.
    E' la piu' larga perche' e' quella che riceve, sovrapposto alla riga, il
@@ -301,8 +264,8 @@
    Ora il salto e' fisso a --tr-space-7 e lo scarto della pagina resta sopra.
    ========================================================================== */
 .tr-doc__sign {
-  margin-top: var(--tr-space-7);
-  padding-top: var(--tr-space-3);
+  margin-top: auto;
+  padding-top: var(--tr-space-7);
   border-top: var(--tr-rule-thin) solid var(--tr-border-soft-2);
 }
 .tr-doc__sign-grid {
@@ -358,7 +321,7 @@
 }
 
 /* ==========================================================================
-   8 · Piede del documento formale
+   7 · Piede del documento formale
    NON e' .tr-footer. Il footer del sistema firma una superficie: marchio a
    sinistra, contatti e riferimento di prodotto a destra, certificazioni solo
    se la superficie e' pubblica. Qui il compito e' un altro: IDENTIFICARE
@@ -373,7 +336,7 @@
    confuso, e su un documento formale il nome che conta e' quello legale.
    ========================================================================== */
 .tr-doc-footer {
-  margin-top: var(--tr-space-5);
+  margin-top: var(--tr-space-7);
   padding-top: var(--tr-space-3);
   border-top: var(--tr-rule-thin) solid var(--tr-border-soft-2);
 }
@@ -519,7 +482,7 @@
 }
 
 /* ==========================================================================
-   9 · Anteprima e stampa
+   8 · Anteprima e stampa
    .tr-doc--preview e' il foglio visto a schermo: porta il filetto che ne
    segna il bordo e la didascalia della zona del timbro. In stampa cadono
    entrambi.

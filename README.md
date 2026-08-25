@@ -1173,24 +1173,29 @@ riga, il timbro tondo aziendale.
 ### Il foglio ha una misura fissa
 
 794×1123px sono 210×297mm a 96dpi: il contenuto della copertina **deve stare in una
-pagina**, e il ritmo verticale non puo' essere improvvisato. Cinque gradini, tutti dalla
+pagina**, e il ritmo verticale non puo' essere improvvisato. Tre gradini, tutti dalla
 scala `--tr-space-*`, e nessun altro valore:
 
 | Passo | Token | Dove |
 |---|---|---|
 | 8px | `--tr-space-2` | etichetta → contenuto |
 | 12px | `--tr-space-3` | fra le parti interne di un blocco |
-| 24px | `--tr-space-5` | fra blocchi contigui |
-| 32px | `--tr-space-6` | dove cambia l'argomento (dati → oggetto) |
-| 48px | `--tr-space-7` | zona franca **minima** sopra la banda firme |
+| 48px | `--tr-space-7` | **fra un blocco e il successivo**, e con la testata e il piede |
 
-La zona franca e' governata, non e' cio' che avanza. Con `margin-top: auto` il suo minimo
-sarebbe zero, e su una copertina piena il filetto delle firme finirebbe contro i
-riferimenti: il salto e' quindi fisso, e lo scarto della pagina resta sopra di esso.
+**Le giunzioni con la testata e con il piede non sono piu' strette delle altre: sono
+uguali.** Erano il difetto piu' visibile della prima versione — 26px, meno di 7mm, contro
+i 34 e i 58 che separavano fra loro i blocchi di contenuto — cioe' il rapporto rovesciato.
+Testata e piede sono i confini del foglio, non giunzioni di contenuto: devono staccarsi
+almeno quanto tutto il resto.
 
-E' una gabbia stretta, e va detto: il **sommario dell'oggetto sta in due o tre righe** e i
-**riferimenti in tre voci**. Oltre, la copertina va a pagina due — l'unico modo in cui il
-template puo' rompersi, ed e' preferibile al taglio silenzioso di un'altezza fissa.
+Un documento deve respirare, e il respiro non e' cio' che avanza. La zona sopra la banda
+firme e' l'unico spazio elastico del foglio — separa il contenuto dall'apparato di
+controllo — e ha un **minimo garantito** di 48px di padding: con il solo `margin-top: auto`
+il minimo sarebbe zero, e su una copertina piena il blocco firme finirebbe contro il testo.
+
+Ne discende un vincolo, e va detto: il **sommario dell'oggetto sta in due o tre righe**.
+Oltre, la copertina va a pagina due — l'unico modo in cui il template puo' rompersi, ed e'
+preferibile al taglio silenzioso di un'altezza fissa.
 
 | Token | Valore | |
 |---|---|---|
@@ -1281,13 +1286,14 @@ audit vengono confusi di continuo. Il template li tiene volutamente lontani.
 | Tipo di documento | `.tr-doc__kind` + `.tr-eyebrow` | Documento protocollato, preventivo… |
 | Destinatario e dati | `.tr-doc__meta`, `.tr-doc__key`, `.tr-datatable` | Spett.le / c.a., protocollo, data, revisione |
 | Oggetto | `.tr-doc__subject` + `.tr-h3` | Eyebrow, titolo e sommario |
-| Riferimenti | `.tr-doc__refs` | Vs. richiesta, contratto o CIG, allegati |
 | Redazione | `.tr-doc__sign` | Redatto · Verificato · Approvato, con firma e data |
 | Piede | `.tr-doc-footer` | Colophon: copia, emittente, credenziali |
 
-I **riferimenti** non sono decorazione: sono cio' a cui il documento risponde. Senza, la
-copertina lascia un vuoto in mezzo alla pagina e costringe chi legge ad aprire il
-documento per capire di cosa sia il seguito.
+Una versione intermedia portava anche un blocco **Riferimenti** (richiesta dell'ente,
+contratto o CIG, allegati), aggiunto per riempire il vuoto che la prima copertina lasciava
+in mezzo alla pagina. Quel vuoto ora e' aria distribuita sulle giunzioni, e fra le due cose
+l'aria vale di piu': su un foglio A4 pieno fino all'orlo non c'e' spazio per entrambe. I
+riferimenti tornano quando serviranno, sulla prima pagina interna.
 
 ### Stampa
 
