@@ -204,7 +204,7 @@
   content: "";
   width: var(--tr-dot-size);
   height: var(--tr-dot-size);
-  border-radius: 50%;
+  border-radius: var(--tr-radius-pill);
   background: currentColor;
   flex: none;
 }

@@ -290,7 +290,7 @@
 }
 .tr-doc__sign-name {
   font-weight: var(--tr-weight-semibold);
-  font-size: 13px;
+  font-size: var(--tr-doc-text);
   color: var(--tr-ink-900);
   margin: 0;
 }

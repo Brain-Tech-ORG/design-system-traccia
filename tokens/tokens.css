@@ -75,7 +75,7 @@
   --tr-state-critical-border: #b86767;
 
   /* Testo comune sulle superfici semantiche piene. */
-  --tr-state-on-solid: #ffffff;
+  --tr-state-on-solid: var(--tr-ink-on-solid);
 
   /* ---- Colore · Superfici ----
      Due piani, non uno. La PAGINA e' il fondo neutro; i COMPONENTI che
@@ -97,6 +97,10 @@
   --tr-ink-900: #1b1f2a; /* testo primario, tratti disegni tecnici */
   --tr-ink-600: #3a4050; /* testo secondario / body */
   --tr-ink-400: #565c6b; /* didascalie e metadati */
+  /* Inchiostro su superficie piena, di marca o di stato. Vale per il cerchietto
+     pieno, per l'azione del login e per i pannelli semantici: e' un ruolo, non
+     un colore, ed e' il motivo per cui non si scrive #ffffff nei componenti. */
+  --tr-ink-on-solid: #ffffff;
 
   /* ---- Tipografia · Famiglie ---- */
   --tr-font-display: "Archivo", system-ui, sans-serif;   /* display / UI / body */

@@ -165,6 +165,32 @@ volte al giorno.
   object-fit contain); le foto ambientate stanno in cornice arrotondata 22–36px con bordo
   1px `border/soft` e padding 7–14px (`.tr-photo-frame`).
 
+### Nessun valore letterale dove esiste un token
+
+Il commento in cima a `tokens.css` dice che tenere lo spigolo «in un token solo
+permette di cambiarlo in un punto solo», e per un po' il sistema si e'
+contraddetto da solo: `.tr-notice` e `.tr-tab` scrivevano `border-radius: 0`
+come numero, il pallino e i cerchietti scrivevano `50%` invece della pillola, e
+quattro componenti scrivevano `#ffffff` a mano. Sono token che avrebbero
+smesso di funzionare al primo cambio: chi avesse portato `--tr-radius-ui` a
+2px si sarebbe ritrovato due componenti rimasti a zero, senza capire perche'.
+
+La regola non e' pero' «sostituire ogni numero che coincide con un token».
+**Un token e' un valore con un significato**, e quando i due non coincidono si
+lascia il numero:
+
+| Letterale | Token con lo stesso valore | Si sostituisce? |
+|---|---|---|
+| `border-radius: 50%` sul dot | `--tr-radius-pill` — «chip, dot e cerchietti» | **Sì**: e' proprio quel ruolo |
+| `color: #ffffff` sul cerchietto pieno | `--tr-ink-on-solid` | **Sì**: e' inchiostro su superficie piena |
+| `font-size: 13px` su `.tr-step__sub` | `--tr-text-mono` (13px) | **No**: quel testo non e' mono |
+| `font-size: 13px` sulla firma del documento | `--tr-doc-text` (13px) | **Sì**: e' il corpo del documento |
+
+Sostituire per coincidenza numerica e' peggio del letterale che si voleva
+togliere: lega due cose che non hanno ragione di muoversi insieme, e il giorno
+in cui il mono cambia misura si sposta anche un sottotitolo che col mono non
+c'entrava niente.
+
 ## Icone
 
 Il sistema riservava lo spazio all'icona da prima di averne una. Il campo ha un
@@ -1556,4 +1582,7 @@ al browser di scartare fondo e tinte.
 - **Accessibilità**: contrasto testo ≥ 4.5:1. Il blu `#4194d7` su bianco si usa solo a taglie
   ≥ 12px bold o per elementi non testuali; il testo body è sempre in ink. Per testo piccolo in
   blu e per i fondi pieni con testo bianco si usa `brand/600` (`#2f7ab8`).
-- Niente icone illustrative complesse; solo forme base (cerchi, linee, triangoli).
+- **Icone**: solo il set del sistema (vedi [Icone](#icone)) — griglia 24, tratto 2, nessun
+  riempimento. Niente icone illustrative o a piu' colori: un simbolo disegnato su un'altra
+  griglia si riconosce a colpo d'occhio ed e' il modo piu' rapido per far sembrare
+  disordinata un'interfaccia ordinata.
