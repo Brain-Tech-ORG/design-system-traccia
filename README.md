@@ -16,7 +16,9 @@ niente gradienti, niente emoji, molto bianco.
 ├── tokens/
 │   ├── tokens.css                Design token come CSS custom properties
 │   └── tokens.json               Design token in formato W3C draft
-├── css/traccia.css               Libreria componenti (prefisso .tr-)
+├── css/
+│   ├── traccia.css               Libreria componenti (prefisso .tr-)
+│   └── traccia-doc.css           Documenti formali a stampa (prefisso .tr-doc)
 ├── js/tr-select.js               Listbox del select (vanilla, per Angular e HTML)
 ├── email/
 │   ├── firma-email.html          Firma email (tabelle + stili inline)
@@ -178,6 +180,7 @@ volte al giorno.
 | 14 | Card | `.tr-card` + `__head` / `__title` / `__foot` |
 | 15 | Azione | `.tr-btn` + `--primary` / `--secondary` / `--neutral` / `--quiet` / `--danger` |
 | 16 | Spinner di caricamento | `.tr-spinner` + `__wipe` / `__track` / `__seq` / `__ring` |
+| 17 | Foglio e piede del documento formale | `.tr-doc` + `.tr-doc-footer` — vedi [Documenti formali](#documenti-formali) |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -1134,20 +1137,172 @@ client in **tema scuro**, dove alcuni motori invertono i colori del testo ma non
 gli sfondi.
 
 
-## Copertina documenti protocollati e preventivi
+## Documenti formali
 
-Template A4 in [`examples/copertina-documenti.html`](examples/copertina-documenti.html),
-in due varianti dello stesso modello: **documento protocollato** e **preventivo**.
-E' una superficie pubblica, quindi il footer porta la riga certificazioni; il watermark
-outline sborda dall'angolo alto-destra e l'oggetto sta sul gradino H3 del sistema —
-e' un documento istituzionale, non una brochure.
+Preventivi, progetti tecnici, relazioni, documenti da protocollare. Componenti in
+[`css/traccia-doc.css`](css/traccia-doc.css), copertina d'esempio in due varianti in
+[`examples/copertina-documenti.html`](examples/copertina-documenti.html).
 
-Campi previsti dal sistema di gestione: intestazione del cliente (Spett.le / c.a.),
-oggetto, data di emissione, numero di protocollo o di offerta, numero di revisione,
-codice modello (MOD-…), blocco **Redatto / Verificato / Approvato** con ruolo, firma e
-data, riga specifiche (classificazione, conservazione, pagine). La stampa della pagina
-emette le copertine in A4 a pieno formato (`@page` senza margini, filetto di anteprima
-rimosso).
+```html
+<link rel="stylesheet" href="tokens/tokens.css">
+<link rel="stylesheet" href="css/traccia.css">
+<link rel="stylesheet" href="css/traccia-doc.css">
+
+<section class="tr-doc tr-doc--preview">…</section>
+```
+
+Vale il linguaggio del sistema — layout aperti, niente box, niente ombre, un solo
+accento — piu' tre cose che il documento formale impone e la pagina a schermo no.
+
+### Una gabbia sola: due corsie e un gutter
+
+Il foglio si legge composto o assemblato a seconda di quante verticali condivide. Qui
+ne condivide tutte: testata, riga del tipo, intestazione e banda firme dichiarano la
+**stessa griglia**, e la corsia di destra — larga `--tr-doc-meta-col` — corre dalla
+testa al piede senza mai cambiare.
+
+| Corsia | Larghezza | In alto | In basso |
+|---|---|---|---|
+| Campo del documento | `1fr` (330px) | Marchio, tipo, destinatario, oggetto | Prime due firme |
+| Gutter | `--tr-space-7` (48px) | uno solo su tutta la pagina | |
+| Corsia di controllo | `--tr-doc-meta-col` (288px) | Zona del timbro, chiave di protocollo, dati | Terza firma, badge |
+
+La terza cella di firma e' la piu' larga perche' e' quella che riceve, sovrapposto alla
+riga, il timbro tondo aziendale.
+
+### Il foglio ha una misura fissa
+
+794×1123px sono 210×297mm a 96dpi: il contenuto della copertina **deve stare in una
+pagina**, e il ritmo verticale non puo' essere improvvisato. Tre gradini, tutti dalla
+scala `--tr-space-*`, e nessun altro valore:
+
+| Passo | Token | Dove |
+|---|---|---|
+| 8px | `--tr-space-2` | etichetta → contenuto |
+| 12px | `--tr-space-3` | fra le parti interne di un blocco |
+| 48px | `--tr-space-7` | **fra un blocco e il successivo**, e con la testata e il piede |
+
+**Le giunzioni con la testata e con il piede non sono piu' strette delle altre: sono
+uguali.** Erano il difetto piu' visibile della prima versione — 26px, meno di 7mm, contro
+i 34 e i 58 che separavano fra loro i blocchi di contenuto — cioe' il rapporto rovesciato.
+Testata e piede sono i confini del foglio, non giunzioni di contenuto: devono staccarsi
+almeno quanto tutto il resto.
+
+Un documento deve respirare, e il respiro non e' cio' che avanza. La zona sopra la banda
+firme e' l'unico spazio elastico del foglio — separa il contenuto dall'apparato di
+controllo — e ha un **minimo garantito** di 48px di padding: con il solo `margin-top: auto`
+il minimo sarebbe zero, e su una copertina piena il blocco firme finirebbe contro il testo.
+
+Ne discende un vincolo, e va detto: il **sommario dell'oggetto sta in due o tre righe**.
+Oltre, la copertina va a pagina due — l'unico modo in cui il template puo' rompersi, ed e'
+preferibile al taglio silenzioso di un'altezza fissa.
+
+| Token | Valore | |
+|---|---|---|
+| `--tr-doc-w` / `--tr-doc-h` | `794px` / `1123px` | Il foglio A4 a 96dpi |
+| `--tr-doc-pad-x` | `64px` (~17mm) | Il testo non arriva mai al taglio |
+| `--tr-doc-pad-top` / `--tr-doc-pad-bottom` | `56px` / `56px` | Il piede non sta sotto la testa: il primo elemento a rischio di rifilo e' il badge |
+| `--tr-doc-text` | `13px` | Corpo, dentro il range di stampa 12–14px |
+| `--tr-doc-meta-col` | `288px` | La corsia di controllo |
+| `--tr-doc-sign-h` | `128px` | Banda firme: ~11,5mm di spazio per la penna |
+
+### Il foglio non e' solo nostro
+
+In alto a destra l'ente che riceve appone la **propria segnatura di protocollo in
+entrata**. Quella zona va lasciata libera, e si lascia libera non mettendoci niente:
+`.tr-doc__stamp` e' una cella vuota per costruzione. A dire che e' riservata e non
+dimenticata sono i due filetti sopra di essa — testata e riga del tipo — che si fermano
+entrambi sulla verticale del gutter invece di attraversare la pagina.
+
+A schermo `.tr-doc--preview` ci scrive sopra una didascalia; in stampa sparisce.
+
+### Il piede identifica l'emittente
+
+**Non e' `.tr-footer`.** Il footer del sistema firma una superficie: marchio a sinistra,
+contatti e riferimento di prodotto a destra. Qui il compito e' un altro. Un documento esce
+dall'azienda, viene protocollato, fotocopiato, scansionato a pezzi e ritrovato mesi dopo
+dentro un fascicolo: il piede deve dire **chi lo ha emesso** anche a una pagina staccata
+dal suo contesto.
+
+Sotto il filetto si entra nel colophon, e si legge dalla carta all'azienda alla prova di
+terzi: prima di quale **copia** si tratta, poi **chi** la emette, poi con quali
+**credenziali**.
+
+| Riga | Classe | Contenuto | Voce |
+|---|---|---|---|
+| La copia | `__model` | Codice e revisione del modello, conservazione, pagina | Mono 10px `ink/400` |
+| Chi emette | `__name` | Cooperativa E.D.P. La Traccia | Archivo 800 maiuscolo, `ink/900` |
+| Dove ha sede | `__seat` | Recinto II Fiorentini, 10 — 75100 Matera | Archivo 400 11px, **in frase** |
+| Identificativi | `__legal` | P.IVA 00317370773 | Mono `--tr-tracking-mono-ui` |
+| Recapiti | `__contacts` | Email e telefono | Mono 10px `ink/400` |
+| Credenziali | `__certs` | Le quattro norme + badge | Etichetta `brand/600`, elenco `ink/400` |
+
+Tre voci diverse per tre fatti giuridici diversi. Il **nome** e' l'unico testo del piede a
+contrasto pieno, ed e' cio' che rende il foglio attribuibile. L'**indirizzo** resta in
+frase: si trascrive, e il maiuscolo gli toglierebbe la sagoma delle parole. La **P.IVA**
+e' un codice e prende la voce mono — da riga autonoma diventa anche lo slot dove
+aggiungere REA e numero d'Albo, che a una societa' cooperativa l'art. 2250 c.c. chiede
+in corrispondenza.
+
+**Il wordmark non compare nel piede**: la ragione sociale per esteso lo sostituisce. Due
+modi di scrivere lo stesso nome affiancati sarebbero un lockup confuso, e su un documento
+formale il nome che conta e' quello legale. Resta il solo marchio grafico.
+
+La riga certificazioni non e' opzionale come nel footer di sistema: un documento formale
+e' **per definizione** una superficie pubblica. Cade pero' il filetto di riempimento —
+l'elenco delle quattro norme riempie gia' la riga, e infilarcelo manda il badge a capo da
+solo, staccato da cio' che certifica.
+
+### La chiave di protocollo esce dalla tabella
+
+Il numero di protocollo (o di offerta) e' il dato per cui il documento verra' cercato: in
+un fascicolo si scorre la colonna dei numeri, non i titoli. Dentro la tabella aveva lo
+stesso peso della classificazione, cioe' nessuno. `.tr-doc__key` lo porta in testa alla
+corsia di controllo, in mono semibold 19px `brand/600`, chiuso da un filetto da 2px.
+
+L'etichetta dice **"Ns."**: su questa pagina convivono tre numeri di protocollo — il
+nostro, quello dell'ente fra i riferimenti e quello che l'ente apporra' col timbro — e un
+numero che non dice di chi e' costringe a indovinare.
+
+Attenzione a non confondere **la revisione del modello** (`MOD-05.02 · Rev. 02`, nel
+colophon) con **la revisione del documento** (in tabella): sono due numeri diversi, e in
+audit vengono confusi di continuo. Il template li tiene volutamente lontani.
+
+### Cosa il documento non prende dal resto del sistema
+
+| | Perche' |
+|---|---|
+| **Niente watermark** | La sagoma outline nasce per brochure e slide, dove la pagina si guarda. Un documento si fotocopia, si scansiona e si passa all'OCR: al 16% sotto il testo sporca il numero di protocollo e confonde il riconoscimento. L'emittente e' gia' dichiarato in testata e nel piede |
+| **Niente chip** | Era l'unica forma chiusa e bordata di una pagina il cui linguaggio vieta i box: in stampa una pillola col filetto blu si legge come un campo da compilare. Il tipo di documento usa l'eyebrow, che e' la voce del sistema per i kicker |
+| **Il fondo e' bianco, non `paper`** | `brand/600` su `paper` misura 4,42:1 e non passa la soglia di 4,5:1 che il sistema si impone; su bianco misura 4,57:1. Con una riga rientrano sopra la soglia tutte le etichette mono blu del foglio — e la carta, del resto, e' bianca davvero |
+| **Il marchio e' il mark, non il lockup** | `logo-traccia.svg` ha un canvas trasparente: a 28px l'inchiostro comincia 12px dentro il margine, e il primo elemento del foglio non sarebbe allineato a niente. `logo-traccia-mark.svg` parte a filo |
+| **`Spett.le` e `c.a.` non sono in mono** | Non sono etichette di sistema, sono la lingua della lettera, e [si scrivono in frase](#dove-finisce-il-maiuscolo). Il blocco del destinatario e' l'unico punto del foglio in cui parla una persona a un'altra |
+
+### Campi e struttura
+
+| Blocco | Classe | Contenuto |
+|---|---|---|
+| Testata e zona del timbro | `.tr-header` + `.tr-doc__stamp` | Marchio; l'angolo destro resta all'ente |
+| Tipo di documento | `.tr-doc__kind` + `.tr-eyebrow` | Documento protocollato, preventivo… |
+| Destinatario e dati | `.tr-doc__meta`, `.tr-doc__key`, `.tr-datatable` | Spett.le / c.a., protocollo, data, revisione |
+| Oggetto | `.tr-doc__subject` + `.tr-h3` | Eyebrow, titolo e sommario |
+| Redazione | `.tr-doc__sign` | Redatto · Verificato · Approvato, con firma e data |
+| Piede | `.tr-doc-footer` | Colophon: copia, emittente, credenziali |
+
+Una versione intermedia portava anche un blocco **Riferimenti** (richiesta dell'ente,
+contratto o CIG, allegati), aggiunto per riempire il vuoto che la prima copertina lasciava
+in mezzo alla pagina. Quel vuoto ora e' aria distribuita sulle giunzioni, e fra le due cose
+l'aria vale di piu': su un foglio A4 pieno fino all'orlo non c'e' spazio per entrambe. I
+riferimenti tornano quando serviranno, sulla prima pagina interna.
+
+### Stampa
+
+`@page { size: A4; margin: 0 }`: le copertine escono a pieno formato, senza il filetto che
+`.tr-doc--preview` usa solo a schermo. In stampa **i filetti salgono di tinta**: `border/soft`
+ha una luminanza troppo vicina al bianco e sparisce alla prima fotocopia, portandosi via la
+struttura della pagina — che in questo sistema e' fatta di filetti e non di riquadri, e
+quindi non ha nient'altro con cui reggersi. `print-color-adjust: exact` sul foglio impedisce
+al browser di scartare fondo e tinte.
 
 ## Vincoli
 

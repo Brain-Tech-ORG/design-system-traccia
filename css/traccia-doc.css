@@ -1,0 +1,527 @@
+/* ==========================================================================
+   LA TRACCIA — Documenti formali (stampa A4)
+   Richiede tokens/tokens.css e css/traccia.css.
+
+   Copertine e pagine dei documenti in uscita: preventivi, progetti tecnici,
+   relazioni, documenti da protocollare. Vale il linguaggio del sistema —
+   layout aperti, niente box, niente ombre, un solo accento — con in piu' le
+   regole che la stampa e la tracciabilita' documentale impongono.
+
+   Tre cose distinguono un documento formale da una pagina del sito:
+
+   1. IL PIEDE IDENTIFICA L'EMITTENTE. Un documento esce dall'azienda, viene
+      protocollato, fotocopiato, scansionato a pezzi e ritrovato mesi dopo
+      dentro un fascicolo. Il piede deve dire chi lo ha emesso anche a una
+      pagina staccata dal suo contesto: ragione sociale, sede e partita IVA,
+      sempre, piu' le certificazioni. Non e' una firma di cortesia come nel
+      footer del sito: e' identificazione.
+
+   2. IL FOGLIO HA UNA MISURA FISSA. 794x1123px sono 210x297mm a 96dpi. Il
+      ritmo verticale non puo' essere lasciato al caso: cinque gradini, tutti
+      dalla scala --tr-space-*, e nessun altro valore.
+
+   3. IL FOGLIO NON E' SOLO NOSTRO. In alto a destra l'ente che riceve appone
+      la propria segnatura di protocollo in entrata: quella zona va lasciata
+      libera, e si lascia libera non mettendoci niente.
+
+   Prefisso classi: .tr-doc
+   ========================================================================== */
+
+.tr-doc,
+.tr-doc__kind,
+.tr-doc__meta,
+.tr-doc__key,
+.tr-doc__stamp,
+.tr-doc__subject,
+.tr-doc__sign,
+.tr-doc__sign-cell,
+.tr-doc-footer { box-sizing: border-box; }
+
+/* ==========================================================================
+   1 · Il foglio
+   Formato A4 a 96dpi. I margini sono piu' larghi di quelli di una pagina a
+   schermo: un documento istituzionale viene stampato, pinzato e archiviato,
+   e il testo non deve mai arrivare al taglio. Il piede sta sopra la testa,
+   mai sotto: il primo elemento a rischio di rifilo e' il badge.
+
+   Il fondo e' BIANCO, non paper. Non e' un dettaglio di gusto: brand/600 su
+   paper (#fbfbfd) misura 4,42:1 e non passa la soglia di 4,5:1 che il sistema
+   si impone; su bianco misura 4,57:1 e passa. Con una riga rientrano sopra la
+   soglia tutte le etichette mono blu del foglio. E la carta, del resto, e'
+   bianca davvero.
+   ========================================================================== */
+.tr-doc {
+  width: var(--tr-doc-w);
+  min-height: var(--tr-doc-h);
+  padding: var(--tr-doc-pad-top) var(--tr-doc-pad-x) var(--tr-doc-pad-bottom);
+  background: var(--tr-surface);
+  color: var(--tr-ink-600);
+  font-family: var(--tr-font-display);
+  font-size: var(--tr-doc-text);
+  line-height: var(--tr-leading-body);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- La gabbia: due corsie e un solo gutter ----
+   Il foglio aveva due sistemi di colonne che non si parlavano: in alto una
+   griglia 1fr/288, in basso tre celle uguali. Nessuna verticale in comune
+   tranne il margine sinistro, ed e' il motivo per cui la pagina si leggeva
+   assemblata invece che composta.
+
+   Ora tutte le fasce dichiarano la stessa gabbia. La corsia di destra e'
+   larga --tr-doc-meta-col e non cambia mai: in alto porta la zona franca del
+   timbro e la chiave di protocollo, in basso la terza firma e il badge delle
+   certificazioni. E' l'unica verticale che corre dalla testa al piede. */
+.tr-doc .tr-header,
+.tr-doc__kind,
+.tr-doc__meta {
+  display: grid;
+  grid-template-columns: 1fr var(--tr-doc-meta-col);
+  gap: 0 var(--tr-space-7);
+}
+
+/* ==========================================================================
+   2 · Testata e zona del timbro
+   Il filetto della testata non attraversa piu' tutta la giustezza: e' il
+   bordo inferiore del solo marchio, cioe' della corsia sinistra. Si ferma
+   dove comincia il gutter, e insieme al filetto della riga sotto costruisce
+   la verticale che rende leggibile lo spazio vuoto a destra come una zona
+   riservata invece che come una dimenticanza.
+
+   Il marchio e' il MARK, non il lockup: logo-traccia.svg ha un canvas
+   trasparente e a 28px di altezza l'inchiostro comincia 12px dentro il
+   margine — il primo elemento del foglio non sarebbe allineato a niente.
+   logo-traccia-mark.svg parte a filo.
+   ========================================================================== */
+.tr-doc .tr-header {
+  padding-bottom: 0;
+  border-bottom: 0;
+  align-items: end;
+}
+.tr-doc .tr-header > .tr-brandmark {
+  padding-bottom: var(--tr-space-4);
+  border-bottom: var(--tr-rule-thin) solid var(--tr-border-soft-2);
+}
+
+/* La cella del timbro e' vuota per costruzione: e' spazio riservato, e lo si
+   riserva non occupandolo. La didascalia esiste solo in anteprima, per dire a
+   chi guarda a schermo perche' quell'angolo e' vuoto; in stampa sparisce. */
+.tr-doc__stamp { position: relative; }
+
+@media screen {
+  .tr-doc--preview .tr-doc__stamp::before {
+    content: "Zona riservata al protocollo dell'ente";
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: var(--tr-font-mono);
+    font-size: 9px;
+    letter-spacing: var(--tr-tracking-mono);
+    text-transform: uppercase;
+    color: var(--tr-brand-300);
+    white-space: nowrap;
+  }
+}
+
+/* ==========================================================================
+   3 · Riga del tipo di documento
+   Il tipo apre il foglio come un kicker, con la voce che il sistema ha gia'
+   per i kicker: l'eyebrow. Prima era una .tr-chip — l'unica forma chiusa e
+   bordata di una pagina il cui linguaggio vieta i box, e in stampa una
+   pillola con il filetto blu si legge come un campo da compilare.
+   Stando nella corsia sinistra, l'eyebrow lascia inoltre libero l'angolo
+   del timbro, che la chip lambiva.
+
+   L'etichetta dell'eyebrow e' brand/500 di serie: a 13px fa 3,15:1 e non
+   regge. Nel documento passa a brand/600, che su bianco fa 4,57:1.
+   ========================================================================== */
+.tr-doc__kind { margin-top: var(--tr-space-7); }
+.tr-doc .tr-eyebrow__label { color: var(--tr-brand-600); }
+
+/* ==========================================================================
+   4 · Intestazione del destinatario e dati del documento
+   A sinistra il destinatario, a destra la chiave di protocollo e la tabella
+   dei dati, sulle verticali della gabbia.
+   ========================================================================== */
+.tr-doc__meta {
+  margin-top: var(--tr-space-7);
+  align-items: start;
+}
+
+/* Etichetta mono blu che apre un blocco tecnico */
+.tr-doc__label {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-brand-600);
+  margin: 0 0 var(--tr-space-2);
+}
+
+/* "Spett.le" e "c.a." NON sono etichette di sistema: sono la lingua della
+   lettera, e si scrivono in frase. Il maiuscolo mono qui apparterrebbe alla
+   voce sbagliata — quella che dice "questo lo scrive il programma" — e il
+   blocco del destinatario e' l'unico punto del foglio in cui parla una
+   persona a un'altra. */
+.tr-doc__dest-lead {
+  margin: 0 0 var(--tr-space-1);
+  color: var(--tr-ink-400);
+}
+.tr-doc__dest-name {
+  font-weight: var(--tr-weight-semibold);
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--tr-ink-900);
+  margin: 0 0 var(--tr-space-1);
+}
+.tr-doc__dest-addr {
+  margin: 0;
+  color: var(--tr-ink-600);
+}
+.tr-doc__dest-att {
+  margin: var(--tr-space-3) 0 0;
+  color: var(--tr-ink-400);
+}
+
+/* ---- La chiave: numero di protocollo o di offerta ----
+   E' il dato per cui il documento verra' cercato: in un fascicolo si scorre
+   la colonna dei numeri, non i titoli. Nella tabella dei dati aveva lo
+   stesso peso della classificazione, cioe' nessuno. Qui esce dalla tabella,
+   prende la testa della corsia di controllo e un corpo suo. Resta mono,
+   perche' e' un codice, e resta in brand/600, che regge il contrasto anche
+   in fotocopia.
+
+   L'etichetta dice "Ns.": su questa pagina convivono il nostro protocollo,
+   quello dell'ente fra i riferimenti e quello che l'ente apporra' col timbro.
+   Un numero che non dice di chi e' costringe a indovinare. */
+.tr-doc__key {
+  padding-bottom: var(--tr-space-3);
+  border-bottom: var(--tr-rule-medium) solid var(--tr-brand-500);
+}
+.tr-doc__key-label {
+  display: block;
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+  margin-bottom: var(--tr-space-1);
+}
+.tr-doc__key-value {
+  display: block;
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 19px;
+  letter-spacing: var(--tr-tracking-mono-ui);
+  line-height: 1.1;
+  color: var(--tr-brand-600);
+  font-variant-numeric: tabular-nums;
+}
+
+/* La tabella dati sotto la chiave: misure da documento, non da interfaccia */
+.tr-doc__meta .tr-datatable { margin-top: var(--tr-space-3); }
+.tr-doc__meta .tr-datatable__row { padding: 7px 0; }
+.tr-doc__meta .tr-datatable__row:first-child { border-top: 0; }
+.tr-doc__meta .tr-datatable__label { font-size: 10px; }
+.tr-doc__meta .tr-datatable__value {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   5 · Oggetto
+   Eyebrow, titolo display e sommario. Il titolo sta su .tr-h3: un documento
+   istituzionale non ha bisogno della voce alta di una brochure, e a 22px
+   l'oggetto entra su due righe anche quando e' lungo.
+   ========================================================================== */
+.tr-doc__subject { margin-top: var(--tr-space-7); }
+.tr-doc__subject .tr-eyebrow { margin-bottom: var(--tr-space-3); }
+.tr-doc__subject .tr-h3 {
+  max-width: 26em;
+  line-height: 1.18;
+}
+.tr-doc__abstract {
+  max-width: 62ch;
+  margin: var(--tr-space-3) 0 0;
+  color: var(--tr-ink-600);
+}
+
+/* ==========================================================================
+   6 · Redazione e approvazione
+   Le tre firme del controllo documentale, sulle verticali della gabbia: il
+   campo si spezza in due e la terza cella cade sulla corsia di controllo.
+   E' la piu' larga perche' e' quella che riceve, sovrapposto alla riga, il
+   timbro tondo aziendale.
+
+   Un filetto solo, continuo, in testa alla banda: tre bordi di cella
+   disegnavano tre inizi per un gruppo che e' uno.
+
+   LA ZONA FRANCA SOPRA LA BANDA HA UN MINIMO GARANTITO. Prima la banda era
+   spinta al fondo da margin-top:auto, e con auto il minimo e' zero: su una
+   copertina piena il filetto delle firme sarebbe finito contro i riferimenti.
+   Ora il salto e' fisso a --tr-space-7 e lo scarto della pagina resta sopra.
+   ========================================================================== */
+.tr-doc__sign {
+  margin-top: auto;
+  padding-top: var(--tr-space-7);
+  border-top: var(--tr-rule-thin) solid var(--tr-border-soft-2);
+}
+.tr-doc__sign-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr var(--tr-doc-meta-col);
+  gap: 0 var(--tr-space-7);
+  margin-top: var(--tr-space-3);
+  min-height: var(--tr-doc-sign-h);
+}
+.tr-doc__sign-cell {
+  display: flex;
+  flex-direction: column;
+}
+.tr-doc__sign-role {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono-mid);
+  text-transform: uppercase;
+  color: var(--tr-brand-600);
+  margin: 0 0 var(--tr-space-2);
+}
+.tr-doc__sign-name {
+  font-weight: var(--tr-weight-semibold);
+  font-size: 13px;
+  color: var(--tr-ink-900);
+  margin: 0;
+}
+.tr-doc__sign-fn {
+  margin: 1px 0 0;
+  font-size: 11px;
+  color: var(--tr-ink-400);
+}
+/* La riga della firma autografa si appoggia al fondo della cella e lascia
+   sopra di se' lo spazio per la penna: ~11,5mm, non i 6 di prima. E' un
+   filetto piu' scuro degli altri, perche' e' l'unico che qualcuno deve
+   vedere per scriverci sopra dopo una fotocopia. */
+.tr-doc__sign-rule {
+  margin-top: auto;
+  height: 0;
+  border-top: var(--tr-rule-thin) solid var(--tr-ink-400);
+}
+.tr-doc__sign-caption {
+  margin: var(--tr-space-1) 0 0;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--tr-space-3);
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+}
+
+/* ==========================================================================
+   7 · Piede del documento formale
+   NON e' .tr-footer. Il footer del sistema firma una superficie: marchio a
+   sinistra, contatti e riferimento di prodotto a destra, certificazioni solo
+   se la superficie e' pubblica. Qui il compito e' un altro: IDENTIFICARE
+   L'EMITTENTE.
+
+   Sotto il filetto si entra nel colophon, e si legge dalla carta all'azienda
+   alla prova di terzi: prima di quale COPIA si tratta (modello, revisione,
+   conservazione, pagina), poi CHI la emette, poi CON QUALI credenziali.
+
+   Il wordmark non compare: la ragione sociale per esteso lo sostituisce. Due
+   modi di scrivere lo stesso nome uno accanto all'altro sarebbero un lockup
+   confuso, e su un documento formale il nome che conta e' quello legale.
+   ========================================================================== */
+.tr-doc-footer {
+  margin-top: var(--tr-space-7);
+  padding-top: var(--tr-space-3);
+  border-top: var(--tr-rule-thin) solid var(--tr-border-soft-2);
+}
+
+/* ---- Riga del modello ----
+   I dati della COPIA, non dell'emittente: codice e revisione del modello —
+   che non e' la revisione del documento, quella sta in tabella — tempo di
+   conservazione e numero di pagina. Stanno qui e non in una riga propria a
+   meta' foglio: sono amministrazione, e l'amministrazione sta nel colophon. */
+.tr-doc-footer__model {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--tr-space-2) var(--tr-space-5);
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+}
+
+/* ---- Identificazione dell'emittente ----
+   Tre righe, tre domande diverse, tre voci diverse: CHI emette (voce del
+   wordmark, ink/900: l'unico testo del piede a contrasto pieno), DOVE ha
+   sede (in frase, perche' un indirizzo si trascrive e il maiuscolo gli
+   toglie la sagoma delle parole), CON QUALE identificativo (mono, perche'
+   e' un codice). Non una riga sola con dei punti medi in mezzo: la P.IVA in
+   coda all'indirizzo era il dato piu' macchina-leggibile del foglio scritto
+   con l'inchiostro piu' debole. */
+.tr-doc-footer__issuer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--tr-space-5);
+  margin-top: var(--tr-space-3);
+}
+.tr-doc-footer__id {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--tr-space-3);
+}
+.tr-doc-footer__mark {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  align-self: start;
+  height: 20px;
+  width: auto;
+  display: block;
+  transform: translateY(1px);
+}
+.tr-doc-footer__name {
+  display: block;
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-display);
+  font-size: 12.5px;
+  letter-spacing: var(--tr-tracking-wordmark);
+  text-transform: uppercase;
+  color: var(--tr-ink-900);
+  line-height: 1.25;
+}
+.tr-doc-footer__seat {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--tr-ink-600);
+}
+/* Riga degli identificativi legali. E' uno slot, non un dato solo: a una
+   societa' cooperativa l'art. 2250 c.c. chiede in corrispondenza anche il
+   REA e il numero d'iscrizione all'Albo. Il mono qui prende il gradino di
+   tracking nato per il codice che si legge e si trascrive, non per
+   l'etichetta che l'occhio attraversa. */
+.tr-doc-footer__legal {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono-ui);
+  color: var(--tr-ink-600);
+}
+/* I recapiti restano, ma sotto la ragione sociale nella gerarchia: servono a
+   rispondere, non a identificare. */
+.tr-doc-footer__contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  text-align: right;
+}
+.tr-doc-footer__contact {
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* ---- Riga certificazioni ----
+   Stessa composizione del footer di sistema — etichetta mono blu, elenco
+   mono grigio, badge — perche' e' la stessa credenziale e non deve avere due
+   aspetti diversi in due posti. Cade pero' il filetto di riempimento: nel
+   footer di sistema serve a chiudere una riga corta, ma qui l'elenco delle
+   quattro norme la riempie gia' tutta, e infilarcelo manda il badge a capo
+   da solo, staccato da cio' che certifica. */
+.tr-doc-footer__certs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--tr-space-3);
+  margin-top: var(--tr-space-3);
+  padding-top: var(--tr-space-3);
+  border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
+}
+.tr-doc-footer__certs-label {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono-mid);
+  text-transform: uppercase;
+  color: var(--tr-brand-600);
+  white-space: nowrap;
+}
+/* L'elenco e' l'unico elemento elastico della riga: prende lo spazio che
+   resta fra l'etichetta e il badge. Se un giorno le norme diventassero
+   cinque, va a capo dentro il proprio riquadro invece di scaricare il badge
+   su una riga sua. */
+.tr-doc-footer__certs-list {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--tr-font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tr-tracking-mono);
+  color: var(--tr-ink-400);
+}
+.tr-doc-footer__certs-badges {
+  height: 24px;
+  width: auto;
+  display: block;
+  flex: none;
+  margin-left: auto;
+}
+
+/* ==========================================================================
+   8 · Anteprima e stampa
+   .tr-doc--preview e' il foglio visto a schermo: porta il filetto che ne
+   segna il bordo e la didascalia della zona del timbro. In stampa cadono
+   entrambi.
+
+   In stampa i filetti salgono di tinta. Non e' un vezzo: border/soft
+   (#dde2ee) ha una luminanza troppo vicina al bianco e sparisce alla prima
+   fotocopia, portandosi via la struttura della pagina — che in questo
+   sistema e' fatta di filetti e non di riquadri, quindi non ha nient'altro
+   con cui reggersi.
+
+   Il foglio resta su min-height e non su height: se il contenuto eccede,
+   esce una seconda pagina. E' una rottura rumorosa, e su un documento
+   formale e' preferibile al taglio silenzioso di un'altezza fissa.
+   ========================================================================== */
+.tr-doc--preview {
+  border: var(--tr-rule-thin) solid var(--tr-border-soft);
+  margin-inline: auto;
+}
+
+@page { size: A4; margin: 0; }
+
+@media print {
+  .tr-doc {
+    /* Il fondo bianco e le tinte dei filetti non sono decorazione: senza
+       questa riga il browser puo' scartarli e la pagina perde la struttura. */
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .tr-doc--preview { border: 0; }
+  .tr-doc + .tr-doc { break-before: page; }
+
+  .tr-doc .tr-header > .tr-brandmark,
+  .tr-doc__sign,
+  .tr-doc-footer {
+    border-color: var(--tr-ink-400);
+  }
+  .tr-doc-footer__certs,
+  .tr-doc .tr-datatable__row {
+    border-color: var(--tr-border-soft-2);
+  }
+  .tr-doc__key { border-bottom-color: var(--tr-brand-600); }
+}
