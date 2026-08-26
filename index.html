@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/traccia.css">
 <link rel="stylesheet" href="css/traccia-icons.css">
 <link rel="stylesheet" href="css/traccia-states.css">
+<link rel="stylesheet" href="css/traccia-categories.css">
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -34,6 +35,10 @@
   /* Il focus non si puo' fotografare in una pagina ferma: questa classe ne
      riproduce l'aspetto per la vetrina, e non fa parte del sistema. */
   .is-focus { outline: 2px solid var(--tr-brand-500); outline-offset: 3px; }
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px 16px; }
+  .cat-card { border-bottom: 2px solid var(--tr-cat-border); background: var(--tr-cat-surface); padding: 14px 14px 12px; }
+  .cat-card b { display: block; font-family: var(--tr-font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tr-cat-ink); }
+  .cat-card span { display: block; font-family: var(--tr-font-mono); font-size: 10px; letter-spacing: 0.03em; color: var(--tr-cat-ink); opacity: 0.75; margin-top: 4px; }
   .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 24px 16px; }
   .icon-cell { display: flex; align-items: center; gap: 10px; color: var(--tr-ink-900); }
   /* La zona dei messaggi transitori e' fissa sullo schermo: per mostrarla ferma
@@ -1232,6 +1237,82 @@
     </div>
 
     <div class="tr-toast-region" id="demo-toast-region" role="status" aria-live="polite"></div>
+  </section>
+
+
+  <!-- SCALA CATEGORIALE -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">21 · Scala <em>categoriale</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        Un'eccezione governata alla regola del singolo hue, riservata alla <strong>codifica di
+        categorie</strong> nelle interfacce software: venti tipi di entita' dentro un testo, le serie
+        di un grafico, le voci di una legenda. Mai come accento decorativo, mai su brochure e slide.
+        Ancorata al blu del marchio, passo aureo di 137,508°, chroma bassa e chiarezza costante per
+        ruolo: la serie resta nel registro sommesso del sistema invece di diventare un arcobaleno.
+      </p>
+    </div>
+
+    <div class="cat-grid">
+      <div class="cat-card tr-cat--1"><b>Gradino 1</b><span>hue 246.1° · testo 5.37:1</span></div>
+      <div class="cat-card tr-cat--2"><b>Gradino 2</b><span>hue 23.6° · testo 5.57:1</span></div>
+      <div class="cat-card tr-cat--3"><b>Gradino 3</b><span>hue 161.1° · testo 5.20:1</span></div>
+      <div class="cat-card tr-cat--4"><b>Gradino 4</b><span>hue 298.6° · testo 5.58:1</span></div>
+      <div class="cat-card tr-cat--5"><b>Gradino 5</b><span>hue 76.1° · testo 5.50:1</span></div>
+      <div class="cat-card tr-cat--6"><b>Gradino 6</b><span>hue 213.6° · testo 5.16:1</span></div>
+      <div class="cat-card tr-cat--7"><b>Gradino 7</b><span>hue 351.1° · testo 5.62:1</span></div>
+      <div class="cat-card tr-cat--8"><b>Gradino 8</b><span>hue 128.6° · testo 5.29:1</span></div>
+      <div class="cat-card tr-cat--neutral"><b>Gradino 0</b><span>oltre l'ottava categoria</span></div>
+    </div>
+
+    <div class="grid-2 demo-block" style="margin-top:48px">
+      <div>
+        <div class="tr-eyebrow" style="margin-bottom:20px">
+          <span class="tr-eyebrow__label">Entita' nel testo</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
+        <p class="tr-body" style="font-size:15px">
+          Il documento intestato a <span class="tr-cat tr-cat--1">RSSMRA80A01F839X</span>, residente in
+          <span class="tr-cat tr-cat--2">Recinto II Fiorentini 10, Matera</span>, protocollato il
+          <span class="tr-cat tr-cat--3">14 marzo 2026</span> per un importo di
+          <span class="tr-cat tr-cat--4">1.240,00 euro</span> sul conto
+          <span class="tr-cat tr-cat--5">IT60X0542811101000000123456</span>, riporta la voce
+          <span class="tr-cat tr-cat--neutral">allegato tecnico</span> che nessuna categoria copre.
+        </p>
+        <p class="tr-body demo-note" style="font-size:13px">
+          Il filetto sotto non e' decorazione: il colore non deve essere l'unico segnale, e una
+          sottolineatura sopravvive alla stampa in bianco e nero, al daltonismo e al contrasto
+          forzato. Il tassello non e' cliccabile e non ha stati.
+        </p>
+      </div>
+      <div>
+        <div class="tr-eyebrow" style="margin-bottom:20px">
+          <span class="tr-eyebrow__label">Legenda</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:12px 24px">
+        <span class="tr-cat-key tr-cat--1">Codice fiscale</span>
+        <span class="tr-cat-key tr-cat--2">Indirizzo</span>
+        <span class="tr-cat-key tr-cat--3">Data</span>
+        <span class="tr-cat-key tr-cat--4">Importo</span>
+        <span class="tr-cat-key tr-cat--5">IBAN</span>
+        <span class="tr-cat-key tr-cat--6">Targa</span>
+        <span class="tr-cat-key tr-cat--7">Diagnosi</span>
+        <span class="tr-cat-key tr-cat--8">Numero di pratica</span>
+          <span class="tr-cat-key tr-cat--neutral">Altro</span>
+        </div>
+        <p class="tr-body demo-note" style="font-size:13px">
+          L'etichetta e' parte del componente e non si toglie: il tassello da solo non porta il
+          significato, esattamente come il pallino di <code style="font-family:var(--tr-font-mono);font-size:12px">.tr-status</code>.
+        </p>
+        <p class="tr-body" style="font-size:13px; margin-top:16px">
+          <strong>Si ferma a otto</strong>, e non e' un numero di gusto: con il passo aureo i primi
+          otto gradini restano ad almeno 32,5° l'uno dall'altro, al nono la distanza minima crolla a
+          20,1° e due tinte cosi' vicine, a questa chroma, non si distinguono piu'.
+        </p>
+      </div>
+    </div>
   </section>
 
   <!-- FIRMA EMAIL -->

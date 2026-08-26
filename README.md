@@ -22,7 +22,8 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── traccia-fonts.css         @font-face per i font in locale (prodotti offline)
 │   ├── traccia.css               Libreria componenti (prefisso .tr-)
 │   ├── traccia-icons.css         Registro icone (mascherature) + .tr-icon
-│   ├── traccia-states.css        Stati semantici UI (.tr-notice, .tr-status)
+│   ├── traccia-states.css        Stati semantici UI (.tr-notice, .tr-toast, .tr-status)
+│   ├── traccia-categories.css    Scala categoriale (solo interfacce software)
 │   └── traccia-doc.css           Documenti formali a stampa (prefisso .tr-doc)
 ├── js/tr-select.js               Listbox del select (vanilla, per Angular e HTML)
 ├── email/
@@ -386,6 +387,7 @@ disordinata un'interfaccia ordinata.
 | 18 | Icona | `.tr-icon` + `.tr-icon--<nome>` — vedi [Icone](#icone) |
 | 19 | Interruttore | `.tr-switch` (+ `.tr-switch-row`) — vedi [Interruttore](#interruttore) |
 | 20 | Messaggio transitorio | `.tr-toast` + `.tr-toast-region` — vedi [Messaggio transitorio](#messaggio-transitorio) |
+| 21 | Marcatura di categoria e legenda | `.tr-cat` / `.tr-cat-key` — vedi [Scala categoriale](#scala-categoriale) |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -1360,6 +1362,106 @@ Sotto `prefers-reduced-motion: reduce` vale la regola dell'etichetta flottante:
 **lo stato finale resta, la corsa no** — la traccia e' tracciata, la sequenza
 accesa, il marchio pieno, e niente si muove.
 
+
+## Scala categoriale
+
+Il sistema e' netto: mai altri hue, eccetto le famiglie di stato. E' la regola
+giusta per l'identita', per i materiali editoriali e per la validazione dei
+form. Ma un'interfaccia software deve anche **codificare categorie** —
+evidenziare venti tipi di entita' dentro un testo, distinguere le serie di un
+grafico, colorare le voci di una legenda. Li' il blu di marca da solo non basta,
+e le cinque tinte di stato **non sono disponibili** perche' significano gia'
+altro: verde vuol dire «e' andata bene», non «e' un codice fiscale». Riusarlo
+per una categoria non fa perdere una categoria, fa perdere il verde.
+
+Finche' il README non lo diceva, chi ci si imbatteva usciva dal sistema di
+nascosto — che e' esattamente cio' che la regola voleva evitare. Meglio
+governare l'eccezione che fingere che non esista.
+
+### Come e' costruita
+
+Ancorata al **blu del marchio** (hue 246,1° in OKLCH), con passo di **137,508°**,
+il passo aureo. Non e' esoterismo: e' l'unico passo che non chiude mai un giro
+esatto, quindi separa bene anche i gradini contigui. La scorciatoia abituale —
+un hash sul nome della categoria — produce invece grappoli e collisioni, e per
+giunta cambia colore alla prima categoria rinominata: la stessa entita' che
+cambia tinta fra due versioni del prodotto.
+
+Chroma bassa e chiarezza costante **per ruolo**, non per gradino: e' cosi' che
+la serie resta nel registro sommesso del sistema invece di diventare un
+arcobaleno. Tre ruoli per ogni gradino, ognuno con la sua soglia verificata:
+
+| # | Hue | Fondo | Filetto | Testo | Testo su fondo / su paper | Filetto su fondo |
+|---|---|---|---|---|---|---|
+| 1 | 246.1° | `#e5f6ff` | `#648fb6` | `#2b6899` | 5.37:1 / 5.76:1 | 3.07:1 |
+| 2 | 23.6° | `#ffedea` | `#b67a76` | `#944a47` | 5.57:1 / 6.11:1 | 3.07:1 |
+| 3 | 161.1° | `#e4faed` | `#5e987a` | `#1d7450` | 5.20:1 / 5.51:1 | 3.08:1 |
+| 4 | 298.6° | `#f6f0ff` | `#9282b4` | `#6b5594` | 5.58:1 / 6.04:1 | 3.08:1 |
+| 5 | 76.1° | `#fff1df` | `#a68657` | `#835a0e` | 5.50:1 / 5.90:1 | 3.06:1 |
+| 6 | 213.6° | `#dff9ff` | `#4e95a5` | `#007185` | 5.16:1 / 5.49:1 | 3.10:1 |
+| 7 | 351.1° | `#ffecf6` | `#b07992` | `#8d496a` | 5.62:1 / 6.14:1 | 3.10:1 |
+| 8 | 128.6° | `#eef8e4` | `#7b9261` | `#526e2b` | 5.29:1 / 5.62:1 | 3.11:1 |
+| 0 | — | `surface/tint` | `border/soft-2` | `ink/600` | oltre l'ottava categoria |  |
+
+Il testo e' verificato a >= 4,5:1 **sia sul proprio fondo sia sul paper della
+pagina**, perche' un'etichetta di legenda spesso non ha il proprio fondo sotto;
+il filetto a >= 3:1 su entrambi, che e' la soglia degli elementi non testuali.
+
+### Perche' si ferma a otto
+
+Non e' un numero di gusto ed e' l'unico punto in cui la costruzione decide da
+sola. Con il passo aureo i primi **otto** gradini restano ad almeno **32,5°**
+l'uno dall'altro; al nono la distanza minima **crolla a 20,1°**, e a questa
+chroma due tinte a 20° non si distinguono piu' — tanto meno se non sono
+affiancate, che e' il caso normale di un'entita' in mezzo a un testo.
+
+**Oltre l'ottava categoria il colore smette di essere un canale.** Non serve un
+nono colore: serve smettere di chiederglielo.
+
+| Quante categorie | Cosa fa il colore |
+|---|---|
+| 1–8 | identifica: gradini 1–8, sempre accompagnati dall'etichetta |
+| 9 e oltre | **rinuncia**: le otto piu' frequenti tengono il gradino, tutte le altre passano al gradino 0 (`.tr-cat--neutral`), e l'identita' la porta l'etichetta |
+
+Il gradino 0 non e' un ripiego mal riuscito: e' la rinuncia **dichiarata**. Il
+tassello resta — quindi si vede che quella e' un'entita' marcata — ma non finge
+di dire quale.
+
+### Uso
+
+```html
+<!-- entita' dentro un testo -->
+Intestato a <span class="tr-cat tr-cat--1">RSSMRA80A01F839X</span>, residente in
+<span class="tr-cat tr-cat--2">Recinto II Fiorentini 10, Matera</span>.
+
+<!-- voce di legenda: l'etichetta e' parte del componente -->
+<span class="tr-cat-key tr-cat--3">Data</span>
+
+<!-- categorie che arrivano dai dati: i tre ruoli si passano come valore -->
+<span class="tr-cat" style="--tr-cat-surface: var(--tr-cat-5-surface);
+                            --tr-cat-border: var(--tr-cat-5-border);
+                            --tr-cat-ink: var(--tr-cat-5-ink)">…</span>
+```
+
+**Il colore non e' mai l'unico segnale.** `.tr-cat` porta sempre un filetto
+sotto e `.tr-cat-key` porta sempre l'etichetta — che e' parte del componente e
+non si toglie, esattamente come il testo di `.tr-status`. Una sottolineatura
+sopravvive alla stampa in bianco e nero, al daltonismo e a
+`forced-colors: active`, dove infatti il colore sparisce e resta lei.
+
+### La regola d'ingaggio
+
+| Superficie | Scala categoriale |
+|---|---|
+| Interfaccia software, codifica di categorie | Sì |
+| Grafici e legende dentro l'applicazione | Sì |
+| Accento, evidenza, decorazione | **No** — quello e' il blu di marca, ed e' uno |
+| Stato, esito, severita' | **No** — quelle sono le famiglie semantiche |
+| Brochure, slide, documenti a stampa, firma email | **No**, mai |
+
+Fuori da questi due usi la regola del sistema non cambia di una virgola: un solo
+hue. La scala categoriale non e' una palette in piu' a disposizione, e' uno
+strumento per un lavoro che il blu da solo non puo' fare.
 
 ## Grafici
 

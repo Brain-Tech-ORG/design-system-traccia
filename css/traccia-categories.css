@@ -1,0 +1,175 @@
+/* ==========================================================================
+   LA TRACCIA — Scala categoriale
+   Caricare dopo tokens/tokens.css. Riservata alle interfacce software.
+
+   La regola del sistema e' netta: un solo hue, piu' le famiglie semantiche di
+   stato. E' giusta per l'identita', per i materiali editoriali e per la
+   validazione dei form. Ma un'interfaccia deve anche CODIFICARE CATEGORIE —
+   evidenziare venti tipi di entita' dentro un testo, distinguere le serie di un
+   grafico, colorare le voci di una legenda. Li' il blu di marca da solo non
+   basta, e le cinque tinte di stato non sono disponibili perche' significano
+   gia' altro: verde vuol dire "e' andata bene", non "e' un codice fiscale".
+
+   Finche' il sistema non lo diceva, chi ci si imbatteva usciva di nascosto —
+   che e' esattamente cio' che la regola voleva evitare. Meglio governare
+   l'eccezione che fingere che non esista.
+
+   COME E' COSTRUITA
+   Ancorata al blu del marchio (hue 246,1° in OKLCH), passo di 137,508° — il
+   passo aureo. Non e' esoterismo: e' l'unico passo che non chiude mai un giro
+   esatto, quindi separa bene anche i gradini contigui. Un hash sul nome della
+   categoria, che e' la scorciatoia abituale, produce invece grappoli e
+   collisioni, e cambia colore alla prima categoria rinominata.
+
+   Chroma bassa e chiarezza costante per ruolo: la serie resta nel registro
+   sommesso del sistema invece di diventare un arcobaleno. Tre ruoli per
+   gradino — fondo, filetto, testo — con il testo verificato a >= 4,5:1 sia sul
+   proprio fondo sia sul paper della pagina, e il filetto a >= 3:1 su entrambi.
+
+   PERCHE' SI FERMA A OTTO
+   Non e' un numero di gusto, e' dove la costruzione si rompe. Con il passo
+   aureo i primi otto gradini restano a 32,5° minimi l'uno dall'altro; al nono
+   la distanza minima crolla a 20,1°, e a questa chroma due tinte a 20° non si
+   distinguono piu' — specie se non sono affiancate. Oltre l'ottava categoria
+   il colore smette di essere un canale utile: vedi il README.
+   ========================================================================== */
+
+:root {
+  --tr-cat-1-surface: #e5f6ff;
+  --tr-cat-1-border: #648fb6;
+  --tr-cat-1-ink: #2b6899;
+  --tr-cat-2-surface: #ffedea;
+  --tr-cat-2-border: #b67a76;
+  --tr-cat-2-ink: #944a47;
+  --tr-cat-3-surface: #e4faed;
+  --tr-cat-3-border: #5e987a;
+  --tr-cat-3-ink: #1d7450;
+  --tr-cat-4-surface: #f6f0ff;
+  --tr-cat-4-border: #9282b4;
+  --tr-cat-4-ink: #6b5594;
+  --tr-cat-5-surface: #fff1df;
+  --tr-cat-5-border: #a68657;
+  --tr-cat-5-ink: #835a0e;
+  --tr-cat-6-surface: #dff9ff;
+  --tr-cat-6-border: #4e95a5;
+  --tr-cat-6-ink: #007185;
+  --tr-cat-7-surface: #ffecf6;
+  --tr-cat-7-border: #b07992;
+  --tr-cat-7-ink: #8d496a;
+  --tr-cat-8-surface: #eef8e4;
+  --tr-cat-8-border: #7b9261;
+  --tr-cat-8-ink: #526e2b;
+
+  /* Nono e oltre: non un nono colore, ma la rinuncia dichiarata al colore.
+     Il tassello resta, la tinta no, e l'identita' torna all'etichetta. */
+  --tr-cat-0-surface: var(--tr-surface-tint);
+  --tr-cat-0-border: var(--tr-border-soft-2);
+  --tr-cat-0-ink: var(--tr-ink-600);
+}
+
+/* ---- I tre ruoli ----
+   Si impostano insieme, con una utility o a mano se le categorie arrivano dai
+   dati: `style="--tr-cat-surface: var(--tr-cat-3-surface); ..."`. */
+.tr-cat--1 {
+  --tr-cat-surface: var(--tr-cat-1-surface);
+  --tr-cat-border: var(--tr-cat-1-border);
+  --tr-cat-ink: var(--tr-cat-1-ink);
+}
+.tr-cat--2 {
+  --tr-cat-surface: var(--tr-cat-2-surface);
+  --tr-cat-border: var(--tr-cat-2-border);
+  --tr-cat-ink: var(--tr-cat-2-ink);
+}
+.tr-cat--3 {
+  --tr-cat-surface: var(--tr-cat-3-surface);
+  --tr-cat-border: var(--tr-cat-3-border);
+  --tr-cat-ink: var(--tr-cat-3-ink);
+}
+.tr-cat--4 {
+  --tr-cat-surface: var(--tr-cat-4-surface);
+  --tr-cat-border: var(--tr-cat-4-border);
+  --tr-cat-ink: var(--tr-cat-4-ink);
+}
+.tr-cat--5 {
+  --tr-cat-surface: var(--tr-cat-5-surface);
+  --tr-cat-border: var(--tr-cat-5-border);
+  --tr-cat-ink: var(--tr-cat-5-ink);
+}
+.tr-cat--6 {
+  --tr-cat-surface: var(--tr-cat-6-surface);
+  --tr-cat-border: var(--tr-cat-6-border);
+  --tr-cat-ink: var(--tr-cat-6-ink);
+}
+.tr-cat--7 {
+  --tr-cat-surface: var(--tr-cat-7-surface);
+  --tr-cat-border: var(--tr-cat-7-border);
+  --tr-cat-ink: var(--tr-cat-7-ink);
+}
+.tr-cat--8 {
+  --tr-cat-surface: var(--tr-cat-8-surface);
+  --tr-cat-border: var(--tr-cat-8-border);
+  --tr-cat-ink: var(--tr-cat-8-ink);
+}
+.tr-cat--neutral {
+  --tr-cat-surface: var(--tr-cat-0-surface);
+  --tr-cat-border: var(--tr-cat-0-border);
+  --tr-cat-ink: var(--tr-cat-0-ink);
+}
+
+/* ---- Marcatura di entita' dentro un testo ----
+   Fondo tenue e filetto sotto: il filetto e' li' perche' il colore non deve
+   essere l'unico segnale, e una sottolineatura sopravvive alla stampa in bianco
+   e nero, al daltonismo e al contrasto forzato. */
+.tr-cat {
+  --tr-cat-surface: var(--tr-cat-0-surface);
+  --tr-cat-border: var(--tr-cat-0-border);
+  --tr-cat-ink: var(--tr-cat-0-ink);
+
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 1px 4px;
+  border-bottom: var(--tr-rule-medium) solid var(--tr-cat-border);
+  border-radius: var(--tr-radius-ui);
+  background: var(--tr-cat-surface);
+  color: var(--tr-cat-ink);
+}
+
+/* ---- Voce di legenda ----
+   Il tassello non porta mai il significato da solo: l'etichetta e' parte del
+   componente e non si toglie. E' la stessa regola di .tr-status. */
+.tr-cat-key {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tr-space-2);
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-caption);
+  letter-spacing: var(--tr-tracking-mono-ui);
+  text-transform: uppercase;
+  color: var(--tr-ink-600);
+}
+
+.tr-cat-key::before {
+  content: "";
+  flex: none;
+  width: var(--tr-icon-sm);
+  height: var(--tr-icon-sm);
+  border: var(--tr-rule-thin) solid var(--tr-cat-border);
+  border-radius: var(--tr-radius-ui);
+  background: var(--tr-cat-surface);
+}
+
+/* Il tratto della serie in un grafico: si passa come valore, come gia' fanno i
+   colori dei grafici altrove nel sistema. */
+.tr-cat-stroke { stroke: var(--tr-cat-border); }
+.tr-cat-fill { fill: var(--tr-cat-surface); }
+
+@media (forced-colors: active) {
+  /* Qui il colore non esiste piu': resta il filetto, che infatti c'era gia'. */
+  .tr-cat {
+    border-bottom-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+  .tr-cat-key::before { border-color: CanvasText; background: Canvas; }
+}
