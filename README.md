@@ -13,11 +13,13 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── logo-traccia-outline.svg  Sagoma outline per watermark negli sfondi
 │   ├── logo-traccia-mark.svg     Solo il marchio, normalizzato: sorgente dello spinner
 │   ├── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
-│   └── icons/                    Sorgenti SVG delle icone (stroke currentColor)
+│   ├── icons/                    Sorgenti SVG delle icone (stroke currentColor)
+│   └── fonts/                    Archivo + IBM Plex Mono, sottoinsieme latino, con OFL
 ├── tokens/
 │   ├── tokens.css                Design token come CSS custom properties
 │   └── tokens.json               Design token in formato W3C draft
 ├── css/
+│   ├── traccia-fonts.css         @font-face per i font in locale (prodotti offline)
 │   ├── traccia.css               Libreria componenti (prefisso .tr-)
 │   ├── traccia-icons.css         Registro icone (mascherature) + .tr-icon
 │   ├── traccia-states.css        Stati semantici UI (.tr-notice, .tr-status)
@@ -32,6 +34,8 @@ niente gradienti, niente emoji, molto bianco.
 ## Uso rapido
 
 ```html
+<!-- font: CDN per il web pubblico, oppure css/traccia-fonts.css se il prodotto
+     deve reggere senza rete. Vedi "Tipografia · dove stanno i font". -->
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tokens/tokens.css">
 <link rel="stylesheet" href="css/traccia.css">
@@ -124,6 +128,80 @@ scegliendo colori nuovi.
   eyebrow/kicker, numerazioni, quote, specifiche, contatti, metadati.
 - **Body — Archivo 400**: 12–14px stampa / 14–16px UI / 24–30px slide, line-height 1.5–1.65, ink/600.
 - **Slide 16:9 (1920×1080)**: mai testo sotto 17px; titoli 60–92px.
+
+### Dove stanno i font
+
+Il CDN non e' l'unica destinazione, ed e' il punto in cui il sistema si era
+fermato troppo presto.
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+```
+
+Quel `<link>` va benissimo per il sito e per tutto cio' che vive in rete. Non va
+per un prodotto che gira **offline**, in rete chiusa, o che promette
+esplicitamente di non uscire dalla macchina: li' e' una richiesta di rete al
+caricamento, e senza connessione i font non arrivano affatto. La pagina ripiega
+su `system-ui`, e due prodotti della stessa famiglia finiscono con due
+tipografie diverse — che e' esattamente cio' che un design system esiste per
+impedire.
+
+I file stanno quindi anche nel repository, e si caricano cosi':
+
+```html
+<link rel="stylesheet" href="css/traccia-fonts.css">
+<link rel="stylesheet" href="tokens/tokens.css">
+```
+
+`traccia-fonts.css` va **prima** dei token e dei componenti, e contiene tre
+`@font-face` pronte:
+
+```css
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 800;          /* variabile: un file copre i tre pesi */
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("../assets/fonts/archivo-latin-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* + IBM Plex Mono 400 e 600, stessa unicode-range */
+```
+
+| Superficie | Font |
+|---|---|
+| Sito, landing, materiali in rete | CDN |
+| Prodotto software installato, rete chiusa, uso offline | `css/traccia-fonts.css` |
+| Firma email | nessuno dei due: `Archivo, 'Helvetica Neue', Helvetica, Arial` in linea |
+
+**Il sottoinsieme e' il latino, e basta.** Per l'italiano copre tutto — accenti
+e caporali compresi — e tiene i tre file a **63,7 KB** complessivi:
+
+| File | Peso |
+|---|---|
+| `archivo-latin-var.woff2` | 34,1 KB |
+| `ibm-plex-mono-latin-400.woff2` | 14,4 KB |
+| `ibm-plex-mono-latin-600.woff2` | 15,3 KB |
+
+Archivo e' variabile: **un file solo copre l'arco 400–800**, quindi i tre pesi
+del sistema non costano tre richieste, e `font-weight` si scrive come sempre.
+Chi deve comporre in vietnamita o in cirillico scarica da Google Fonts anche
+quei sottoinsiemi e aggiunge le `@font-face` con la loro `unicode-range`: il
+meccanismo non cambia.
+
+**Licenza.** Entrambi i caratteri sono **SIL Open Font License 1.1**, quindi
+ridistribuibili — e' il motivo per cui possono stare qui dentro. Il testo
+integrale e' in `assets/fonts/OFL-Archivo.txt` e
+`assets/fonts/OFL-IBMPlexMono.txt`, e **va tenuto insieme ai file**, anche nelle
+copie del sistema che finiscono dentro un prodotto: la licenza lo richiede, e
+costa 9 KB.
+
+`index.html` e le pagine in `examples/` usano la via locale, non il CDN: la
+vetrina di un sistema che serve prodotti offline deve reggere senza rete, e
+verificarlo e' piu' facile se e' il caso normale.
 
 ### Dove finisce il maiuscolo
 
