@@ -331,9 +331,17 @@ a mano.
 ### Uso
 
 ```html
-<!-- decorativa: accompagna un'etichetta che dice gia' tutto -->
+<!-- decorativa: accompagna un'etichetta che dice gia' tutto.
+     L'etichetta va in un elemento suo, vedi sotto. -->
 <button class="tr-btn tr-btn--primary" type="button">
-  <span class="tr-icon tr-icon--download" aria-hidden="true"></span>Scarica il referto
+  <span class="tr-icon tr-icon--download" aria-hidden="true"></span>
+  <span>Scarica il referto</span>
+</button>
+
+<!-- icona in coda: accompagna il gesto e all'hover scivola di 3px -->
+<button class="tr-btn tr-btn--secondary" type="button">
+  <span>Apri il registro</span>
+  <span class="tr-icon tr-icon--arrow-right" aria-hidden="true"></span>
 </button>
 
 <!-- unico contenuto del comando: senza aria-label il pulsante non ha nome -->
@@ -348,6 +356,14 @@ a mano.
   <span class="tr-field__label">Ricerca</span>
 </label>
 ```
+
+**L'etichetta dell'azione va in un elemento suo.** Il sistema muove l'icona in
+coda e tiene ferma quella in testa, ma con l'etichetta scritta come nodo di
+testo nudo — `Apri il registro<span class="tr-icon">` — l'icona risulta insieme
+primo e **ultimo** figlio, perche' `:first-child` conta gli elementi e non il
+testo. La regola non scatta, e non esiste selettore che possa distinguere la
+testa dalla coda. Un `<span>` attorno all'etichetta costa una riga e fa
+funzionare il sistema; vale anche per le icone scritte come `<svg>`.
 
 **Accessibilita'.** Quando l'icona accompagna un'etichetta e' decorazione e va
 `aria-hidden="true"`: annunciarla due volte non aiuta nessuno. Quando e' l'unico

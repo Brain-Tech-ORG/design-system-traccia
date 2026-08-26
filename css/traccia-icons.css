@@ -108,7 +108,14 @@
 .tr-btn--icon.tr-btn--sm > .tr-icon { width: var(--tr-icon-md); height: var(--tr-icon-md); }
 
 /* Stessa cortesia riservata a `> svg`: l'icona in coda accompagna il gesto,
-   quella in testa resta ferma. */
+   quella in testa resta ferma.
+
+   Perche' la distinzione regga, L'ETICHETTA VA IN UN ELEMENTO SUO. Con
+   l'etichetta scritta come nodo di testo nudo — `Apri il registro<span
+   class="tr-icon">` — l'icona risulta insieme primo e ultimo figlio, perche'
+   :first-child conta gli elementi e non il testo: la regola non scatta, e non
+   c'e' selettore che possa distinguere la testa dalla coda. Un `<span>`
+   attorno all'etichetta costa una riga e fa funzionare il sistema. */
 .tr-btn > .tr-icon:last-child:not(:first-child) {
   transition: transform var(--tr-motion-fast) var(--tr-motion-ease);
 }
