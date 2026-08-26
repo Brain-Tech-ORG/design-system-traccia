@@ -181,6 +181,14 @@
                                      dell'etichetta flottante la ricopre. Va
                                      ridefinita sui contenitori con fondo diverso. */
 
+  /* ---- Icone ----
+     Tre misure sole, agganciate alle altezze delle azioni: sotto i 14px il
+     tratto da 2 si chiude, sopra i 24 l'icona diventa un disegno e vuole
+     un'altra griglia. */
+  --tr-icon-sm: 14px;             /* dentro .tr-btn--sm e le righe di tabella */
+  --tr-icon-md: 16px;             /* misura corrente: azione, campo, elenco */
+  --tr-icon-lg: 20px;             /* .tr-btn--lg, sola icona, riquadro avviso */
+
   /* ---- Movimento ---- */
   --tr-motion-fast: 160ms;
   --tr-motion-ease: cubic-bezier(0.2, 0, 0.2, 1);

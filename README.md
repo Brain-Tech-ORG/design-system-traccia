@@ -12,12 +12,15 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── logo-traccia.svg          Logo (chevron blu, pieno)
 │   ├── logo-traccia-outline.svg  Sagoma outline per watermark negli sfondi
 │   ├── logo-traccia-mark.svg     Solo il marchio, normalizzato: sorgente dello spinner
-│   └── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
+│   ├── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
+│   └── icons/                    Sorgenti SVG delle icone (stroke currentColor)
 ├── tokens/
 │   ├── tokens.css                Design token come CSS custom properties
 │   └── tokens.json               Design token in formato W3C draft
 ├── css/
 │   ├── traccia.css               Libreria componenti (prefisso .tr-)
+│   ├── traccia-icons.css         Registro icone (mascherature) + .tr-icon
+│   ├── traccia-states.css        Stati semantici UI (.tr-notice, .tr-status)
 │   └── traccia-doc.css           Documenti formali a stampa (prefisso .tr-doc)
 ├── js/tr-select.js               Listbox del select (vanilla, per Angular e HTML)
 ├── email/
@@ -32,6 +35,8 @@ niente gradienti, niente emoji, molto bianco.
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tokens/tokens.css">
 <link rel="stylesheet" href="css/traccia.css">
+<link rel="stylesheet" href="css/traccia-icons.css">
+<link rel="stylesheet" href="css/traccia-states.css">
 
 <body class="tr-page">
   <h1 class="tr-h1">Titolo con parola <em>chiave</em></h1>
@@ -160,6 +165,99 @@ volte al giorno.
   object-fit contain); le foto ambientate stanno in cornice arrotondata 22–36px con bordo
   1px `border/soft` e padding 7–14px (`.tr-photo-frame`).
 
+## Icone
+
+Il sistema riservava lo spazio all'icona da prima di averne una. Il campo ha un
+prefisso e un suffisso, l'avviso ha un riquadro da 20px, l'azione ha perfino una
+regola di movimento sull'icona in coda. Mancava il segno: chi costruiva un
+prodotto se lo procurava altrove, e il sistema perdeva il controllo sul disegno
+piu' ripetuto dell'interfaccia — quello che l'utente vede cento volte al giorno.
+
+### Griglia e tratto
+
+`viewBox 24`, tratto `2`, estremita' e giunzioni tonde, nessun riempimento.
+
+Il tratto e' la sola misura che conta davvero, e non e' arbitraria: l'icona vive
+appaiata all'etichetta di un'azione, che e' Archivo semibold a 13px. Sotto i 2px
+il disegno sbiadisce accanto alla parola; sopra, diventa piu' nero della parola
+stessa e l'occhio legge prima il simbolo del comando. Le estremita' tonde sono
+l'unico punto in cui il sistema smussa un angolo dentro l'interfaccia, ed e'
+coerente: `--tr-radius-ui` governa le **superfici**, non i tratti — e i tratti,
+dal filetto stondato in poi, sono sempre stati tondi.
+
+### Le tre misure
+
+| Token | Valore | Dove |
+|---|---|---|
+| `--tr-icon-sm` | 14px | `.tr-btn--sm`, righe di tabella |
+| `--tr-icon-md` | 16px | misura corrente: azione, campo, elenco |
+| `--tr-icon-lg` | 20px | `.tr-btn--lg`, comando a sola icona, riquadro dell'avviso |
+
+Sono agganciate alle altezze delle azioni che gia' esistevano
+(`--tr-btn-h-sm` 32, `--tr-btn-h` 42, `--tr-btn-h-lg` 48), e dentro un pulsante
+non vanno dichiarate: e' il pulsante a imporre la misura all'icona.
+
+### La consegna: mascheratura, non markup
+
+Le strade erano due — uno sprite `<symbol>` + `<use>`, oppure un registro di
+custom property con `mask-image` e `background: currentColor`. Il sistema ha
+scelto la seconda, e la ragione non e' il peso del file (5,8 KB, comunque
+trascurabile in entrambi i casi): e' il controllo.
+
+**Se l'icona e' un valore CSS, la variante se la porta dietro.** Un
+`.tr-notice--danger` arriva col proprio triangolo perche' la variante imposta
+`--tr-notice-icon`, e nessuno puo' accoppiare il segno d'allarme a un messaggio
+di conferma. Con uno sprite quel disallineamento resta sempre a un copia-incolla
+di distanza, perche' li' il segno lo sceglie chi scrive il markup e il componente
+non ha modo di correggerlo. Un sistema che si limita a *sperare* che il markup
+sia coerente non sta governando niente.
+
+Il prezzo si paga in `forced-colors: active`, dove il sistema operativo
+sostituisce `background-color` e un'icona mascherata sparirebbe. Si ripaga in
+fondo a `traccia-icons.css` ridipingendola con un colore di sistema
+(`CanvasText`, `ButtonText` dentro le azioni), che non viene sostituito: resta
+la forma e si perde il colore semantico — che in quella modalita' non era
+comunque un canale disponibile.
+
+Gli stessi disegni stanno in `assets/icons/*.svg` con `stroke="currentColor"`,
+per i posti dove il CSS non arriva: la firma email, un allegato, un SVG composto
+a mano.
+
+### Uso
+
+```html
+<!-- decorativa: accompagna un'etichetta che dice gia' tutto -->
+<button class="tr-btn tr-btn--primary" type="button">
+  <span class="tr-icon tr-icon--download" aria-hidden="true"></span>Scarica il referto
+</button>
+
+<!-- unico contenuto del comando: senza aria-label il pulsante non ha nome -->
+<button class="tr-btn tr-btn--icon" type="button" aria-label="Elimina la voce">
+  <span class="tr-icon tr-icon--trash" aria-hidden="true"></span>
+</button>
+
+<!-- dentro un campo: il modificatore riserva lo spazio e sposta l'etichetta -->
+<label class="tr-field tr-field--with-prefix">
+  <span class="tr-field__prefix"><span class="tr-icon tr-icon--search" aria-hidden="true"></span></span>
+  <input class="tr-field__control" id="q" type="search" placeholder="Cerca">
+  <span class="tr-field__label">Ricerca</span>
+</label>
+```
+
+**Accessibilita'.** Quando l'icona accompagna un'etichetta e' decorazione e va
+`aria-hidden="true"`: annunciarla due volte non aiuta nessuno. Quando e' l'unico
+contenuto di un comando, il comando ha bisogno di un `aria-label`, altrimenti
+per una tecnologia assistiva quel pulsante non ha nome.
+
+**Il set.** `info`, `alert`, `check`, `close`, `lock`, `unlock`, `download`,
+`upload`, `copy`, `file`, `folder`, `save`, `tag`, `sliders`, `search`,
+`arrow-right`, `chevron-down`, `external-link`, `trash`, `edit`, `plus`,
+`minus`. Sono ventidue perche' sono quelle che un prodotto usa davvero; il
+registro si allunga aggiungendo una riga a `:root` e la sua utility, con lo
+stesso `viewBox` e lo stesso tratto. Un'icona disegnata su un'altra griglia si
+riconosce a colpo d'occhio, ed e' il modo piu' rapido per far sembrare
+disordinata un'interfaccia ordinata.
+
 ## Componenti
 
 | # | Componente | Classe |
@@ -181,6 +279,7 @@ volte al giorno.
 | 15 | Azione | `.tr-btn` + `--primary` / `--secondary` / `--neutral` / `--quiet` / `--danger` |
 | 16 | Spinner di caricamento | `.tr-spinner` + `__wipe` / `__track` / `__seq` / `__ring` |
 | 17 | Foglio e piede del documento formale | `.tr-doc` + `.tr-doc-footer` — vedi [Documenti formali](#documenti-formali) |
+| 18 | Icona | `.tr-icon` + `.tr-icon--<nome>` — vedi [Icone](#icone) |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 

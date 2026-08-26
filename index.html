@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tokens/tokens.css">
 <link rel="stylesheet" href="css/traccia.css">
+<link rel="stylesheet" href="css/traccia-icons.css">
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -29,6 +30,12 @@
   .type-specimen { display: flex; flex-direction: column; gap: 28px; }
   .demo-block { margin-top: 32px; }
   .demo-note { margin-top: 12px; }
+  /* Il focus non si puo' fotografare in una pagina ferma: questa classe ne
+     riproduce l'aspetto per la vetrina, e non fa parte del sistema. */
+  .is-focus { outline: 2px solid var(--tr-brand-500); outline-offset: 3px; }
+  .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 24px 16px; }
+  .icon-cell { display: flex; align-items: center; gap: 10px; color: var(--tr-ink-900); }
+  .icon-cell span:last-child { font-family: var(--tr-font-mono); font-size: 11px; letter-spacing: 0.03em; color: var(--tr-ink-400); }
   @media (max-width: 820px) {
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
     .page { padding: 32px 20px 48px; }
@@ -924,6 +931,134 @@
       <code style="font-family:var(--tr-font-mono);font-size:12px">--tr-sp-dur</code>, la curva a
       <code style="font-family:var(--tr-font-mono);font-size:12px">--tr-sp-ease</code>.
     </p>
+  </section>
+
+
+  <!-- ICONE -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">18 · <em>Icone</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        Griglia 24, tratto 2, estremita' e giunzioni tonde, nessun riempimento. L'icona non e' un
+        elemento scritto a mano ma un valore CSS: si imposta con <code style="font-family:var(--tr-font-mono);font-size:13px">--tr-icon</code>,
+        quindi puo' discendere da una variante invece di essere copiata nel markup. Il colore e'
+        sempre <code style="font-family:var(--tr-font-mono);font-size:13px">currentColor</code>.
+      </p>
+    </div>
+
+    <div class="icon-grid">
+      <span class="icon-cell"><span class="tr-icon tr-icon--info" aria-hidden="true"></span><span>info</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--alert" aria-hidden="true"></span><span>alert</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--check" aria-hidden="true"></span><span>check</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--close" aria-hidden="true"></span><span>close</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--lock" aria-hidden="true"></span><span>lock</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--unlock" aria-hidden="true"></span><span>unlock</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--download" aria-hidden="true"></span><span>download</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--upload" aria-hidden="true"></span><span>upload</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--copy" aria-hidden="true"></span><span>copy</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--file" aria-hidden="true"></span><span>file</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--folder" aria-hidden="true"></span><span>folder</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--save" aria-hidden="true"></span><span>save</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--tag" aria-hidden="true"></span><span>tag</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--sliders" aria-hidden="true"></span><span>sliders</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--search" aria-hidden="true"></span><span>search</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--arrow-right" aria-hidden="true"></span><span>arrow-right</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--chevron-down" aria-hidden="true"></span><span>chevron-down</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--external-link" aria-hidden="true"></span><span>external-link</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--trash" aria-hidden="true"></span><span>trash</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--edit" aria-hidden="true"></span><span>edit</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--plus" aria-hidden="true"></span><span>plus</span></span>
+      <span class="icon-cell"><span class="tr-icon tr-icon--minus" aria-hidden="true"></span><span>minus</span></span>
+    </div>
+
+    <div class="grid-2 demo-block" style="margin-top:48px">
+      <div>
+        <div class="tr-eyebrow" style="margin-bottom:20px">
+          <span class="tr-eyebrow__label">Le tre misure</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:28px; color:var(--tr-ink-900)">
+          <span style="display:inline-flex; align-items:center; gap:10px">
+            <span class="tr-icon tr-icon--sm tr-icon--save" aria-hidden="true"></span>
+            <span class="tr-mono tr-mono--muted">sm · 14</span>
+          </span>
+          <span style="display:inline-flex; align-items:center; gap:10px">
+            <span class="tr-icon tr-icon--save" aria-hidden="true"></span>
+            <span class="tr-mono tr-mono--muted">md · 16</span>
+          </span>
+          <span style="display:inline-flex; align-items:center; gap:10px">
+            <span class="tr-icon tr-icon--lg tr-icon--save" aria-hidden="true"></span>
+            <span class="tr-mono tr-mono--muted">lg · 20</span>
+          </span>
+        </div>
+        <p class="tr-body demo-note" style="font-size:13px">
+          Il tratto da 2px su griglia 24 e' tarato sul peso di Archivo semibold a 13px, che e' la
+          misura dell'etichetta delle azioni: e' li' che icona e parola stanno appaiate.
+        </p>
+      </div>
+      <div>
+        <div class="tr-eyebrow" style="margin-bottom:20px">
+          <span class="tr-eyebrow__label">Dentro il campo</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
+        <label class="tr-field tr-field--with-prefix">
+          <span class="tr-field__prefix"><span class="tr-icon tr-icon--search" aria-hidden="true"></span></span>
+          <input class="tr-field__control" id="demo-icn-1" type="search" placeholder="Cerca un fascicolo">
+          <span class="tr-field__label">Ricerca</span>
+        </label>
+        <label class="tr-field tr-field--with-suffix" style="margin-top:20px">
+          <input class="tr-field__control" id="demo-icn-2" type="text" value="RSA-2048" placeholder=" ">
+          <span class="tr-field__label">Chiave</span>
+          <button class="tr-field__suffix tr-field__suffix--action" type="button" aria-label="Copia la chiave">
+            <span class="tr-icon tr-icon--copy" aria-hidden="true"></span>
+          </button>
+        </label>
+      </div>
+    </div>
+
+    <div class="demo-block" style="margin-top:48px">
+      <div class="tr-eyebrow" style="margin-bottom:24px">
+        <span class="tr-eyebrow__label">Dentro l'azione</span>
+        <span class="tr-eyebrow__line"></span>
+        <span class="tr-eyebrow__note">Tutti gli stati</span>
+      </div>
+      <div class="tr-btn-group">
+        <button class="tr-btn tr-btn--primary" type="button">
+          <span class="tr-icon tr-icon--download" aria-hidden="true"></span>Scarica il referto
+        </button>
+        <button class="tr-btn tr-btn--secondary" type="button">
+          Apri il registro<span class="tr-icon tr-icon--arrow-right" aria-hidden="true"></span>
+        </button>
+        <button class="tr-btn tr-btn--quiet tr-btn--sm" type="button">
+          <span class="tr-icon tr-icon--sliders" aria-hidden="true"></span>Filtri
+        </button>
+        <button class="tr-btn tr-btn--danger" type="button">
+          <span class="tr-icon tr-icon--trash" aria-hidden="true"></span>Elimina
+        </button>
+        <button class="tr-btn tr-btn--secondary is-focus" type="button">
+          <span class="tr-icon tr-icon--save" aria-hidden="true"></span>Salva
+        </button>
+        <button class="tr-btn tr-btn--primary" type="button" disabled>
+          <span class="tr-icon tr-icon--upload" aria-hidden="true"></span>Carica
+        </button>
+        <button class="tr-btn tr-btn--icon" type="button" aria-label="Modifica la voce">
+          <span class="tr-icon tr-icon--edit" aria-hidden="true"></span>
+        </button>
+        <button class="tr-btn tr-btn--icon tr-btn--danger" type="button" aria-label="Elimina la voce">
+          <span class="tr-icon tr-icon--trash" aria-hidden="true"></span>
+        </button>
+        <button class="tr-btn tr-btn--icon" type="button" aria-label="Chiudi il pannello" disabled>
+          <span class="tr-icon tr-icon--close" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="tr-body demo-note" style="font-size:13px">
+        Il quinto comando mostra l'aspetto del focus, che in una pagina ferma non si vede.
+        Quando l'icona e' decorativa va <code style="font-family:var(--tr-font-mono);font-size:12px">aria-hidden="true"</code>;
+        quando e' l'unico contenuto del comando serve <code style="font-family:var(--tr-font-mono);font-size:12px">aria-label</code>,
+        altrimenti il pulsante non ha nome.
+      </p>
+    </div>
   </section>
 
   <!-- FIRMA EMAIL -->
