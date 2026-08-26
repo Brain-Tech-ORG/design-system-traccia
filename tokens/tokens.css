@@ -181,6 +181,15 @@
                                      dell'etichetta flottante la ricopre. Va
                                      ridefinita sui contenitori con fondo diverso. */
 
+  /* ---- Interruttore ----
+     Pista e cursore rettangolari, come tutto il resto dell'interfaccia. Il
+     cursore e' quadrato e si ricava dall'altezza (h - 2 filetti - 2 respiri),
+     cosi' la corsa vale esattamente w - h: cambiare una misura non sfascia
+     l'altra. */
+  --tr-switch-w: 44px;            /* pista */
+  --tr-switch-h: 22px;            /* pista: cursore 14px, corsa 22px */
+  --tr-switch-pad: 3px;           /* respiro fra filetto e cursore */
+
   /* ---- Icone ----
      Tre misure sole, agganciate alle altezze delle azioni: sotto i 14px il
      tratto da 2 si chiude, sopra i 24 l'icona diventa un disegno e vuole

@@ -24,6 +24,8 @@
 .tr-chip,
 .tr-circle,
 .tr-notice,
+.tr-switch,
+.tr-switch-row,
 .tr-login,
 .tr-login__header,
 .tr-login__main,
@@ -2031,6 +2033,103 @@ select.tr-field__control + .tr-field__label,
   .tr-spinner__seq > * { opacity: 1; }
   .tr-spinner__trail { transform: scaleX(0.962); }
   .tr-spinner__runner { transform: translateX(var(--tr-sp-run, 218px)); }
+}
+
+/* ==========================================================================
+   Interruttore
+   Un'opzione a due stati che ha effetto subito: la cifratura si accende, il
+   filtro si applica, il salvataggio automatico parte. Non e' una scelta da
+   confermare — quella e' roba da due .tr-tab o da un gruppo di opzioni, dove
+   esiste ancora un pulsante che chiude il compito.
+
+   Il riflesso e' di prendere la pillola con la pallina che scivola, ma quella
+   forma appartiene a un altro sistema: qui --tr-radius-ui vale 0 e non ci sono
+   ombre. Pista e cursore restano rettangolari, il filetto e' quello di sempre,
+   e il segno di stato lo danno il riempimento pieno e la posizione.
+
+   La POSIZIONE e' il segnale primario, il colore e' solo conferma: il cursore
+   compie una corsa pari a w - h, cioe' meta' pista, e a colori spenti si vede
+   comunque da che parte sta. E' il motivo per cui la corsa e' cosi' lunga.
+   ========================================================================== */
+.tr-switch {
+  --tr-switch-track: transparent;
+  --tr-switch-rule: var(--tr-border-soft-2);
+  --tr-switch-knob: var(--tr-ink-400);
+  --tr-switch-travel: 0px;
+
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: var(--tr-switch-w);
+  height: var(--tr-switch-h);
+  margin: 0;
+  padding: 0;
+  border: var(--tr-rule-thin) solid var(--tr-switch-rule);
+  border-radius: var(--tr-radius-ui);
+  background: var(--tr-switch-track);
+  cursor: pointer;
+  transition:
+    background-color var(--tr-motion-fast) var(--tr-motion-ease),
+    border-color var(--tr-motion-fast) var(--tr-motion-ease);
+}
+
+/* Il cursore si ricava dall'altezza, non da un token proprio: cosi' non puo'
+   sfasarsi dalla pista che lo contiene. */
+.tr-switch::before {
+  content: "";
+  position: absolute;
+  top: var(--tr-switch-pad);
+  left: var(--tr-switch-pad);
+  width: calc(var(--tr-switch-h) - 2 * var(--tr-rule-thin) - 2 * var(--tr-switch-pad));
+  height: calc(var(--tr-switch-h) - 2 * var(--tr-rule-thin) - 2 * var(--tr-switch-pad));
+  background: var(--tr-switch-knob);
+  transform: translateX(var(--tr-switch-travel));
+  transition: transform 180ms var(--tr-motion-ease);
+}
+
+.tr-switch[aria-checked="true"] {
+  --tr-switch-track: var(--tr-brand-600);
+  --tr-switch-rule: var(--tr-brand-600);
+  --tr-switch-knob: var(--tr-surface);
+  --tr-switch-travel: calc(var(--tr-switch-w) - var(--tr-switch-h));
+}
+
+.tr-switch:hover:not(:disabled) { --tr-switch-rule: var(--tr-ink-400); }
+.tr-switch[aria-checked="true"]:hover:not(:disabled) {
+  --tr-switch-track: var(--tr-brand-700);
+  --tr-switch-rule: var(--tr-brand-700);
+}
+
+.tr-switch:focus-visible { outline: 2px solid var(--tr-brand-500); outline-offset: 2px; }
+.tr-switch:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Riga di comando: l'interruttore, cio' che governa, e la parola che dice come
+   sta. La parola e' .tr-status e non una pill colorata, perche' il pallino piu'
+   il testo reggono anche a colori spenti — una pill no. */
+.tr-switch-row {
+  display: flex;
+  align-items: center;
+  gap: var(--tr-space-3);
+}
+.tr-switch-row__label {
+  color: var(--tr-ink-900);
+  font-size: var(--tr-text-body);
+}
+.tr-switch-row .tr-status { margin-left: auto; }
+.tr-switch-row:has(.tr-switch:disabled) .tr-switch-row__label { opacity: 0.45; }
+
+/* Il colore non e' piu' un canale: resta la posizione, che infatti bastava. */
+@media (forced-colors: active) {
+  .tr-switch { border-color: CanvasText; background: Canvas; }
+  .tr-switch::before { background: CanvasText; }
+  .tr-switch[aria-checked="true"] { border-color: Highlight; background: Highlight; }
+  .tr-switch[aria-checked="true"]::before { background: HighlightText; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Lo stato finale resta, la corsa no. */
+  .tr-switch,
+  .tr-switch::before { transition: none; }
 }
 
 /* ==========================================================================

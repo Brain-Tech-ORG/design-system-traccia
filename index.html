@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="tokens/tokens.css">
 <link rel="stylesheet" href="css/traccia.css">
 <link rel="stylesheet" href="css/traccia-icons.css">
+<link rel="stylesheet" href="css/traccia-states.css">
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -1061,6 +1062,80 @@
     </div>
   </section>
 
+
+  <!-- INTERRUTTORE -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">19 · <em>Interruttore</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        Un'opzione a due stati che ha effetto subito. Pista e cursore rettangolari, filetto di 1px,
+        lo stato dato dal riempimento pieno e dalla posizione: il cursore compie una corsa lunga
+        mezza pista, cosi' a colori spenti si vede comunque da che parte sta.
+        Markup su <code style="font-family:var(--tr-font-mono);font-size:13px">&lt;button role="switch" aria-checked&gt;</code>,
+        non su una checkbox travestita.
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <div style="display:flex; flex-direction:column; gap:24px">
+        <div class="tr-switch-row">
+          <button class="tr-switch" type="button" role="switch" aria-checked="true" aria-labelledby="sw-l1"></button>
+          <span class="tr-switch-row__label" id="sw-l1">Cifratura del pacchetto</span>
+          <span class="tr-status tr-status--success" aria-hidden="true">Attiva</span>
+        </div>
+        <div class="tr-switch-row">
+          <button class="tr-switch" type="button" role="switch" aria-checked="false" aria-labelledby="sw-l2"></button>
+          <span class="tr-switch-row__label" id="sw-l2">Invio dei log al fornitore</span>
+          <span class="tr-status" aria-hidden="true">Spento</span>
+        </div>
+        <div class="tr-switch-row">
+          <button class="tr-switch is-focus" type="button" role="switch" aria-checked="false" aria-labelledby="sw-l3"></button>
+          <span class="tr-switch-row__label" id="sw-l3">Aggiornamento automatico</span>
+          <span class="tr-status" aria-hidden="true">Spento</span>
+        </div>
+        <div class="tr-switch-row">
+          <button class="tr-switch is-focus" type="button" role="switch" aria-checked="true" aria-labelledby="sw-l4"></button>
+          <span class="tr-switch-row__label" id="sw-l4">Conservazione a norma</span>
+          <span class="tr-status tr-status--success" aria-hidden="true">Attiva</span>
+        </div>
+        <div class="tr-switch-row">
+          <button class="tr-switch" type="button" role="switch" aria-checked="false" aria-labelledby="sw-l5" disabled></button>
+          <span class="tr-switch-row__label" id="sw-l5">Firma remota</span>
+          <span class="tr-status" aria-hidden="true">Non disponibile</span>
+        </div>
+        <div class="tr-switch-row">
+          <button class="tr-switch" type="button" role="switch" aria-checked="true" aria-labelledby="sw-l6" disabled></button>
+          <span class="tr-switch-row__label" id="sw-l6">Registro delle operazioni</span>
+          <span class="tr-status tr-status--info" aria-hidden="true">Imposta dal criterio</span>
+        </div>
+      </div>
+      <div>
+        <div class="tr-eyebrow" style="margin-bottom:20px">
+          <span class="tr-eyebrow__label">Quando non usarlo</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
+        <p class="tr-body" style="font-size:14px">
+          L'interruttore promette che l'effetto sia gia' avvenuto. Se la scelta va confermata da un
+          comando — se esiste un <em>Salva</em> in fondo alla pagina — l'interruttore mente: li'
+          servono due <code style="font-family:var(--tr-font-mono);font-size:12px">.tr-tab</code>
+          o un gruppo di opzioni, che dichiarano di essere una scelta in attesa.
+        </p>
+        <p class="tr-body" style="font-size:14px; margin-top:16px">
+          La parola di stato accanto e' <code style="font-family:var(--tr-font-mono);font-size:12px">.tr-status</code>,
+          non una pill colorata: pallino piu' testo reggono anche a colori spenti. Per le tecnologie
+          assistive e' ridondante — <code style="font-family:var(--tr-font-mono);font-size:12px">aria-checked</code>
+          lo dice gia' — quindi va <code style="font-family:var(--tr-font-mono);font-size:12px">aria-hidden="true"</code>,
+          altrimenti lo stato viene annunciato due volte.
+        </p>
+        <p class="tr-body" style="font-size:14px; margin-top:16px">
+          La terza e la quarta riga mostrano l'aspetto del focus. Gli ultimi due interruttori sono
+          disabilitati, uno per stato: anche spenti la posizione del cursore resta leggibile.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- FIRMA EMAIL -->
   <section class="section">
     <div class="section-head">
@@ -1176,6 +1251,15 @@
   </section>
 
 
+  <script>
+    // Solo per la vetrina: nel sistema lo stato lo governa l'applicazione
+    // che ospita il componente, scrivendo aria-checked.
+    document.querySelectorAll('.tr-switch').forEach(function (sw) {
+      sw.addEventListener('click', function () {
+        sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
+      });
+    });
+  </script>
   <script src="js/tr-select.js"></script>
   <script>TrSelect.enhanceAll();</script>
 </div>

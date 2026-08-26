@@ -280,6 +280,7 @@ disordinata un'interfaccia ordinata.
 | 16 | Spinner di caricamento | `.tr-spinner` + `__wipe` / `__track` / `__seq` / `__ring` |
 | 17 | Foglio e piede del documento formale | `.tr-doc` + `.tr-doc-footer` — vedi [Documenti formali](#documenti-formali) |
 | 18 | Icona | `.tr-icon` + `.tr-icon--<nome>` — vedi [Icone](#icone) |
+| 19 | Interruttore | `.tr-switch` (+ `.tr-switch-row`) — vedi [Interruttore](#interruttore) |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -968,6 +969,71 @@ grammatica, e chi ha gia' imparato a leggere l'una legge anche l'altra.
 attivo non si trasmette con una classe ma con `aria-selected="true"`: il CSS
 legge quello, quindi markup accessibile e aspetto giusto non possono divergere.
 
+
+## Interruttore
+
+`.tr-switch` — un'opzione a due stati che **ha effetto subito**: la cifratura si
+accende, il filtro si applica, il salvataggio automatico parte.
+
+Il riflesso, quando serve un interruttore, e' di prendere la pillola con la
+pallina che scivola. Ma quella forma appartiene a un altro sistema: qui
+`--tr-radius-ui` vale `0` e non ci sono ombre, e una pillola in mezzo a campi e
+pulsanti a spigolo vivo si legge come un pezzo importato. Pista e cursore
+restano quindi rettangolari, il filetto e' quello di sempre, e il segno di stato
+lo danno il riempimento pieno e la posizione.
+
+### La posizione prima del colore
+
+Il cursore compie una corsa pari a `w - h`, cioe' esattamente meta' pista. Non e'
+un vezzo: e' la ragione per cui lo stato resta leggibile **senza colore**. Con
+una corsa breve, spento e acceso si distinguono solo perche' uno e' blu; con
+mezza pista si distinguono anche in una fotocopia, e in `forced-colors: active`
+— dove il file degli stati aveva gia' aperto la strada — il componente si
+appoggia proprio a quello.
+
+Il cursore non ha un token proprio: si ricava dall'altezza della pista
+(`h − 2 filetti − 2 respiri`), cosi' cambiare `--tr-switch-h` non lo puo'
+sfasare. Da li' discende anche la corsa, che vale `w − h` e basta.
+
+### Markup
+
+```html
+<div class="tr-switch-row">
+  <button class="tr-switch" type="button" role="switch"
+          aria-checked="true" aria-labelledby="sw-cifratura"></button>
+  <span class="tr-switch-row__label" id="sw-cifratura">Cifratura del pacchetto</span>
+  <span class="tr-status tr-status--success" aria-hidden="true">Attiva</span>
+</div>
+```
+
+`<button role="switch" aria-checked>`, non una checkbox travestita: il ruolo lo
+dichiara l'elemento, e lo stato lo scrive l'applicazione che ospita il
+componente cambiando `aria-checked`. Il nome accessibile arriva da
+`aria-labelledby` — un `<label for>` puntato a un `<button>` non lega nulla.
+
+**La parola di stato accanto e' `.tr-status`, non una pill colorata.** Pallino
+piu' testo reggono anche a colori spenti; una pill colorata, no. Per le
+tecnologie assistive quella parola e' ridondante, perche' `aria-checked` lo dice
+gia': va quindi `aria-hidden="true"`, altrimenti lo stato viene annunciato due
+volte.
+
+Focus con `outline: 2px solid var(--tr-brand-500)` e `outline-offset: 2px`, lo
+stesso di `.tr-btn`. Disabilitato con l'attributo `disabled`: opacita' 0,45, e la
+posizione del cursore resta comunque leggibile.
+
+### Quando invece non usarlo
+
+L'interruttore **promette che l'effetto sia gia' avvenuto**. Se la scelta va
+confermata — se in fondo alla pagina c'e' un *Salva* — l'interruttore mente, e
+l'utente crede di aver cambiato qualcosa che invece non e' cambiato. Li' servono
+due `.tr-tab`, o un gruppo di opzioni dentro un `.tr-fieldset`: dichiarano di
+essere una scelta in attesa, e c'e' ancora un comando che chiude il compito.
+
+| Serve | Componente |
+|---|---|
+| Opzione con effetto immediato | `.tr-switch` |
+| Scelta fra due viste dello stesso contenuto | `.tr-tab` |
+| Scelta da confermare con un comando | gruppo di opzioni in `.tr-fieldset` |
 
 ## Spinner di caricamento
 
