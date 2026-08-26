@@ -36,6 +36,10 @@
   .is-focus { outline: 2px solid var(--tr-brand-500); outline-offset: 3px; }
   .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 24px 16px; }
   .icon-cell { display: flex; align-items: center; gap: 10px; color: var(--tr-ink-900); }
+  /* La zona dei messaggi transitori e' fissa sullo schermo: per mostrarla ferma
+     nella vetrina la si riporta nel flusso. Non fa parte del sistema. */
+  .toast-stage .tr-toast-region { position: static; inset: auto; width: auto; pointer-events: auto; }
+  .toast-stage .tr-toast { animation: none; }
   .icon-cell span:last-child { font-family: var(--tr-font-mono); font-size: 11px; letter-spacing: 0.03em; color: var(--tr-ink-400); }
   @media (max-width: 820px) {
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
@@ -1136,6 +1140,100 @@
     </div>
   </section>
 
+
+  <!-- MESSAGGIO TRANSITORIO -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">20 · Messaggio <em>transitorio</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        L'avviso in linea copre cio' che resta in pagina; questo copre la conferma che passa —
+        <em>copiato</em>, <em>salvato</em>, <em>porta occupata</em>. Sono due tempi dello stesso
+        vocabolario, quindi condividono le stesse variabili di variante: l'icona, il filetto e la
+        tinta arrivano da un unico blocco, e i due componenti non possono divergere.
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <div class="toast-stage">
+        <div class="tr-toast-region">
+          <div class="tr-toast tr-toast--success">
+            <span class="tr-toast__icon" aria-hidden="true"></span>
+            <div class="tr-toast__content">
+              <p class="tr-toast__title">Salvato</p>
+              <p class="tr-toast__body">Revisione 03 archiviata nel fascicolo 2026/0412.</p>
+            </div>
+            <button class="tr-btn tr-btn--icon tr-btn--sm" type="button" aria-label="Chiudi il messaggio">
+              <span class="tr-icon tr-icon--close" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <div class="tr-toast tr-toast--danger">
+            <span class="tr-toast__icon" aria-hidden="true"></span>
+            <div class="tr-toast__content">
+              <p class="tr-toast__title">Porta occupata</p>
+              <p class="tr-toast__body">La 8443 e' gia' in uso. Il servizio non e' stato avviato.</p>
+            </div>
+            <button class="tr-btn tr-btn--sm" type="button">Riprova</button>
+          </div>
+
+          <div class="tr-toast tr-toast--warning">
+            <span class="tr-toast__icon" aria-hidden="true"></span>
+            <div class="tr-toast__content">
+              <p class="tr-toast__body">Il certificato scade fra 12 giorni.</p>
+            </div>
+          </div>
+
+          <div class="tr-toast tr-toast--info">
+            <span class="tr-toast__icon" aria-hidden="true"></span>
+            <div class="tr-toast__content">
+              <p class="tr-toast__body">Chiave copiata negli appunti.</p>
+            </div>
+          </div>
+
+          <div class="tr-toast">
+            <span class="tr-toast__icon" aria-hidden="true"></span>
+            <div class="tr-toast__content">
+              <p class="tr-toast__body">Nessuna variante: il messaggio neutro non colora nulla.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="tr-eyebrow" style="margin-bottom:20px">
+          <span class="tr-eyebrow__label">Regole</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
+        <p class="tr-body" style="font-size:14px">
+          Superficie piena e scura: e' l'eccezione che il messaggio si guadagna arrivando non
+          richiesto sopra il contenuto. Senza un piano proprio il testo si mescolerebbe a quello che
+          c'e' sotto, e una conferma illeggibile non conferma niente. Il filetto prende il gradino
+          chiaro della stessa famiglia, perche' su fondo scuro le tinte di stato piene non si staccano.
+        </p>
+        <p class="tr-body" style="font-size:14px; margin-top:16px">
+          La zona va marcata <code style="font-family:var(--tr-font-mono);font-size:12px">role="status"</code>
+          con <code style="font-family:var(--tr-font-mono);font-size:12px">aria-live="polite"</code> per le
+          conferme; un errore che interrompe il compito usa
+          <code style="font-family:var(--tr-font-mono);font-size:12px">role="alert"</code> — e non
+          si chiude da solo, perche' un errore che sparisce prima di essere letto e' un errore
+          nascosto.
+        </p>
+        <div class="tr-btn-group" style="margin-top:24px">
+          <button class="tr-btn tr-btn--secondary" type="button" id="demo-toast">
+            <span class="tr-icon tr-icon--copy" aria-hidden="true"></span>Copia la chiave
+          </button>
+        </div>
+        <p class="tr-body demo-note" style="font-size:13px">
+          Il comando fa comparire un messaggio vero, in basso a destra, con l'entrata e la durata
+          previste dal sistema.
+        </p>
+      </div>
+    </div>
+
+    <div class="tr-toast-region" id="demo-toast-region" role="status" aria-live="polite"></div>
+  </section>
+
   <!-- FIRMA EMAIL -->
   <section class="section">
     <div class="section-head">
@@ -1258,6 +1356,16 @@
       sw.addEventListener('click', function () {
         sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
       });
+    });
+
+    document.getElementById('demo-toast').addEventListener('click', function () {
+      var region = document.getElementById('demo-toast-region');
+      var t = document.createElement('div');
+      t.className = 'tr-toast tr-toast--info';
+      t.innerHTML = '<span class="tr-toast__icon" aria-hidden="true"></span>' +
+        '<div class="tr-toast__content"><p class="tr-toast__body">Chiave copiata negli appunti.</p></div>';
+      region.appendChild(t);
+      setTimeout(function () { t.remove(); }, 4000);
     });
   </script>
   <script src="js/tr-select.js"></script>

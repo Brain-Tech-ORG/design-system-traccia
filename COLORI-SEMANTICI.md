@@ -78,16 +78,19 @@ Caricare l'estensione dopo i file principali:
 ```html
 <link rel="stylesheet" href="tokens/tokens.css">
 <link rel="stylesheet" href="css/traccia.css">
+<link rel="stylesheet" href="css/traccia-icons.css">
 <link rel="stylesheet" href="css/traccia-states.css">
 ```
+
+Le icone servono davvero: ogni variante porta con sé la propria (`--tr-notice-icon`),
+quindi il riquadro `__icon` lasciato vuoto si disegna da solo e il segno d'allarme
+non può finire su un messaggio di conferma.
 
 ### Avviso strutturato
 
 ```html
 <div class="tr-notice tr-notice--warning tr-notice--tint" role="status">
-  <span class="tr-notice__icon" aria-hidden="true">
-    <!-- icona SVG con fill/stroke currentColor -->
-  </span>
+  <span class="tr-notice__icon" aria-hidden="true"></span>
   <div class="tr-notice__content">
     <p class="tr-notice__title">Attenzione</p>
     <p class="tr-notice__body">
@@ -103,14 +106,29 @@ Caricare l'estensione dopo i file principali:
 <div class="tr-notice tr-notice--alarm"
      role="alert"
      aria-live="assertive">
-  <span class="tr-notice__icon" aria-hidden="true">
-    <!-- icona SVG con fill/stroke currentColor -->
-  </span>
+  <span class="tr-notice__icon" aria-hidden="true"></span>
   <div class="tr-notice__content">
     <p class="tr-notice__title">Allarme critico</p>
     <p class="tr-notice__body">
       Servizio non raggiungibile. È richiesto un intervento immediato.
     </p>
+  </div>
+</div>
+```
+
+### Messaggio transitorio
+
+Stesse variabili di variante dell'avviso, tempo diverso: quello resta in pagina,
+questo passa. La zona è unica per applicazione e i messaggi si impilano dentro.
+
+```html
+<div class="tr-toast-region" role="status" aria-live="polite">
+  <div class="tr-toast tr-toast--success">
+    <span class="tr-toast__icon" aria-hidden="true"></span>
+    <div class="tr-toast__content">
+      <p class="tr-toast__title">Salvato</p>
+      <p class="tr-toast__body">Revisione 03 archiviata nel fascicolo 2026/0412.</p>
+    </div>
   </div>
 </div>
 ```

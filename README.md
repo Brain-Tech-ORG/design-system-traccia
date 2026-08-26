@@ -281,6 +281,7 @@ disordinata un'interfaccia ordinata.
 | 17 | Foglio e piede del documento formale | `.tr-doc` + `.tr-doc-footer` — vedi [Documenti formali](#documenti-formali) |
 | 18 | Icona | `.tr-icon` + `.tr-icon--<nome>` — vedi [Icone](#icone) |
 | 19 | Interruttore | `.tr-switch` (+ `.tr-switch-row`) — vedi [Interruttore](#interruttore) |
+| 20 | Messaggio transitorio | `.tr-toast` + `.tr-toast-region` — vedi [Messaggio transitorio](#messaggio-transitorio) |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -1034,6 +1035,85 @@ essere una scelta in attesa, e c'e' ancora un comando che chiude il compito.
 | Opzione con effetto immediato | `.tr-switch` |
 | Scelta fra due viste dello stesso contenuto | `.tr-tab` |
 | Scelta da confermare con un comando | gruppo di opzioni in `.tr-fieldset` |
+
+## Messaggio transitorio
+
+`.tr-toast` — la conferma che passa: *copiato*, *salvato*, *porta occupata*.
+`.tr-notice` copriva gia' il messaggio che resta in pagina; mancava il tempo
+breve, ed e' una necessita' universale in un prodotto software. Finche' non
+c'era, ognuno se la inventava.
+
+### Non e' una famiglia nuova
+
+Le variabili di variante — `--tr-notice-accent`, `--tr-notice-border`,
+`--tr-notice-icon` e le altre — sono dichiarate **una volta sola** in testa a
+`traccia-states.css`, su un selettore che nomina insieme `.tr-notice` e
+`.tr-toast`. Non e' un dettaglio di implementazione: e' l'unico modo perche' i
+due componenti non divergano. Con due famiglie parallele, il primo che ritocca
+il giallo dell'allerta lo ritocca in un posto solo, e sei mesi dopo l'avviso in
+pagina e la conferma che passa hanno due gialli diversi.
+
+Dalla stessa variante arriva anche l'icona, quindi il riquadro `__icon` si
+lascia vuoto e si disegna da solo — vedi [Icone](#icone).
+
+### La superficie scura e' un'eccezione, e si paga
+
+Il sistema non ammette pannelli con fondo colorato dietro ai contenuti, e
+l'avviso in linea infatti non ne ha: gli basta un filetto sul fianco, perche'
+sta **dentro** il flusso, e il flusso gli fa da contesto. Il messaggio
+transitorio no: arriva non richiesto sopra il contenuto, e senza un piano
+proprio il testo si mescolerebbe a quello che c'e' sotto. Una conferma
+illeggibile non conferma niente.
+
+Il fondo e' quindi `ink/900` pieno, e il filetto d'accento prende il **gradino
+chiaro** della stessa famiglia (`--tr-notice-border`) invece della tinta piena:
+su fondo scuro `danger` o `success` non si staccherebbero. Non e' una variabile
+parallela — e' un altro passo della stessa scala.
+
+### Markup
+
+```html
+<!-- una sola zona per applicazione: i messaggi si impilano dentro -->
+<div class="tr-toast-region" role="status" aria-live="polite">
+  <div class="tr-toast tr-toast--success">
+    <span class="tr-toast__icon" aria-hidden="true"></span>
+    <div class="tr-toast__content">
+      <p class="tr-toast__title">Salvato</p>
+      <p class="tr-toast__body">Revisione 03 archiviata nel fascicolo 2026/0412.</p>
+    </div>
+    <button class="tr-btn tr-btn--icon tr-btn--sm" type="button" aria-label="Chiudi il messaggio">
+      <span class="tr-icon tr-icon--close" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>
+```
+
+### Annunci e durata
+
+| Cosa | Ruolo | Chiusura |
+|---|---|---|
+| Conferma (`success`, `info`, neutro) | `role="status"` + `aria-live="polite"` sulla zona | automatica |
+| Errore o allerta che interrompe il compito | `role="alert"` sul singolo messaggio | **solo a mano** |
+
+`polite` aspetta che la tecnologia assistiva finisca la frase in corso; e' cio'
+che serve a una conferma, che non ha fretta. `alert` interrompe, ed e' corretto
+solo quando il compito si e' fermato davvero.
+
+**Durata minima: 4 secondi**, piu' un secondo ogni cinque parole oltre le dieci.
+E' il tempo di accorgersi che qualcosa e' comparso, spostare lo sguardo e
+leggere. Un messaggio che sparisce prima ha fatto solo rumore.
+
+**Un errore non si chiude da solo.** Un errore che sparisce prima di essere
+letto e' un errore nascosto, e l'utente resta convinto che l'operazione sia
+riuscita. Se il messaggio porta un comando — *Riprova*, *Annulla* — il timer non
+parte affatto: nessuno insegue un pulsante che scappa.
+
+**Il conto si ferma sotto il puntatore e col focus dentro**, e riparte quando
+si esce: e' l'unico modo perche' chi sta leggendo o sta per premere *Annulla*
+non si veda portare via il messaggio a meta'.
+
+L'entrata e' una traslazione di 8px in 180ms, spenta sotto
+`prefers-reduced-motion: reduce` — li' il messaggio compare, non entra.
 
 ## Spinner di caricamento
 
