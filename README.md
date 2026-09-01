@@ -14,7 +14,8 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── logo-traccia-mark.svg     Solo il marchio, normalizzato: sorgente dello spinner
 │   ├── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
 │   ├── icons/                    Sorgenti SVG delle icone (stroke currentColor)
-│   └── fonts/                    Archivo + IBM Plex Mono, sottoinsieme latino, con OFL
+│   ├── fonts/                    Archivo + IBM Plex Mono, sottoinsieme latino, con OFL
+│   └── fonts/ttf/                Gli stessi font in TrueType, per l'incorporazione in Word
 ├── tokens/
 │   ├── tokens.css                Design token come CSS custom properties
 │   └── tokens.json               Design token in formato W3C draft
@@ -29,6 +30,10 @@ niente gradienti, niente emoji, molto bianco.
 ├── email/
 │   ├── firma-email.html          Firma email (tabelle + stili inline)
 │   └── firma-email.txt           Firma email, versione testo semplice
+├── office/
+│   ├── carta-intestata.dotx      Carta intestata Word: il modello da usare
+│   ├── carta-intestata.docx      Lo stesso file, apribile come documento
+│   └── carta-intestata/          Il generatore (build.js + build.sh): il .dotx non si edita a mano
 └── index.html                    Documentazione visiva / showcase
 ```
 
@@ -1770,6 +1775,114 @@ ha una luminanza troppo vicina al bianco e sparisce alla prima fotocopia, portan
 struttura della pagina — che in questo sistema e' fatta di filetti e non di riquadri, e
 quindi non ha nient'altro con cui reggersi. `print-color-adjust: exact` sul foglio impedisce
 al browser di scartare fondo e tinte.
+
+## Carta intestata (Word)
+
+Lettere, offerte, comunicazioni protocollate: tutto cio' che esce dall'azienda
+scritto in Word parte da [`office/carta-intestata.dotx`](office/carta-intestata.dotx).
+E' un modello: Word lo apre come documento nuovo e il file base non si tocca.
+La copia `.docx` accanto e' identica, per chi deve solo guardarla.
+
+Il modello e' la trasposizione in Word del [documento formale](#documenti-formali):
+stessa gabbia, stesso colophon, stessi filetti. Non e' stato disegnato in Word, e
+**non si modifica in Word**: lo genera [`office/carta-intestata/build.js`](office/carta-intestata/build.js)
+a partire dai token, dal marchio in `assets/` e dai dati d'impresa, e si rigenera con
+`office/carta-intestata/build.sh`. E' l'unico modo in cui un file binario puo' restare
+dentro un design system: se cambia un colore o un recapito, cambia nello script e il
+modello si ricostruisce; se qualcuno lo ritocca a mano, la modifica non sopravvive alla
+rigenerazione successiva — ed e' giusto cosi'.
+
+### La prima pagina non e' la seconda
+
+Un documento formale ha un apparato — colophon, certificazioni, badge — e quell'apparato
+ha un costo: circa 25mm di foglio. Sulla prima pagina si paga volentieri, perche' e' la
+pagina che identifica l'emittente e che l'ente riceve, protocolla e timbra. Ripeterlo su
+ogni pagina di una relazione di dodici e' un'altra cosa: il testo si restringe, il piede
+smette di essere letto, e la pagina interna somiglia a una copertina senza esserlo.
+
+Il modello usa quindi l'opzione **"Diversi per la prima pagina"** di Word, con due
+coppie di testata e piede:
+
+| | Prima pagina | Pagine interne |
+|---|---|---|
+| Testata | Lockup `.tr-brandmark` (marchio 8mm) e **zona del timbro** libera a destra; il filetto si ferma sul gutter | Lockup ridotto (5,6mm, come nel footer di sistema) e filetto pieno |
+| Piede | Il colophon di `.tr-doc-footer`: marchio, ragione sociale, sede, P.IVA; email, telefono e pagina a destra; riga certificazioni con badge | **Una riga**: ragione sociale, sede, P.IVA e numero di pagina |
+| Corpo | Word alza il testo per far posto al colophon | ~25mm in piu' per il testo |
+
+I margini del corpo — 30mm in alto, 24mm in basso — sono tarati sulla coppia compatta,
+che e' il caso normale. Sulla prima pagina il piede e' piu' alto del margine, e Word
+risolve da solo spingendo il corpo verso l'alto: e' l'unico punto in cui il modello si
+appoggia a un comportamento del programma invece che a una misura dichiarata.
+
+### La gabbia
+
+| Misura | Valore | Da dove |
+|---|---|---|
+| Foglio | A4, 210×297mm | `--tr-doc-w` / `--tr-doc-h` |
+| Margini laterali | 17mm | `--tr-doc-pad-x` (64px) |
+| Testata e piede dal bordo | 10mm | |
+| Corsia del documento | 87mm | 330px su 666 di contenuto: la stessa proporzione del foglio a schermo |
+| Corpo | Archivo 10,5pt, interlinea 1,25, 8pt fra i paragrafi | `ink/600` |
+| Titoli | Archivo ExtraBold 16pt / SemiBold 12pt | `ink/900` |
+| Etichette | IBM Plex Mono 7–7,5pt, maiuscolo, tracking 0,08–0,22em | `ink/400`; in blu `brand/600` |
+| Filetti | 0,75pt | `border/soft-2` `#c9cede`: [in stampa i filetti salgono di tinta](#stampa) |
+
+Nel pannello stili di Word restano quattro voci con nome: **Titolo 1**, **Titolo 2**,
+**Etichetta** (l'eyebrow mono blu) e **Dato tecnico** (mono `ink/900`, per protocolli,
+codici, importi). Il resto e' il corpo, e non servono altri stili.
+
+### Quello che il colophon dice, e in che ordine
+
+Vale la [gerarchia del documento formale](#il-piede-identifica-lemittente): prima **chi
+emette** — la ragione sociale per esteso, Archivo 800 maiuscolo, l'unico testo del piede a
+contrasto pieno — poi la **sede in frase**, poi la **P.IVA** in mono. I recapiti stanno a
+destra, sotto nella gerarchia: servono a rispondere, non a identificare. Il wordmark non
+compare nel piede: resta il solo marchio. La riga certificazioni chiude la prima pagina,
+perche' un documento che esce e' una superficie pubblica.
+
+La riga compatta delle pagine interne tiene la stessa gerarchia senza l'apparato: nome,
+sede, P.IVA, pagina. Una pagina staccata dal fascicolo deve ancora dire chi l'ha emessa.
+
+Le etichette blu del foglio — «Certificazioni», «Oggetto», lo stile Etichetta — usano
+`brand/600`, non il blu logo: a 7pt il `#4194d7` su bianco non regge il 4,5:1. Il blu logo
+compare solo sui **punti separatori** del piede compatto e sul marchio, cioe' su elementi
+non testuali — la stessa regola della firma email.
+
+### I font viaggiano nel file
+
+Word non ha un `@font-face`, ma incorpora i caratteri nel documento. I cinque file in
+`assets/fonts/ttf/` — Archivo 400, 600 e 800, IBM Plex Mono 400 e 600 — entrano nel `.dotx`
+e la lettera si compone in Archivo anche sul PC di chi non ha mai installato nulla, nel
+prodotto in rete chiusa e nel PDF che ne esce. Senza, Word ripiegherebbe su Calibri e due
+lettere della stessa azienda avrebbero due tipografie: la stessa ragione per cui
+[i font stanno nel repository](#dove-stanno-i-font).
+
+Un dettaglio che condiziona lo script: Word incorpora **un file per nome di famiglia**,
+non un peso. I pesi sono quindi famiglie distinte — `Archivo`, `Archivo SemiBold`,
+`Archivo ExtraBold` — e il grassetto **non si ottiene con il pulsante B**, che produrrebbe
+un grassetto sintetico: si sceglie la famiglia. Gli stili del modello lo fanno gia'.
+
+Il lockup entra come immagine (PNG a 8x, composto da `render-lockup.py` con le regole di
+`.tr-brandmark`): Word non allinea un SVG a un testo con tracking, e non tutte le versioni
+reggono un SVG in testata. Il costo e' che il lockup non si ricompone cambiando font; il
+vantaggio e' che si vede uguale ovunque.
+
+### Rigenerare
+
+```bash
+cd office/carta-intestata
+./build.sh          # node + docx, python3 + Pillow; con LibreOffice anche il PDF di controllo in build/
+```
+
+Tre cose che `build.sh` fa e che non vanno tolte: rasterizza i lockup dal marchio in
+`assets/`; scrive un risultato provvisorio nei campi PAGE e NUMPAGES, che docx-js lascia
+vuoti e che LibreOffice e le anteprime non ricalcolano; porta in maiuscolo la chiave dei
+font incorporati, che lo schema richiede cosi'. La copia `.dotx` e' lo stesso archivio con
+il content type del modello.
+
+Prima di adottare una versione nuova va aperta almeno in **Word per Windows**, in
+**Word per Mac** e in **LibreOffice**, e va stampata: i filetti a `border/soft`
+spariscono alla prima fotocopia, ed e' il motivo per cui qui sono a `border/soft-2`.
 
 ## Vincoli
 
