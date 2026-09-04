@@ -26,7 +26,10 @@ Headquarter  Recinto II Fiorentini, 10 — 75100 Matera (MT), Italy
 braintech.software
 
 Sistema di gestione certificato — Cooperativa E.D.P. La Traccia
-ISO 9001:2015       Qualità
-ISO 13485:2016      Dispositivi medici
-ISO/IEC 27001:2022  Sicurezza delle informazioni
-UNI/PdR 125         Parità di genere
+ISO 9001:2015          Qualità
+ISO 13485:2016         Dispositivi medici
+ISO/IEC 27001:2022     Sicurezza delle informazioni
+UNI/PdR 125            Parità di genere
+UNI EN ISO 14001:2015  Gestione ambientale
+UNI ISO 37001:2025     Gestione per la prevenzione corruzione
+PASS 24000:2022        Gestione sociale
