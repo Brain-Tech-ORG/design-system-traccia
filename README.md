@@ -431,7 +431,7 @@ quando a scorrere e' la pagina, sia quando a scorrere e' un pannello interno.
 
 La riga certificazioni (`.tr-footer__certs`) e' composta da etichetta
 `CERTIFICAZIONI` in mono blu (tracking 0.14em), elenco in mono grigio
-`ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125`, filetto stondato
+`ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125 · UNI EN ISO 14001:2015 · UNI ISO 37001:2025 · PASS 24000:2022`, filetto stondato
 `border/soft` che riempie la riga e badge `assets/certificazioni.png`
 (IMQ Certified + SI Cert, altezza ~30px).
 
@@ -1707,7 +1707,7 @@ terzi: prima di quale **copia** si tratta, poi **chi** la emette, poi con quali
 | Dove ha sede | `__seat` | Recinto II Fiorentini, 10 — 75100 Matera | Archivo 400 11px, **in frase** |
 | Identificativi | `__legal` | P.IVA 00317370773 | Mono `--tr-tracking-mono-ui` |
 | Recapiti | `__contacts` | Email e telefono | Mono 10px `ink/400` |
-| Credenziali | `__certs` | Le quattro norme + badge | Etichetta `brand/600`, elenco `ink/400` |
+| Credenziali | `__certs` | Le sette norme + badge | Etichetta `brand/600`, elenco `ink/400` |
 
 Tre voci diverse per tre fatti giuridici diversi. Il **nome** e' l'unico testo del piede a
 contrasto pieno, ed e' cio' che rende il foglio attribuibile. L'**indirizzo** resta in
@@ -1722,8 +1722,8 @@ formale il nome che conta e' quello legale. Resta il solo marchio grafico.
 
 La riga certificazioni non e' opzionale come nel footer di sistema: un documento formale
 e' **per definizione** una superficie pubblica. Cade pero' il filetto di riempimento —
-l'elenco delle quattro norme riempie gia' la riga, e infilarcelo manda il badge a capo da
-solo, staccato da cio' che certifica.
+l'elenco delle norme riempie gia' la riga (a sette, va a capo dentro il proprio riquadro),
+e infilarcelo manda il badge a capo da solo, staccato da cio' che certifica.
 
 ### La chiave di protocollo esce dalla tabella
 

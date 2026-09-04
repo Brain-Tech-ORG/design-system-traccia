@@ -441,8 +441,8 @@
    mono grigio, badge — perche' e' la stessa credenziale e non deve avere due
    aspetti diversi in due posti. Cade pero' il filetto di riempimento: nel
    footer di sistema serve a chiudere una riga corta, ma qui l'elenco delle
-   quattro norme la riempie gia' tutta, e infilarcelo manda il badge a capo
-   da solo, staccato da cio' che certifica. */
+   norme la riempie gia' tutta, e infilarcelo manda il badge a capo da solo,
+   staccato da cio' che certifica. */
 .tr-doc-footer__certs {
   display: flex;
   flex-wrap: nowrap;
@@ -462,9 +462,9 @@
   white-space: nowrap;
 }
 /* L'elenco e' l'unico elemento elastico della riga: prende lo spazio che
-   resta fra l'etichetta e il badge. Se un giorno le norme diventassero
-   cinque, va a capo dentro il proprio riquadro invece di scaricare il badge
-   su una riga sua. */
+   resta fra l'etichetta e il badge. Le norme sono sette e su una riga sola
+   non ci stanno: va a capo dentro il proprio riquadro invece di scaricare
+   il badge su una riga sua. */
 .tr-doc-footer__certs-list {
   flex: 1 1 auto;
   min-width: 0;

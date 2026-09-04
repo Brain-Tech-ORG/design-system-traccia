@@ -537,12 +537,16 @@
   color: var(--tr-brand-500);
   white-space: nowrap;
 }
+/* L'elenco va a capo: le norme sono sette e su una riga sola non ci stanno
+   nemmeno a piena larghezza. Con min-width: 0 e' lui a cedere spazio, cosi'
+   il filetto continua a chiudere l'ultima riga invece di sparire. */
 .tr-footer__certs-list {
+  flex: 0 1 auto;
+  min-width: 0;
   font-family: var(--tr-font-mono);
   font-size: 10px;
   letter-spacing: var(--tr-tracking-mono);
   color: var(--tr-ink-400);
-  white-space: nowrap;
 }
 .tr-footer__certs-line {
   flex: 1 1 auto;
@@ -2140,7 +2144,6 @@ select.tr-field__control + .tr-field__label,
   .tr-h2 { font-size: 26px; }
   .tr-steps { grid-template-columns: repeat(2, 1fr); }
   .tr-steps--linked::before { display: none; }
-  .tr-footer__certs-list { white-space: normal; }
   .tr-footer__certs-line { min-width: 40px; }
   .tr-login__header,
   .tr-login__main,

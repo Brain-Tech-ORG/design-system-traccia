@@ -110,7 +110,7 @@ const CO = {
   legal: "P.IVA 00317370773",
   mail: "info@latraccia.it",
   tel: "+39 0835 336836",
-  certs: "ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125",
+  certs: "ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125 · UNI EN ISO 14001:2015 · UNI ISO 37001:2025 · PASS 24000:2022",
 };
 
 // ---- testata --------------------------------------------------------------
