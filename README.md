@@ -26,7 +26,9 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── traccia-states.css        Stati semantici UI (.tr-notice, .tr-toast, .tr-status)
 │   ├── traccia-categories.css    Scala categoriale (solo interfacce software)
 │   └── traccia-doc.css           Documenti formali a stampa (prefisso .tr-doc)
-├── js/tr-select.js               Listbox del select (vanilla, per Angular e HTML)
+├── js/
+│   ├── tr-select.js              Listbox del select (vanilla, per Angular e HTML)
+│   └── tr-parallax.js            Parallasse dell'hero (vanilla; legge i fattori dai token)
 ├── email/
 │   ├── firma-email.html          Firma email (tabelle + stili inline)
 │   └── firma-email.txt           Firma email, versione testo semplice
@@ -62,7 +64,10 @@ niente gradienti, niente emoji, molto bianco.
   può essere usata negli sfondi delle brochure e delle pagine delle presentazioni:
   opacità 0.16 sul paper, dietro ai contenuti, tipicamente a sbordo da un angolo pagina,
   `pointer-events: none`. Componente `.tr-watermark` dentro un `.tr-watermark-host`
-  (position relative + overflow hidden), con varianti di posizione `--top-right` e `--bottom-left`.
+  (position relative + overflow **clip**, non hidden: hidden creerebbe un contesto di
+  scorrimento e spegnerebbe qualunque `position: sticky` all'interno, come la colonna del dato
+  del [blocco introduttivo](#blocco-introduttivo)), con varianti di posizione `--top-right` e
+  `--bottom-left`.
 - **Tono**: tecnico, sobrio, istituzionale ma moderno.
 
 ## Palette
@@ -115,6 +120,14 @@ Ne discendono due regole pratiche:
 Fa eccezione il **pannello del select**, che galleggia sopra il contenuto: li' il
 filetto non e' decorazione ma l'unica cosa che ne segna il confine, perche'
 bianco su bianco non si staccherebbe.
+
+**Sopra una foto.** Quando il contenuto deve staccarsi da un'immagine — il
+pannello che sale sopra l'hero di una pagina — il piano 1 e' **l'unico modo
+lecito** di farlo: un blocco bianco (`.tr-panel`), che con `--over` risale di
+`--tr-space-8` sopra l'hero che lo precede. Non un'ombra, che simulerebbe una
+profondita' che il sistema non ha, e non un bordo. Il pannello ridefinisce
+`--tr-field-bg` come la card, perche' ha cambiato piano. Vedi
+[Blocco introduttivo](#blocco-introduttivo).
 
 ### Chiaro e scuro
 
@@ -226,6 +239,54 @@ In particolare il **titolo di una card sta in frase**: e' contenuto — il nome 
 un centro, di una misura — spesso e' un nome proprio, e si rilegge decine di
 volte al giorno.
 
+Vale anche per gli elenchi. **`.tr-dotlist` e' l'elenco tecnico**: voci brevi —
+fino a quattro o cinque parole — specifiche, contatti, campi, in mono maiuscolo
+con il dot davanti. Tre voci come «software per la rilevazione automatica delle
+presenze del personale e il controllo accessi» in mono maiuscolo con tracking
+sono illeggibili: quello e' un contenuto, e va nell'**elenco in frase**
+`.tr-list` — sans, corpo del body, dot piccolo allineato alla prima riga. Se una
+voce non sta su una riga di mono senza andare a capo, non e' una specifica, e'
+una frase.
+
+### Misura e colonne di testo
+
+Ogni classe puo' essere «a norma» e il blocco uscire male lo stesso, perche' il
+difetto non e' nel CSS ma in come il testo occupa lo spazio. Queste sono le
+regole che il sistema non diceva.
+
+**La misura del testo corrente.** Quante battute stanno su una riga:
+
+| Testo | Misura | Token |
+|---|---|---|
+| Body (`.tr-body`) | 56–66ch, di default **62ch** | `--tr-measure-body` |
+| Prosa in colonna (paragrafi impilati) | **66ch**, il massimo | `--tr-measure-prose` |
+| Lead | 52–60ch, di default **60ch** | `--tr-measure-lead` |
+| Riga di descrizione sotto il titolo di una voce | **56ch** | `--tr-measure-short` |
+| Titolo display come titolo di blocco (`.tr-h2`/`.tr-h3`) | 20–26ch, di default **22ch** | `--tr-measure-title` |
+
+Il `62ch` di `.tr-body` **e' un massimo, non un'eccezione da togliere** con
+`max-width: none`: un paragrafo piu' largo si legge peggio, non «riempie meglio»
+la pagina. Anche i titoli display hanno una misura: un titolo a tutta larghezza
+su due righe lunghe perde la parola chiave finale, che e' proprio quella in blu.
+
+**Un testo lungo non sta mai da solo in un contenitore largo.** O si affianca a
+una colonna di servizio — un dato, un sommario, un elenco — o si spezza in piu'
+paragrafi di pari misura, uno sotto l'altro. Due paragrafi di larghezza diversa
+in sequenza, uno pieno e uno a 62ch, sono l'errore da cui nasce questa sezione.
+Regola pratica: **sopra ~800px di larghezza disponibile un blocco di sola prosa
+va nel pattern a due colonne** del [blocco introduttivo](#blocco-introduttivo).
+
+**La distanza dopo l'eyebrow.** L'eyebrow apre un blocco, e cio' che apre non
+gli sta incollato: `--tr-space-after-eyebrow` (= `--tr-space-4`) prima del
+testo, `--tr-space-5` prima di un titolo o di una cifra. Lo fa la regola
+`.tr-eyebrow + *`, un margine sul fratello che segue: in flusso normale
+collassa con un eventuale margine inferiore gia' scritto sull'eyebrow, quindi
+non si somma. Non serve piu' scriverlo a mano.
+
+**Il titolo sta tra eyebrow e testo.** Quando un blocco ha un titolo, l'ordine
+e' eyebrow, titolo, lead: il titolo e' un `.tr-h2` o `.tr-h3` alla misura di
+titolo, con la parola chiave finale in `<em>`.
+
 ## Linguaggio geometrico
 
 - **Layout aperti**: niente box, niente sfondi colorati dietro i contenuti, niente bordi-contenitore.
@@ -274,6 +335,50 @@ Sostituire per coincidenza numerica e' peggio del letterale che si voleva
 togliere: lega due cose che non hanno ragione di muoversi insieme, e il giorno
 in cui il mono cambia misura si sposta anche un sottotitolo che col mono non
 c'entrava niente.
+
+## Movimento
+
+Il sistema aveva due token di movimento, `--tr-motion-fast` e
+`--tr-motion-ease`, e servivano alle transizioni di interfaccia: il filetto
+che cresce sotto un'azione, l'etichetta che sale. Il movimento **di pagina** e'
+un'altra cosa, e ha regole sue.
+
+- **Un elemento solo per pagina**, ed e' **l'immagine dell'hero**. Mai il testo
+  corrente, mai le tabelle, mai piu' di un hero.
+- **Fattori**: lo sfondo scorre a **0,4** della pagina, il testo dell'hero a
+  **0,25** e intanto sfuma. Stanno nei token `--tr-parallax-bg` e
+  `--tr-parallax-content`, e `js/tr-parallax.js` li legge da CSS con
+  `getComputedStyle`: si tarano li', non nel codice.
+- **Come si calcola**: in `requestAnimationFrame`, un frame per volta, con
+  listener `passive`; e solo finche' l'hero e' in vista — fuori dalla vista il
+  listener non e' nemmeno registrato.
+- **`prefers-reduced-motion: reduce` spegne tutto**, due volte: in CSS
+  (`transform: none !important` su sfondo e contenuto) e in JS (il listener
+  non viene registrato, e se la preferenza cambia a pagina aperta si rimuove e
+  gli stili in linea si ripuliscono).
+- **Lo sfondo e' un livello a parte**, piu' alto del riquadro del **22%** sopra
+  e sotto (`--tr-parallax-bleed`, applicato a `top` e `bottom`), con
+  `will-change: transform`; l'hero ha `overflow: hidden` e
+  `isolation: isolate`. Con il fattore a 0,4 lo sbordo e' esattamente quanto
+  serve perche' il bordo della foto non si scopra mai finche' l'hero e' in vista.
+- **Il velo** sopra la foto e' `ink/900` con alpha (`--tr-hero-overlay`, via
+  `color-mix`), non un colore nuovo: il testo sopra e' `ink/on-solid`.
+
+```html
+<section class="tr-hero" data-tr-parallax="hero">
+  <div class="tr-hero__bg" data-tr-parallax="bg" style="background-image:url(…)"></div>
+  <div class="tr-hero__overlay"></div>
+  <div class="tr-hero__content" data-tr-parallax="content">
+    <span class="tr-mono tr-mono--wide">Referenze</span>
+    <h1 class="tr-h1">Dove lavora <em>La Traccia</em></h1>
+  </div>
+</section>
+<script src="js/tr-parallax.js"></script>
+<script>TrParallax.enhanceAll();</script>
+```
+
+Senza lo script, o con la preferenza attiva, l'hero e' semplicemente fermo: e'
+uno stato lecito, non un degrado.
 
 ## Icone
 
@@ -409,6 +514,9 @@ disordinata un'interfaccia ordinata.
 | 19 | Interruttore | `.tr-switch` (+ `.tr-switch-row`) — vedi [Interruttore](#interruttore) |
 | 20 | Messaggio transitorio | `.tr-toast` + `.tr-toast-region` — vedi [Messaggio transitorio](#messaggio-transitorio) |
 | 21 | Marcatura di categoria e legenda | `.tr-cat` / `.tr-cat-key` — vedi [Scala categoriale](#scala-categoriale) |
+| 22 | Blocco introduttivo (dato + testo), pannello e hero | `.tr-intro` + `__aside` / `__main`, `.tr-panel` (+ `--over`), `.tr-hero` + `js/tr-parallax.js` — vedi [Blocco introduttivo](#blocco-introduttivo) |
+| 23 | Elenco in frase e linee di prodotto | `.tr-list`, `.tr-numbered-list` > `.tr-numbered` |
+| 24 | Cifra in evidenza e riga di dati | `.tr-figure` + `__number` / `__label`, `.tr-facts` |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -690,6 +798,90 @@ non per stile, ma perche' e' il markup che lega le opzioni fra loro per le
 tecnologie assistive. In errore si usa `.tr-fieldset--error` sul contenitore.
 | `disabled` / `readonly` | controllo | Gestiti dagli attributi nativi, nessuna classe |
 
+
+## Blocco introduttivo
+
+E' **il modo in cui si apre una pagina di contenuto**, e nasce da una pagina
+uscita male con ogni classe a norma: l'eyebrow incollato al testo, un elenco di
+frasi composto in mono, due paragrafi di larghezza diversa e mezza pagina vuota
+a destra. La regola che ne discende e' una: **se una pagina ha un numero che la
+riassume, quel numero apre la pagina**, e il testo gli sta accanto, non sotto.
+
+```html
+<section class="tr-hero" data-tr-parallax="hero">…</section>
+
+<div class="tr-panel tr-panel--over">
+  <div class="tr-intro">
+    <aside class="tr-intro__aside">
+      <div class="tr-eyebrow"><span class="tr-eyebrow__label">Referenze</span><span class="tr-eyebrow__line"></span></div>
+      <p class="tr-figure">
+        <span class="tr-figure__number">672</span>
+        <span class="tr-figure__label tr-mono tr-mono--muted">installazioni<br>in tutta Italia</span>
+      </p>
+      <dl class="tr-facts">
+        <div><dt>Prodotti</dt><dd>9</dd></div>
+        <div><dt>Aree</dt><dd>2</dd></div>
+        <div><dt>Regioni</dt><dd>22</dd></div>
+      </dl>
+    </aside>
+    <div class="tr-intro__main">
+      <h2 class="tr-h3 tr-intro__title">Leader in Italia nel software per sanita' e <em>pubblica amministrazione</em></h2>
+      <p class="tr-intro__lead">…</p>
+      <ol class="tr-numbered-list">
+        <li class="tr-numbered"><span class="tr-circle tr-circle--outline">01</span><div><p class="tr-numbered__title">Nefrologia e dialisi</p><p class="tr-numbered__body">…</p></div></li>
+      </ol>
+      <div class="tr-intro__prose"><p class="tr-body">…</p><p class="tr-body">…</p></div>
+    </div>
+  </div>
+</div>
+```
+
+### Le due colonne
+
+`.tr-intro` e' una griglia `minmax(200px, 5fr) minmax(0, 12fr)` con gap
+`--tr-space-6 --tr-space-8` e `align-items: start`. A sinistra
+**`.tr-intro__aside`**, la colonna di servizio: eyebrow, cifra, dati. E'
+`position: sticky` a `--tr-space-9` dal bordo: il numero resta in vista mentre
+si legge cio' che lo spiega, e si ferma quando la colonna del testo finisce. A
+destra **`.tr-intro__main`**: titolo `.tr-h3` alla misura di titolo
+(`.tr-intro__title`, 22ch), lead a 60ch (`.tr-intro__lead`), poi
+`.tr-numbered-list` o `.tr-list`, poi la prosa in `.tr-intro__prose`:
+paragrafi `.tr-body` di pari misura, 66ch, uno sotto l'altro.
+
+Sotto i **900px** la griglia va su una colonna e l'aside torna nel flusso:
+fissa in testa coprirebbe il titolo.
+
+### La cifra in evidenza
+
+`.tr-figure` e' il dato che riassume la pagina: Archivo al peso display,
+`--tr-text-figure` (`clamp(56px, 7vw, 84px)`), interlinea `--tr-leading-figure`
+(0,95), `ink/900`, **cifre tabellari** — una cifra si confronta con un'altra e
+deve pesare uguale. Sotto il numero il tratto d'accento (`--tr-accent-dash-w` ×
+`--tr-rule-accent`, `brand/500`), e sotto ancora l'etichetta mono
+`.tr-figure__label` in `.tr-mono--muted`, che va a capo dove decide il markup.
+
+`.tr-facts` e' la riga di due, tre o quattro dati piccoli: un `<dl>` con un
+`<div>` per dato, `dt` mono `ink/400`, `dd` Archivo semibold a `--tr-text-lead`
+in `ink/900`, tabellare; filetto sopra in `border/soft`, come `.tr-specs`, di
+cui e' la variante con i numeri al posto delle voci.
+
+### I tre elenchi
+
+| Elenco | Classe | Quando |
+|---|---|---|
+| Tecnico | `.tr-dotlist` | Voci brevi (4–5 parole): specifiche, contatti, campi. Mono maiuscolo |
+| In frase | `.tr-list` | Contenuti dentro la prosa: sans, corpo body, `ink/600`, dot 6px alla prima riga, gap `--tr-space-2`, misura del body |
+| Linee di prodotto | `.tr-numbered-list` > `.tr-numbered` | Le linee di offerta: `<ol>` senza marcatori, gap `--tr-space-4`, filetto sopra e sotto, padding `--tr-space-5`; cerchietto `--outline` con numero mono, titolo semibold in frase, una riga di descrizione a 56ch |
+
+### Il pannello sopra l'hero
+
+`.tr-panel` e' il piano 1 per una sezione intera: `--tr-surface`, padding
+`--tr-space-7`, nessun bordo, nessuna ombra, nessun raggio, e ridefinisce
+`--tr-field-bg` sul proprio bianco come chiede [Superfici](#superfici). Con
+**`--over`** ha `margin-top: calc(-1 * var(--tr-space-8))`, `position: relative`
+e `z-index: 1`: sale sopra l'hero fotografico che lo precede, ed e' l'unico modo
+lecito di staccare il contenuto da una foto. L'hero e il suo movimento sono
+descritti in [Movimento](#movimento).
 
 ## Card
 

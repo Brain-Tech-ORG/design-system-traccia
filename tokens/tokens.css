@@ -127,6 +127,18 @@
   /* ---- Tipografia · Interlinea ---- */
   --tr-leading-display: 1.08; /* range 1.04–1.15 */
   --tr-leading-body: 1.6;     /* range 1.5–1.65 */
+  --tr-leading-figure: 0.95;  /* cifra in evidenza: una riga sola, senza aria sopra */
+
+  /* ---- Tipografia · Misura ----
+     Quante battute stanno su una riga. E' un massimo, non un'eccezione: un
+     paragrafo che lo supera si legge peggio, non "riempie meglio" la pagina.
+     Se lo spazio avanza, il testo si affianca a una colonna di servizio o si
+     spezza in piu' paragrafi di pari misura — non si allarga. */
+  --tr-measure-body: 62ch;    /* .tr-body (range 56–66ch) */
+  --tr-measure-prose: 66ch;   /* paragrafi di prosa in colonna, il massimo del range */
+  --tr-measure-lead: 60ch;    /* lead (range 52–60ch) */
+  --tr-measure-short: 56ch;   /* riga di descrizione sotto il titolo di una voce */
+  --tr-measure-title: 22ch;   /* .tr-h2/.tr-h3 come titolo di blocco (range 20–26ch) */
 
   /* ---- Tipografia · Scala (UI, px) ---- */
   --tr-text-caption: 12px;
@@ -136,6 +148,9 @@
   --tr-text-h3: 22px;
   --tr-text-h2: 32px;
   --tr-text-h1: 48px;
+  /* Cifra in evidenza: piu' grande dell'H1, scala con la finestra e si ferma
+     prima di diventare un poster. */
+  --tr-text-figure: clamp(56px, 7vw, 84px);
 
   /* ---- Spaziatura ---- */
   --tr-space-1: 4px;
@@ -147,6 +162,9 @@
   --tr-space-7: 48px;
   --tr-space-8: 64px;
   --tr-space-9: 96px;
+  /* Distanza fra l'eyebrow e cio' che apre: il testo sta a un passo, un titolo
+     o una cifra a un passo e mezzo (--tr-space-5, vedi .tr-eyebrow + *). */
+  --tr-space-after-eyebrow: var(--tr-space-4);
 
   /* ---- Geometria · Raggi ----
      A schermo le superfici dell'interfaccia — card, pannelli, campi, azioni —
@@ -205,6 +223,16 @@
   /* ---- Movimento ---- */
   --tr-motion-fast: 160ms;
   --tr-motion-ease: cubic-bezier(0.2, 0, 0.2, 1);
+  /* Parallasse dell'hero: l'unico movimento di pagina ammesso, sull'immagine
+     e mai sul testo corrente. I fattori li legge js/tr-parallax.js con
+     getComputedStyle, cosi' si tarano da qui e non nel codice. Lo sbordo e'
+     quanto lo sfondo eccede il riquadro sopra e sotto: con il fattore a 0,4 e'
+     cio' che serve perche' il bordo della foto non si scopra mai. */
+  --tr-parallax-bg: 0.4;        /* velocita' dello sfondo rispetto allo scorrimento */
+  --tr-parallax-content: 0.25;  /* velocita' del testo dell'hero, che intanto sfuma */
+  --tr-parallax-bleed: 22%;     /* sbordo verticale dello sfondo, sopra e sotto */
+  --tr-hero-min-h: 420px;       /* altezza minima dell'hero fotografico */
+  --tr-hero-overlay: 64%;       /* quanto ink/900 copre la foto perche' il testo regga */
 
   /* ---- Pagina di login (co-branding con il cliente) ---- */
   --tr-client-logo-h: 40px;   /* altezza del marchio cliente in testa (range 32-48px) */
@@ -228,6 +256,8 @@
   /* ---- Geometria · Misure ricorrenti ---- */
   --tr-accent-dash-w: 64px; /* tratto d'accento sopra i titoli di sezione */
   --tr-dot-size: 8px;       /* dot bullet (range 6–13px) */
+  --tr-dot-size-sm: 6px;    /* dot dentro un chip o accanto a una riga di testo */
+  --tr-intro-aside-min: 200px; /* la colonna del dato nel blocco introduttivo non scende sotto */
   --tr-circle-sm: 28px;     /* cerchietto numerato piccolo (range 24–52px) */
   --tr-circle-md: 40px;
   --tr-circle-lg: 52px;

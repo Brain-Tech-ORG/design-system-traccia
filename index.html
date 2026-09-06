@@ -1315,6 +1315,189 @@
     </div>
   </section>
 
+  <!-- 22 · BLOCCO INTRODUTTIVO -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">22 · Blocco <em>introduttivo</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        Il modo in cui si apre una pagina di contenuto: un hero fotografico, il pannello bianco che
+        gli sale sopra, e dentro il pattern <strong>dato + testo</strong>. A sinistra la colonna di
+        servizio — eyebrow, cifra in evidenza, riga di dati — che resta ferma mentre si scorre; a
+        destra titolo, lead, linee di prodotto e prosa, ciascuno con la propria misura. Un testo
+        lungo non sta mai da solo in un contenitore largo.
+      </p>
+    </div>
+
+    <section class="tr-hero" data-tr-parallax="hero">
+      <div class="tr-hero__bg" data-tr-parallax="bg" style="background-image:url(assets/sede.jpg)"></div>
+      <div class="tr-hero__overlay"></div>
+      <div class="tr-hero__content" data-tr-parallax="content">
+        <span class="tr-mono tr-mono--wide">Referenze</span>
+        <h2 class="tr-h1" style="margin-top:16px">Dove lavora <em>La Traccia</em></h2>
+        <p class="tr-body" style="margin-top:16px">
+          L'immagine scorre piu' lenta della pagina e il testo sfuma: e' l'unico movimento ammesso.
+        </p>
+      </div>
+    </section>
+
+    <div class="tr-panel tr-panel--over">
+      <div class="tr-intro">
+        <aside class="tr-intro__aside">
+          <div class="tr-eyebrow">
+            <span class="tr-eyebrow__label">Referenze</span>
+            <span class="tr-eyebrow__line"></span>
+          </div>
+          <p class="tr-figure">
+            <span class="tr-figure__number">672</span>
+            <span class="tr-figure__label tr-mono tr-mono--muted">installazioni<br>in tutta Italia</span>
+          </p>
+          <dl class="tr-facts">
+            <div><dt>Prodotti</dt><dd>9</dd></div>
+            <div><dt>Aree</dt><dd>2</dd></div>
+            <div><dt>Regioni</dt><dd>22</dd></div>
+          </dl>
+        </aside>
+        <div class="tr-intro__main">
+          <h3 class="tr-h3 tr-intro__title">Leader in Italia nel software per sanita' e <em>pubblica amministrazione</em></h3>
+          <p class="tr-intro__lead">
+            Dal 1985 progettiamo e manteniamo sistemi informativi per aziende sanitarie, enti locali
+            e imprese: software installato, seguito e aggiornato nel tempo, non venduto e lasciato.
+          </p>
+          <ol class="tr-numbered-list">
+            <li class="tr-numbered">
+              <span class="tr-circle tr-circle--outline">01</span>
+              <div>
+                <p class="tr-numbered__title">Nefrologia e dialisi</p>
+                <p class="tr-numbered__body">Cartella clinica di reparto, gestione delle sedute e dei trattamenti domiciliari.</p>
+              </div>
+            </li>
+            <li class="tr-numbered">
+              <span class="tr-circle tr-circle--outline">02</span>
+              <div>
+                <p class="tr-numbered__title">Anatomia patologica</p>
+                <p class="tr-numbered__body">Tracciabilita' del campione dall'accettazione al referto, con firma digitale.</p>
+              </div>
+            </li>
+            <li class="tr-numbered">
+              <span class="tr-circle tr-circle--outline">03</span>
+              <div>
+                <p class="tr-numbered__title">Presenze e controllo accessi</p>
+                <p class="tr-numbered__body">Rilevazione automatica delle presenze del personale e gestione dei varchi.</p>
+              </div>
+            </li>
+          </ol>
+          <div class="tr-intro__prose">
+            <p class="tr-body">
+              La cooperativa nasce a Matera e cresce con i propri clienti: i primi reparti di dialisi
+              informatizzati negli anni Novanta sono ancora in produzione, aggiornati versione dopo
+              versione. E' il motivo per cui il numero a sinistra e' il dato che apre la pagina: non
+              una promessa, ma un conteggio.
+            </p>
+            <p class="tr-body">
+              Le due aree — sanita' e pubblica amministrazione — condividono la stessa piattaforma di
+              integrazione, gli stessi standard di interoperabilita' e lo stesso gruppo di assistenza.
+              Ogni installazione e' seguita da un referente che conosce la struttura e il suo
+              personale.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="tr-body demo-note" style="font-size:13px">
+      Sotto i 900px il blocco va su una colonna e la colonna del dato torna nel flusso. Con
+      <code style="font-family:var(--tr-font-mono);font-size:12px">prefers-reduced-motion: reduce</code>
+      l'hero e' fermo: il CSS annulla le trasformazioni e lo script non registra il listener.
+    </p>
+  </section>
+
+  <!-- 23 · ELENCO IN FRASE -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">23 · Elenco in <em>frase</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        Due elenchi, due voci. <strong>Quando l'uno e quando l'altro:</strong> l'elenco tecnico
+        (<code style="font-family:var(--tr-font-mono);font-size:13px">.tr-dotlist</code>) e' mono
+        maiuscolo per voci brevi — fino a quattro o cinque parole: specifiche, contatti, campi.
+        L'elenco in frase (<code style="font-family:var(--tr-font-mono);font-size:13px">.tr-list</code>)
+        e' in sans, nel corpo del body, per i contenuti che si leggono: e' l'elenco da usare dentro la prosa.
+      </p>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="tr-eyebrow">
+          <span class="tr-eyebrow__label">Elenco in frase</span>
+          <span class="tr-eyebrow__line"></span>
+          <span class="tr-eyebrow__note">.tr-list</span>
+        </div>
+        <ul class="tr-list">
+          <li>Software per la rilevazione automatica delle presenze del personale e il controllo degli accessi.</li>
+          <li>Cartella clinica informatizzata per i reparti di nefrologia e dialisi, con i trattamenti domiciliari.</li>
+          <li>Sistema di tracciabilita' del campione per l'anatomia patologica, dall'accettazione al referto firmato.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tr-eyebrow">
+          <span class="tr-eyebrow__label">Elenco tecnico</span>
+          <span class="tr-eyebrow__line"></span>
+          <span class="tr-eyebrow__note">.tr-dotlist</span>
+        </div>
+        <ul class="tr-dotlist">
+          <li><span class="tr-dot"></span>HL7 FHIR R4</li>
+          <li><span class="tr-dot"></span>Firma digitale CAdES</li>
+          <li><span class="tr-dot"></span>SPID · CIE · CNS</li>
+          <li><span class="tr-dot"></span>Assistenza 8–18</li>
+        </ul>
+      </div>
+    </div>
+    <p class="tr-body demo-note" style="font-size:13px">
+      La prova e' semplice: se una voce non sta in una riga di mono maiuscolo senza andare a capo,
+      non e' una specifica, e' una frase — e va in <code style="font-family:var(--tr-font-mono);font-size:12px">.tr-list</code>.
+    </p>
+  </section>
+
+  <!-- 24 · CIFRA E DATI -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">24 · Cifra e <em>dati</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        Il numero che riassume una pagina e' un dato in evidenza, non una parola in un paragrafo:
+        <code style="font-family:var(--tr-font-mono);font-size:13px">.tr-figure</code> lo compone in
+        display con il tratto d'accento sotto e l'etichetta mono a seguire;
+        <code style="font-family:var(--tr-font-mono);font-size:13px">.tr-facts</code> mette sotto due,
+        tre o quattro dati piccoli. Cifre tabellari: una cifra si confronta con un'altra e deve pesare uguale.
+      </p>
+    </div>
+    <div class="grid-3">
+      <div>
+        <p class="tr-figure">
+          <span class="tr-figure__number">672</span>
+          <span class="tr-figure__label tr-mono tr-mono--muted">installazioni<br>in tutta Italia</span>
+        </p>
+      </div>
+      <div>
+        <p class="tr-figure">
+          <span class="tr-figure__number">40</span>
+          <span class="tr-figure__label tr-mono tr-mono--muted">anni<br>di attivita'</span>
+        </p>
+      </div>
+      <div>
+        <div class="tr-eyebrow">
+          <span class="tr-eyebrow__label">Riga di dati</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
+        <dl class="tr-facts">
+          <div><dt>Prodotti</dt><dd>9</dd></div>
+          <div><dt>Aree</dt><dd>2</dd></div>
+          <div><dt>Regioni</dt><dd>22</dd></div>
+          <div><dt>Sedi</dt><dd>3</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <!-- FIRMA EMAIL -->
   <section class="section">
     <div class="section-head">
@@ -1463,6 +1646,8 @@
   </script>
   <script src="js/tr-select.js"></script>
   <script>TrSelect.enhanceAll();</script>
+  <script src="js/tr-parallax.js"></script>
+  <script>TrParallax.enhanceAll();</script>
 </div>
 </body>
 </html>

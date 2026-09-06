@@ -49,7 +49,14 @@
 .tr-mark-clip,
 .tr-mark-clip__defs,
 .tr-mark-clip__img,
-.tr-mark-clip__echo { box-sizing: border-box; }
+.tr-mark-clip__echo,
+.tr-panel,
+.tr-hero,
+.tr-hero__content,
+.tr-intro,
+.tr-facts,
+.tr-numbered-list,
+.tr-list { box-sizing: border-box; }
 
 /* ---- Base pagina ---- */
 .tr-page {
@@ -180,7 +187,10 @@
   color: var(--tr-brand-500);
 }
 
-.tr-body { color: var(--tr-ink-600); max-width: 62ch; }
+/* La misura e' un massimo, non un'eccezione: non si toglie con max-width: none.
+   Se lo spazio avanza, il testo si affianca a una colonna di servizio o si
+   spezza in paragrafi di pari misura (vedi .tr-intro). */
+.tr-body { color: var(--tr-ink-600); max-width: var(--tr-measure-body); }
 .tr-caption {
   font-size: var(--tr-text-caption);
   color: var(--tr-ink-400);
@@ -247,6 +257,17 @@
   white-space: nowrap;
 }
 
+/* L'eyebrow apre un blocco, e cio' che apre non gli sta incollato: il testo a
+   un passo, un titolo o una cifra a un passo e mezzo. E' un margine sul
+   fratello che segue, quindi in flusso normale collassa con un eventuale
+   margine inferiore gia' scritto sull'eyebrow: non si somma, prevale il
+   maggiore. */
+.tr-eyebrow + * { margin-top: var(--tr-space-after-eyebrow); }
+.tr-eyebrow + .tr-h1,
+.tr-eyebrow + .tr-h2,
+.tr-eyebrow + .tr-h3,
+.tr-eyebrow + .tr-figure { margin-top: var(--tr-space-5); }
+
 /* ========================================================================== 
    3 · Chip / pill
    bordo 1px blu, testo mono blu, raggio 999px
@@ -267,7 +288,7 @@
   background: transparent;
   white-space: nowrap;
 }
-.tr-chip .tr-dot { width: 6px; height: 6px; }
+.tr-chip .tr-dot { width: var(--tr-dot-size-sm); height: var(--tr-dot-size-sm); }
 
 /* ========================================================================== 
    4 · Voce elenco numerata (settori, funzioni)
@@ -295,6 +316,22 @@
   font-size: 14px;
   color: var(--tr-ink-600);
 }
+
+/* Elenco di linee di prodotto o di offerta: le voci numerate impilate fra due
+   filetti. Il cerchietto va in --outline con il numero mono, il titolo in
+   frase, la descrizione su una riga sola di misura breve: e' un sommario, non
+   il posto in cui si racconta. */
+.tr-numbered-list {
+  list-style: none;
+  margin: 0;
+  padding: var(--tr-space-5) 0;
+  display: grid;
+  gap: var(--tr-space-4);
+  border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
+  border-bottom: var(--tr-rule-thin) solid var(--tr-border-soft);
+}
+.tr-numbered-list > li { margin: 0; padding: 0; }
+.tr-numbered-list .tr-numbered__body { max-width: var(--tr-measure-short); }
 
 /* ========================================================================== 
    5 · Step di processo
@@ -387,6 +424,38 @@
   color: var(--tr-ink-600);
 }
 .tr-dotlist li .tr-dot { transform: translateY(-1px); }
+
+/* Elenco in frase: l'elenco che sta dentro la prosa. Voci lunghe, in sans e
+   nel corpo del body, con un dot piccolo appeso alla prima riga. Il .tr-dotlist
+   qui sopra e' un'altra cosa: mono maiuscolo per voci brevi e tecniche —
+   specifiche, contatti, campi — e su una frase intera diventa illeggibile. */
+.tr-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tr-space-2);
+  max-width: var(--tr-measure-body);
+  color: var(--tr-ink-600);
+}
+.tr-list > li {
+  position: relative;
+  margin: 0;
+  padding-left: calc(var(--tr-dot-size-sm) + var(--tr-space-3));
+}
+/* Il dot si allinea al centro ottico della prima riga, qualunque sia il corpo:
+   meta' dell'interlinea meno meta' del dot. */
+.tr-list > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc((var(--tr-leading-body) * 1em - var(--tr-dot-size-sm)) / 2);
+  width: var(--tr-dot-size-sm);
+  height: var(--tr-dot-size-sm);
+  border-radius: var(--tr-radius-pill);
+  background: var(--tr-brand-500);
+}
 
 /* ========================================================================== 
    7 · Tabella dati
@@ -1754,11 +1823,15 @@ select.tr-field__control + .tr-field__label,
    tratto blu logo) in opacità 0.16 sul paper, negli sfondi di brochure
    e pagine di presentazione. Sta dietro ai contenuti, tipicamente sborda
    da un bordo pagina, e non intercetta il puntatore.
-   Il contenitore pagina deve avere position:relative e overflow:hidden.
+   Il contenitore pagina deve avere position:relative e tagliare lo sbordo.
+   Lo taglia con overflow:clip e non con hidden: hidden fa del contenitore un
+   contesto di scorrimento, e qualunque position:sticky al suo interno — la
+   colonna del dato di .tr-intro — smetterebbe di seguire la pagina. clip
+   taglia e basta.
    ========================================================================== */
 .tr-watermark-host {
   position: relative;
-  overflow: hidden;
+  overflow: clip;
 }
 .tr-watermark {
   position: absolute;
@@ -2137,8 +2210,208 @@ select.tr-field__control + .tr-field__label,
 }
 
 /* ==========================================================================
+   Cifra in evidenza e riga di dati
+   Il numero che riassume una pagina — installazioni, sedi, anni — e' un dato
+   in evidenza, non una parola dentro un paragrafo: si compone in display, con
+   il tratto d'accento sotto e l'etichetta mono a seguire. Le cifre sono
+   tabellari perche' una cifra si confronta con un'altra, e deve pesare uguale.
+   ========================================================================== */
+.tr-figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tr-space-2);
+  margin: 0;
+}
+.tr-figure__number {
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-display);
+  font-size: var(--tr-text-figure);
+  line-height: var(--tr-leading-figure);
+  letter-spacing: var(--tr-tracking-display);
+  color: var(--tr-ink-900);
+  font-variant-numeric: tabular-nums;
+}
+.tr-figure__number::after {
+  content: "";
+  display: block;
+  width: var(--tr-accent-dash-w);
+  height: var(--tr-rule-accent);
+  margin-top: var(--tr-space-3);
+  border-radius: var(--tr-radius-line);
+  background: var(--tr-brand-500);
+}
+/* L'etichetta va a capo dove decide il markup (<br>): un'interlinea piena
+   tiene leggibili le due righe in mono. */
+.tr-figure__label { line-height: 1.5; }
+
+/* Riga di 2–4 dati piccoli sotto la cifra: <dl> con un <div> per dato,
+   etichetta mono grigia sopra, valore in Archivo semibold sotto. Filetto sopra
+   come .tr-specs: e' la stessa famiglia, con i numeri al posto delle voci. */
+.tr-facts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: var(--tr-space-3) var(--tr-space-5);
+  margin: 0;
+  padding-top: var(--tr-space-4);
+  border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
+}
+.tr-facts > div { margin: 0; }
+.tr-facts dt {
+  margin: 0 0 var(--tr-space-1);
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-body);
+  font-size: var(--tr-text-mono);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+}
+.tr-facts dd {
+  margin: 0;
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--tr-text-lead);
+  line-height: var(--tr-leading-display);
+  color: var(--tr-ink-900);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   Blocco introduttivo (dato + testo)
+   Il modo in cui si apre una pagina di contenuto. Un testo lungo non sta mai
+   da solo in un contenitore largo: a sinistra la colonna di servizio —
+   eyebrow, cifra, dati — che resta ferma mentre si scorre; a destra il
+   titolo, il lead, l'elenco e la prosa, ciascuno con la propria misura. Se
+   una pagina ha un numero che la riassume, quel numero apre la pagina.
+   ========================================================================== */
+.tr-intro {
+  display: grid;
+  grid-template-columns: minmax(var(--tr-intro-aside-min), 5fr) minmax(0, 12fr);
+  gap: var(--tr-space-6) var(--tr-space-8);
+  align-items: start;
+}
+/* La colonna del dato segue lo scorrimento finche' la colonna del testo non
+   finisce: il numero resta in vista mentre si legge cio' che lo spiega. */
+.tr-intro__aside {
+  position: sticky;
+  top: var(--tr-space-9);
+}
+.tr-intro__aside .tr-facts { margin-top: var(--tr-space-5); }
+.tr-intro__main { min-width: 0; }
+.tr-intro__title { max-width: var(--tr-measure-title); }
+.tr-intro__lead {
+  margin: var(--tr-space-4) 0 0;
+  font-size: var(--tr-text-lead);
+  line-height: 1.5;
+  max-width: var(--tr-measure-lead);
+  color: var(--tr-ink-600);
+}
+.tr-intro__main > .tr-numbered-list,
+.tr-intro__main > .tr-list { margin-top: var(--tr-space-5); }
+/* La prosa: paragrafi di pari misura, uno sotto l'altro, senza margini propri. */
+.tr-intro__prose {
+  margin-top: var(--tr-space-5);
+  display: grid;
+  gap: var(--tr-space-3);
+}
+.tr-intro__prose > .tr-body { margin: 0; max-width: var(--tr-measure-prose); }
+
+/* ==========================================================================
+   Pannello
+   Il piano 1 senza essere una card: un contenitore bianco per una sezione
+   intera di pagina. Nessun bordo, nessuna ombra, nessun raggio; ridefinisce
+   --tr-field-bg come chiede la regola delle superfici. Con --over sale sopra
+   l'hero fotografico che lo precede: sopra una foto il piano e' l'unico modo
+   lecito di staccare il contenuto.
+   ========================================================================== */
+.tr-panel {
+  --tr-field-bg: var(--tr-surface);
+  display: block;
+  padding: var(--tr-space-7);
+  border: 0;
+  border-radius: var(--tr-radius-ui);
+  background: var(--tr-surface);
+}
+.tr-panel--over {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * var(--tr-space-8));
+}
+
+/* ==========================================================================
+   Hero fotografico con parallasse
+   L'unico elemento della pagina che si muove. Lo sfondo e' un livello a parte,
+   piu' alto del riquadro dello sbordo sopra e sotto, cosi' puo' scorrere piu'
+   lento della pagina senza scoprire il bordo; il velo e' ink/900 con alpha,
+   non un colore nuovo. Il movimento lo governa js/tr-parallax.js sugli
+   attributi data-tr-parallax="hero|bg|content"; senza script, o con
+   prefers-reduced-motion, l'hero e' semplicemente fermo.
+   ========================================================================== */
+.tr-hero {
+  position: relative;
+  min-height: var(--tr-hero-min-h);
+  display: flex;
+  align-items: center;
+  color: var(--tr-ink-on-solid);
+  overflow: hidden;
+  isolation: isolate;
+}
+.tr-hero__bg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(-1 * var(--tr-parallax-bleed));
+  bottom: calc(-1 * var(--tr-parallax-bleed));
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+}
+.tr-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--tr-ink-900) var(--tr-hero-overlay), transparent);
+}
+.tr-hero__content {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  padding: var(--tr-space-7) var(--tr-space-5) var(--tr-space-9);
+  will-change: transform, opacity;
+}
+/* Sul velo scuro il testo eredita il bianco; la parola chiave resta blu logo. */
+.tr-hero__content .tr-h1,
+.tr-hero__content .tr-h2,
+.tr-hero__content .tr-h3,
+.tr-hero__content .tr-body { color: inherit; }
+.tr-hero__content .tr-body { margin-left: auto; margin-right: auto; }
+.tr-hero__content .tr-mono { color: var(--tr-brand-300); }
+
+/* Chi ha chiesto meno movimento vede l'hero fermo: qui non c'e' uno stato
+   finale da raggiungere, c'e' solo la corsa, e la corsa non si fa. */
+@media (prefers-reduced-motion: reduce) {
+  .tr-hero__bg,
+  .tr-hero__content {
+    transform: none !important;
+    opacity: 1 !important;
+    will-change: auto;
+  }
+}
+
+/* ==========================================================================
    Responsive
    ========================================================================== */
+/* Sotto i 900px il blocco introduttivo va su una colonna e la colonna del dato
+   torna nel flusso: fissa in testa coprirebbe il titolo. */
+@media (max-width: 900px) {
+  .tr-intro { grid-template-columns: 1fr; }
+  .tr-intro__aside { position: static; }
+}
+@media (max-width: 720px) {
+  .tr-panel { padding: var(--tr-space-5); }
+  .tr-hero__content { padding-left: var(--tr-space-4); padding-right: var(--tr-space-4); }
+}
 @media (max-width: 720px) {
   .tr-h1 { font-size: 34px; }
   .tr-h2 { font-size: 26px; }
