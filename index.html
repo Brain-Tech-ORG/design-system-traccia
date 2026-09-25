@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="css/traccia-icons.css">
 <link rel="stylesheet" href="css/traccia-states.css">
 <link rel="stylesheet" href="css/traccia-categories.css">
+<link rel="stylesheet" href="css/traccia-time.css">
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -1495,6 +1496,364 @@
           <div><dt>Sedi</dt><dd>3</dd></div>
         </dl>
       </div>
+    </div>
+  </section>
+
+  <!-- 25 · CRONOLOGIA -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">25 · Crono<em>logia</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        Una sequenza di eventi datati: la storia di una pratica, il registro delle revisioni, le
+        tappe di un progetto. Un binario di 2px e un dot per evento, e tre stati che li dice la
+        <strong>forma prima del colore</strong>: il passato e' pieno, l'evento in corso e' un anello
+        vuoto, il futuro e' tinta chiara con il titolo in grigio. Il binario e' pieno fino all'evento
+        in corso e chiaro dopo — e' la regola del segmento verticale, «pieno sopra il contenuto,
+        tinta chiara sotto», applicata al tempo.
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <div class="tr-eyebrow" style="margin-bottom:24px">
+          <span class="tr-eyebrow__label">Storia di una pratica</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
+        <ol class="tr-timeline">
+          <li class="tr-timeline__event">
+            <time class="tr-timeline__when" datetime="2026-03-14">14 mar 2026</time>
+            <div class="tr-timeline__body">
+              <p class="tr-timeline__title">Protocollo aperto</p>
+              <p class="tr-timeline__text">Istanza ricevuta via PEC e registrata al n. 2026/0412.</p>
+            </div>
+          </li>
+          <li class="tr-timeline__event">
+            <time class="tr-timeline__when" datetime="2026-03-20">20 mar 2026</time>
+            <div class="tr-timeline__body">
+              <p class="tr-timeline__title">Istruttoria avviata</p>
+              <p class="tr-timeline__text">Assegnata all'ufficio tecnico, richiesta integrazione documentale.</p>
+            </div>
+          </li>
+          <li class="tr-timeline__event" aria-current="step">
+            <time class="tr-timeline__when" datetime="2026-04-02">2 apr 2026</time>
+            <div class="tr-timeline__body">
+              <p class="tr-timeline__title">Parere tecnico</p>
+              <p class="tr-timeline__text">In attesa del sopralluogo: la pratica non puo' proseguire senza.</p>
+              <div class="tr-timeline__meta">
+                <span class="tr-status tr-status--warning">In attesa</span>
+              </div>
+            </div>
+          </li>
+          <li class="tr-timeline__event">
+            <time class="tr-timeline__when">Da definire</time>
+            <div class="tr-timeline__body">
+              <p class="tr-timeline__title">Determina</p>
+            </div>
+          </li>
+          <li class="tr-timeline__event">
+            <time class="tr-timeline__when">Da definire</time>
+            <div class="tr-timeline__body">
+              <p class="tr-timeline__title">Notifica al richiedente</p>
+            </div>
+          </li>
+        </ol>
+        <p class="tr-body demo-note" style="font-size:13px">
+          L'evento in corso lo dichiara <code style="font-family:var(--tr-font-mono);font-size:12px">aria-current="step"</code>;
+          quelli sopra sono passati e lo ricava il CSS. Lo stato — in attesa, respinto — non tinge
+          il dot: viaggia in <code style="font-family:var(--tr-font-mono);font-size:12px">.tr-status</code>,
+          dentro l'evento. Il binario resta di marca.
+        </p>
+      </div>
+      <div>
+        <div class="tr-eyebrow" style="margin-bottom:24px">
+          <span class="tr-eyebrow__label">Registro delle revisioni</span>
+          <span class="tr-eyebrow__line"></span>
+        </div>
+        <ol class="tr-timeline">
+          <li class="tr-timeline__event">
+            <time class="tr-timeline__when" datetime="2026-02-03">3 feb 2026</time>
+            <div class="tr-timeline__body">
+              <p class="tr-timeline__title">Revisione 01</p>
+              <p class="tr-timeline__text">Prima emissione.</p>
+            </div>
+          </li>
+          <li class="tr-timeline__event">
+            <time class="tr-timeline__when" datetime="2026-02-19">19 feb 2026</time>
+            <div class="tr-timeline__body">
+              <p class="tr-timeline__title">Revisione 02</p>
+              <p class="tr-timeline__text">Recepite le osservazioni del committente sui capitoli 3 e 5.</p>
+            </div>
+          </li>
+          <li class="tr-timeline__event">
+            <time class="tr-timeline__when" datetime="2026-03-11">11 mar 2026</time>
+            <div class="tr-timeline__body">
+              <p class="tr-timeline__title">Revisione 03</p>
+              <p class="tr-timeline__text">Archiviata nel fascicolo 2026/0412.</p>
+              <div class="tr-timeline__meta">
+                <span class="tr-status tr-status--success">Approvata</span>
+              </div>
+            </div>
+          </li>
+        </ol>
+        <p class="tr-body demo-note" style="font-size:13px">
+          Senza <code style="font-family:var(--tr-font-mono);font-size:12px">aria-current</code> la cronologia e'
+          una storia: tutto e' gia' accaduto, tutto e' pieno.
+        </p>
+      </div>
+    </div>
+
+    <div class="demo-block" style="margin-top:48px">
+      <div class="tr-eyebrow" style="margin-bottom:24px">
+        <span class="tr-eyebrow__label">In riga</span>
+        <span class="tr-eyebrow__line"></span>
+        <span class="tr-eyebrow__note">.tr-timeline--row</span>
+      </div>
+      <ol class="tr-timeline tr-timeline--row">
+        <li class="tr-timeline__event">
+          <time class="tr-timeline__when" datetime="2026-01">Gen 2026</time>
+          <div class="tr-timeline__body">
+            <p class="tr-timeline__title">Analisi</p>
+            <p class="tr-timeline__text">Rilievo dei processi e dei vincoli normativi.</p>
+          </div>
+        </li>
+        <li class="tr-timeline__event">
+          <time class="tr-timeline__when" datetime="2026-03">Mar 2026</time>
+          <div class="tr-timeline__body">
+            <p class="tr-timeline__title">Progetto</p>
+            <p class="tr-timeline__text">Architettura e piano di attivazione.</p>
+          </div>
+        </li>
+        <li class="tr-timeline__event" aria-current="step">
+          <time class="tr-timeline__when" datetime="2026-06">Giu 2026</time>
+          <div class="tr-timeline__body">
+            <p class="tr-timeline__title">Avvio</p>
+            <p class="tr-timeline__text">Installazione, migrazione e formazione.</p>
+          </div>
+        </li>
+        <li class="tr-timeline__event">
+          <time class="tr-timeline__when" datetime="2026-10">Ott 2026</time>
+          <div class="tr-timeline__body">
+            <p class="tr-timeline__title">Supporto</p>
+            <p class="tr-timeline__text">Assistenza continuativa e aggiornamenti.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="tr-body demo-note" style="font-size:13px">
+        Lo stesso componente girato, non un secondo componente: le tappe di un'offerta o di un
+        progetto, una accanto all'altra. Sotto i 720px torna in colonna. Non e' lo
+        <em>step di processo</em>: quello numera le fasi di un metodo e non ha date.
+      </p>
+    </div>
+  </section>
+
+  <!-- 26 · CRONOPROGRAMMA -->
+  <section class="section">
+    <div class="section-head">
+      <span class="tr-accent-dash"></span>
+      <h2 class="tr-h3">26 · Crono<em>programma</em></h2>
+      <p class="tr-body" style="margin-top:12px">
+        Attivita' su righe, tempo su colonne, una barra per attivita': il diagramma di Gantt, ma
+        con i pezzi del sistema. La <strong>barra e' il tassello categoriale allungato</strong>
+        — fondo tenue, filetto attorno — e si riempie con l'avanzamento: e' la pienezza a dire
+        «fatto», non un secondo colore. La riga e' alta 40px come la barra di un grafico, la
+        colonna e' l'unita' minima del piano, la fase e' il segmento del sistema in orizzontale e
+        la pietra miliare e' un dot seduto sul filetto del giorno in cui cade.
+      </p>
+    </div>
+
+    <div class="tr-gantt-scroll">
+      <div class="tr-gantt" role="table" aria-label="Piano di attivazione 2026"
+           style="--tr-gantt-cols: 12; --tr-gantt-today: 5.5">
+        <div class="tr-gantt__head" role="row">
+          <div class="tr-gantt__corner" role="columnheader">Attivita'</div>
+          <div class="tr-gantt__scale" role="columnheader" aria-label="Mesi del 2026">
+            <span class="tr-gantt__tick">Gen</span>
+            <span class="tr-gantt__tick">Feb</span>
+            <span class="tr-gantt__tick">Mar</span>
+            <span class="tr-gantt__tick">Apr</span>
+            <span class="tr-gantt__tick">Mag</span>
+            <span class="tr-gantt__tick">Giu</span>
+            <span class="tr-gantt__tick">Lug</span>
+            <span class="tr-gantt__tick tr-gantt__tick--off">Ago</span>
+            <span class="tr-gantt__tick">Set</span>
+            <span class="tr-gantt__tick">Ott</span>
+            <span class="tr-gantt__tick">Nov</span>
+            <span class="tr-gantt__tick">Dic</span>
+          </div>
+        </div>
+
+        <div class="tr-gantt__row tr-gantt__row--group" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Analisi</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar tr-gantt__bar--summary" style="--tr-gantt-start: 1; --tr-gantt-span: 3; --tr-gantt-progress: 100%">
+              <span class="tr-sr-only">Da gennaio a marzo, completata</span>
+            </span>
+          </div>
+        </div>
+        <div class="tr-gantt__row tr-gantt__row--sub" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Rilievo dei processi</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar" style="--tr-gantt-start: 1; --tr-gantt-span: 2; --tr-gantt-progress: 100%">
+              <span class="tr-sr-only">Da gennaio a febbraio, completata</span>
+              <span class="tr-gantt__bar-label" aria-hidden="true">8 sett.</span>
+            </span>
+          </div>
+        </div>
+        <div class="tr-gantt__row tr-gantt__row--sub" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Vincoli normativi e privacy</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar" style="--tr-gantt-start: 2; --tr-gantt-span: 2; --tr-gantt-progress: 100%">
+              <span class="tr-sr-only">Da febbraio a marzo, completata</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="tr-gantt__row tr-gantt__row--group" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Progetto</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar tr-gantt__bar--summary" style="--tr-gantt-start: 3; --tr-gantt-span: 5; --tr-gantt-progress: 55%">
+              <span class="tr-sr-only">Da marzo a luglio, al 55 per cento</span>
+            </span>
+          </div>
+        </div>
+        <div class="tr-gantt__row tr-gantt__row--sub" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Architettura</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar" style="--tr-gantt-start: 3; --tr-gantt-span: 2; --tr-gantt-progress: 100%">
+              <span class="tr-sr-only">Da marzo ad aprile, completata</span>
+            </span>
+          </div>
+        </div>
+        <div class="tr-gantt__row tr-gantt__row--sub" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Piano di attivazione</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar" style="--tr-gantt-start: 4; --tr-gantt-span: 3; --tr-gantt-progress: 60%">
+              <span class="tr-sr-only">Da aprile a giugno, al 60 per cento</span>
+              <span class="tr-gantt__bar-label" aria-hidden="true">60%</span>
+            </span>
+          </div>
+        </div>
+        <div class="tr-gantt__row tr-gantt__row--sub" role="row">
+          <div class="tr-gantt__label" role="rowheader">
+            <span class="tr-gantt__name">Migrazione dati</span>
+            <span class="tr-status tr-status--warning">In ritardo</span>
+          </div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar tr-gantt__bar--warning" style="--tr-gantt-start: 4; --tr-gantt-span: 4; --tr-gantt-progress: 20%">
+              <span class="tr-sr-only">Da aprile a luglio, al 20 per cento, in ritardo</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="tr-gantt__row" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Collaudo</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar tr-gantt__bar--milestone" style="--tr-gantt-start: 8">
+              <span class="tr-sr-only">Primo agosto</span>
+              <span class="tr-gantt__bar-label" aria-hidden="true">1 ago</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="tr-gantt__row tr-gantt__row--group" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Avvio</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar tr-gantt__bar--summary" style="--tr-gantt-start: 9; --tr-gantt-span: 4">
+              <span class="tr-sr-only">Da settembre a dicembre, non iniziata</span>
+            </span>
+          </div>
+        </div>
+        <div class="tr-gantt__row tr-gantt__row--sub" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Formazione degli operatori</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar" style="--tr-gantt-start: 9; --tr-gantt-span: 2">
+              <span class="tr-sr-only">Da settembre a ottobre, non iniziata</span>
+            </span>
+          </div>
+        </div>
+        <div class="tr-gantt__row tr-gantt__row--sub" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Esercizio affiancato</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar" style="--tr-gantt-start: 11; --tr-gantt-span: 2">
+              <span class="tr-sr-only">Da novembre a dicembre, non iniziata</span>
+              <span class="tr-gantt__bar-label tr-gantt__bar-label--start" aria-hidden="true">8 sett.</span>
+            </span>
+          </div>
+        </div>
+
+        <span class="tr-gantt__now" data-label="Oggi" aria-hidden="true"></span>
+      </div>
+    </div>
+    <p class="tr-body demo-note" style="font-size:13px">
+      La barra <strong>in ritardo</strong> prende la famiglia semantica al posto della marca e il
+      nome della riga porta il suo <code style="font-family:var(--tr-font-mono);font-size:12px">.tr-status</code>:
+      senza quello il colore e' l'unico segnale, e il sistema non lo ammette. Agosto ha l'etichetta
+      spenta, non il fondo colorato: il fondo di un piano resta il paper. Il segmento di «oggi» si
+      scrive dopo le righe e si posiziona con
+      <code style="font-family:var(--tr-font-mono);font-size:12px">--tr-gantt-today</code>, anche frazionario.
+    </p>
+
+    <div class="demo-block" style="margin-top:48px">
+      <div class="tr-eyebrow" style="margin-bottom:24px">
+        <span class="tr-eyebrow__label">Piu' serie</span>
+        <span class="tr-eyebrow__line"></span>
+        <span class="tr-eyebrow__note">scala categoriale</span>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:12px 24px; margin-bottom:24px">
+        <span class="tr-cat-key tr-cat--1">Team funzionale</span>
+        <span class="tr-cat-key tr-cat--3">Sviluppo</span>
+        <span class="tr-cat-key tr-cat--5">Cliente</span>
+      </div>
+      <div class="tr-gantt" role="table" aria-label="Chi fa cosa nel secondo trimestre" style="--tr-gantt-cols: 13">
+        <div class="tr-gantt__head" role="row">
+          <div class="tr-gantt__corner" role="columnheader">Settimane</div>
+          <div class="tr-gantt__scale" role="columnheader" aria-label="Settimane da aprile a giugno">
+            <span class="tr-gantt__tick" style="--tr-gantt-span: 4">Apr</span>
+            <span class="tr-gantt__tick" style="--tr-gantt-span: 5">Mag</span>
+            <span class="tr-gantt__tick" style="--tr-gantt-span: 4">Giu</span>
+          </div>
+        </div>
+        <div class="tr-gantt__row" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Specifiche di dettaglio</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar tr-cat--1" style="--tr-gantt-start: 1; --tr-gantt-span: 4; --tr-gantt-progress: 100%">
+              <span class="tr-sr-only">Team funzionale, settimane 1–4, completata</span>
+            </span>
+          </div>
+        </div>
+        <div class="tr-gantt__row" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Integrazione anagrafica</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar tr-cat--3" style="--tr-gantt-start: 4; --tr-gantt-span: 6; --tr-gantt-progress: 45%">
+              <span class="tr-sr-only">Sviluppo, settimane 4–9, al 45 per cento</span>
+            </span>
+          </div>
+        </div>
+        <div class="tr-gantt__row" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Verifica dei dati migrati</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar tr-cat--5" style="--tr-gantt-start: 8; --tr-gantt-span: 4">
+              <span class="tr-sr-only">Cliente, settimane 8–11, non iniziata</span>
+            </span>
+          </div>
+        </div>
+        <div class="tr-gantt__row" role="row">
+          <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Rilascio in produzione</span></div>
+          <div class="tr-gantt__lane" role="cell">
+            <span class="tr-gantt__bar tr-gantt__bar--milestone tr-cat--3" style="--tr-gantt-start: 12">
+              <span class="tr-sr-only">Sviluppo, settimana 12</span>
+              <span class="tr-gantt__bar-label" aria-hidden="true">v2.4</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <p class="tr-body demo-note" style="font-size:13px">
+        Le serie prendono la scala categoriale — chi fa cosa, quale sistema — con la legenda sopra,
+        come in un grafico. Qui l'unita' e' la settimana e la scala raggruppa le tacche per mese con
+        <code style="font-family:var(--tr-font-mono);font-size:12px">--tr-gantt-span</code>: le colonne
+        della scala sono le stesse delle corsie, quindi tacche e barre non possono sfasarsi.
+      </p>
     </div>
   </section>
 

@@ -253,10 +253,24 @@
   --tr-doc-meta-col: 288px;     /* colonna dei dati di protocollo */
   --tr-doc-sign-h: 128px;       /* banda firme: ~11,5mm di spazio per la penna */
 
+  /* ---- Tempo: cronologia e cronoprogramma ----
+     La riga del cronoprogramma e' alta quanto la barra di un grafico (circa
+     40px, vedi "Grafici"): un piano che cresce in basso e' sempre meglio di
+     uno che si comprime. La barra e' il tassello categoriale allungato, e
+     una colonna e' l'unita' minima del piano: giorni, settimane o mesi. */
+  --tr-timeline-when-col: 112px; /* colonna della data nella cronologia verticale */
+  --tr-gantt-row-h: 40px;        /* riga del cronoprogramma */
+  --tr-gantt-bar-h: 14px;        /* altezza della barra */
+  --tr-gantt-label-col: 220px;   /* colonna dei nomi delle attivita' */
+  --tr-gantt-col-min: 0px;       /* larghezza minima di una colonna: 0 = fluido;
+                                    si alza (es. 24px) quando l'unita' e' il giorno,
+                                    e il piano scorre dentro .tr-gantt-scroll */
+
   /* ---- Geometria · Misure ricorrenti ---- */
   --tr-accent-dash-w: 64px; /* tratto d'accento sopra i titoli di sezione */
   --tr-dot-size: 8px;       /* dot bullet (range 6–13px) */
   --tr-dot-size-sm: 6px;    /* dot dentro un chip o accanto a una riga di testo */
+  --tr-dot-size-lg: 12px;   /* evento della cronologia, pietra miliare del cronoprogramma */
   --tr-intro-aside-min: 200px; /* la colonna del dato nel blocco introduttivo non scende sotto */
   --tr-circle-sm: 28px;     /* cerchietto numerato piccolo (range 24–52px) */
   --tr-circle-md: 40px;

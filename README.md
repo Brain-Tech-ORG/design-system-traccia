@@ -25,6 +25,7 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── traccia-icons.css         Registro icone (mascherature) + .tr-icon
 │   ├── traccia-states.css        Stati semantici UI (.tr-notice, .tr-toast, .tr-status)
 │   ├── traccia-categories.css    Scala categoriale (solo interfacce software)
+│   ├── traccia-time.css          Cronologia (.tr-timeline) e cronoprogramma (.tr-gantt)
 │   └── traccia-doc.css           Documenti formali a stampa (prefisso .tr-doc)
 ├── js/
 │   ├── tr-select.js              Listbox del select (vanilla, per Angular e HTML)
@@ -517,6 +518,8 @@ disordinata un'interfaccia ordinata.
 | 22 | Blocco introduttivo (dato + testo), pannello e hero | `.tr-intro` + `__aside` / `__main`, `.tr-panel` (+ `--over`), `.tr-hero` + `js/tr-parallax.js` — vedi [Blocco introduttivo](#blocco-introduttivo) |
 | 23 | Elenco in frase e linee di prodotto | `.tr-list`, `.tr-numbered-list` > `.tr-numbered` |
 | 24 | Cifra in evidenza e riga di dati | `.tr-figure` + `__number` / `__label`, `.tr-facts` |
+| 25 | Cronologia (verticale e in riga) | `.tr-timeline` (+ `--row`) > `.tr-timeline__event` — vedi [Cronologia e cronoprogramma](#cronologia-e-cronoprogramma) |
+| 26 | Cronoprogramma (Gantt) | `.tr-gantt` + `__row` / `__lane` / `__bar` (+ `--summary` / `--milestone`), `.tr-gantt__now` — vedi [Cronologia e cronoprogramma](#cronologia-e-cronoprogramma) |
 
 Tutti i componenti sono mostrati e documentati in [`index.html`](index.html).
 
@@ -1722,6 +1725,210 @@ Tre accorgimenti, sempre insieme:
 
 Se dopo questi tre l'etichetta e' ancora troppo lunga, il problema non e' il
 grafico: sono troppe categorie in una vista sola.
+
+
+## Cronologia e cronoprogramma
+
+Il sistema sapeva gia' rappresentare il tempo, solo non lo diceva. Il segmento
+verticale e' «pieno sopra il contenuto, tinta chiara sotto», cioe' fatto e da
+fare; il dot e' un istante; il mono e' la voce delle date; la riga di un
+grafico a barre e' alta circa 40px. Chi doveva mostrare la storia di una
+pratica o il piano di un'attivazione si costruiva il componente da se', ogni
+volta diverso. I due componenti di [`css/traccia-time.css`](css/traccia-time.css)
+non inventano una forma: mettono in fila quelle che c'erano.
+
+```html
+<link rel="stylesheet" href="tokens/tokens.css">
+<link rel="stylesheet" href="css/traccia.css">
+<link rel="stylesheet" href="css/traccia-time.css">
+<!-- il cronoprogramma prende le serie da traccia-categories.css e lo stato
+     da traccia-states.css, quando servono -->
+```
+
+| | Cronologia `.tr-timeline` | Cronoprogramma `.tr-gantt` |
+|---|---|---|
+| Cosa mostra | eventi datati, uno dopo l'altro | attivita' con una durata, in parallelo |
+| Domanda a cui risponde | «cosa e' successo, e a che punto siamo» | «chi fa cosa, quando, e quanto manca» |
+| Esempi | storia di una pratica, registro delle revisioni, tappe di un'offerta | piano di attivazione, cronoprogramma di un'offerta, carico di un trimestre |
+| Dove | interfacce, brochure, documenti formali | interfacce e documenti formali; su brochure e slide solo di marca |
+
+### Cronologia: la forma prima del colore
+
+Un binario di 2px con un dot per evento. Tre stati, e li dice la forma prima
+del colore: il **passato e' pieno**, l'evento **in corso e' un anello vuoto**
+— aperto, come il cerchietto `--outline` — e il **futuro e' tinta chiara**,
+con il titolo in grigio. Il binario e' pieno fino all'evento in corso e chiaro
+dopo: e' `.tr-vseg` applicato al tempo.
+
+```html
+<ol class="tr-timeline">
+  <li class="tr-timeline__event">
+    <time class="tr-timeline__when" datetime="2026-03-14">14 mar 2026</time>
+    <div class="tr-timeline__body">
+      <p class="tr-timeline__title">Protocollo aperto</p>
+      <p class="tr-timeline__text">Istanza ricevuta via PEC e registrata al n. 2026/0412.</p>
+    </div>
+  </li>
+  <li class="tr-timeline__event" aria-current="step">
+    <time class="tr-timeline__when" datetime="2026-04-02">2 apr 2026</time>
+    <div class="tr-timeline__body">
+      <p class="tr-timeline__title">Parere tecnico</p>
+      <div class="tr-timeline__meta">
+        <span class="tr-status tr-status--warning">In attesa</span>
+      </div>
+    </div>
+  </li>
+  <li class="tr-timeline__event">
+    <time class="tr-timeline__when">Da definire</time>
+    <div class="tr-timeline__body"><p class="tr-timeline__title">Determina</p></div>
+  </li>
+</ol>
+```
+
+- **Si segna un evento solo.** `aria-current="step"` sull'evento in corso;
+  quelli sopra sono passati e lo ricava il CSS con `:has()`. Senza
+  `aria-current` la cronologia e' una storia: tutto e' gia' accaduto, tutto e'
+  pieno. Le classi `.is-done` e `.is-current` restano per i browser senza
+  `:has()` e per quando lo stato non e' «il corrente e cio' che lo precede».
+- **Lo stato non tinge il dot.** In attesa, respinto, approvato: viaggiano in
+  un `.tr-status` dentro `.tr-timeline__meta`, e il binario resta di marca.
+  Un dot rosso direbbe «errore» a chi lo scorre, ma non direbbe quale.
+- **La data e' mono, il titolo e' in frase.** Il titolo e' contenuto, come
+  quello di una card, non un'etichetta: niente maiuscolo.
+- **In riga** (`.tr-timeline--row`): lo stesso componente girato — dot in
+  alto, binario orizzontale, data e titolo sotto — per le tappe di un'offerta
+  o di un progetto. Sotto i 720px torna in colonna. Non e' lo *step di
+  processo*: quello numera le fasi di un metodo e non ha date.
+- Sotto i 560px la cronologia verticale impila la data sopra il titolo: la
+  colonna della data a sinistra si mangerebbe meta' della riga.
+
+### Cronoprogramma: la barra e' il tassello allungato
+
+Attivita' su righe, tempo su colonne, una barra per attivita'. Il diagramma di
+Gantt, ma con i pezzi del sistema:
+
+- **La barra e' il tassello categoriale allungato** — fondo tenue, filetto
+  attorno, come `.tr-cat-key::before` — e **si riempie con l'avanzamento**
+  (`--tr-gantt-progress`): una barra piena e' finita, una vuota non e'
+  iniziata. E' la pienezza a dire «fatto», non un secondo colore.
+- **La riga e' alta 40px** (`--tr-gantt-row-h`), come la barra di un grafico:
+  un piano che cresce in basso e' sempre meglio di uno che si comprime. Il
+  nome va a capo, non si tronca: e' la colonna dei nomi, non l'asse di un
+  grafico.
+- **La colonna e' l'unita' minima del piano.** Se il piano si misura in giorni
+  le colonne sono giorni (`--tr-gantt-cols`), e la scala in testa raggruppa le
+  tacche per settimana o per mese con `--tr-gantt-span`. Scala e corsie hanno
+  la stessa griglia, quindi tacche e barre non possono sfasarsi. Quando le
+  colonne sono troppe per la larghezza, `--tr-gantt-col-min` da' a ciascuna
+  una misura minima e il piano scorre dentro `.tr-gantt-scroll`.
+- **La fase** (`.tr-gantt__bar--summary`) e' il segmento del sistema in
+  orizzontale: pieno per quanto e' fatto, tinta chiara per il resto. E' sempre
+  di marca — una fase non e' una serie. La riga della fase e' `--group`, in
+  display maiuscolo come lo step di processo; le attivita' che contiene sono
+  `--sub` e rientrano di un passo e mezzo.
+- **La pietra miliare** (`.tr-gantt__bar--milestone`) e' un istante, quindi un
+  dot, seduto sul filetto della colonna in cui cade. Non ha durata e non ha
+  avanzamento.
+- **«Oggi»** (`.tr-gantt__now`) e' un segmento di marca a tutta altezza, sulla
+  colonna in cui cade la data — anche frazionaria: `--tr-gantt-today: 5.5` e'
+  meta' della quinta. Si scrive dopo le righe, cosi' passa sopra le barre;
+  l'etichetta la porta `data-label`.
+- **Il fondo di un piano resta il paper.** Un periodo non lavorativo spegne
+  l'etichetta della tacca (`.tr-gantt__tick--off`), non colora la colonna.
+- **La didascalia della barra sta fuori**, in coda (`.tr-gantt__bar-label`):
+  dentro 14px non ci sta niente. Con `--start` si mette in testa, per le barre
+  in fondo al piano.
+
+```html
+<div class="tr-gantt-scroll">
+  <div class="tr-gantt" role="table" aria-label="Piano di attivazione 2026"
+       style="--tr-gantt-cols: 12; --tr-gantt-today: 5.5">
+    <div class="tr-gantt__head" role="row">
+      <div class="tr-gantt__corner" role="columnheader">Attivita'</div>
+      <div class="tr-gantt__scale" role="columnheader" aria-label="Mesi del 2026">
+        <span class="tr-gantt__tick">Gen</span>
+        <span class="tr-gantt__tick">Feb</span>
+        <!-- … una tacca per colonna, o --tr-gantt-span per raggrupparle -->
+      </div>
+    </div>
+
+    <div class="tr-gantt__row tr-gantt__row--group" role="row">
+      <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Analisi</span></div>
+      <div class="tr-gantt__lane" role="cell">
+        <span class="tr-gantt__bar tr-gantt__bar--summary"
+              style="--tr-gantt-start: 1; --tr-gantt-span: 3; --tr-gantt-progress: 100%">
+          <span class="tr-sr-only">Da gennaio a marzo, completata</span>
+        </span>
+      </div>
+    </div>
+    <div class="tr-gantt__row tr-gantt__row--sub" role="row">
+      <div class="tr-gantt__label" role="rowheader">
+        <span class="tr-gantt__name">Migrazione dati</span>
+        <span class="tr-status tr-status--warning">In ritardo</span>
+      </div>
+      <div class="tr-gantt__lane" role="cell">
+        <span class="tr-gantt__bar tr-gantt__bar--warning"
+              style="--tr-gantt-start: 4; --tr-gantt-span: 4; --tr-gantt-progress: 20%">
+          <span class="tr-sr-only">Da aprile a luglio, al 20 per cento, in ritardo</span>
+          <span class="tr-gantt__bar-label" aria-hidden="true">20%</span>
+        </span>
+      </div>
+    </div>
+    <div class="tr-gantt__row" role="row">
+      <div class="tr-gantt__label" role="rowheader"><span class="tr-gantt__name">Collaudo</span></div>
+      <div class="tr-gantt__lane" role="cell">
+        <span class="tr-gantt__bar tr-gantt__bar--milestone" style="--tr-gantt-start: 8">
+          <span class="tr-sr-only">Primo agosto</span>
+        </span>
+      </div>
+    </div>
+
+    <span class="tr-gantt__now" data-label="Oggi" aria-hidden="true"></span>
+  </div>
+</div>
+```
+
+| Variabile | Dove | Cosa regge |
+|---|---|---|
+| `--tr-gantt-cols` | `.tr-gantt` | quante colonne ha il piano: l'unita' minima |
+| `--tr-gantt-today` | `.tr-gantt` | colonna in cui cade oggi, anche frazionaria |
+| `--tr-gantt-span` | `.tr-gantt__tick`, `.tr-gantt__bar` | quante colonne copre |
+| `--tr-gantt-start` | `.tr-gantt__bar` | colonna di inizio, da 1 |
+| `--tr-gantt-progress` | `.tr-gantt__bar` | avanzamento, in percentuale |
+
+Le variabili `--tr-gantt-track` e `--tr-gantt-fill` **non sono token**: vivono
+dentro la barra e le ridefiniscono le varianti. I token sono le misure in
+`tokens.css` (`--tr-gantt-row-h`, `--tr-gantt-bar-h`, `--tr-gantt-label-col`,
+`--tr-gantt-col-min`, `--tr-timeline-when-col`, `--tr-dot-size-lg`).
+
+### Serie e stato: due canali, due famiglie
+
+Sono le stesse regole della [scala categoriale](#scala-categoriale) e degli
+[stati semantici](COLORI-SEMANTICI.md), e non c'e' niente da imparare di nuovo:
+
+- **Le serie** — chi fa cosa, quale sistema — prendono la scala categoriale:
+  `.tr-cat--3` sulla barra, e i tre ruoli arrivano da li' (fondo, filetto,
+  riempimento). La legenda sta sopra il piano, con `.tr-cat-key`, come in un
+  grafico. Senza classe la barra e' di marca.
+- **Lo stato** — in ritardo, bloccata — prende la famiglia semantica al posto
+  della serie (`.tr-gantt__bar--warning`, `--danger`) e **obbliga** un
+  `.tr-status` accanto al nome della riga. Senza quello il rosso e' l'unico
+  segnale, e il sistema non lo ammette. «Fatto» non e' uno stato: e' la barra
+  piena.
+- **Su brochure, slide e documenti formali** la regola non cambia: un solo hue.
+  Un cronoprogramma dentro un'offerta e' di marca, con fasi e pietre miliari, e
+  senza serie colorate.
+
+### Accessibilita'
+
+Il cronoprogramma e' una tabella e si dichiara come tale: `role="table"`,
+`row`, `rowheader`, `cell`. La barra non dice niente da sola — e' un rettangolo
+— quindi porta dentro un `.tr-sr-only` con periodo e avanzamento; la didascalia
+visibile e' `aria-hidden`, perche' ripeterebbe. Il segmento di «oggi» e'
+decorativo. In `forced-colors: active` restano il filetto della barra e la
+pienezza, e nella cronologia resta la forma — pieno, anello, vuoto — che gia'
+distingueva gli stati. In stampa barre, dot e binari sono contenuto e si
+tengono con `print-color-adjust: exact`.
 
 
 ## Firma email
