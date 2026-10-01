@@ -42,7 +42,7 @@
       --gdt-pad-x: 56px;         /* ~15mm: il testo non arriva mai al taglio */
       --gdt-pad-top: 40px;
       --gdt-pad-bottom: 32px;
-      --gdt-block: 26px;         /* fra un blocco e il successivo */
+      --gdt-block: 20px;         /* fra un blocco e il successivo */
       --gdt-text: 12px;          /* corpo di stampa (range 12-14px) */
       --gdt-rule: var(--tr-border-soft-2);
     }
@@ -123,7 +123,7 @@
       margin: 0;
       font-family: var(--tr-font-display);
       font-weight: var(--tr-weight-display);
-      font-size: 44px;
+      font-size: 42px;
       line-height: 1;
       letter-spacing: var(--tr-tracking-display);
       color: var(--tr-ink-900);
@@ -169,7 +169,7 @@
 
     /* ---- Cosa fa: i quattro passi ---- */
     .gdt-steps {
-      margin-top: var(--tr-space-4);
+      margin: var(--tr-space-4) 0 0;   /* l'<ol> porta un margine inferiore suo */
       --tr-circle-md: 30px;
       gap: var(--tr-space-4);
     }
@@ -179,7 +179,45 @@
     .gdt-steps .tr-step__title { font-size: 12.5px; margin-top: var(--tr-space-1); }
     .gdt-steps .tr-step__sub { font-size: 12px; line-height: 1.45; color: var(--tr-ink-600); max-width: none; }
 
-    /* ---- Cosa semplifica: sei voci ---- */
+    /* ---- In rete: i tre interlocutori della banca ----
+       E' il blocco da mettere in evidenza, e lo si distingue senza box: il
+       filetto in testa alle tre voci e' brand/300 — la linea secondaria del
+       sistema — invece del grigio delle voci sotto, e ogni voce apre con la
+       direzione del dato. */
+    .gdt-net {
+      list-style: none;
+      margin: var(--tr-space-4) 0 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--tr-space-5);
+    }
+    .gdt-net__item {
+      padding-top: var(--tr-space-3);
+      border-top: var(--tr-rule-medium) solid var(--tr-brand-300);
+    }
+    .gdt-net__who {
+      display: flex;
+      align-items: center;
+      gap: var(--tr-space-2);
+      font-family: var(--tr-font-mono);
+      font-weight: var(--tr-weight-semibold);
+      font-size: 10px;
+      letter-spacing: var(--tr-tracking-mono-mid);
+      text-transform: uppercase;
+      color: var(--tr-brand-600);
+    }
+    .gdt-net__who svg { width: 16px; height: 16px; color: var(--tr-brand-500); flex: none; }
+    .gdt-net__title {
+      margin-top: var(--tr-space-2) !important;
+      font-weight: var(--tr-weight-semibold);
+      font-size: 13.5px;
+      line-height: 1.3;
+      color: var(--tr-ink-900);
+    }
+    .gdt-net__body { margin-top: 3px !important; font-size: 12px; line-height: 1.5; }
+
+    /* ---- Cosa semplifica: quattro voci ---- */
     .gdt-gains {
       list-style: none;
       margin: var(--tr-space-4) 0 0;
@@ -204,22 +242,33 @@
     }
     .gdt-gain__body { margin-top: 3px !important; font-size: 12px; line-height: 1.5; }
 
-    /* ---- Chiusura: l'invito, i recapiti e il QR su una riga sola ----
+    /* ---- Chiusura: l'invito e l'email, con il QR a fianco ----
        Scende in fondo al foglio con margin-top: auto, ma con un minimo
-       garantito: lo scarto della pagina resta sopra, mai contro il testo. */
+       garantito: lo scarto della pagina resta sopra, mai contro il testo.
+       Il congresso e' gia' nella testata, quindi qui niente eyebrow: apre
+       un filetto, come il piede. Si scrive e basta — niente stand, niente
+       telefono: il contatto e' l'email. */
     .gdt-close {
       margin-top: auto;
       padding-top: var(--gdt-block);
     }
     .gdt-close__row {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: var(--tr-space-6);
-      align-items: end;
-      margin-top: var(--tr-space-3);
+      align-items: center;
+      padding-top: var(--tr-space-4);
+      border-top: var(--tr-rule-thin) solid var(--gdt-rule);
     }
     .gdt-close .tr-h3 { font-size: 19px; line-height: 1.15; }
-    .gdt-close__text { margin-top: var(--tr-space-2) !important; font-size: 12px; }
+    .gdt-close__body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--tr-space-6);
+      align-items: end;
+      margin-top: var(--tr-space-2);
+    }
+    .gdt-close__text { font-size: 12px; }
     .gdt-contacts { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
     .gdt-contacts li { display: flex; align-items: baseline; gap: var(--tr-space-3); }
     .gdt-contacts__k {
@@ -232,7 +281,7 @@
     }
     .gdt-contacts__v { font-weight: var(--tr-weight-semibold); font-size: 13px; color: var(--tr-ink-900); text-decoration: none; }
     .gdt-qr { display: flex; flex-direction: column; align-items: center; gap: var(--tr-space-1); }
-    .gdt-qr img { width: 72px; height: 72px; display: block; }
+    .gdt-qr img { width: 68px; height: 68px; display: block; }
     .gdt-qr span {
       font-family: var(--tr-font-mono);
       font-size: 8.5px;
@@ -296,7 +345,7 @@
           <img class="tr-brandmark__logo" src="../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
           <span class="tr-brandmark__wordmark">La Traccia</span>
         </span>
-        <span class="gdt-head__ref">Software per le banche dei tessuti</span>
+        <span class="gdt-head__ref">A.I.BA.T. 2026 · Torino · 23–24 ottobre</span>
       </header>
 
       <!-- Apertura: il prodotto, la promessa, che cosa fa in una frase -->
@@ -306,15 +355,15 @@
         <p class="tr-h2">Il lavoro quotidiano della banca, più <em>semplice</em></p>
         <p class="gdt-lead">
           Il gestionale web che accompagna ogni tessuto <strong>dall’arrivo in banca all’innesto</strong>:
-          accetta, lavora, conserva e distribuisce in un unico sistema, senza registri di carta
-          e senza ricopiare i dati, con la tracciabilità sempre pronta per controlli e ispezioni.
+          un unico sistema, in rete con i centri trapianti, senza carta e senza ricopiare i dati.
         </p>
         <div class="gdt-scope">
-          <span class="gdt-scope__label">Banche di tessuti</span>
-          <span class="tr-specs__item"><span class="tr-dot"></span>Muscolo-scheletrici</span>
+          <span class="gdt-scope__label">Banche</span>
+          <span class="tr-specs__item"><span class="tr-dot"></span>Muscolo-scheletriche</span>
           <span class="tr-specs__item"><span class="tr-dot"></span>Cute</span>
           <span class="tr-specs__item"><span class="tr-dot"></span>Cardiovascolari</span>
           <span class="tr-specs__item"><span class="tr-dot"></span>Membrana amniotica</span>
+          <span class="tr-specs__item"><span class="tr-dot"></span>Sangue cordonale</span>
         </div>
       </section>
 
@@ -329,27 +378,54 @@
           <li class="tr-step">
             <span class="tr-circle">01</span>
             <p class="tr-step__title">Accettazione</p>
-            <p class="tr-step__sub">Donatore da GeDon, checklist di conformità e quarantena del tessuto.</p>
+            <p class="tr-step__sub">Donatore dal CRT, checklist e quarantena.</p>
           </li>
           <li class="tr-step">
             <span class="tr-circle">02</span>
             <p class="tr-step__title">Lavorazione</p>
-            <p class="tr-step__sub">Processazione, sierologia, esami colturali e prodotti derivati, fino all’idoneità.</p>
+            <p class="tr-step__sub">Processazione, esami e idoneità del tessuto.</p>
           </li>
           <li class="tr-step">
             <span class="tr-circle">03</span>
             <p class="tr-step__title">Conservazione</p>
-            <p class="tr-step__sub">Frigoriferi, congelatori e criocontenitori configurabili, con lo stato di ogni tessuto.</p>
+            <p class="tr-step__sub">Frigoriferi, congelatori e azoto, con scadenze.</p>
           </li>
           <li class="tr-step">
             <span class="tr-circle">04</span>
             <p class="tr-step__title">Distribuzione</p>
-            <p class="tr-step__sub">Lista d’attesa per urgenza, assegnazione al paziente, consegna e innesto.</p>
+            <p class="tr-step__sub">Richieste, assegnazione, cessione e innesto.</p>
           </li>
         </ol>
       </section>
 
-      <!-- Cosa semplifica: il cuore commerciale -->
+      <!-- In rete: il blocco da mettere in evidenza — CRT, centri trapianto, CNT -->
+      <section class="gdt-block">
+        <div class="tr-eyebrow">
+          <span class="tr-eyebrow__label">In rete</span>
+          <span class="tr-eyebrow__line"></span>
+          <span class="tr-eyebrow__note">Dal regionale al nazionale</span>
+        </div>
+        <h2 class="tr-h3">Collegato a tutto il sistema <em>trapianti</em></h2>
+        <ul class="gdt-net">
+          <li class="gdt-net__item">
+            <p class="gdt-net__who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="m7.5 10 4.5 4.5 4.5-4.5"/><path d="M4 20.5h16"/></svg><span>Centro regionale</span></p>
+            <p class="gdt-net__title">Niente da ricopiare</p>
+            <p class="gdt-net__body">Donatore e donazione arrivano dal CRT già registrati.</p>
+          </li>
+          <li class="gdt-net__item">
+            <p class="gdt-net__who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 4.5h6v6"/><path d="M19.5 4.5 11 13"/><path d="M18 14.5v5H4.5V6H10"/></svg><span>Centri trapianto</span></p>
+            <p class="gdt-net__title">Richieste e tariffazione</p>
+            <p class="gdt-net__body">Richieste, cessioni e tariffe degli scambi in un unico flusso.</p>
+          </li>
+          <li class="gdt-net__item">
+            <p class="gdt-net__who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 14.5v-11"/><path d="M7.5 8 12 3.5 16.5 8"/><path d="M4 20.5h16"/></svg><span>Centro nazionale</span></p>
+            <p class="gdt-net__title">Rendicontazione al CNT</p>
+            <p class="gdt-net__body">Attività ed esiti arrivano al Centro Nazionale senza ricompilarli.</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Cosa semplifica: il lavoro di ogni giorno -->
       <section class="gdt-block">
         <div class="tr-eyebrow">
           <span class="tr-eyebrow__label">Cosa ti semplifica</span>
@@ -358,13 +434,6 @@
         </div>
         <h2 class="tr-h3">Meno tempo sulle carte, più tempo sui <em>tessuti</em></h2>
         <ul class="gdt-gains">
-          <li class="gdt-gain">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="m7.5 10 4.5 4.5 4.5-4.5"/><path d="M4 20.5h16"/></svg>
-            <div>
-              <p class="gdt-gain__title">Niente doppie digitazioni</p>
-              <p class="gdt-gain__body">Il donatore arriva da GeDon con il codice SIT: leggi il barcode e la scheda è già compilata.</p>
-            </div>
-          </li>
           <li class="gdt-gain">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 3.5h8v8L11 21 3.5 13.5z"/><path d="M16.75 7.25v.01"/></svg>
             <div>
@@ -375,15 +444,8 @@
           <li class="gdt-gain">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
             <div>
-              <p class="gdt-gain__title">Lo stato di ogni tessuto, sempre aggiornato</p>
-              <p class="gdt-gain__body">Quarantena, disponibile, consegnato, innestato: si aggiorna da solo a ogni passaggio.</p>
-            </div>
-          </li>
-          <li class="gdt-gain">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 12.5 5 5 10-10"/></svg>
-            <div>
-              <p class="gdt-gain__title">Checklist al posto dei moduli</p>
-              <p class="gdt-gain__body">Conformità all’arrivo, sierologia, esami colturali e documenti allegati: tutto nella scheda del tessuto.</p>
+              <p class="gdt-gain__title">Ogni tessuto sotto controllo</p>
+              <p class="gdt-gain__body">Quarantena, disponibilità e scadenze a colpo d’occhio, con un avviso quando serve attenzione.</p>
             </div>
           </li>
           <li class="gdt-gain">
@@ -403,26 +465,22 @@
         </ul>
       </section>
 
-      <!-- Chiusura: l'invito al congresso, con i recapiti e il QR per la demo -->
+      <!-- Chiusura: l'invito a scriverci, con l'email e il QR per la demo -->
       <section class="gdt-close">
-        <div class="tr-eyebrow">
-          <span class="tr-eyebrow__label">A.I.BA.T. 2026</span>
-          <span class="tr-eyebrow__line"></span>
-          <span class="tr-eyebrow__note">Torino · 23–24 ottobre</span>
-        </div>
         <div class="gdt-close__row">
           <div>
             <p class="tr-h3">Vediamolo sul percorso della tua <em>banca</em></p>
-            <p class="gdt-close__text">Ci trovi al congresso: fermaci per una demo, oppure scrivici e ne organizziamo una dedicata.</p>
+            <div class="gdt-close__body">
+              <p class="gdt-close__text">Saremo al congresso: scrivici per incontrarci a Torino o per fissare una demo dedicata.</p>
+              <ul class="gdt-contacts">
+                <li><span class="gdt-contacts__k">Email</span><a class="gdt-contacts__v" href="mailto:commerciale@latraccia.it">commerciale@latraccia.it</a></li>
+                <li><span class="gdt-contacts__k">Web</span><a class="gdt-contacts__v" href="https://www.latraccia.it">www.latraccia.it</a></li>
+              </ul>
+            </div>
           </div>
-          <ul class="gdt-contacts">
-            <li><span class="gdt-contacts__k">Email</span><a class="gdt-contacts__v" href="mailto:commerciale@latraccia.it">commerciale@latraccia.it</a></li>
-            <li><span class="gdt-contacts__k">Telefono</span><span class="gdt-contacts__v">+39 0835 336836</span></li>
-            <li><span class="gdt-contacts__k">Web</span><a class="gdt-contacts__v" href="https://www.latraccia.it">www.latraccia.it</a></li>
-          </ul>
           <div class="gdt-qr">
             <img src="qr-demo-gedon-tessuti.svg" alt="Codice QR: email a commerciale@latraccia.it per richiedere una demo di GeDon Tessuti">
-            <span>Inquadra e<br>chiedi la demo</span>
+            <span>Inquadra<br>e scrivici</span>
           </div>
         </div>
       </section>
