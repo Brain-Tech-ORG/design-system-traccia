@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GeDon Banche — Brochure A.I.BA.T. 2026</title>
+  <!-- Font in locale, ma i pesi STATICI di assets/fonts/ttf e non il woff2
+       variabile di css/traccia-fonts.css: Chromium incorpora un font variabile
+       come Type 3, che molte tipografie scartano in preflight. I TTF statici
+       entrano come TrueType — la stessa scelta della carta intestata Word. -->
+  <style>
+    @font-face { font-family: "Archivo"; font-weight: 400; src: url("../assets/fonts/ttf/Archivo-Regular.ttf") format("truetype"); }
+    @font-face { font-family: "Archivo"; font-weight: 600; src: url("../assets/fonts/ttf/Archivo-SemiBold.ttf") format("truetype"); }
+    @font-face { font-family: "Archivo"; font-weight: 800; src: url("../assets/fonts/ttf/Archivo-ExtraBold.ttf") format("truetype"); }
+    @font-face { font-family: "IBM Plex Mono"; font-weight: 400; src: url("../assets/fonts/ttf/IBMPlexMono-Regular.ttf") format("truetype"); }
+    @font-face { font-family: "IBM Plex Mono"; font-weight: 600; src: url("../assets/fonts/ttf/IBMPlexMono-SemiBold.ttf") format("truetype"); }
+  </style>
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <link rel="stylesheet" href="../css/traccia.css">
+  <style>
+    /* ======================================================================
+       Brochure A4, una pagina: GeDon Banche al congresso A.I.BA.T. 2026.
+       Stampa in proprio, inserita nelle cartelle dei partecipanti.
+
+       Il foglio e' quello dei documenti formali — 794x1123px, cioe' 210x297mm
+       a 96dpi — ma il compito e' l'opposto: non identifica un emittente,
+       convince un lettore che ha trenta secondi. Ne discendono le scelte:
+       - il fondo e' bianco, come in traccia-doc.css: le etichette mono blu in
+         brand/600 reggono 4,57:1 solo su bianco, e la carta e' bianca;
+       - la sagoma outline del marchio sborda dall'angolo, come chiede il
+         README per le brochure;
+       - i filetti sono gia' a border/soft-2: su carta border/soft sparisce.
+
+       --bleed vale 0 per il PDF A4 e 3mm per il file di tipografia: la pagina
+       cresce di 3mm per lato, il foglio resta dov'e' e la sola sagoma del
+       marchio — l'unico elemento al vivo — continua oltre il taglio.
+       ====================================================================== */
+    @page { size: A4; margin: 0; }
+
+    :root {
+      --gdt-bleed: 0mm;
+      --gdt-pad-x: 56px;         /* ~15mm: il testo non arriva mai al taglio */
+      --gdt-pad-top: 40px;
+      --gdt-pad-bottom: 32px;
+      --gdt-block: 20px;         /* fra un blocco e il successivo */
+      --gdt-text: 12px;          /* corpo di stampa (range 12-14px) */
+      --gdt-rule: var(--tr-border-soft-2);
+    }
+    html.gdt-bleed { --gdt-bleed: 3mm; }
+
+    html, body { margin: 0; padding: 0; }
+    body { background: var(--tr-paper); }
+
+    .gdt-page {
+      position: relative;
+      width: calc(var(--tr-doc-w) + 2 * var(--gdt-bleed));
+      height: calc(var(--tr-doc-h) + 2 * var(--gdt-bleed));
+      margin: 32px auto;
+      overflow: clip;
+      background: var(--tr-surface);
+      outline: var(--tr-rule-thin) solid var(--tr-border-soft);
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    /* La sagoma del marchio: al vivo dall'angolo alto destro, dietro a tutto */
+    .gdt-watermark {
+      position: absolute;
+      top: calc(var(--gdt-bleed) - 70px);
+      right: calc(var(--gdt-bleed) - 250px);
+      width: 640px;
+      height: auto;
+      opacity: var(--tr-watermark-opacity);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .gdt-sheet {
+      position: absolute;
+      inset: var(--gdt-bleed);
+      box-sizing: border-box;
+      padding: var(--gdt-pad-top) var(--gdt-pad-x) var(--gdt-pad-bottom);
+      display: flex;
+      flex-direction: column;
+      font-family: var(--tr-font-display);
+      font-size: var(--gdt-text);
+      line-height: 1.5;
+      color: var(--tr-ink-600);
+      -webkit-font-smoothing: antialiased;
+    }
+    .gdt-sheet p { margin: 0; }
+
+    /* Le etichette mono blu stanno in brand/600: a questa misura il blu logo
+       non regge il 4,5:1 (vedi traccia-doc.css, riga del tipo). */
+    .gdt-sheet .tr-eyebrow__label { color: var(--tr-brand-600); font-size: 11px; }
+    .gdt-sheet .tr-eyebrow__line { background: var(--tr-border-soft); }
+    .gdt-sheet .tr-eyebrow__note { font-size: 10px; }
+
+    /* ---- Testata ---- */
+    .gdt-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--tr-space-5);
+      padding-bottom: var(--tr-space-3);
+      border-bottom: var(--tr-rule-thin) solid var(--gdt-rule);
+    }
+    .gdt-head .tr-brandmark__logo { height: 24px; }
+    .gdt-head .tr-brandmark__wordmark { font-size: 15px; }
+    .gdt-head__ref {
+      font-family: var(--tr-font-mono);
+      font-weight: var(--tr-weight-semibold);
+      font-size: 10px;
+      letter-spacing: var(--tr-tracking-mono-wide);
+      text-transform: uppercase;
+      color: var(--tr-brand-600);
+    }
+
+    /* ---- Apertura ---- */
+    .gdt-hero { margin-top: var(--gdt-block); }
+    .gdt-hero .tr-accent-dash { margin-bottom: var(--tr-space-3); }
+    .gdt-product {
+      margin: 0;
+      font-family: var(--tr-font-display);
+      font-weight: var(--tr-weight-display);
+      font-size: 42px;
+      line-height: 1;
+      letter-spacing: var(--tr-tracking-display);
+      color: var(--tr-ink-900);
+    }
+    .gdt-hero .tr-h2 {
+      margin-top: var(--tr-space-3);
+      font-size: 22px;
+      line-height: 1.1;
+    }
+    .gdt-lead {
+      margin-top: var(--tr-space-3) !important;
+      max-width: 64ch;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--tr-ink-600);
+    }
+    .gdt-lead strong { font-weight: var(--tr-weight-semibold); color: var(--tr-ink-900); }
+
+    /* ---- Ambiti: riga specifiche ---- */
+    .gdt-scope {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--tr-space-2) var(--tr-space-4);
+      margin-top: var(--tr-space-4);
+      padding-top: var(--tr-space-3);
+      border-top: var(--tr-rule-thin) solid var(--gdt-rule);
+    }
+    .gdt-scope__label {
+      font-family: var(--tr-font-mono);
+      font-weight: var(--tr-weight-semibold);
+      font-size: 10px;
+      letter-spacing: var(--tr-tracking-mono-wide);
+      text-transform: uppercase;
+      color: var(--tr-brand-600);
+    }
+    .gdt-scope .tr-specs__item { font-size: 10px; letter-spacing: 0.06em; gap: var(--tr-space-2); color: var(--tr-ink-900); }
+    .gdt-scope .tr-dot { width: var(--tr-dot-size-sm); height: var(--tr-dot-size-sm); }
+
+    /* ---- Blocco generico ---- */
+    .gdt-block { margin-top: var(--gdt-block); }
+    .gdt-block > .tr-h3 { margin-top: var(--tr-space-3); font-size: 19px; line-height: 1.15; }
+
+    /* ---- Cosa fa: i quattro passi ---- */
+    .gdt-steps {
+      margin: var(--tr-space-4) 0 0;   /* l'<ol> porta un margine inferiore suo */
+      --tr-circle-md: 30px;
+      gap: var(--tr-space-4);
+    }
+    .gdt-steps .tr-step { align-items: flex-start; text-align: left; gap: var(--tr-space-2); }
+    .gdt-steps.tr-steps--linked::before { left: 30px; right: calc(25% - 0px); top: 15px; }
+    .gdt-steps .tr-circle { font-size: 11px; }
+    .gdt-steps .tr-step__title { font-size: 12.5px; margin-top: var(--tr-space-1); }
+    .gdt-steps .tr-step__sub { font-size: 12px; line-height: 1.45; color: var(--tr-ink-600); max-width: none; }
+
+    /* ---- In rete: i tre interlocutori della banca ----
+       E' il blocco da mettere in evidenza, e lo si distingue senza box: il
+       filetto in testa alle tre voci e' brand/300 — la linea secondaria del
+       sistema — invece del grigio delle voci sotto, e ogni voce apre con la
+       direzione del dato. */
+    .gdt-net {
+      list-style: none;
+      margin: var(--tr-space-4) 0 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--tr-space-5);
+    }
+    .gdt-net__item {
+      padding-top: var(--tr-space-3);
+      border-top: var(--tr-rule-medium) solid var(--tr-brand-300);
+    }
+    .gdt-net__who {
+      display: flex;
+      align-items: center;
+      gap: var(--tr-space-2);
+      font-family: var(--tr-font-mono);
+      font-weight: var(--tr-weight-semibold);
+      font-size: 10px;
+      letter-spacing: var(--tr-tracking-mono-mid);
+      text-transform: uppercase;
+      color: var(--tr-brand-600);
+    }
+    .gdt-net__who svg { width: 16px; height: 16px; color: var(--tr-brand-500); flex: none; }
+    .gdt-net__title {
+      margin-top: var(--tr-space-2) !important;
+      font-weight: var(--tr-weight-semibold);
+      font-size: 13.5px;
+      line-height: 1.3;
+      color: var(--tr-ink-900);
+    }
+    .gdt-net__body { margin-top: 3px !important; font-size: 12px; line-height: 1.5; }
+
+    /* ---- Cosa semplifica: quattro voci ---- */
+    .gdt-gains {
+      list-style: none;
+      margin: var(--tr-space-4) 0 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--tr-space-3) var(--tr-space-6);
+    }
+    .gdt-gain {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      column-gap: var(--tr-space-3);
+      padding-top: var(--tr-space-3);
+      border-top: var(--tr-rule-thin) solid var(--gdt-rule);
+    }
+    .gdt-gain svg { width: 20px; height: 20px; color: var(--tr-brand-500); margin-top: 1px; }
+    .gdt-gain__title {
+      font-weight: var(--tr-weight-semibold);
+      font-size: 13.5px;
+      line-height: 1.3;
+      color: var(--tr-ink-900);
+    }
+    .gdt-gain__body { margin-top: 3px !important; font-size: 12px; line-height: 1.5; }
+
+    /* ---- Chiusura: l'invito e l'email, con il QR a fianco ----
+       Scende in fondo al foglio con margin-top: auto, ma con un minimo
+       garantito: lo scarto della pagina resta sopra, mai contro il testo.
+       Il congresso e' gia' nella testata, quindi qui niente eyebrow: apre
+       un filetto, come il piede. Si scrive e basta — niente stand, niente
+       telefono: il contatto e' l'email. */
+    .gdt-close {
+      margin-top: auto;
+      padding-top: var(--gdt-block);
+    }
+    .gdt-close__row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--tr-space-6);
+      align-items: center;
+      padding-top: var(--tr-space-4);
+      border-top: var(--tr-rule-thin) solid var(--gdt-rule);
+    }
+    .gdt-close .tr-h3 { font-size: 19px; line-height: 1.15; }
+    .gdt-close__body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--tr-space-6);
+      align-items: end;
+      margin-top: var(--tr-space-2);
+    }
+    .gdt-close__text { font-size: 12px; }
+    .gdt-contacts { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+    .gdt-contacts li { display: flex; align-items: baseline; gap: var(--tr-space-3); }
+    .gdt-contacts__k {
+      width: 56px;
+      font-family: var(--tr-font-mono);
+      font-size: 9.5px;
+      letter-spacing: var(--tr-tracking-mono);
+      text-transform: uppercase;
+      color: var(--tr-ink-400);
+    }
+    .gdt-contacts__v { font-weight: var(--tr-weight-semibold); font-size: 13px; color: var(--tr-ink-900); text-decoration: none; }
+    .gdt-qr { display: flex; flex-direction: column; align-items: center; gap: var(--tr-space-1); }
+    .gdt-qr img { width: 68px; height: 68px; display: block; }
+    .gdt-qr span {
+      font-family: var(--tr-font-mono);
+      font-size: 8.5px;
+      letter-spacing: var(--tr-tracking-mono);
+      text-transform: uppercase;
+      color: var(--tr-ink-400);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* ---- Piede: il marchio e le credenziali, su una riga sola ----
+       Niente ragione sociale, sede e P.IVA: e' un volantino, non un
+       documento formale, e chi emette lo dice gia' il marchio. Restano le
+       certificazioni, con il badge accanto all'elenco che certifica. */
+    .gdt-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--tr-space-5);
+      margin-top: var(--gdt-block);
+      padding-top: var(--tr-space-3);
+      border-top: var(--tr-rule-thin) solid var(--gdt-rule);
+    }
+    .gdt-foot .tr-brandmark__logo { height: 18px; }
+    .gdt-foot .tr-brandmark__wordmark { font-size: 12px; }
+    .gdt-certs {
+      display: flex;
+      align-items: center;
+      gap: var(--tr-space-4);
+    }
+    .gdt-certs__text { line-height: 1.45; }
+    .gdt-certs__label {
+      display: block;
+      font-family: var(--tr-font-mono);
+      font-weight: var(--tr-weight-semibold);
+      font-size: 9px;
+      letter-spacing: var(--tr-tracking-mono-mid);
+      text-transform: uppercase;
+      color: var(--tr-brand-600);
+      white-space: nowrap;
+    }
+    .gdt-certs__list {
+      display: block;
+      font-family: var(--tr-font-mono);
+      font-size: 9px;
+      letter-spacing: 0.04em;
+      color: var(--tr-ink-400);
+      white-space: nowrap;
+    }
+    .gdt-certs img { height: 22px; width: auto; display: block; flex: none; }
+
+    @media print {
+      body { background: none; }
+      .gdt-page { margin: 0; outline: 0; }
+    }
+  </style>
+</head>
+<body>
+  <article class="gdt-page" aria-label="GeDon Banche — brochure A.I.BA.T. 2026">
+    <img class="gdt-watermark" src="../assets/logo-traccia-outline.svg" alt="" aria-hidden="true">
+
+    <div class="gdt-sheet">
+
+      <header class="gdt-head">
+        <span class="tr-brandmark">
+          <img class="tr-brandmark__logo" src="../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
+          <span class="tr-brandmark__wordmark">La Traccia</span>
+        </span>
+        <span class="gdt-head__ref">A.I.BA.T. 2026 · Torino · 23–24 ottobre</span>
+      </header>
+
+      <!-- Apertura: il prodotto, la promessa, che cosa fa in una frase -->
+      <section class="gdt-hero">
+        <span class="tr-accent-dash"></span>
+        <h1 class="gdt-product">GeDon Banche</h1>
+        <p class="tr-h2">Il lavoro quotidiano della banca, più <em>semplice</em></p>
+        <p class="gdt-lead">
+          Il gestionale web che accompagna ogni tessuto <strong>dall’arrivo in banca all’innesto</strong>:
+          un unico sistema, in rete con i centri trapianti, senza carta e senza ricopiare i dati.
+        </p>
+        <div class="gdt-scope">
+          <span class="gdt-scope__label">Banche</span>
+          <span class="tr-specs__item"><span class="tr-dot"></span>Muscolo-scheletriche</span>
+          <span class="tr-specs__item"><span class="tr-dot"></span>Cute</span>
+          <span class="tr-specs__item"><span class="tr-dot"></span>Cardiovascolari</span>
+          <span class="tr-specs__item"><span class="tr-dot"></span>Membrana amniotica</span>
+          <span class="tr-specs__item"><span class="tr-dot"></span>Sangue cordonale</span>
+        </div>
+      </section>
+
+      <!-- Cosa fa: il percorso del tessuto in quattro passi -->
+      <section class="gdt-block">
+        <div class="tr-eyebrow">
+          <span class="tr-eyebrow__label">Cosa fa</span>
+          <span class="tr-eyebrow__line"></span>
+          <span class="tr-eyebrow__note">Il percorso del tessuto</span>
+        </div>
+        <ol class="tr-steps tr-steps--linked gdt-steps" style="list-style:none;padding:0;">
+          <li class="tr-step">
+            <span class="tr-circle">01</span>
+            <p class="tr-step__title">Accettazione</p>
+            <p class="tr-step__sub">Donatore dal CRT, checklist e quarantena.</p>
+          </li>
+          <li class="tr-step">
+            <span class="tr-circle">02</span>
+            <p class="tr-step__title">Lavorazione</p>
+            <p class="tr-step__sub">Processazione, esami e idoneità del tessuto.</p>
+          </li>
+          <li class="tr-step">
+            <span class="tr-circle">03</span>
+            <p class="tr-step__title">Conservazione</p>
+            <p class="tr-step__sub">Frigoriferi, congelatori e azoto, con scadenze.</p>
+          </li>
+          <li class="tr-step">
+            <span class="tr-circle">04</span>
+            <p class="tr-step__title">Distribuzione</p>
+            <p class="tr-step__sub">Richieste, assegnazione, cessione e innesto.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- In rete: il blocco da mettere in evidenza — CRT, centri trapianto, CNT -->
+      <section class="gdt-block">
+        <div class="tr-eyebrow">
+          <span class="tr-eyebrow__label">In rete</span>
+          <span class="tr-eyebrow__line"></span>
+          <span class="tr-eyebrow__note">Dal regionale al nazionale</span>
+        </div>
+        <h2 class="tr-h3">Collegato a tutto il sistema <em>trapianti</em></h2>
+        <ul class="gdt-net">
+          <li class="gdt-net__item">
+            <p class="gdt-net__who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="m7.5 10 4.5 4.5 4.5-4.5"/><path d="M4 20.5h16"/></svg><span>Centro regionale</span></p>
+            <p class="gdt-net__title">Niente da ricopiare</p>
+            <p class="gdt-net__body">Donatore e donazione arrivano dal CRT già registrati.</p>
+          </li>
+          <li class="gdt-net__item">
+            <p class="gdt-net__who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 4.5h6v6"/><path d="M19.5 4.5 11 13"/><path d="M18 14.5v5H4.5V6H10"/></svg><span>Centri trapianto</span></p>
+            <p class="gdt-net__title">Richieste e tariffazione</p>
+            <p class="gdt-net__body">Richieste, cessioni e tariffe degli scambi in un unico flusso.</p>
+          </li>
+          <li class="gdt-net__item">
+            <p class="gdt-net__who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 14.5v-11"/><path d="M7.5 8 12 3.5 16.5 8"/><path d="M4 20.5h16"/></svg><span>Centro nazionale</span></p>
+            <p class="gdt-net__title">Rendicontazione al CNT</p>
+            <p class="gdt-net__body">Attività ed esiti arrivano al Centro Nazionale senza ricompilarli.</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Cosa semplifica: il lavoro di ogni giorno -->
+      <section class="gdt-block">
+        <div class="tr-eyebrow">
+          <span class="tr-eyebrow__label">Cosa ti semplifica</span>
+          <span class="tr-eyebrow__line"></span>
+          <span class="tr-eyebrow__note">Ogni giorno, in banca</span>
+        </div>
+        <h2 class="tr-h3">Meno tempo sulle carte, più tempo sui <em>tessuti</em></h2>
+        <ul class="gdt-gains">
+          <li class="gdt-gain">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 3.5h8v8L11 21 3.5 13.5z"/><path d="M16.75 7.25v.01"/></svg>
+            <div>
+              <p class="gdt-gain__title">Codice SEC ed etichette in un clic</p>
+              <p class="gdt-gain__body">Il sistema genera il codice SEC con il suo barcode e le etichette QR per prodotti e provette.</p>
+            </div>
+          </li>
+          <li class="gdt-gain">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+            <div>
+              <p class="gdt-gain__title">Ogni tessuto sotto controllo</p>
+              <p class="gdt-gain__body">Quarantena, disponibilità e scadenze a colpo d’occhio, con un avviso quando serve attenzione.</p>
+            </div>
+          </li>
+          <li class="gdt-gain">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 3.5H6v17h12V8z"/><path d="M13.5 3.5V8H18"/></svg>
+            <div>
+              <p class="gdt-gain__title">Report e indici già calcolati</p>
+              <p class="gdt-gain__body">Indici di qualità secondo il piano della banca, statistiche esportabili e schede pronte da stampare.</p>
+            </div>
+          </li>
+          <li class="gdt-gain">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/><path d="M12 14.5v2"/></svg>
+            <div>
+              <p class="gdt-gain__title">Sempre pronti per audit e ispezioni</p>
+              <p class="gdt-gain__body">Ogni operazione registra utente, data e ora: la storia di un tessuto, dal donatore all’innesto, è sempre lì.</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Chiusura: l'invito a scriverci, con l'email e il QR per la demo -->
+      <section class="gdt-close">
+        <div class="gdt-close__row">
+          <div>
+            <p class="tr-h3">Vediamolo sul percorso della tua <em>banca</em></p>
+            <div class="gdt-close__body">
+              <p class="gdt-close__text">Saremo al congresso: scrivici per incontrarci a Torino o per fissare una demo dedicata.</p>
+              <ul class="gdt-contacts">
+                <li><span class="gdt-contacts__k">Email</span><a class="gdt-contacts__v" href="mailto:commerciale@latraccia.it">commerciale@latraccia.it</a></li>
+                <li><span class="gdt-contacts__k">Web</span><a class="gdt-contacts__v" href="https://www.latraccia.it">www.latraccia.it</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="gdt-qr">
+            <img src="qr-demo-gedon-banche.svg" alt="Codice QR: email a commerciale@latraccia.it per richiedere una demo di GeDon Banche">
+            <span>Inquadra<br>e scrivici</span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="gdt-foot">
+        <span class="tr-brandmark">
+          <img class="tr-brandmark__logo" src="../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
+          <span class="tr-brandmark__wordmark">La Traccia</span>
+        </span>
+        <div class="gdt-certs">
+          <p class="gdt-certs__text">
+            <span class="gdt-certs__label">Certificazioni</span>
+            <span class="gdt-certs__list">ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125<br>UNI EN ISO 14001:2015 · UNI ISO 37001:2025 · PASS 24000:2022</span>
+          </p>
+          <!-- Badge ricampionato a 300 dpi alla misura di stampa (22px = 5,8mm), in JPEG
+               su fondo bianco come la carta: l'originale in assets/ arriva a ~520 dpi
+               e da solo pesava 40 KB del PDF. -->
+          <img src="certificazioni-300dpi.jpg" alt="IMQ Certified ISO 9001:2015, ISO 13485:2016, ISO/IEC 27001:2022 — SI Cert UNI PdR 125">
+        </div>
+      </footer>
+
+    </div>
+  </article>
+</body>
+</html>
