@@ -1,4 +1,4 @@
-// Genera i PDF della brochure GeDon Tessuti — A.I.BA.T. 2026.
+// Genera i PDF della brochure GeDon Banche — A.I.BA.T. 2026.
 //
 //   node brochure/build.mjs
 //
@@ -28,14 +28,14 @@ try {
 }
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const source = pathToFileURL(path.join(here, "gedon-tessuti-aibat-2026.html")).href;
+const source = pathToFileURL(path.join(here, "gedon-banche-aibat-2026.html")).href;
 
 // Il formato si dichiara con @page e preferCSSPageSize: Chromium quantizza la
 // pagina a passi di 0,96pt, e per questa via lo scarto resta sotto 0,1mm
 // (con width/height passati a page.pdf arriva a 0,24mm).
 const outputs = [
-  { file: "GeDon-Tessuti_AIBAT-2026_A4.pdf", bleed: false, size: "210mm 297mm" },
-  { file: "GeDon-Tessuti_AIBAT-2026_A4_tipografia-abbondanza-3mm.pdf", bleed: true, size: "216mm 303mm" },
+  { file: "GeDon-Banche_AIBAT-2026_A4.pdf", bleed: false, size: "210mm 297mm" },
+  { file: "GeDon-Banche_AIBAT-2026_A4_tipografia-abbondanza-3mm.pdf", bleed: true, size: "216mm 303mm" },
 ];
 
 const browser = await chromium.launch();
