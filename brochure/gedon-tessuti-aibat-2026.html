@@ -292,25 +292,29 @@
       line-height: 1.3;
     }
 
-    /* ---- Piede: chi emette e con quali credenziali ---- */
+    /* ---- Piede: il marchio e le credenziali, su una riga sola ----
+       Niente ragione sociale, sede e P.IVA: e' un volantino, non un
+       documento formale, e chi emette lo dice gia' il marchio. Restano le
+       certificazioni, con il badge accanto all'elenco che certifica. */
     .gdt-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--tr-space-5);
       margin-top: var(--gdt-block);
       padding-top: var(--tr-space-3);
       border-top: var(--tr-rule-thin) solid var(--gdt-rule);
     }
-    .gdt-foot__id { display: flex; align-items: center; justify-content: space-between; gap: var(--tr-space-4); }
     .gdt-foot .tr-brandmark__logo { height: 18px; }
     .gdt-foot .tr-brandmark__wordmark { font-size: 12px; }
-    .gdt-foot__legal { font-size: 11px; color: var(--tr-ink-600); text-align: right; }
-    .gdt-foot__legal b { font-weight: var(--tr-weight-semibold); color: var(--tr-ink-900); }
-    .gdt-foot__legal span { font-family: var(--tr-font-mono); font-size: 9.5px; letter-spacing: var(--tr-tracking-mono-ui); }
     .gdt-certs {
       display: flex;
       align-items: center;
-      gap: var(--tr-space-3);
-      margin-top: var(--tr-space-2);
+      gap: var(--tr-space-4);
     }
+    .gdt-certs__text { line-height: 1.45; }
     .gdt-certs__label {
+      display: block;
       font-family: var(--tr-font-mono);
       font-weight: var(--tr-weight-semibold);
       font-size: 9px;
@@ -320,11 +324,12 @@
       white-space: nowrap;
     }
     .gdt-certs__list {
-      flex: 1 1 auto;
+      display: block;
       font-family: var(--tr-font-mono);
       font-size: 9px;
       letter-spacing: 0.04em;
       color: var(--tr-ink-400);
+      white-space: nowrap;
     }
     .gdt-certs img { height: 22px; width: auto; display: block; flex: none; }
 
@@ -486,16 +491,15 @@
       </section>
 
       <footer class="gdt-foot">
-        <div class="gdt-foot__id">
-          <span class="tr-brandmark">
-            <img class="tr-brandmark__logo" src="../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
-            <span class="tr-brandmark__wordmark">La Traccia</span>
-          </span>
-          <p class="gdt-foot__legal"><b>Cooperativa E.D.P. La Traccia</b> · Recinto II Fiorentini, 10 — 75100 Matera · <span>P.IVA 00317370773</span></p>
-        </div>
+        <span class="tr-brandmark">
+          <img class="tr-brandmark__logo" src="../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
+          <span class="tr-brandmark__wordmark">La Traccia</span>
+        </span>
         <div class="gdt-certs">
-          <span class="gdt-certs__label">Certificazioni</span>
-          <span class="gdt-certs__list">ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125<br>UNI EN ISO 14001:2015 · UNI ISO 37001:2025 · PASS 24000:2022</span>
+          <p class="gdt-certs__text">
+            <span class="gdt-certs__label">Certificazioni</span>
+            <span class="gdt-certs__list">ISO 9001:2015 · ISO 13485:2016 · ISO/IEC 27001:2022 · UNI PdR 125<br>UNI EN ISO 14001:2015 · UNI ISO 37001:2025 · PASS 24000:2022</span>
+          </p>
           <img src="../assets/certificazioni.png" alt="IMQ Certified ISO 9001:2015, ISO 13485:2016, ISO/IEC 27001:2022 — SI Cert UNI PdR 125">
         </div>
       </footer>
