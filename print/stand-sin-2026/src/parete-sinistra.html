@@ -2,99 +2,27 @@
 <html lang="it" data-w="420" data-h="220">
 <head>
   <meta charset="utf-8">
-  <title>La Traccia — SIN 2026 — Parete sinistra · Ambulatorio con intelligenza artificiale — 420×220 cm (1:10)</title>
+  <title>La Traccia — SIN 2026 — Parete sinistra — 420×220 cm (1:10)</title>
   <link rel="stylesheet" href="stand.css">
   <style>
     /* File 420×220, area visibile 370×200: 10 cm nascosti per lato, piu' gli
-       ultimi 30 cm a destra senza grafica (giunzione dei pannelli). Qui il
-       primo concetto per esteso: a sinistra titolo, lead e firma; a destra
-       i quattro passi in colonna. La parete si legge da dentro lo stand. */
+       ultimi 30 cm a destra senza grafica (giunzione dei pannelli).
+       Niente testo: solo la sagoma outline del marchio, a sbordo dal bordo
+       alto, verso l'ingresso dello stand (la giunzione e' dalla parte del
+       fondale). E' il watermark del sistema, alla scala della parete. */
     @page { size: 420mm 220mm; }
     .st-sheet { --w: 420mm; --h: 220mm; --hide-r: 40mm; }
-    .wall { display: flex; flex-direction: column; padding: 16mm 20mm 14mm; }
-    .wall__grid {
-      flex: 1 1 auto;
-      display: grid;
-      grid-template-columns: 3fr 2fr;
-      gap: 36mm;
-      margin-top: var(--s-6);
-      align-items: start;
-    }
-    .wall__text { display: flex; flex-direction: column; height: 100%; }
-    .wall__text .st-h1 { --t-display: 15mm; }
-    .wall__text .st-lead { margin-top: var(--s-5); font-size: 6mm; max-width: none; }
-    .wall__cta { margin-top: var(--s-6); }
-    .wall__sign { margin-top: auto; padding-top: var(--s-6); }
-    .wall__flow { --flow-n: 4; --flow-circle: 22mm; --t-step: 6mm; gap: 6mm; }
-    .wall__flow .st-step { gap: 10mm; }
-    .wall__flow .st-step__sub { font-size: 4.2mm; }
+    .st-watermark { width: 170mm; top: -46mm; left: 34mm; }
   </style>
 </head>
 <body>
   <div class="st-sheet st-sheet--wall">
-    <div class="st-safe wall">
-      <div class="st-eyebrow">
-        <span class="st-eyebrow__label">Ambulatorio · Intelligenza artificiale</span>
-        <span class="st-eyebrow__line"></span>
-        <span class="st-eyebrow__note">Novità SIN 2026</span>
-      </div>
+    <svg class="st-watermark" viewBox="0 0 594 717" aria-hidden="true">
+      <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+      <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+    </svg>
 
-      <div class="wall__grid">
-        <div class="wall__text">
-          <h1 class="st-h1">Il medico parla, il referto si compila <em>da&nbsp;sé</em></h1>
-          <p class="st-lead">
-            Durante la visita il medico parla con il paziente, come sempre. Il microfono Traccia
-            ascolta, decodifica il contenuto e compila il referto: anamnesi, esame obiettivo,
-            parametri. Il medico verifica, corregge e firma.
-          </p>
-          <p class="st-mono st-mono--brand st-mono--wide wall__cta" style="margin-bottom:0">Chiedi una dimostrazione allo stand</p>
-          <div class="wall__sign">
-            <div class="st-lockup" data-fit-w="64" role="img" aria-label="La Traccia">
-              <svg class="st-lockup__mark" viewBox="0 0 594 717" aria-hidden="true">
-                <path fill="#4194d7" d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
-                <path fill="#4194d7" d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
-              </svg>
-              <span class="st-lockup__word">La Traccia</span>
-            </div>
-          </div>
-        </div>
-
-        <ol class="st-flow st-flow--col wall__flow">
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20.5v-1a5.5 5.5 0 0 1 5.5-5.5h2a5.5 5.5 0 0 1 5.5 5.5v1"/><path d="M17.5 8a3.5 3.5 0 0 1 0 6"/><path d="M20 5a7.5 7.5 0 0 1 0 12"/></svg></span>
-            <div class="st-step__text">
-              <span class="st-step__n">01</span>
-              <p class="st-step__title">Il medico parla</p>
-              <p class="st-step__sub">Un dialogo con il paziente, senza tastiera.</p>
-            </div>
-          </li>
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10.5a6.5 6.5 0 0 0 13 0"/><path d="M12 17v3.5"/><path d="M8.5 20.5h7"/></svg></span>
-            <div class="st-step__text">
-              <span class="st-step__n">02</span>
-              <p class="st-step__title">Il microfono Traccia ascolta</p>
-              <p class="st-step__sub">Un dispositivo dedicato, senza fili: segue il medico anche al lettino.</p>
-            </div>
-          </li>
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8V5.5a2 2 0 0 1 2-2H8"/><path d="M16 3.5h2.5a2 2 0 0 1 2 2V8"/><path d="M20.5 16v2.5a2 2 0 0 1-2 2H16"/><path d="M8 20.5H5.5a2 2 0 0 1-2-2V16"/><path d="M6.5 12h11"/></svg></span>
-            <div class="st-step__text">
-              <span class="st-step__n">03</span>
-              <p class="st-step__title">L'IA decodifica</p>
-              <p class="st-step__sub">Trascrive in tempo reale e riconosce i termini della nefrologia.</p>
-            </div>
-          </li>
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 3.5H6v17h12V8z"/><path d="M13.5 3.5V8H18"/><path d="m9 14.5 1.75 1.75L14.5 12.5"/></svg></span>
-            <div class="st-step__text">
-              <span class="st-step__n">04</span>
-              <p class="st-step__title">Il referto si compila</p>
-              <p class="st-step__sub">Campi strutturati e testo pronti per la verifica e la firma.</p>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </div>
+    <div class="st-safe"></div>
 
     <div class="st-guide st-guide--hidden">
       <span class="st-guide__label" style="left: 2mm; top: 2mm">Area visibile 370 × 200 cm · 10 cm nascosti per lato</span>

@@ -2,100 +2,26 @@
 <html lang="it" data-w="470" data-h="220">
 <head>
   <meta charset="utf-8">
-  <title>La Traccia — SIN 2026 — Parete destra · Cartella, IA e processo infermieristico — 470×220 cm (1:10)</title>
+  <title>La Traccia — SIN 2026 — Parete destra — 470×220 cm (1:10)</title>
   <link rel="stylesheet" href="stand.css">
   <style>
-    /* File 470×220, area visibile 450×200: 10 cm nascosti per lato. Il
-       secondo concetto per esteso: i dati in cartella navigati con l'IA e
-       il processo infermieristico, con l'imaging come esempio concreto.
-       Stesso impianto della parete sinistra, specchiato: i passi a sinistra,
-       il testo a destra, verso il fondale. */
+    /* File 470×220, area visibile 450×200: 10 cm nascosti per lato.
+       Niente testo: solo la sagoma outline del marchio, a sbordo dal bordo
+       alto, verso l'ingresso dello stand — specchiata nella posizione, non
+       nel disegno: il marchio non si ribalta. */
     @page { size: 470mm 220mm; }
     .st-sheet { --w: 470mm; --h: 220mm; }
-    .wall { display: flex; flex-direction: column; padding: 16mm 20mm 14mm; }
-    .wall__grid {
-      flex: 1 1 auto;
-      display: grid;
-      grid-template-columns: 2fr 3fr;
-      gap: 40mm;
-      margin-top: var(--s-6);
-      align-items: start;
-    }
-    .wall__text { display: flex; flex-direction: column; height: 100%; }
-    .wall__text .st-h1 { --t-display: 15mm; }
-    .wall__text .st-lead { margin-top: var(--s-5); font-size: 6mm; max-width: none; }
-    .wall__cta { margin-top: var(--s-6); }
-    .wall__sign { margin-top: auto; padding-top: var(--s-6); display: flex; justify-content: flex-end; }
-    .wall__flow { --flow-n: 4; --flow-circle: 22mm; --t-step: 6mm; gap: 6mm; }
-    .wall__flow .st-step { gap: 10mm; }
-    .wall__flow .st-step__sub { font-size: 4.2mm; }
+    .st-watermark { width: 170mm; top: -46mm; right: 34mm; }
   </style>
 </head>
 <body>
   <div class="st-sheet st-sheet--wall">
-    <div class="st-safe wall">
-      <div class="st-eyebrow">
-        <span class="st-eyebrow__label">Cartella clinica · Intelligenza artificiale</span>
-        <span class="st-eyebrow__line"></span>
-        <span class="st-eyebrow__note">Novità SIN 2026</span>
-      </div>
+    <svg class="st-watermark" viewBox="0 0 594 717" aria-hidden="true">
+      <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+      <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+    </svg>
 
-      <div class="wall__grid">
-        <ol class="st-flow st-flow--col wall__flow">
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8.5A1.5 1.5 0 0 1 5 7h2.5l1.5-2.5h6L16.5 7H19a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 19 19H5a1.5 1.5 0 0 1-1.5-1.5z"/><circle cx="12" cy="12.75" r="3.5"/></svg></span>
-            <div class="st-step__text">
-              <span class="st-step__n">01</span>
-              <p class="st-step__title">Foto all'accesso vascolare</p>
-              <p class="st-step__sub">L'infermiere la scatta dal processo infermieristico, in cartella.</p>
-            </div>
-          </li>
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8V5.5a2 2 0 0 1 2-2H8"/><path d="M16 3.5h2.5a2 2 0 0 1 2 2V8"/><path d="M20.5 16v2.5a2 2 0 0 1-2 2H16"/><path d="M8 20.5H5.5a2 2 0 0 1-2-2V16"/><path d="M6.5 12h11"/></svg></span>
-            <div class="st-step__text">
-              <span class="st-step__n">02</span>
-              <p class="st-step__title">L'IA legge l'immagine</p>
-              <p class="st-step__sub">Riconosce i segni di infiammazione e li confronta con lo storico.</p>
-            </div>
-          </li>
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.75 21.25 20H2.75z"/><path d="M12 10v4"/><path d="M12 17v.01"/></svg></span>
-            <div class="st-step__text">
-              <span class="st-step__n">03</span>
-              <p class="st-step__title">La cartella segnala</p>
-              <p class="st-step__sub">L'esito entra nel diario e nelle schede del paziente.</p>
-            </div>
-          </li>
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5H6.5A1.5 1.5 0 0 0 5 6.5v13A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-13A1.5 1.5 0 0 0 17.5 5h-2"/><path d="M8.5 3.5h7v3h-7z"/><path d="M9 12h6"/><path d="M9 15.5h6"/></svg></span>
-            <div class="st-step__text">
-              <span class="st-step__n">04</span>
-              <p class="st-step__title">Il processo guida</p>
-              <p class="st-step__sub">Il processo infermieristico propone il passo successivo.</p>
-            </div>
-          </li>
-        </ol>
-
-        <div class="wall__text">
-          <h1 class="st-h1">I dati in cartella, navigati con l'IA e il processo <em>infermieristico</em></h1>
-          <p class="st-lead">
-            Un assistente che legge la cartella e risponde: storico, terapie, esami. E nel processo
-            infermieristico entra l'imaging diagnostico: una foto dell'accesso vascolare basta per
-            riconoscere i segni di infiammazione.
-          </p>
-          <p class="st-mono st-mono--brand st-mono--wide wall__cta" style="margin-bottom:0">Chiedi una dimostrazione allo stand</p>
-          <div class="wall__sign">
-            <div class="st-lockup" data-fit-w="64" role="img" aria-label="La Traccia">
-              <svg class="st-lockup__mark" viewBox="0 0 594 717" aria-hidden="true">
-                <path fill="#4194d7" d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
-                <path fill="#4194d7" d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
-              </svg>
-              <span class="st-lockup__word">La Traccia</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="st-safe"></div>
 
     <div class="st-guide st-guide--hidden">
       <span class="st-guide__label" style="left: 2mm; top: 2mm">Area visibile 450 × 200 cm · 10 cm nascosti per lato</span>

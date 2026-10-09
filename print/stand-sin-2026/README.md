@@ -25,10 +25,10 @@ raster e senza trasparenze.
 | `fondale-2-quinta--solo-logo.pdf` | Parete fondale 2 — variante | 220×220 | ~200×200 | Solo il lockup |
 | `totem-a-istituzionale.pdf` | Totem esterni, lato A | 100×200 | — | Marchio, claim istituzionale, linee di prodotto, certificazioni, contatti |
 | `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | Ambulatorio con IA: il medico parla → il microfono Traccia decodifica → il referto si compila |
-| `totem-b2-cartella-ia.pdf` | Totem 2, lato B | 100×200 | — | Cartella, IA e processo infermieristico: foto all'accesso vascolare → l'IA legge l'immagine → la cartella segnala e guida |
+| `totem-b2-cartella-ia.pdf` | Totem 2, lato B | 100×200 | — | Cartella, IA e processo infermieristico: una domanda alla cartella → l'IA naviga lo storico → il processo infermieristico guida |
 | `totem-b-concetti.pdf` | Totem, lato B — variante | 100×200 | — | I due concetti sullo stesso lato, per avere i due totem identici |
-| `parete-sinistra.pdf` | Parete sinistra — **proposta** | 420×220 | ~370×200 | Il primo concetto per esteso, in quattro passi. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
-| `parete-destra.pdf` | Parete destra — **proposta** | 470×220 | ~450×200 | Il secondo concetto per esteso, in quattro passi, specchiato |
+| `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Solo grafica: la sagoma outline del marchio a sbordo dal bordo alto, verso l'ingresso. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
+| `parete-destra.pdf` | Parete destra | 470×220 | ~450×200 | Solo grafica: la stessa sagoma, a sbordo dal bordo alto verso l'ingresso |
 
 Le pagine misurano il nominale a meno di 0,1 mm (Chromium arrotonda i
 millimetri a pixel interi): in opera e' un millimetro su una parete di quasi
@@ -51,26 +51,31 @@ troppo c'e' la variante `--solo-logo`.
 
 **Totem, lato A: chi siamo.** Marchio in testa, eyebrow con la ragione sociale,
 il claim istituzionale e il lead presi dalla vetrina del sistema (`index.html`,
-blocco introduttivo), le tre linee di prodotto come `.tr-numbered-list`, e in
-calce la riga certificazioni — che sta sulle superfici pubbliche, e un totem in
-corsia lo e' — con sito e email.
+blocco introduttivo; l'anno e' il 1980), tre linee di nefrologia e dialisi
+come `.tr-numbered-list` — e' un congresso di nefrologia, le altre aree non
+servono — e in calce la riga certificazioni, che sta sulle superfici
+pubbliche, e un totem in corsia lo e', con sito e email.
 
 **Totem, lato B: le novita', in modo grafico.** Nessuna schermata di prodotto:
 ogni concetto e' un titolo display con la parola chiave in blu e tre passi con
 icone sulla griglia del sistema (viewBox 24, tratto 2, estremita' tonde),
 collegati dalla linea `brand/300` di `.tr-steps`. Le icone nuove — persona che
-parla, microfono, fotocamera, inquadratura, cartella — seguono la stessa
-griglia delle ventidue del registro. Un concetto per totem (B1 e B2) si legge
-meglio da lontano; la variante `totem-b-concetti` li mette insieme.
+parla, microfono, fumetto, cartella — seguono la stessa griglia delle
+ventidue del registro; la lente e il documento sono quelle del registro. Un
+concetto per totem (B1 e B2) si legge meglio da lontano; la variante
+`totem-b-concetti` li mette insieme.
 
-**Pareti laterali: proposta.** Il brief non le descrive; l'allestitore le
-chiede. Portano i due concetti per esteso — titolo, lead, quattro passi in
-colonna, firma — nella stessa lingua dei totem, cosi' lo stand racconta una
-cosa sola: fuori il marchio e il perche' entrare, dentro il come.
+**Pareti laterali: solo grafica, e poca.** Niente testo: su ciascuna parete
+la sola sagoma outline del marchio, a sbordo dal bordo alto verso l'ingresso
+dello stand — a sinistra sulla parete sinistra, a destra su quella destra. La
+posizione e' specchiata, il disegno no: il marchio non si ribalta. E' il
+watermark del sistema alla scala della parete; tutto il resto e' bianco.
 
 ### Scala tipografica
 
 Due formati, due scale (`src/stand.css`). I valori sono centimetri in opera.
+Le pareti oggi non portano testo: la scala resta definita per quando dovesse
+servire.
 
 | | Pareti (lette in cammino, 3–6 m) | Totem (letti da fermi, 1,5–4 m) |
 |---|---|---|
@@ -105,11 +110,15 @@ trasparenze. Il file dichiara DeviceCMYK senza output intent: il profilo
 1. **Le due facce dei totem.** Qui lato A = istituzionale, lato B = un
    concetto per totem (B1 sul primo, B2 sul secondo). Se i due totem devono
    essere identici, il lato B e' `totem-b-concetti.pdf`.
-2. **Le pareti laterali** sono una proposta: il brief non le descriveva.
-3. **I dati istituzionali** sul totem A — «Leader in Italia nel software per
-   sanita' e pubblica amministrazione», «dal 1985», le tre linee di prodotto —
-   vengono dalla vetrina del design system, non da un testo approvato per la
-   fiera.
+2. **Il claim del totem A** — «Leader in Italia nel software per sanita' e
+   pubblica amministrazione» — e il lead vengono dalla vetrina del design
+   system, non da un testo approvato per la fiera. Le tre linee (cartella
+   clinica di nefrologia e dialisi; sedute di dialisi e trattamenti
+   domiciliari; ambulatori e telemedicina) sono una scelta per il pubblico
+   della SIN.
+3. **Il secondo concetto** e' raccontato senza l'imaging: l'assistente che
+   risponde sui dati della cartella e il processo infermieristico che guida
+   le attivita'.
 4. **La riga certificazioni** e' solo testo: i badge IMQ / SI Cert sono un PNG
    che ingrandito dieci volte non regge. Se servono, vanno chiesti in vettoriale
    agli enti.
