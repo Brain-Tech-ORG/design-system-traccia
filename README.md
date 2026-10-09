@@ -37,6 +37,8 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── carta-intestata.dotx      Carta intestata Word: il modello da usare
 │   ├── carta-intestata.docx      Lo stesso file, apribile come documento
 │   └── carta-intestata/          Il generatore (build.js + build.sh): il .dotx non si edita a mano
+├── print/
+│   └── stand-sin-2026/           Grafiche di stand (SIN 2026): sorgenti in scala 1:10, generatore, PDF CMYK in out/
 └── index.html                    Documentazione visiva / showcase
 ```
 

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="it" data-w="270" data-h="220">
+<head>
+  <meta charset="utf-8">
+  <title>La Traccia — SIN 2026 — Parete fondale 1 — 270×220 cm (1:10)</title>
+  <link rel="stylesheet" href="stand.css">
+  <style>
+    /* File 270×220, area visibile 250×200: 10 cm nascosti per lato.
+       Il marchio, e basta: il lockup a 210 cm di larghezza, poco sopra il
+       centro ottico; la sagoma outline a sbordo dall'angolo alto a destra. */
+    @page { size: 270mm 220mm; }
+    .st-sheet { --w: 270mm; --h: 220mm; }
+    .fondale__lockup {
+      position: absolute;
+      left: 50%;
+      top: 47%;
+      transform: translate(-50%, -50%);
+    }
+    /* Alta abbastanza perche' il triangolo interno resti sopra il wordmark. */
+    .st-watermark { width: 125mm; top: -62mm; right: -24mm; }
+  </style>
+</head>
+<body>
+  <div class="st-sheet st-sheet--wall">
+    <svg class="st-watermark" viewBox="0 0 594 717" aria-hidden="true">
+      <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+      <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+    </svg>
+
+    <div class="st-safe">
+      <div class="st-lockup fondale__lockup" data-fit-w="210" role="img" aria-label="La Traccia">
+        <svg class="st-lockup__mark" viewBox="0 0 594 717" aria-hidden="true">
+          <path fill="#4194d7" d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+          <path fill="#4194d7" d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+        </svg>
+        <span class="st-lockup__word">La Traccia</span>
+      </div>
+    </div>
+
+    <div class="st-guide st-guide--hidden">
+      <span class="st-guide__label" style="left: 2mm; top: 2mm">Area visibile 250 × 200 cm · 10 cm nascosti per lato</span>
+    </div>
+  </div>
+  <script src="stand.js"></script>
+</body>
+</html>
