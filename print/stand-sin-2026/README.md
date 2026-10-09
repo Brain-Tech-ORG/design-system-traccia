@@ -19,7 +19,7 @@ decimo), piu' la tavola di riepilogo.
 
 | N. | File | Pezzo |
 |---|---|---|
-| 00 | `00_riepilogo-esecutivo.pdf` | Tavola di riepilogo: miniature, file, specifiche, riferimenti (A4 orizzontale, 2 pagine) |
+| 00 | `00_riepilogo-esecutivo.pdf` | Tavola di riepilogo: miniature, file, specifiche, riferimenti (A4 orizzontale, 2 pagine, rev. 03) |
 | 01 | `01_parete-sinistra_420x220cm_scala-1-10.pdf` | Parete sinistra |
 | 02 | `02_parete-fondale-1_270x220cm_scala-1-10.pdf` | Parete fondale 1 |
 | 03 | `03_parete-fondale-2-quinta_220x220cm_scala-1-10.pdf` | Parete fondale 2 (quinta) |
@@ -34,7 +34,7 @@ rigenera con `node esecutivo.mjs`: non sta nel repository.
 
 Tutte in **scala 1:10**: 1 mm nel file = 1 cm in opera, quindi un PDF da
 270×220 mm e' la parete da 270×220 cm. Sono vettoriali, con i font incorporati
-(Archivo, IBM Plex Mono) dove c'e' testo, colori dichiarati in **DeviceCMYK**,
+(Archivo, IBM Plex Mono e, per il wordmark, Space Grotesk) dove c'e' testo, colori dichiarati in **DeviceCMYK**,
 senza immagini raster e senza trasparenze.
 
 | File | Pezzo | File (cm) | Area visibile (cm) | Contenuto |
@@ -69,7 +69,11 @@ stessa misura e alla stessa altezza del marchio del fondale: sul fondo dello
 stand il segno pieno resta uno solo, e la quinta gli risponde invece di
 ripeterlo.
 
-**Totem 1: modelli IA per la nefrologia.** In testa marchio, eyebrow
+**Il wordmark e' «traccia»**: tutto minuscolo, senza «la», in Space Grotesk
+700, come nel design system (`.tr-brandmark`): scritta 0,8 e distanza 0,34
+dell'altezza del marchio. Sui totem il lockup e' largo 54 cm.
+
+**Totem 1: modelli IA per la nefrologia.** In testa il lockup, eyebrow
 «Novita' · Hardware custom» e titolo display «Modelli IA per la nefrologia»
 (non «intelligenza artificiale»): che sia hardware custom lo dice la nota
 dell'eyebrow, non una didascalia sotto il disegno. Sotto, il **wireframe del
@@ -81,7 +85,7 @@ tratto d'accento: «Ambulatorio», «Rilevazioni a bordo letto». La sagoma
 outline sborda in basso.
 
 **Totem 2: istituzionale.** Un gioco con il marchio e il tema della gestione
-dei dati clinici con l'IA (gen BI). In testa marchio, eyebrow «Gen BI · Dati
+dei dati clinici con l'IA (gen BI). In testa il lockup, eyebrow «Gen BI · Dati
 clinici e IA» e titolo «I dati clinici prendono forma»; in calce
 certificazioni e contatti. In mezzo il **marchio fatto di punti**: le due
 figure del logo campionate su un reticolo parallelo ai loro lati, cosi' i bordi

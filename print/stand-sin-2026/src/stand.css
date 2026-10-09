@@ -21,6 +21,7 @@
 @font-face { font-family: "Archivo"; font-style: normal; font-weight: 800; src: url("../../../assets/fonts/ttf/Archivo-ExtraBold.ttf") format("truetype"); }
 @font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; src: url("../../../assets/fonts/ttf/IBMPlexMono-Regular.ttf") format("truetype"); }
 @font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 600; src: url("../../../assets/fonts/ttf/IBMPlexMono-SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight: 700; src: url("../../../assets/fonts/ttf/SpaceGrotesk-Bold.ttf") format("truetype"); }
 
 :root {
   /* In stampa il "paper" e' il supporto: niente tinta di fondo all'1%, che in
@@ -92,23 +93,24 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
    Marchio
    ========================================================================== */
 
-/* Lockup: marchio + wordmark affiancati, nelle proporzioni di .tr-brandmark
-   (marchio 28 : wordmark 17 : gap 12). Si dimensiona con --mark-h; con
-   data-fit-w="<mm>" lo script in fondo lo porta esattamente a quella larghezza. */
+/* Lockup: marchio + wordmark «traccia» affiancati, nelle proporzioni di
+   .tr-brandmark (scritta 0,8 e distanza 0,34 dell'altezza del marchio). Si
+   dimensiona con --mark-h; con data-fit-w="<mm>" lo script in fondo lo porta
+   esattamente a quella larghezza. */
 .st-lockup {
   display: inline-flex;
   align-items: center;
-  gap: calc(var(--mark-h) * 12 / 28);
+  gap: calc(var(--mark-h) * 0.34);
   --mark-h: 20mm;
 }
 .st-lockup__mark { height: var(--mark-h); width: auto; display: block; flex: none; }
 .st-lockup__word {
-  font-family: var(--tr-font-display);
-  font-weight: var(--tr-weight-display);
-  font-size: calc(var(--mark-h) * 17 / 28);
+  font-family: var(--tr-font-wordmark);
+  font-weight: var(--tr-weight-wordmark);
+  font-size: calc(var(--mark-h) * 0.8);
   line-height: 1;
   letter-spacing: var(--tr-tracking-wordmark);
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: var(--tr-ink-900);
   white-space: nowrap;
 }

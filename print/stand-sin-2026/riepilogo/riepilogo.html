@@ -33,8 +33,7 @@
 
     /* Testata: marchio a sinistra, riferimento del documento a destra. */
     .tr-header { padding-bottom: 3.5mm; }
-    .tr-brandmark__logo { height: 7mm; }
-    .tr-brandmark__wordmark { font-size: 4.3mm; }
+    .tr-brandmark { --tr-brandmark-h: 7mm; }
     .doc-ref {
       font-family: var(--tr-font-mono);
       font-weight: var(--tr-weight-semibold);
@@ -191,9 +190,9 @@
     <header class="tr-header">
       <span class="tr-brandmark">
         <img class="tr-brandmark__logo" src="../../../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
-        <span class="tr-brandmark__wordmark">La Traccia</span>
+        <span class="tr-brandmark__wordmark">traccia</span>
       </span>
-      <span class="doc-ref">Esecutivo di stampa · Rev. 02 · 9 ottobre 2026</span>
+      <span class="doc-ref">Esecutivo di stampa · Rev. 03 · 9 ottobre 2026</span>
     </header>
 
     <div class="intro">
@@ -252,9 +251,9 @@
     <header class="tr-header">
       <span class="tr-brandmark">
         <img class="tr-brandmark__logo" src="../../../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
-        <span class="tr-brandmark__wordmark">La Traccia</span>
+        <span class="tr-brandmark__wordmark">traccia</span>
       </span>
-      <span class="doc-ref">Esecutivo di stampa · Rev. 02 · 9 ottobre 2026</span>
+      <span class="doc-ref">Esecutivo di stampa · Rev. 03 · 9 ottobre 2026</span>
     </header>
 
     <div class="intro">
@@ -287,7 +286,7 @@
             <div class="tr-datatable__row"><span class="tr-datatable__label">Formato</span><span class="tr-datatable__value">PDF vettoriale, una pagina per file</span></div>
             <div class="tr-datatable__row"><span class="tr-datatable__label">Scala</span><span class="tr-datatable__value"><strong>1:10</strong> — 1 mm nel file = 1 cm in opera</span></div>
             <div class="tr-datatable__row"><span class="tr-datatable__label">Colore</span><span class="tr-datatable__value">CMYK (DeviceCMYK); profilo di stampa a cura della tipografia</span></div>
-            <div class="tr-datatable__row"><span class="tr-datatable__label">Font</span><span class="tr-datatable__value">Incorporati: Archivo, IBM Plex Mono</span></div>
+            <div class="tr-datatable__row"><span class="tr-datatable__label">Font</span><span class="tr-datatable__value">Incorporati: Archivo, IBM Plex Mono, Space Grotesk (wordmark)</span></div>
             <div class="tr-datatable__row"><span class="tr-datatable__label">Immagini</span><span class="tr-datatable__value">Nessuna: solo tracciati e testo, nessuna trasparenza</span></div>
             <div class="tr-datatable__row"><span class="tr-datatable__label">Abbondanza</span><span class="tr-datatable__value">Non aggiunta: misure dei file come indicate da Scuotto l'8/10/2026</span></div>
           </div>
