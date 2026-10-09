@@ -389,6 +389,21 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
 .st-drawing .node { fill: var(--tr-brand-500); }
 .st-drawing .node--current { fill: var(--st-paper); stroke: var(--tr-brand-500); stroke-width: 3; }
 .st-drawing .node--next { fill: var(--tr-brand-100); }
+/* Il marchio a punti e i dati sparsi: una tinta per valore, tutte del blu
+   di marca. L'anello e' il dato che l'IA segnala. */
+.st-drawing .l100 { fill: var(--tr-brand-100); }
+.st-drawing .l200 { fill: var(--tr-brand-200); }
+.st-drawing .l300 { fill: var(--tr-brand-300); }
+.st-drawing .l400 { fill: var(--tr-brand-400); }
+.st-drawing .l500 { fill: var(--tr-brand-500); }
+.st-drawing .l600 { fill: var(--tr-brand-600); }
+.st-drawing .ring { fill: var(--st-paper); stroke: var(--tr-brand-600); stroke-width: 4.5; }
+/* La traccia dei dati: piena fino al presente, tratteggiata e chiara dopo
+   (la proiezione dell'IA) — la regola del segmento verticale applicata a una
+   serie. */
+.st-drawing .trace { fill: none; stroke: var(--tr-brand-500); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+.st-drawing .trace--next { stroke: var(--tr-brand-300); stroke-dasharray: 20 18; }
+.st-drawing .solid { fill: var(--tr-brand-500); }
 /* Marcatura di prodotto sul disegno: la sigla in display, in blu. */
 .st-drawing .label {
   font-family: var(--tr-font-display);
