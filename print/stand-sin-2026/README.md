@@ -24,7 +24,7 @@ raster e senza trasparenze.
 | `fondale-2-quinta.pdf` | Parete fondale 2 (quinta) | 220×220 | ~200×200 | Lockup a 168 cm + sagoma outline dall'angolo opposto |
 | `fondale-2-quinta--solo-logo.pdf` | Parete fondale 2 — variante | 220×220 | ~200×200 | Solo il lockup |
 | `totem-a-istituzionale.pdf` | Totem esterni, lato A | 100×200 | — | Marchio, «Dal 1980 · Matera», la cifra «oltre 400 installazioni», le tre linee (Gepadial in testa), certificazioni, contatti |
-| `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | Titolo «Modelli IA per la nefrologia»; il dispositivo AI in wireframe, hardware custom con il marchio stampato: unita' da tavolo accanto a «Ambulatorio», unita' portatile accanto a «Rilevazioni a bordo letto» |
+| `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | Eyebrow «Novita' · Hardware custom», titolo «Modelli IA per la nefrologia»; il wireframe del microfono AI (sigla AI sulla capsula) e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
 | `totem-b2-cartella-ia.pdf` | Totem 2, lato B | 100×200 | — | «Cartella clinica Gepadial»: «Nuovo percorso infermieristico personalizzato» e il disegno del percorso |
 | `totem-b-concetti.pdf` | Totem, lato B — variante | 100×200 | — | Le due novita' sullo stesso lato, per avere i due totem identici |
 | `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Solo grafica: la sagoma outline del marchio a sbordo dal bordo alto, verso l'ingresso. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
@@ -61,15 +61,14 @@ nessuna spiegazione. La testata e' quella del lato A — marchio alla stessa
 misura, eyebrow, titolo display — e la sagoma outline sborda in basso,
 perche' anche da questo lato si capisca subito di chi e' il totem. Sul primo
 il titolo e' «Modelli IA per la nefrologia» (non «intelligenza
-artificiale»), e sotto il **dispositivo AI in wireframe**: hardware custom,
-e deve leggersi come tale, quindi non un microfono da studio ma due unita'
-con il marchio La Traccia stampato sopra e la sigla **AI** in display. Sono
-disegnate con le convenzioni del disegno tecnico del sistema
-(`.tr-drawing`: silhouette con tratto `ink/900` e riempimento
-`surface/tint`, dettagli in blu). L'unita' da tavolo, vista dall'alto —
-anello LED, simbolo del microfono — sta accanto ad «Ambulatorio»; quella
-portatile — clip, LED, onde senza fili — accanto a «Rilevazioni a bordo
-letto», ciascuna con il tratto d'accento. Nessuna didascalia. Sul secondo,
+artificiale»), con la nota dell'eyebrow che dice «Hardware custom»: e' li'
+che si scrive che cos'e', non in una didascalia sotto il disegno. Sotto, il
+**wireframe del microfono AI**, disegnato con le convenzioni del disegno
+tecnico del sistema (`.tr-drawing`: silhouette con tratto `ink/900` e
+riempimento `surface/tint`, dettagli in blu: l'anello LED, l'anello della
+base, le onde senza fili) con la sola sigla **AI** in display sulla capsula,
+e accanto le due parole con il tratto d'accento: «Ambulatorio», «Rilevazioni
+a bordo letto». Sul secondo,
 sotto «Cartella clinica Gepadial», il titolo «Nuovo percorso infermieristico
 personalizzato» e il disegno del percorso: il binario della cronologia
 (`.tr-timeline`) con le tappe fatte piene, quella in corso ad anello, quelle
@@ -126,10 +125,9 @@ trasparenze. Il file dichiara DeviceCMYK senza output intent: il profilo
    nel brief. Le tre linee (cartella clinica Gepadial; sedute di dialisi e
    trattamenti domiciliari; ambulatori e telemedicina) sono una scelta per il
    pubblico della SIN.
-3. **Il dispositivo** e' un wireframe di fantasia — un'unita' da tavolo
-   tonda e una portatile con clip, entrambe con il marchio e la sigla AI —
-   non il disegno dell'hardware reale. Se il prodotto ha una forma
-   riconoscibile, il disegno va rifatto su quella.
+3. **Il microfono** e' un wireframe generico — capsula, stelo, base con
+   anello luminoso, onde senza fili — non il disegno del dispositivo reale.
+   Se il prodotto ha una forma riconoscibile, il disegno va rifatto su quella.
 4. **La riga certificazioni** e' solo testo: i badge IMQ / SI Cert sono un PNG
    che ingrandito dieci volte non regge. Se servono, vanno chiesti in vettoriale
    agli enti.

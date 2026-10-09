@@ -14,20 +14,19 @@
     .block { margin-top: 8mm; }
     .block .st-eyebrow + .st-h1 { margin-top: 5mm; }
     .block .st-h1--title { --t-display: 5mm; }
-    /* Il dispositivo: due righe, un'unita' e la sua parola. */
-    .device {
+    .mic {
       margin-top: 6mm;
       display: grid;
-      grid-template-columns: 24mm 1fr;
-      column-gap: 8mm;
-      row-gap: 5mm;
+      grid-template-columns: 22mm 1fr;
+      gap: 8mm;
       align-items: center;
     }
-    .device__drawing { width: 24mm; height: auto; }
-    .device__item { display: flex; flex-direction: column; gap: 2.5mm; }
+    .mic__drawing { width: 22mm; height: auto; }
+    .mic__text { display: flex; flex-direction: column; gap: 6mm; }
+    .mic__item { display: flex; flex-direction: column; gap: 2.5mm; }
     /* «Rilevazioni a bordo letto» va a capo dopo «a»: due righe pari, non
        una parola orfana. */
-    .device__item .st-h1 { --t-display: 4.4mm; max-width: 44mm; }
+    .mic__item .st-h1 { --t-display: 4.4mm; max-width: 44mm; }
     .path { margin-top: 6mm; width: 50mm; height: auto; margin-left: 2mm; }
     .totem__foot { margin-top: auto; padding-top: 6mm; }
     .totem__foot .st-footer { padding-top: 3mm; }
@@ -56,45 +55,39 @@
         <div class="st-eyebrow">
           <span class="st-eyebrow__label">Novità</span>
           <span class="st-eyebrow__line"></span>
+          <span class="st-eyebrow__note">Hardware custom</span>
         </div>
         <h1 class="st-h1 st-h1--title">Modelli IA per la <em>nefrologia</em></h1>
-        <div class="device">
-          <svg class="st-drawing device__drawing" viewBox="0 0 200 200" role="img" aria-label="Unità da tavolo del dispositivo AI La Traccia">
-            <circle class="silhouette" cx="100" cy="100" r="86"/>
-            <circle class="brand" cx="100" cy="100" r="73" stroke-width="3"/>
-            <g class="mark" transform="translate(91 34) scale(0.03)">
-              <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
-              <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
-            </g>
-            <g class="brand" stroke-width="3" transform="translate(100 104) scale(1.5)">
-              <rect x="-5" y="-16" width="10" height="18" rx="5"/>
-              <path d="M-10 -2a10 10 0 0 0 20 0"/>
-              <path d="M0 8v5"/>
-              <path d="M-6 13h12"/>
-            </g>
-            <text class="label" x="100" y="160" text-anchor="middle" font-size="26">AI</text>
-          </svg>
-          <div class="device__item">
-            <span class="st-accent-dash"></span>
-            <p class="st-h1">Ambulatorio</p>
+        <div class="mic">
+          <div>
+            <svg class="st-drawing mic__drawing" viewBox="0 0 200 400" role="img" aria-label="Microfono AI, hardware custom">
+              <rect class="silhouette" x="55" y="14" width="90" height="150" rx="45"/>
+              <g class="line">
+                <path d="M74 44h52M66 60h68M64 76h72M66 92h68"/>
+                <path d="M100 28v72M84 32v64M116 32v64"/>
+              </g>
+              <text class="label" x="100" y="144" text-anchor="middle" font-size="40">AI</text>
+              <ellipse class="brand" cx="100" cy="158" rx="43" ry="8" stroke-width="3"/>
+              <rect class="silhouette" x="89" y="166" width="22" height="16" rx="4"/>
+              <rect class="silhouette" x="94" y="182" width="12" height="126" rx="6"/>
+              <ellipse class="silhouette" cx="100" cy="330" rx="80" ry="26"/>
+              <ellipse class="brand" cx="100" cy="330" rx="60" ry="17" stroke-width="2.5" stroke-dasharray="5 6"/>
+              <circle class="brand-fill" cx="134" cy="324" r="4"/>
+              <g class="brand" stroke-width="2.5">
+                <path d="M158 40a26 26 0 0 1 0 36"/>
+                <path d="M172 28a44 44 0 0 1 0 60"/>
+              </g>
+            </svg>
           </div>
-          <svg class="st-drawing device__drawing" viewBox="0 0 200 140" role="img" aria-label="Unità portatile del dispositivo AI La Traccia">
-            <rect class="silhouette" x="58" y="16" width="34" height="18" rx="6"/>
-            <rect class="silhouette" x="20" y="30" width="110" height="80" rx="18"/>
-            <g class="mark" transform="translate(36 50) scale(0.028)">
-              <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
-              <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
-            </g>
-            <text class="label" x="104" y="78" text-anchor="middle" font-size="24">AI</text>
-            <circle class="brand-fill" cx="115" cy="96" r="3.5"/>
-            <g class="brand" stroke-width="2.5">
-              <path d="M150 52a22 22 0 0 1 0 32"/>
-              <path d="M164 40a40 40 0 0 1 0 56"/>
-            </g>
-          </svg>
-          <div class="device__item">
-            <span class="st-accent-dash"></span>
-            <p class="st-h1">Rilevazioni a bordo letto</p>
+          <div class="mic__text">
+            <div class="mic__item">
+              <span class="st-accent-dash"></span>
+              <p class="st-h1">Ambulatorio</p>
+            </div>
+            <div class="mic__item">
+              <span class="st-accent-dash"></span>
+              <p class="st-h1">Rilevazioni a bordo letto</p>
+            </div>
           </div>
         </div>
       </section>

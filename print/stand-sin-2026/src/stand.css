@@ -389,7 +389,6 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
 .st-drawing .node { fill: var(--tr-brand-500); }
 .st-drawing .node--current { fill: var(--st-paper); stroke: var(--tr-brand-500); stroke-width: 3; }
 .st-drawing .node--next { fill: var(--tr-brand-100); }
-.st-drawing .mark { fill: var(--tr-brand-500); }
 /* Marcatura di prodotto sul disegno: la sigla in display, in blu. */
 .st-drawing .label {
   font-family: var(--tr-font-display);
