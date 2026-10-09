@@ -135,7 +135,7 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
 /* ==========================================================================
    Tipografia
    ========================================================================== */
-.st-h1, .st-h2 {
+.st-h1 {
   font-family: var(--tr-font-display);
   font-weight: var(--tr-weight-display);
   text-transform: uppercase;
@@ -145,24 +145,7 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
   margin: 0;
 }
 .st-h1 { font-size: var(--t-display); }
-.st-h2 { font-size: var(--t-h2); }
-.st-h1 em, .st-h2 em { font-style: normal; color: var(--tr-brand-500); }
-
-.st-lead {
-  margin: 0;
-  font-size: var(--t-lead);
-  line-height: 1.45;
-  color: var(--tr-ink-600);
-  max-width: var(--tr-measure-lead);
-}
-.st-body {
-  margin: 0;
-  font-size: var(--t-body);
-  line-height: var(--tr-leading-body);
-  color: var(--tr-ink-600);
-  max-width: var(--tr-measure-body);
-}
-.st-body strong { font-weight: var(--tr-weight-semibold); color: var(--tr-ink-900); }
+.st-h1 em { font-style: normal; color: var(--tr-brand-500); }
 
 .st-mono {
   font-family: var(--tr-font-mono);
@@ -181,7 +164,6 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
 /* ==========================================================================
    Primitive geometriche
    ========================================================================== */
-.st-rule { height: var(--rule-1); background: var(--tr-border-soft); border-radius: var(--tr-radius-line); }
 .st-accent-dash {
   display: block;
   width: var(--dash-w);
@@ -221,157 +203,7 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
   white-space: nowrap;
 }
 .st-eyebrow + * { margin-top: var(--s-4); }
-.st-eyebrow + .st-h1, .st-eyebrow + .st-h2 { margin-top: var(--s-5); }
-
-/* Elenco tecnico: dot + voce mono maiuscola, voci brevi */
-.st-dotlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s-3); }
-.st-dotlist li {
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-3);
-  font-family: var(--tr-font-mono);
-  font-weight: var(--tr-weight-semibold);
-  font-size: var(--t-mono);
-  line-height: 1.3;
-  letter-spacing: var(--tr-tracking-mono);
-  text-transform: uppercase;
-  color: var(--tr-ink-600);
-}
-.st-dotlist li .st-dot { transform: translateY(calc(var(--dot) * -0.15)); }
-
-/* Riga specifiche: voci mono con dot distribuite su una riga, filetto sopra */
-.st-specs {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-3) var(--s-6);
-  padding-top: var(--s-4);
-  border-top: var(--rule-1) solid var(--tr-border-soft);
-}
-.st-specs__item {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-3);
-  font-family: var(--tr-font-mono);
-  font-size: var(--t-mono-sm);
-  letter-spacing: var(--tr-tracking-mono);
-  text-transform: uppercase;
-  color: var(--tr-ink-600);
-  white-space: nowrap;
-}
-
-/* Linee di prodotto: cerchietto numerato + titolo in frase + una riga */
-.st-numbered-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
-.st-numbered {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--s-4);
-  padding: var(--s-4) 0;
-  border-top: var(--rule-1) solid var(--tr-border-soft);
-}
-.st-numbered:last-child { border-bottom: var(--rule-1) solid var(--tr-border-soft); }
-.st-numbered__title {
-  margin: 0;
-  font-weight: var(--tr-weight-semibold);
-  font-size: var(--t-lead);
-  line-height: 1.25;
-  color: var(--tr-ink-900);
-}
-.st-numbered__body { margin: var(--s-2) 0 0; font-size: var(--t-body); line-height: 1.4; color: var(--tr-ink-600); max-width: var(--tr-measure-short); }
-
-/* Cerchietto numerato: solo bordo blu, cifra mono blu */
-.st-circle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  width: var(--circle, calc(var(--t-lead) * 2.2));
-  height: var(--circle, calc(var(--t-lead) * 2.2));
-  border: var(--rule-2) solid var(--tr-brand-500);
-  border-radius: var(--tr-radius-pill);
-  font-family: var(--tr-font-mono);
-  font-weight: var(--tr-weight-semibold);
-  font-size: var(--t-mono);
-  letter-spacing: 0.04em;
-  color: var(--tr-brand-500);
-  background: transparent;
-}
-.st-circle--solid { background: var(--tr-brand-500); color: var(--tr-ink-on-solid); }
-
-/* ==========================================================================
-   Flusso in passi (dalla riga .tr-steps): icona in un cerchio outline,
-   numero mono, titolo display, una riga di sottotitolo. Collegati da una
-   linea brand/300 — orizzontale o verticale.
-   ========================================================================== */
-.st-flow { display: grid; position: relative; list-style: none; margin: 0; padding: 0; }
-.st-flow--row { grid-auto-flow: column; grid-auto-columns: 1fr; gap: var(--s-6); }
-.st-flow--col { grid-auto-flow: row; gap: var(--s-6); }
-.st-flow::before {
-  content: "";
-  position: absolute;
-  background: var(--tr-brand-300);
-  border-radius: var(--tr-radius-line);
-}
-.st-flow--row::before {
-  top: calc(var(--flow-circle) / 2 - var(--rule-1) / 2);
-  left: calc(100% / var(--flow-n) / 2);
-  right: calc(100% / var(--flow-n) / 2);
-  height: var(--rule-1);
-}
-.st-flow--col::before {
-  left: calc(var(--flow-circle) / 2 - var(--rule-1) / 2);
-  top: calc(var(--flow-circle) / 2);
-  bottom: calc(var(--flow-circle) / 2);
-  width: var(--rule-1);
-}
-.st-step { position: relative; display: flex; gap: var(--s-5); }
-.st-flow--row .st-step { flex-direction: column; align-items: center; text-align: center; }
-.st-flow--col .st-step { flex-direction: row; align-items: center; }
-.st-step__icon {
-  flex: none;
-  width: var(--flow-circle);
-  height: var(--flow-circle);
-  border: var(--rule-2) solid var(--tr-brand-500);
-  border-radius: var(--tr-radius-pill);
-  background: var(--st-paper);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--tr-brand-500);
-}
-.st-step:last-child .st-step__icon { background: var(--tr-brand-500); color: var(--tr-ink-on-solid); }
-.st-step__icon svg { width: 52%; height: 52%; display: block; }
-.st-step__text { display: flex; flex-direction: column; gap: var(--s-2); min-width: 0; }
-.st-flow--row .st-step__text { align-items: center; }
-.st-step__n {
-  font-family: var(--tr-font-mono);
-  font-weight: var(--tr-weight-semibold);
-  font-size: var(--t-mono);
-  line-height: 1;
-  letter-spacing: var(--tr-tracking-mono-mid);
-  color: var(--tr-brand-500);
-}
-.st-step__title {
-  margin: 0;
-  font-family: var(--tr-font-display);
-  font-weight: var(--tr-weight-display);
-  font-size: var(--t-step, var(--t-h2));
-  line-height: 1.1;
-  letter-spacing: var(--tr-tracking-display);
-  text-transform: uppercase;
-  color: var(--tr-ink-900);
-}
-.st-step__sub { margin: 0; font-size: var(--t-body); line-height: 1.4; color: var(--tr-ink-600); }
-
-/* Icona: griglia 24, tratto 2, estremita' tonde, nessun riempimento. */
-.st-icon {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: var(--icon-stroke);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
+.st-eyebrow + .st-h1 { margin-top: var(--s-5); }
 
 /* ==========================================================================
    Disegno schematico (dalle convenzioni di .tr-drawing): silhouette con
@@ -397,48 +229,6 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
   fill: var(--tr-brand-500);
 }
 
-/* ==========================================================================
-   Cifra in evidenza (da .tr-figure): il dato che riassume il totem. Una
-   parola mono sopra, il numero in display con le cifre tabellari, il tratto
-   d'accento sotto, l'etichetta mono a seguire.
-   ========================================================================== */
-.st-figure { display: flex; flex-direction: column; gap: 2mm; margin: 0; }
-.st-figure__over {
-  font-family: var(--tr-font-mono);
-  font-weight: var(--tr-weight-semibold);
-  font-size: var(--t-mono);
-  line-height: 1;
-  letter-spacing: var(--tr-tracking-mono-wide);
-  text-transform: uppercase;
-  color: var(--tr-brand-500);
-}
-.st-figure__number {
-  font-family: var(--tr-font-display);
-  font-weight: var(--tr-weight-display);
-  font-size: var(--t-figure, calc(var(--t-display) * 3.5));
-  line-height: var(--tr-leading-figure);
-  letter-spacing: var(--tr-tracking-display);
-  color: var(--tr-ink-900);
-  font-variant-numeric: tabular-nums;
-}
-.st-figure__number::after {
-  content: "";
-  display: block;
-  width: var(--dash-w);
-  height: var(--rule-3);
-  margin-top: var(--s-3);
-  border-radius: var(--tr-radius-line);
-  background: var(--tr-brand-500);
-}
-.st-figure__label {
-  font-family: var(--tr-font-mono);
-  font-weight: var(--tr-weight-body);
-  font-size: var(--t-mono);
-  line-height: 1.4;
-  letter-spacing: var(--tr-tracking-mono);
-  text-transform: uppercase;
-  color: var(--tr-ink-400);
-}
 
 /* ==========================================================================
    Piede: firma e certificazioni (superficie pubblica: la riga ci va)

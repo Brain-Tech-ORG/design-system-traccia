@@ -12,9 +12,10 @@ o 1:10**.
 
 ## L'esecutivo di stampa — `esecutivo/`
 
-E' il pacchetto da consegnare: **otto PDF, uno per ogni pezzo stampato**, con
-nomi di produzione che dicono numero, pezzo, misura e scala — la scala nel nome
-evita che qualcuno stampi il file a un decimo — piu' la tavola di riepilogo.
+E' il pacchetto da consegnare: **sei PDF, uno per ogni pezzo stampato** —
+quattro pareti e due totem — con nomi di produzione che dicono numero, pezzo,
+misura e scala (la scala nel nome evita che qualcuno stampi il file a un
+decimo), piu' la tavola di riepilogo.
 
 | N. | File | Pezzo |
 |---|---|---|
@@ -23,36 +24,27 @@ evita che qualcuno stampi il file a un decimo — piu' la tavola di riepilogo.
 | 02 | `02_parete-fondale-1_270x220cm_scala-1-10.pdf` | Parete fondale 1 |
 | 03 | `03_parete-fondale-2-quinta_220x220cm_scala-1-10.pdf` | Parete fondale 2 (quinta) |
 | 04 | `04_parete-destra_470x220cm_scala-1-10.pdf` | Parete destra |
-| 05 | `05_totem-1-lato-A_100x200cm_scala-1-10.pdf` | Totem 1, lato A |
-| 06 | `06_totem-1-lato-B_100x200cm_scala-1-10.pdf` | Totem 1, lato B |
-| 07 | `07_totem-2-lato-A_100x200cm_scala-1-10.pdf` | Totem 2, lato A (uguale al 05) |
-| 08 | `08_totem-2-lato-B_100x200cm_scala-1-10.pdf` | Totem 2, lato B |
+| 05 | `05_totem-1_100x200cm_scala-1-10.pdf` | Totem 1 |
+| 06 | `06_totem-2_100x200cm_scala-1-10.pdf` | Totem 2 |
 
-Il lato A dei totem compare due volte perche' i totem sono due: un file per
-pezzo, cosi' in produzione nessuno deve ricordarsi di stamparlo doppio. Il
-fondale e la quinta sono nella versione con la sagoma outline; le varianti
-`--solo-logo` restano in `out/`. Lo zip
-`LaTraccia_SIN26_esecutivo-stampa.zip` contiene la stessa cartella e si
+Lo zip `LaTraccia_SIN26_esecutivo-stampa.zip` contiene la stessa cartella e si
 rigenera con `node esecutivo.mjs`: non sta nel repository.
 
 ## Le grafiche — `out/`
 
-Tutti in **scala 1:10**: 1 mm nel file = 1 cm in opera, quindi un PDF da
+Tutte in **scala 1:10**: 1 mm nel file = 1 cm in opera, quindi un PDF da
 270×220 mm e' la parete da 270×220 cm. Sono vettoriali, con i font incorporati
-(Archivo, IBM Plex Mono), colori dichiarati in **DeviceCMYK**, senza immagini
-raster e senza trasparenze.
+(Archivo, IBM Plex Mono) dove c'e' testo, colori dichiarati in **DeviceCMYK**,
+senza immagini raster e senza trasparenze.
 
-| File | Grafica | File (cm) | Area visibile (cm) | Contenuto |
+| File | Pezzo | File (cm) | Area visibile (cm) | Contenuto |
 |---|---|---|---|---|
-| `fondale-1.pdf` | Parete fondale 1 | 270×220 | ~250×200 | Il marchio, in grande: lockup a 210 cm + sagoma outline a sbordo |
-| `fondale-1--solo-logo.pdf` | Parete fondale 1 — variante | 270×220 | ~250×200 | Solo il lockup, senza sagoma |
-| `fondale-2-quinta.pdf` | Parete fondale 2 (quinta) | 220×220 | ~200×200 | Lockup a 168 cm + sagoma outline dall'angolo opposto |
-| `fondale-2-quinta--solo-logo.pdf` | Parete fondale 2 — variante | 220×220 | ~200×200 | Solo il lockup |
-| `totem-a-istituzionale.pdf` | Totem 1 e 2, lato A | 100×200 | — | Marchio, «Dal 1980 · Matera», la cifra «oltre 400 installazioni», le tre linee (Gepadial in testa), certificazioni, contatti |
-| `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | Eyebrow «Novita' · Hardware custom», titolo «Modelli IA per la nefrologia»; il wireframe del microfono AI (sigla AI sulla capsula) e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
-| `totem-b2-dati-ia.pdf` | Totem 2, lato B | 100×200 | — | Solo istituzionale: eyebrow «Gen BI · Dati clinici e IA», titolo «I dati clinici prendono forma», il marchio fatto di punti — una mappa di dati, con tre anelli per i dati che l'IA segnala — certificazioni, contatti |
-| `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Solo grafica: la sagoma outline del marchio a sbordo dal bordo alto, verso l'ingresso. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
+| `fondale-1.pdf` | Parete fondale 1 | 270×220 | ~250×200 | Solo il marchio, pieno, alto 170 cm, al centro: niente testo |
+| `fondale-2-quinta.pdf` | Parete fondale 2 (quinta) | 220×220 | ~200×200 | La sagoma outline del marchio, alla stessa misura e altezza: niente testo |
+| `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Solo grafica: la sagoma outline a sbordo dal bordo alto, verso l'ingresso. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
 | `parete-destra.pdf` | Parete destra | 470×220 | ~450×200 | Solo grafica: la stessa sagoma, a sbordo dal bordo alto verso l'ingresso |
+| `totem-1-ambulatorio-ia.pdf` | Totem 1 | 100×200 | — | Eyebrow «Novita' · Hardware custom», titolo «Modelli IA per la nefrologia»; il microfono AI e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
+| `totem-2-dati-ia.pdf` | Totem 2 | 100×200 | — | Eyebrow «Gen BI · Dati clinici e IA», titolo «I dati clinici prendono forma»; il marchio fatto di punti; certificazioni e contatti |
 
 Le pagine misurano il nominale a meno di 0,1 mm (Chromium arrotonda i
 millimetri a pixel interi): in opera e' un millimetro su una parete di quasi
@@ -65,66 +57,53 @@ giunzione. Le guide non stanno nei PDF.
 
 ## Cosa c'e' sopra, e perche'
 
-**Fondale e quinta: solo il marchio.** Il lockup e' quello di `.tr-brandmark`
-— marchio e wordmark affiancati nelle proporzioni 28 : 17 : 12 — portato alla
-larghezza massima che l'area visibile consente con un margine di 20 cm, poco
-sopra il centro ottico. La sagoma outline a sbordo da un angolo e' il watermark
-del sistema (`.tr-watermark`): sul fondale sborda in alto a destra, sulla quinta
-in basso a sinistra, cosi' i due pannelli si rispondono. Per chi la trova di
-troppo c'e' la variante `--solo-logo`.
+**Fondale: il marchio, e basta.** Niente testo, nemmeno il wordmark: il
+marchio pieno, blu di marca, alto 170 cm, al centro dell'area visibile, con
+15 cm d'aria sopra e sotto. E' l'unica cosa che chi passa in corsia deve
+riconoscere, e da lontano un segno solo si riconosce prima di un segno con una
+parola accanto.
 
-**Totem, lato A: chi siamo.** Marchio in testa, eyebrow «Dal 1980 · Matera»,
-poi la cifra in evidenza di `.tr-figure` — «oltre», **400**, «installazioni»
-— che dice chi siamo senza claim, un lead di una frase, tre linee di
-nefrologia e dialisi come `.tr-numbered-list` (la cartella clinica si chiama
-Gepadial, e basta il nome), e in calce la riga certificazioni, che sta sulle
-superfici pubbliche, e un totem in corsia lo e', con sito e email.
+**Quinta: l'eco del marchio.** Anche qui niente testo. La sagoma outline del
+marchio — il watermark del sistema, `brand/500` a 0,16 sul bianco — alla
+stessa misura e alla stessa altezza del marchio del fondale: sul fondo dello
+stand il segno pieno resta uno solo, e la quinta gli risponde invece di
+ripeterlo.
 
-**Totem, lato B: le novita', in modo grafico e vago.** Nessuna schermata,
-nessuna spiegazione. La testata e' quella del lato A — marchio alla stessa
-misura, eyebrow, titolo display — e la sagoma outline sborda in basso,
-perche' anche da questo lato si capisca subito di chi e' il totem. Sul primo
-il titolo e' «Modelli IA per la nefrologia» (non «intelligenza
-artificiale»), con la nota dell'eyebrow che dice «Hardware custom»: e' li'
-che si scrive che cos'e', non in una didascalia sotto il disegno. Sotto, il
-**wireframe del microfono AI**, disegnato con le convenzioni del disegno
-tecnico del sistema (`.tr-drawing`: silhouette con tratto `ink/900` e
-riempimento `surface/tint`, dettagli in blu: l'anello LED, l'anello della
-base, le onde senza fili) con la sola sigla **AI** in display sulla capsula,
-e accanto le due parole con il tratto d'accento: «Ambulatorio», «Rilevazioni
-a bordo letto».
+**Totem 1: modelli IA per la nefrologia.** In testa marchio, eyebrow
+«Novita' · Hardware custom» e titolo display «Modelli IA per la nefrologia»
+(non «intelligenza artificiale»): che sia hardware custom lo dice la nota
+dell'eyebrow, non una didascalia sotto il disegno. Sotto, il **wireframe del
+microfono AI**, disegnato con le convenzioni del disegno tecnico del sistema
+(`.tr-drawing`: silhouette con tratto `ink/900` e riempimento `surface/tint`,
+dettagli in blu: l'anello LED, l'anello della base, le onde senza fili) con la
+sola sigla **AI** in display sulla capsula, e accanto le due parole con il
+tratto d'accento: «Ambulatorio», «Rilevazioni a bordo letto». La sagoma
+outline sborda in basso.
 
-**Totem 2, lato B: solo istituzionale.** Nessuna novita' di prodotto: un
-gioco con il marchio e il tema della gestione dei dati clinici con l'IA (gen
-BI). Testata come sul lato A — marchio, eyebrow «Gen BI · Dati clinici e
-IA», titolo «I dati clinici prendono forma» — e in calce certificazioni e
-contatti. Sotto il titolo il **marchio fatto di punti**: le due figure del
-logo campionate su un reticolo parallelo ai loro lati, cosi' i bordi restano
-dritti e la fessura fra le due figure resta aperta. Da lontano e' il logo, da
-vicino una mappa di dati: la tinta di ogni punto (`brand/300` → `brand/600`)
-e' il suo valore, piu' scura verso la punta; tre anelli sono i dati che l'IA
-segnala. Il reticolo lo genera `src/dot-mark.js`, deterministico: stesso
-seme, stesso disegno, stesso PDF. In entrambi i lati B il disegno sta a
-meta' tra il titolo e il piede.
+**Totem 2: istituzionale.** Un gioco con il marchio e il tema della gestione
+dei dati clinici con l'IA (gen BI). In testa marchio, eyebrow «Gen BI · Dati
+clinici e IA» e titolo «I dati clinici prendono forma»; in calce
+certificazioni e contatti. In mezzo il **marchio fatto di punti**: le due
+figure del logo campionate su un reticolo parallelo ai loro lati, cosi' i bordi
+restano dritti e la fessura fra le due figure resta aperta. Da lontano e' il
+logo, da vicino una mappa di dati: la tinta di ogni punto (`brand/300` →
+`brand/600`) e' il suo valore, piu' scura verso la punta; tre anelli sono i
+dati che l'IA segnala. Il reticolo lo genera `src/dot-mark.js`,
+deterministico: stesso seme, stesso disegno, stesso PDF.
+
+Su entrambi i totem il disegno sta a meta' tra il titolo e il piede.
 
 **Pareti laterali: solo grafica, e poca.** Niente testo: su ciascuna parete
 la sola sagoma outline del marchio, a sbordo dal bordo alto verso l'ingresso
 dello stand — a sinistra sulla parete sinistra, a destra su quella destra. La
-posizione e' specchiata, il disegno no: il marchio non si ribalta. E' il
-watermark del sistema alla scala della parete; tutto il resto e' bianco.
+posizione e' specchiata, il disegno no: il marchio non si ribalta.
 
 ### Scala tipografica
 
-Due formati, due scale (`src/stand.css`). I valori sono centimetri in opera.
-Le pareti oggi non portano testo: la scala resta definita per quando dovesse
-servire.
-
-| | Pareti (lette in cammino, 3–6 m) | Totem (letti da fermi, 1,5–4 m) |
-|---|---|---|
-| Display | 15–22 | 6,8–8 |
-| Lead | 6–6,5 | 4–4,6 |
-| Corpo | 4,2–5 | 3,3–3,9 |
-| Mono | 3,2–3,8 | 2,3–3 |
+Le pareti non portano testo. Sui totem, letti da fermi a 1,5–4 m: titolo
+display 8 cm, le due parole accanto al microfono 4,8 cm, voce mono 2,3–3 cm
+(eyebrow, piede, certificazioni). La scala completa — anche quella delle
+pareti, per quando dovesse servire — sta in `src/stand.css`.
 
 ### Colore
 
@@ -135,7 +114,9 @@ perche' la conversione automatica di un blu saturo aggiunge nero e lo spegne:
 
 | Token | sRGB | CMYK |
 |---|---|---|
+| `brand/600` | `#2f7ab8` | 80 · 45 · 0 · 10 |
 | `brand/500` blu logo | `#4194d7` | 70 · 32 · 0 · 0 |
+| `brand/400` | `#69aadf` | 55 · 22 · 0 · 0 |
 | `brand/300` linee secondarie | `#8fc0e7` | 42 · 12 · 0 · 0 |
 | watermark (brand/500 a 0,16 sul bianco) | `#e1eef9` | 11 · 5 · 0 · 0 |
 | `ink/900` testo primario | `#1b1f2a` | 60 · 50 · 40 · 100 |
@@ -149,32 +130,27 @@ trasparenze. Il file dichiara DeviceCMYK senza output intent: il profilo
 
 ## Da confermare prima di mandare in stampa
 
-1. **La cifra del totem A** — oltre 400 installazioni — e' quella indicata
-   nel brief. Le tre linee (cartella clinica Gepadial; sedute di dialisi e
-   trattamenti domiciliari; ambulatori e telemedicina) sono una scelta per il
-   pubblico della SIN.
-2. **Il microfono** e' un wireframe generico — capsula, stelo, base con
+1. **Il microfono** e' un wireframe generico — capsula, stelo, base con
    anello luminoso, onde senza fili — non il disegno del dispositivo reale.
    Se il prodotto ha una forma riconoscibile, il disegno va rifatto su quella.
-3. **La riga certificazioni** e' solo testo: i badge IMQ / SI Cert sono un PNG
-   che ingrandito dieci volte non regge. Se servono, vanno chiesti in vettoriale
-   agli enti.
-4. **I totem** non hanno un'area nascosta dichiarata: il contenuto tiene 8 cm
+2. **La riga certificazioni** del totem 2 e' solo testo: i badge IMQ / SI
+   Cert sono un PNG che ingrandito dieci volte non regge. Se servono, vanno
+   chiesti in vettoriale agli enti.
+3. **I totem** non hanno un'area nascosta dichiarata: il contenuto tiene 8 cm
    dal bordo. Se il profilo copre di piu', va detto.
-5. **Il microfono AI e la gen BI** sono raccontati come concetti, senza
+4. **Il microfono AI e la gen BI** sono raccontati come concetti, senza
    schermate: e' coerente con la scelta, verbalizzata nella call del 25/9, di
    non esporre il prototipo a tutti.
-6. **Il fondale e la quinta** esistono in due versioni: con la sagoma outline
-   a sbordo (`fondale-1.pdf`, `fondale-2-quinta.pdf`) e con il solo lockup
-   (`--solo-logo`). L'esecutivo porta la prima; per passare alla seconda basta
-   cambiare la sorgente dei pezzi 02 e 03 in `esecutivo.mjs`.
+5. **La quinta** porta l'eco chiara del marchio. Se la si vuole con il
+   marchio pieno come il fondale, e' la stessa pagina con il riempimento al
+   posto del tratto.
 
 ## Come si rigenera
 
 ```sh
 cd print/stand-sin-2026
 node build.mjs            # tutte le grafiche
-node build.mjs totem-b    # solo quelle il cui nome contiene "totem-b"
+node build.mjs totem      # solo quelle il cui nome contiene "totem"
 node esecutivo.mjs        # il pacchetto di consegna: esecutivo/ e lo zip
 ```
 
@@ -186,6 +162,6 @@ install chromium`) e `python3` con `pypdf`; `pdftoppm` (poppler) per le
 anteprime. Ogni pagina in `src/` dichiara la propria misura in `data-w` /
 `data-h` (mm) e in `@page`; `stand.js` porta i lockup con `data-fit-w` alla
 larghezza esatta a font caricati. Chromium stampa il PDF vettoriale, `cmyk.py`
-riscrive i flussi di contenuto da RGB a CMYK e si rifiuta di continuare se
-trova un'immagine raster, una trasparenza o un operatore colore che non sa
-convertire.
+riscrive i flussi di contenuto da RGB a CMYK, li ricomprime e si rifiuta di
+continuare se trova un'immagine raster, una trasparenza o un operatore colore
+che non sa convertire.

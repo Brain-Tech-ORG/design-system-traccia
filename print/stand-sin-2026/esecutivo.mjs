@@ -2,9 +2,9 @@
 //
 // Prende i PDF gia' generati da build.mjs (out/) e li copia in esecutivo/
 // con i nomi di produzione — numero, pezzo, misura, scala — uno per ogni
-// pezzo stampato: il lato A dei totem compare due volte, perche' i totem
-// sono due. Ci aggiunge la tavola di riepilogo (riepilogo/riepilogo.html ->
-// 00_riepilogo-esecutivo.pdf) e chiude tutto in uno zip da allegare.
+// pezzo stampato: quattro pareti e due totem. Ci aggiunge la tavola di
+// riepilogo (riepilogo/riepilogo.html -> 00_riepilogo-esecutivo.pdf) e
+// chiude tutto in uno zip da allegare.
 //
 //   node build.mjs && node esecutivo.mjs
 
@@ -29,10 +29,8 @@ const PIECES = [
   ['02', 'parete-fondale-1', 'fondale-1', '270x220'],
   ['03', 'parete-fondale-2-quinta', 'fondale-2-quinta', '220x220'],
   ['04', 'parete-destra', 'parete-destra', '470x220'],
-  ['05', 'totem-1-lato-A', 'totem-a-istituzionale', '100x200'],
-  ['06', 'totem-1-lato-B', 'totem-b1-ambulatorio-ia', '100x200'],
-  ['07', 'totem-2-lato-A', 'totem-a-istituzionale', '100x200'],
-  ['08', 'totem-2-lato-B', 'totem-b2-dati-ia', '100x200'],
+  ['05', 'totem-1', 'totem-1-ambulatorio-ia', '100x200'],
+  ['06', 'totem-2', 'totem-2-dati-ia', '100x200'],
 ];
 const PACKAGE = 'LaTraccia_SIN26_esecutivo-stampa';
 
