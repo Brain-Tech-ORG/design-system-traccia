@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="it" data-w="100" data-h="200">
+<head>
+  <meta charset="utf-8">
+  <title>La Traccia — SIN 2026 — Totem 3 · Nuovo percorso infermieristico personalizzato — 100×200 cm (1:10)</title>
+  <link rel="stylesheet" href="stand.css">
+  <style>
+    /* Totem 3, proposta. File 100×200, margine di sicurezza 8 cm. Stessa
+       testata dei totem 1 e 2: lockup, eyebrow, titolo display. In mezzo il
+       percorso: parte dal paziente e passa per le cinque fasi del processo
+       di nursing — fatte, in corso, da fare — e la linea tratteggiata lo
+       riporta all'inizio, perche' il percorso si rivaluta e si adatta alla
+       persona. Le fasi sono quelle generali del processo infermieristico:
+       nessuna funzione del prodotto e' dichiarata. */
+    @page { size: 100mm 200mm; }
+    .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
+    .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
+    .totem__intro { margin-top: 8mm; }
+    .totem__intro .st-h1 { --t-display: 8mm; }
+    .path { margin: auto 0; width: 76mm; height: auto; }
+    .path .track { fill: none; stroke: var(--tr-brand-500); stroke-width: 3; stroke-linecap: round; }
+    .path .track--next { stroke: var(--tr-brand-300); }
+    .path .loop { fill: none; stroke: var(--tr-brand-500); stroke-width: 2; stroke-dasharray: 6 7; stroke-linecap: round; stroke-linejoin: round; }
+    .path .step {
+      font-family: var(--tr-font-display);
+      font-weight: var(--tr-weight-display);
+      letter-spacing: var(--tr-tracking-display);
+      text-transform: uppercase;
+      fill: var(--tr-ink-900);
+    }
+    .path .step--next { fill: var(--tr-ink-400); }
+    .totem__foot { padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
+    .totem__foot .st-footer { padding-top: 3mm; }
+    .st-watermark { width: 92mm; bottom: -30mm; right: -36mm; }
+  </style>
+</head>
+<body>
+  <div class="st-sheet st-sheet--totem">
+    <svg class="st-watermark" viewBox="0 0 594 717" aria-hidden="true">
+      <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+      <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+    </svg>
+
+    <div class="st-safe totem">
+      <header>
+        <div class="st-lockup" data-fit-w="54" role="img" aria-label="La Traccia">
+          <svg class="st-lockup__mark" viewBox="0 0 594 717" aria-hidden="true">
+            <path fill="#4194d7" d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+            <path fill="#4194d7" d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+          </svg>
+          <span class="st-lockup__word">traccia</span>
+        </div>
+      </header>
+
+      <section class="totem__intro">
+        <div class="st-eyebrow">
+          <span class="st-eyebrow__label">Novità</span>
+          <span class="st-eyebrow__line"></span>
+          <span class="st-eyebrow__note">Gepadial</span>
+        </div>
+        <h1 class="st-h1">Nuovo percorso infermieristico <em>personalizzato</em></h1>
+      </section>
+
+      <!-- Il percorso: in testa il paziente; il binario e' pieno fino alla
+           fase in corso e chiaro dopo; fasi fatte piene, in corso ad
+           anello, da fare in tinta chiara. Il tratteggio a sinistra
+           chiude il ciclo: dalla valutazione si torna all'accertamento. -->
+      <svg class="st-drawing path" viewBox="0 0 300 330" role="img" aria-label="Percorso infermieristico personalizzato: accertamento, diagnosi, pianificazione, interventi, valutazione">
+        <circle class="silhouette" cx="64" cy="24" r="16"/>
+        <path class="silhouette" d="M34 76c0-18 13-30 30-30s30 12 30 30z"/>
+        <path class="track" d="M64 84v126"/>
+        <path class="track track--next" d="M64 210v100"/>
+        <path class="loop" d="M64 310H22V110h29"/>
+        <path class="loop" d="M43 103l9 7-9 7" stroke-dasharray="none"/>
+        <circle class="brand-fill" cx="64" cy="110" r="9"/>
+        <circle class="brand-fill" cx="64" cy="160" r="9"/>
+        <circle class="ring" cx="64" cy="210" r="9"/>
+        <circle class="l300" cx="64" cy="260" r="9"/>
+        <circle class="l300" cx="64" cy="310" r="9"/>
+        <g font-size="17">
+          <text class="step" x="92" y="116">Accertamento</text>
+          <text class="step" x="92" y="166">Diagnosi</text>
+          <text class="step" x="92" y="216">Pianificazione</text>
+          <text class="step step--next" x="92" y="266">Interventi</text>
+          <text class="step step--next" x="92" y="316">Valutazione</text>
+        </g>
+      </svg>
+
+      <footer class="totem__foot">
+        <p class="st-mono st-mono--brand" style="margin:0">Chiedi una dimostrazione allo stand</p>
+        <div class="st-footer">
+          <div class="st-footer__contacts">
+            <span class="st-footer__contact"><span class="st-dot"></span>latraccia.it</span>
+            <span class="st-footer__contact"><span class="st-dot"></span>info@latraccia.it</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div class="st-guide st-guide--hidden">
+      <span class="st-guide__label" style="left: 2mm; top: 2mm">Totem 100 × 200 cm · margine di sicurezza 8 cm</span>
+    </div>
+  </div>
+  <script src="stand.js"></script>
+</body>
+</html>
