@@ -208,18 +208,26 @@
   padding-bottom: var(--tr-space-4);
   border-bottom: var(--tr-rule-thin) solid var(--tr-border-soft);
 }
+/* Il lockup si misura sull'altezza del marchio (--tr-brandmark-h): la
+   scritta e' 0,8 di quell'altezza e sta a 0,34 di distanza. «traccia» e'
+   minuscolo, senza «la», in Space Grotesk 700: in minuscolo le lettere sono
+   basse, e alla misura del vecchio maiuscolo sparirebbero accanto al
+   marchio. Il minuscolo e' anche nel CSS, cosi' il wordmark resta tale
+   chiunque scriva il testo. */
 .tr-brandmark {
+  --tr-brandmark-h: 28px;
   display: inline-flex;
   align-items: center;
-  gap: var(--tr-space-3);
+  gap: calc(var(--tr-brandmark-h) * 0.34);
 }
-.tr-brandmark__logo { height: 28px; width: auto; display: block; }
+.tr-brandmark__logo { height: var(--tr-brandmark-h); width: auto; display: block; }
 .tr-brandmark__wordmark {
-  font-family: var(--tr-font-display);
-  font-weight: var(--tr-weight-display);
-  font-size: 17px;
+  font-family: var(--tr-font-wordmark);
+  font-weight: var(--tr-weight-wordmark);
+  font-size: calc(var(--tr-brandmark-h) * 0.8);
+  line-height: 1;
   letter-spacing: var(--tr-tracking-wordmark);
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: var(--tr-ink-900);
 }
 
@@ -538,8 +546,7 @@
   padding-top: var(--tr-space-4);
   border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
 }
-.tr-footer .tr-brandmark__logo { height: 20px; }
-.tr-footer .tr-brandmark__wordmark { font-size: 13px; }
+.tr-footer .tr-brandmark { --tr-brandmark-h: 20px; }
 .tr-footer__contacts {
   display: flex;
   flex-wrap: wrap;
@@ -1984,11 +1991,11 @@ select.tr-field__control + .tr-field__label,
    la pagina. Nelle altre il marchio e' un indicatore dentro un'interfaccia
    gia' firmata, e ripetere la firma non aggiunge nulla. */
 .tr-spinner__wordmark {
-  font-family: var(--tr-font-display);
-  font-weight: var(--tr-weight-display);
-  font-size: var(--tr-text-mono);
+  font-family: var(--tr-font-wordmark);
+  font-weight: var(--tr-weight-wordmark);
+  font-size: var(--tr-text-lead);
   letter-spacing: var(--tr-tracking-wordmark);
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: var(--tr-ink-900);
 }
 .tr-spinner__label {
