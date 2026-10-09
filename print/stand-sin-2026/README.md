@@ -44,8 +44,8 @@ senza immagini raster e senza trasparenze.
 | `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Solo grafica: la sagoma outline a sbordo dal bordo alto, verso l'ingresso. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
 | `parete-destra.pdf` | Parete destra | 470×220 | ~450×200 | Solo grafica: la stessa sagoma, a sbordo dal bordo alto verso l'ingresso |
 | `totem-1-ambulatorio-ia.pdf` | Totem 1 | 100×200 | — | Eyebrow «Novita' · Hardware custom», titolo «Modelli IA per la nefrologia»; il microfono AI e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
-| `totem-3-percorso-infermieristico.pdf` | Totem 3 · **proposta**, fuori dall'esecutivo | 100×200 | — | Eyebrow «Novita' · Gepadial», titolo «Nuovo percorso infermieristico personalizzato»; il percorso dal paziente per le cinque fasi del processo di nursing, con il ritorno all'inizio |
 | `totem-2-dati-ia.pdf` | Totem 2 | 100×200 | — | Eyebrow «Gen BI · Dati clinici e IA», titolo «I dati clinici prendono forma»; il marchio fatto di punti; certificazioni e contatti |
+| `totem-3-percorso-infermieristico.pdf` | Totem 3 · **proposta**, fuori dall'esecutivo | 100×200 | — | Eyebrow «Novita' · Gepadial», titolo «Nuovo percorso infermieristico personalizzato»; il percorso dal paziente per le cinque fasi del processo di nursing, con il ritorno all'inizio |
 
 Le pagine misurano il nominale a meno di 0,1 mm (Chromium arrotonda i
 millimetri a pixel interi): in opera e' un millimetro su una parete di quasi
