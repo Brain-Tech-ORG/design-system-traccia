@@ -2,24 +2,23 @@
 <html lang="it" data-w="100" data-h="200">
 <head>
   <meta charset="utf-8">
-  <title>La Traccia — SIN 2026 — Totem esterno, lato B · Cartella, IA e processo infermieristico — 100×200 cm (1:10)</title>
+  <title>La Traccia — SIN 2026 — Totem esterno, lato B · Nuovo percorso infermieristico personalizzato — 100×200 cm (1:10)</title>
   <link rel="stylesheet" href="stand.css">
   <style>
-    /* File 100×200, margine di sicurezza 8 cm. Un concetto solo: i dati in
-       cartella navigati con l'IA — l'assistente che legge la cartella e
-       risponde — e il processo infermieristico. */
+    /* File 100×200, margine di sicurezza 8 cm. Un titolo e un disegno, e
+       basta: il percorso e' un binario con le tappe — fatte, in corso, da
+       fare — e accanto a ogni tappa il wireframe di una riga. Resta vago
+       per scelta. */
     @page { size: 100mm 200mm; }
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
     .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
+    /* Poco contenuto: il blocco sta a meta' tra il marchio e il piede. */
+    .totem__body { margin-top: auto; margin-bottom: auto; }
     .totem__intro { margin-top: 8mm; }
-    .totem__intro .st-h1 { --t-display: 6.8mm; }
-    .totem__flow { margin-top: 8mm; --flow-n: 3; --flow-circle: 20mm; --t-step: 4.8mm; gap: 6mm; }
-    .totem__flow .st-step { gap: 8mm; }
-    .totem__flow .st-step__sub { font-size: 3.3mm; }
-    .totem__foot { margin-top: auto; padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
+    .totem__intro .st-h1 { --t-display: 7.6mm; }
+    .path { margin-top: 16mm; width: 82mm; height: auto; margin-left: 1mm; }
+    .totem__foot { padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
     .totem__foot .st-footer { padding-top: 3mm; }
-    /* Niente sagoma outline su questo lato: il marchio e' nel lockup in
-       testa, e dietro ai passi la sagoma farebbe solo rumore. */
   </style>
 </head>
 <body>
@@ -35,47 +34,36 @@
         </div>
       </header>
 
+      <div class="totem__body">
       <section class="totem__intro">
         <div class="st-eyebrow">
           <span class="st-eyebrow__label">Novità</span>
           <span class="st-eyebrow__line"></span>
-          <span class="st-eyebrow__note">Cartella clinica · IA</span>
+          <span class="st-eyebrow__note">Cartella clinica</span>
         </div>
-        <h1 class="st-h1">I dati in cartella, navigati con l'IA e il processo <em>infermieristico</em></h1>
+        <h1 class="st-h1">Nuovo percorso infermieristico <em>personalizzato</em></h1>
       </section>
 
-      <ol class="st-flow st-flow--col totem__flow">
-        <li class="st-step">
-          <span class="st-step__icon">
-            <svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 4v-4H5.5A1.5 1.5 0 0 1 4 14.5z"/><path d="M8.5 8.5h7"/><path d="M8.5 12h4"/></svg>
-          </span>
-          <div class="st-step__text">
-            <span class="st-step__n">01</span>
-            <p class="st-step__title">Una domanda alla cartella</p>
-            <p class="st-step__sub">Allergie, terapie, esami: si chiede, l'assistente risponde.</p>
-          </div>
-        </li>
-        <li class="st-step">
-          <span class="st-step__icon">
-            <svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
-          </span>
-          <div class="st-step__text">
-            <span class="st-step__n">02</span>
-            <p class="st-step__title">L'IA naviga lo storico</p>
-            <p class="st-step__sub">Legge i dati del paziente e li mette in relazione.</p>
-          </div>
-        </li>
-        <li class="st-step">
-          <span class="st-step__icon">
-            <svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5H6.5A1.5 1.5 0 0 0 5 6.5v13A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-13A1.5 1.5 0 0 0 17.5 5h-2"/><path d="M8.5 3.5h7v3h-7z"/><path d="M9 12h6"/><path d="M9 15.5h6"/></svg>
-          </span>
-          <div class="st-step__text">
-            <span class="st-step__n">03</span>
-            <p class="st-step__title">Il processo infermieristico</p>
-            <p class="st-step__sub">Guida le attività, passo dopo passo, in cartella.</p>
-          </div>
-        </li>
-      </ol>
+      <!-- Il percorso: binario pieno fino alla tappa in corso, chiaro dopo;
+           tappe fatte piene, in corso ad anello, da fare in tinta chiara.
+           Accanto, il wireframe di una riga: una lunga e una corta. -->
+      <svg class="st-drawing path" viewBox="0 0 300 250" role="img" aria-label="Percorso infermieristico personalizzato">
+        <path class="track" d="M24 22v94"/>
+        <path class="track track--light" d="M24 116v110"/>
+        <g class="wire">
+          <path d="M56 16h150M56 30h96"/>
+          <path d="M56 64h120M56 78h170"/>
+          <path d="M56 112h160M56 126h88"/>
+          <path d="M56 160h130M56 174h150"/>
+          <path d="M56 208h110M56 222h60"/>
+        </g>
+        <circle class="node" cx="24" cy="22" r="8"/>
+        <circle class="node" cx="24" cy="70" r="8"/>
+        <circle class="node node--current" cx="24" cy="118" r="8"/>
+        <circle class="node node--next" cx="24" cy="166" r="8"/>
+        <circle class="node node--next" cx="24" cy="214" r="8"/>
+      </svg>
+      </div>
 
       <footer class="totem__foot">
         <p class="st-mono st-mono--brand" style="margin:0">Chiedi una dimostrazione allo stand</p>

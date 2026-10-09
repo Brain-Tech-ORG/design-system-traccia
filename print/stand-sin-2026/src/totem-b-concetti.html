@@ -2,25 +2,31 @@
 <html lang="it" data-w="100" data-h="200">
 <head>
   <meta charset="utf-8">
-  <title>La Traccia — SIN 2026 — Totem esterno, lato B · I due concetti insieme — 100×200 cm (1:10)</title>
+  <title>La Traccia — SIN 2026 — Totem esterno, lato B · Le due novità insieme — 100×200 cm (1:10)</title>
   <link rel="stylesheet" href="stand.css">
   <style>
-    /* Variante: i due concetti sullo stesso lato, uno sopra l'altro, per
-       chi preferisce i due totem identici. Ogni blocco: eyebrow, titolo,
-       tre passi in riga con i soli titoli. */
+    /* Variante: le due novita' sullo stesso lato, una sopra l'altra, per
+       chi preferisce i due totem identici. Sopra il microfono IA con le due
+       parole accanto; sotto il percorso infermieristico. */
     @page { size: 100mm 200mm; }
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
-    .totem { display: flex; flex-direction: column; padding: 7mm 8mm 7mm; }
-    .block { margin-top: 9mm; }
-    .block .st-h1 { --t-display: 5.8mm; }
-    .block__flow { margin-top: 7mm; --flow-n: 3; --flow-circle: 15mm; --t-step: 3.6mm; gap: 5mm; }
-    .block__flow .st-step { gap: 3mm; }
-    .block__flow .st-step__text { gap: 1.5mm; }
-    .block__flow .st-step__title { max-width: 26mm; }
+    .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
+    .block { margin-top: 10mm; }
+    .mic {
+      margin-top: 8mm;
+      display: grid;
+      grid-template-columns: 28mm 1fr;
+      gap: 8mm;
+      align-items: center;
+    }
+    .mic__drawing { width: 28mm; height: auto; }
+    .mic__text { display: flex; flex-direction: column; gap: 7mm; }
+    .mic__item { display: flex; flex-direction: column; gap: 2.5mm; }
+    .mic__item .st-h1 { --t-display: 4.6mm; }
+    .block .st-h1--title { --t-display: 5.8mm; }
+    .path { margin-top: 8mm; width: 66mm; height: auto; margin-left: 2mm; }
     .totem__foot { margin-top: auto; padding-top: 6mm; }
     .totem__foot .st-footer { padding-top: 3mm; }
-    /* Niente sagoma outline su questo lato: il marchio e' nel lockup in
-       testa, e dietro ai passi la sagoma farebbe solo rumore. */
   </style>
 </head>
 <body>
@@ -40,46 +46,62 @@
         <div class="st-eyebrow">
           <span class="st-eyebrow__label">Novità</span>
           <span class="st-eyebrow__line"></span>
-          <span class="st-eyebrow__note">Ambulatorio · IA</span>
+          <span class="st-eyebrow__note">Intelligenza artificiale</span>
         </div>
-        <h1 class="st-h1">Il medico parla, il referto si compila <em>da&nbsp;sé</em></h1>
-        <ol class="st-flow st-flow--row block__flow">
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20.5v-1a5.5 5.5 0 0 1 5.5-5.5h2a5.5 5.5 0 0 1 5.5 5.5v1"/><path d="M17.5 8a3.5 3.5 0 0 1 0 6"/><path d="M20 5a7.5 7.5 0 0 1 0 12"/></svg></span>
-            <div class="st-step__text"><span class="st-step__n">01</span><p class="st-step__title">Il medico parla</p></div>
-          </li>
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10.5a6.5 6.5 0 0 0 13 0"/><path d="M12 17v3.5"/><path d="M8.5 20.5h7"/></svg></span>
-            <div class="st-step__text"><span class="st-step__n">02</span><p class="st-step__title">Il microfono decodifica</p></div>
-          </li>
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 3.5H6v17h12V8z"/><path d="M13.5 3.5V8H18"/><path d="M9 12h6"/><path d="M9 15.5h3.5"/></svg></span>
-            <div class="st-step__text"><span class="st-step__n">03</span><p class="st-step__title">Il referto si compila</p></div>
-          </li>
-        </ol>
+        <div class="mic">
+          <svg class="st-drawing mic__drawing" viewBox="0 0 200 400" role="img" aria-label="Microfono con intelligenza artificiale">
+            <rect class="silhouette" x="55" y="14" width="90" height="150" rx="45"/>
+            <g class="line">
+              <path d="M74 46h52M66 66h68M64 86h72M66 106h68M74 126h52"/>
+              <path d="M100 28v120M84 32v112M116 32v112"/>
+            </g>
+            <ellipse class="brand" cx="100" cy="158" rx="43" ry="8" stroke-width="3"/>
+            <rect class="silhouette" x="89" y="166" width="22" height="16" rx="4"/>
+            <rect class="silhouette" x="94" y="182" width="12" height="126" rx="6"/>
+            <ellipse class="silhouette" cx="100" cy="330" rx="80" ry="26"/>
+            <ellipse class="brand" cx="100" cy="330" rx="60" ry="17" stroke-width="2.5" stroke-dasharray="5 6"/>
+            <circle class="brand-fill" cx="134" cy="324" r="4"/>
+            <g class="brand" stroke-width="2.5">
+              <path d="M158 40a26 26 0 0 1 0 36"/>
+              <path d="M172 28a44 44 0 0 1 0 60"/>
+            </g>
+          </svg>
+          <div class="mic__text">
+            <div class="mic__item">
+              <span class="st-accent-dash"></span>
+              <p class="st-h1">Ambulatorio</p>
+            </div>
+            <div class="mic__item">
+              <span class="st-accent-dash"></span>
+              <p class="st-h1">Rilevazioni a bordo letto</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section class="block">
         <div class="st-eyebrow">
           <span class="st-eyebrow__label">Novità</span>
           <span class="st-eyebrow__line"></span>
-          <span class="st-eyebrow__note">Cartella clinica · IA</span>
+          <span class="st-eyebrow__note">Cartella clinica</span>
         </div>
-        <h2 class="st-h1">I dati in cartella, navigati con l'IA e il processo <em>infermieristico</em></h2>
-        <ol class="st-flow st-flow--row block__flow">
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 4v-4H5.5A1.5 1.5 0 0 1 4 14.5z"/><path d="M8.5 8.5h7"/><path d="M8.5 12h4"/></svg></span>
-            <div class="st-step__text"><span class="st-step__n">01</span><p class="st-step__title">Chiedi alla cartella</p></div>
-          </li>
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></span>
-            <div class="st-step__text"><span class="st-step__n">02</span><p class="st-step__title">L'IA naviga lo storico</p></div>
-          </li>
-          <li class="st-step">
-            <span class="st-step__icon"><svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5H6.5A1.5 1.5 0 0 0 5 6.5v13A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-13A1.5 1.5 0 0 0 17.5 5h-2"/><path d="M8.5 3.5h7v3h-7z"/><path d="M9 12h6"/><path d="M9 15.5h6"/></svg></span>
-            <div class="st-step__text"><span class="st-step__n">03</span><p class="st-step__title">Il processo guida</p></div>
-          </li>
-        </ol>
+        <h2 class="st-h1 st-h1--title">Nuovo percorso infermieristico <em>personalizzato</em></h2>
+        <svg class="st-drawing path" viewBox="0 0 300 250" role="img" aria-label="Percorso infermieristico personalizzato">
+          <path class="track" d="M24 22v94"/>
+          <path class="track track--light" d="M24 116v110"/>
+          <g class="wire">
+            <path d="M56 16h150M56 30h96"/>
+            <path d="M56 64h120M56 78h170"/>
+            <path d="M56 112h160M56 126h88"/>
+            <path d="M56 160h130M56 174h150"/>
+            <path d="M56 208h110M56 222h60"/>
+          </g>
+          <circle class="node" cx="24" cy="22" r="8"/>
+          <circle class="node" cx="24" cy="70" r="8"/>
+          <circle class="node node--current" cx="24" cy="118" r="8"/>
+          <circle class="node node--next" cx="24" cy="166" r="8"/>
+          <circle class="node node--next" cx="24" cy="214" r="8"/>
+        </svg>
       </section>
 
       <footer class="totem__foot">

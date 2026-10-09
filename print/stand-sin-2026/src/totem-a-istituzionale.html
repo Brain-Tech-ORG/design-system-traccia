@@ -7,7 +7,8 @@
   <style>
     /* File 100×200. L'allestitore non dichiara aree nascoste per i totem:
        il contenuto tiene comunque 8 cm dal bordo. Marchio in testa, claim
-       istituzionale, le tre linee di prodotto, certificazioni in calce. */
+       di nefrologia e dialisi — qui si parla solo di quello — le tre linee,
+       certificazioni in calce. */
     @page { size: 100mm 200mm; }
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
     .totem {
@@ -16,7 +17,7 @@
       padding: 7mm 8mm 6mm;
     }
     .totem__intro { margin-top: 8mm; }
-    .totem__intro .st-h1 { --t-display: 6.8mm; }
+    .totem__intro .st-h1 { --t-display: 7mm; }
     .totem__intro .st-lead { margin-top: var(--s-4); font-size: 4mm; }
     .totem__lines { margin-top: 8mm; }
     .totem__lines .st-numbered { padding: 3mm 0; align-items: center; gap: var(--s-4); }
@@ -48,17 +49,17 @@
 
       <section class="totem__intro">
         <div class="st-eyebrow">
-          <span class="st-eyebrow__label">Cooperativa E.D.P. La Traccia</span>
+          <span class="st-eyebrow__label">Dal 1980</span>
           <span class="st-eyebrow__line"></span>
+          <span class="st-eyebrow__note">Matera</span>
         </div>
-        <h1 class="st-h1">Leader in Italia nel software per sanità e <em>pubblica amministrazione</em></h1>
+        <h1 class="st-h1">Leader in Italia nel software per la nefrologia e la <em>dialisi</em></h1>
         <p class="st-lead">
-          Dal 1980 progettiamo e manteniamo sistemi informativi per aziende sanitarie,
-          enti locali e imprese.
+          Progettiamo e manteniamo i sistemi informativi dei reparti di nefrologia e dialisi:
+          software installato, seguito e aggiornato nel tempo.
         </p>
       </section>
 
-      <!-- Un congresso di nefrologia: le linee sono quelle di nefrologia e dialisi. -->
       <ol class="st-numbered-list totem__lines">
         <li class="st-numbered">
           <span class="st-circle">01</span>

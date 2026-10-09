@@ -377,11 +377,18 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
    Disegno schematico (dalle convenzioni di .tr-drawing): silhouette con
    tratto ink/900 e riempimento surface/tint; dettagli blu.
    ========================================================================== */
-.st-drawing .silhouette { fill: var(--tr-surface-tint); stroke: var(--tr-ink-900); stroke-width: 2.25; stroke-linejoin: round; }
+.st-drawing { display: block; }
+.st-drawing .silhouette { fill: var(--tr-surface-tint); stroke: var(--tr-ink-900); stroke-width: 2.25; stroke-linejoin: round; stroke-linecap: round; }
 .st-drawing .line { fill: none; stroke: var(--tr-border-soft-2); stroke-width: 2; stroke-linecap: round; }
+.st-drawing .wire { fill: none; stroke: var(--tr-border-soft-2); stroke-width: 5; stroke-linecap: round; }
 .st-drawing .brand { fill: none; stroke: var(--tr-brand-500); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .st-drawing .brand-fill { fill: var(--tr-brand-500); }
 .st-drawing .tint { fill: var(--tr-brand-100); }
+.st-drawing .track { fill: none; stroke: var(--tr-brand-500); stroke-width: 3; stroke-linecap: round; }
+.st-drawing .track--light { stroke: var(--tr-brand-100); }
+.st-drawing .node { fill: var(--tr-brand-500); }
+.st-drawing .node--current { fill: var(--st-paper); stroke: var(--tr-brand-500); stroke-width: 3; }
+.st-drawing .node--next { fill: var(--tr-brand-100); }
 .st-drawing .mono { font-family: var(--tr-font-mono); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--tr-brand-500); }
 .st-drawing .mono--ink { fill: var(--tr-ink-400); font-weight: 400; }
 

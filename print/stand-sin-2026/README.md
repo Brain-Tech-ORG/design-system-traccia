@@ -23,10 +23,10 @@ raster e senza trasparenze.
 | `fondale-1--solo-logo.pdf` | Parete fondale 1 — variante | 270×220 | ~250×200 | Solo il lockup, senza sagoma |
 | `fondale-2-quinta.pdf` | Parete fondale 2 (quinta) | 220×220 | ~200×200 | Lockup a 168 cm + sagoma outline dall'angolo opposto |
 | `fondale-2-quinta--solo-logo.pdf` | Parete fondale 2 — variante | 220×220 | ~200×200 | Solo il lockup |
-| `totem-a-istituzionale.pdf` | Totem esterni, lato A | 100×200 | — | Marchio, claim istituzionale, linee di prodotto, certificazioni, contatti |
-| `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | Ambulatorio con IA: il medico parla → il microfono Traccia decodifica → il referto si compila |
-| `totem-b2-cartella-ia.pdf` | Totem 2, lato B | 100×200 | — | Cartella, IA e processo infermieristico: una domanda alla cartella → l'IA naviga lo storico → il processo infermieristico guida |
-| `totem-b-concetti.pdf` | Totem, lato B — variante | 100×200 | — | I due concetti sullo stesso lato, per avere i due totem identici |
+| `totem-a-istituzionale.pdf` | Totem esterni, lato A | 100×200 | — | Marchio, dal 1980, claim di nefrologia e dialisi, le tre linee, certificazioni, contatti |
+| `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | Il wireframe del microfono IA e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
+| `totem-b2-cartella-ia.pdf` | Totem 2, lato B | 100×200 | — | «Nuovo percorso infermieristico personalizzato» e il disegno del percorso |
+| `totem-b-concetti.pdf` | Totem, lato B — variante | 100×200 | — | Le due novita' sullo stesso lato, per avere i due totem identici |
 | `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Solo grafica: la sagoma outline del marchio a sbordo dal bordo alto, verso l'ingresso. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
 | `parete-destra.pdf` | Parete destra | 470×220 | ~450×200 | Solo grafica: la stessa sagoma, a sbordo dal bordo alto verso l'ingresso |
 
@@ -49,21 +49,24 @@ del sistema (`.tr-watermark`): sul fondale sborda in alto a destra, sulla quinta
 in basso a sinistra, cosi' i due pannelli si rispondono. Per chi la trova di
 troppo c'e' la variante `--solo-logo`.
 
-**Totem, lato A: chi siamo.** Marchio in testa, eyebrow con la ragione sociale,
-il claim istituzionale e il lead presi dalla vetrina del sistema (`index.html`,
-blocco introduttivo; l'anno e' il 1980), tre linee di nefrologia e dialisi
-come `.tr-numbered-list` — e' un congresso di nefrologia, le altre aree non
-servono — e in calce la riga certificazioni, che sta sulle superfici
-pubbliche, e un totem in corsia lo e', con sito e email.
+**Totem, lato A: chi siamo.** Marchio in testa, eyebrow «Dal 1980 · Matera»,
+il claim — «Leader in Italia nel software per la nefrologia e la dialisi»:
+qui si parla solo di quello, la pubblica amministrazione resta fuori — un
+lead di una frase, tre linee di nefrologia e dialisi come `.tr-numbered-list`,
+e in calce la riga certificazioni, che sta sulle superfici pubbliche, e un
+totem in corsia lo e', con sito e email.
 
-**Totem, lato B: le novita', in modo grafico.** Nessuna schermata di prodotto:
-ogni concetto e' un titolo display con la parola chiave in blu e tre passi con
-icone sulla griglia del sistema (viewBox 24, tratto 2, estremita' tonde),
-collegati dalla linea `brand/300` di `.tr-steps`. Le icone nuove — persona che
-parla, microfono, fumetto, cartella — seguono la stessa griglia delle
-ventidue del registro; la lente e il documento sono quelle del registro. Un
-concetto per totem (B1 e B2) si legge meglio da lontano; la variante
-`totem-b-concetti` li mette insieme.
+**Totem, lato B: le novita', in modo grafico e vago.** Nessuna schermata,
+nessuna spiegazione. Sul primo il **wireframe del microfono con intelligenza
+artificiale**, disegnato con le convenzioni del disegno tecnico del sistema
+(`.tr-drawing`: silhouette con tratto `ink/900` e riempimento `surface/tint`,
+dettagli in blu: l'anello LED, l'anello della base, le onde senza fili), e
+accanto le due parole con il tratto d'accento: «Ambulatorio», «Rilevazioni a
+bordo letto». Sul secondo il titolo «Nuovo percorso infermieristico
+personalizzato» e il disegno del percorso: il binario della cronologia
+(`.tr-timeline`) con le tappe fatte piene, quella in corso ad anello, quelle
+da fare in tinta chiara, e accanto a ogni tappa il wireframe di una riga. La
+variante `totem-b-concetti` mette le due novita' sullo stesso lato.
 
 **Pareti laterali: solo grafica, e poca.** Niente testo: su ciascuna parete
 la sola sagoma outline del marchio, a sbordo dal bordo alto verso l'ingresso
@@ -110,15 +113,15 @@ trasparenze. Il file dichiara DeviceCMYK senza output intent: il profilo
 1. **Le due facce dei totem.** Qui lato A = istituzionale, lato B = un
    concetto per totem (B1 sul primo, B2 sul secondo). Se i due totem devono
    essere identici, il lato B e' `totem-b-concetti.pdf`.
-2. **Il claim del totem A** — «Leader in Italia nel software per sanita' e
-   pubblica amministrazione» — e il lead vengono dalla vetrina del design
-   system, non da un testo approvato per la fiera. Le tre linee (cartella
-   clinica di nefrologia e dialisi; sedute di dialisi e trattamenti
-   domiciliari; ambulatori e telemedicina) sono una scelta per il pubblico
-   della SIN.
-3. **Il secondo concetto** e' raccontato senza l'imaging: l'assistente che
-   risponde sui dati della cartella e il processo infermieristico che guida
-   le attivita'.
+2. **Il claim del totem A** riprende quello della vetrina del design system
+   («Leader in Italia nel software per sanita' e pubblica amministrazione»)
+   ristretto alla nefrologia e dialisi: va letto come una frase da approvare,
+   non come un dato. Le tre linee (cartella clinica di nefrologia e dialisi;
+   sedute di dialisi e trattamenti domiciliari; ambulatori e telemedicina)
+   sono una scelta per il pubblico della SIN.
+3. **Il microfono** e' un wireframe generico — capsula, stelo, base con
+   anello luminoso, onde senza fili — non il disegno del dispositivo reale.
+   Se il prodotto ha una forma riconoscibile, il disegno va rifatto su quella.
 4. **La riga certificazioni** e' solo testo: i badge IMQ / SI Cert sono un PNG
    che ingrandito dieci volte non regge. Se servono, vanno chiesti in vettoriale
    agli enti.

@@ -2,24 +2,33 @@
 <html lang="it" data-w="100" data-h="200">
 <head>
   <meta charset="utf-8">
-  <title>La Traccia — SIN 2026 — Totem esterno, lato B · Ambulatorio con intelligenza artificiale — 100×200 cm (1:10)</title>
+  <title>La Traccia — SIN 2026 — Totem esterno, lato B · Microfono IA, ambulatorio — 100×200 cm (1:10)</title>
   <link rel="stylesheet" href="stand.css">
   <style>
-    /* File 100×200, margine di sicurezza 8 cm. Un concetto solo, raccontato
-       in tre passi: il medico parla, il microfono Traccia decodifica, il
-       referto si compila. Icone sulla griglia 24, tratto 2. */
+    /* File 100×200, margine di sicurezza 8 cm. Il wireframe del microfono
+       con intelligenza artificiale, nelle convenzioni del disegno tecnico del
+       sistema (silhouette con tratto ink, dettagli in blu), e accanto le due
+       parole: ambulatorio, rilevazioni a bordo letto. Niente altro. */
     @page { size: 100mm 200mm; }
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
     .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
+    /* Poco contenuto: il blocco sta a meta' tra il marchio e il piede. */
+    .totem__body { margin-top: auto; margin-bottom: auto; }
     .totem__intro { margin-top: 8mm; }
-    .totem__intro .st-h1 { --t-display: 7.4mm; }
-    .totem__flow { margin-top: 9mm; --flow-n: 3; --flow-circle: 20mm; --t-step: 4.8mm; gap: 6mm; }
-    .totem__flow .st-step { gap: 8mm; }
-    .totem__flow .st-step__sub { font-size: 3.3mm; }
-    .totem__foot { margin-top: auto; padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
+    .mic {
+      margin-top: 16mm;
+      display: grid;
+      grid-template-columns: 40mm 1fr;
+      gap: 6mm;
+      align-items: center;
+    }
+    .mic__drawing { width: 40mm; height: auto; }
+    .mic__text { display: flex; flex-direction: column; gap: 10mm; }
+    .mic__item { display: flex; flex-direction: column; gap: 3mm; }
+    .mic__item .st-h1 { --t-display: 4.8mm; }
+    .mic__caption { margin-top: 6mm; text-align: center; }
+    .totem__foot { padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
     .totem__foot .st-footer { padding-top: 3mm; }
-    /* Niente sagoma outline su questo lato: il marchio e' nel lockup in
-       testa, e dietro ai passi la sagoma farebbe solo rumore. */
   </style>
 </head>
 <body>
@@ -35,47 +44,50 @@
         </div>
       </header>
 
+      <div class="totem__body">
       <section class="totem__intro">
         <div class="st-eyebrow">
           <span class="st-eyebrow__label">Novità</span>
           <span class="st-eyebrow__line"></span>
-          <span class="st-eyebrow__note">Ambulatorio · IA</span>
+          <span class="st-eyebrow__note">Intelligenza artificiale</span>
         </div>
-        <h1 class="st-h1">Il medico parla, il referto si compila <em>da&nbsp;sé</em></h1>
       </section>
 
-      <ol class="st-flow st-flow--col totem__flow">
-        <li class="st-step">
-          <span class="st-step__icon">
-            <svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20.5v-1a5.5 5.5 0 0 1 5.5-5.5h2a5.5 5.5 0 0 1 5.5 5.5v1"/><path d="M17.5 8a3.5 3.5 0 0 1 0 6"/><path d="M20 5a7.5 7.5 0 0 1 0 12"/></svg>
-          </span>
-          <div class="st-step__text">
-            <span class="st-step__n">01</span>
-            <p class="st-step__title">Il medico parla</p>
-            <p class="st-step__sub">La visita si svolge come sempre: un dialogo con il paziente.</p>
+      <div class="mic">
+        <div>
+          <!-- Wireframe del microfono IA: capsula, anello LED, stelo, base
+               con anello luminoso, tasto, onde senza fili. -->
+          <svg class="st-drawing mic__drawing" viewBox="0 0 200 400" role="img" aria-label="Microfono con intelligenza artificiale">
+            <rect class="silhouette" x="55" y="14" width="90" height="150" rx="45"/>
+            <g class="line">
+              <path d="M74 46h52M66 66h68M64 86h72M66 106h68M74 126h52"/>
+              <path d="M100 28v120M84 32v112M116 32v112"/>
+            </g>
+            <ellipse class="brand" cx="100" cy="158" rx="43" ry="8" stroke-width="3"/>
+            <rect class="silhouette" x="89" y="166" width="22" height="16" rx="4"/>
+            <rect class="silhouette" x="94" y="182" width="12" height="126" rx="6"/>
+            <ellipse class="silhouette" cx="100" cy="330" rx="80" ry="26"/>
+            <ellipse class="brand" cx="100" cy="330" rx="60" ry="17" stroke-width="2.5" stroke-dasharray="5 6"/>
+            <circle class="brand-fill" cx="134" cy="324" r="4"/>
+            <g class="brand" stroke-width="2.5">
+              <path d="M158 40a26 26 0 0 1 0 36"/>
+              <path d="M172 28a44 44 0 0 1 0 60"/>
+            </g>
+          </svg>
+          <p class="st-mono st-mono--muted st-mono--sm mic__caption" style="margin:0">Microfono IA</p>
+        </div>
+        <div class="mic__text">
+          <div class="mic__item">
+            <span class="st-accent-dash"></span>
+            <p class="st-h1">Ambulatorio</p>
           </div>
-        </li>
-        <li class="st-step">
-          <span class="st-step__icon">
-            <svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 10.5a6.5 6.5 0 0 0 13 0"/><path d="M12 17v3.5"/><path d="M8.5 20.5h7"/></svg>
-          </span>
-          <div class="st-step__text">
-            <span class="st-step__n">02</span>
-            <p class="st-step__title">Il microfono Traccia decodifica</p>
-            <p class="st-step__sub">Trascrive in tempo reale, con il lessico della nefrologia.</p>
+          <div class="mic__item">
+            <span class="st-accent-dash"></span>
+            <p class="st-h1">Rilevazioni a bordo letto</p>
           </div>
-        </li>
-        <li class="st-step">
-          <span class="st-step__icon">
-            <svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 3.5H6v17h12V8z"/><path d="M13.5 3.5V8H18"/><path d="M9 12h6"/><path d="M9 15.5h3.5"/></svg>
-          </span>
-          <div class="st-step__text">
-            <span class="st-step__n">03</span>
-            <p class="st-step__title">Il referto si compila</p>
-            <p class="st-step__sub">I campi si riempiono da soli. Il medico verifica e firma.</p>
-          </div>
-        </li>
-      </ol>
+        </div>
+      </div>
+      </div>
 
       <footer class="totem__foot">
         <p class="st-mono st-mono--brand" style="margin:0">Chiedi una dimostrazione allo stand</p>
