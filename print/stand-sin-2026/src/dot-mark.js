@@ -74,22 +74,4 @@
       dot(g, p.x, p.y, r, cls);
     });
   };
-
-  // Dati sparsi che arrivano da sinistra e convergono sul vertice D del
-  // marchio: fitti e scuri vicino, radi e chiari lontano.
-  window.trScatter = function (g, o) {
-    const { count = 46, width = 420, r = 9.5, seed = 11, levels = ['l300', 'l200', 'l100'] } = o || {};
-    const rand = rng(seed);
-    const placed = [];
-    for (let tries = 0; placed.length < count && tries < 6000; tries++) {
-      const t = Math.pow(rand(), 0.85);
-      const x = D[0] - 30 - t * width;
-      const spread = (rand() + rand() + rand() - 1.5) / 1.5;
-      const y = D[1] + spread * (18 + t * 210);
-      if (placed.some((p) => Math.hypot(p[0] - x, p[1] - y) < 2 * r + 9)) continue;
-      placed.push([x, y]);
-      const k = Math.min(levels.length - 1, Math.floor(t * levels.length));
-      dot(g, x, y, r, levels[k]);
-    }
-  };
 })();

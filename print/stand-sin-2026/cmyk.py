@@ -131,12 +131,17 @@ def main(src, dst, title):
         page.replace_contents(new)
         process_xobjects(page.get("/Resources"), seen)
         check_extgstate(page.get("/Resources"))
-    writer.add_metadata({
+    # Senza le date di Chromium: la stessa grafica deve dare lo stesso file,
+    # cosi' nel repository cambia solo il PDF che e' cambiato davvero.
+    info = {k: v for k, v in (reader.metadata or {}).items()
+            if k not in ("/CreationDate", "/ModDate")}
+    info.update({
         "/Title": title,
         "/Author": "Cooperativa E.D.P. La Traccia",
         "/Subject": "Allestimento stand SIN 2026 Sorrento — scala 1:10, DeviceCMYK",
         "/Creator": "design-system-traccia / print/stand-sin-2026",
     })
+    writer.metadata = info
     with open(dst, "wb") as f:
         writer.write(f)
     if unmapped:

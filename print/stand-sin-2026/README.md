@@ -25,9 +25,7 @@ raster e senza trasparenze.
 | `fondale-2-quinta--solo-logo.pdf` | Parete fondale 2 — variante | 220×220 | ~200×200 | Solo il lockup |
 | `totem-a-istituzionale.pdf` | Totem 1 e 2, lato A | 100×200 | — | Marchio, «Dal 1980 · Matera», la cifra «oltre 400 installazioni», le tre linee (Gepadial in testa), certificazioni, contatti |
 | `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | Eyebrow «Novita' · Hardware custom», titolo «Modelli IA per la nefrologia»; il wireframe del microfono AI (sigla AI sulla capsula) e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
-| `totem-b2-dati-ia--forma.pdf` | Totem 2, lato B — **proposta 1** | 100×200 | — | «I dati clinici prendono forma»: il marchio fatto di punti, una mappa di dati; gli anelli sono i dati che l'IA segnala |
-| `totem-b2-dati-ia--ordine.pdf` | Totem 2, lato B — **proposta 2** | 100×200 | — | «L'IA dà forma ai dati clinici»: dati sparsi che arrivano dal bordo e convergono nel marchio a punti |
-| `totem-b2-dati-ia--traccia.pdf` | Totem 2, lato B — **proposta 3** | 100×200 | — | «Ogni dato lascia una traccia»: il marchio pieno posato sulla serie dei dati; a destra la proiezione dell'IA, tratteggiata |
+| `totem-b2-dati-ia.pdf` | Totem 2, lato B | 100×200 | — | Solo istituzionale: eyebrow «Gen BI · Dati clinici e IA», titolo «I dati clinici prendono forma», il marchio fatto di punti — una mappa di dati, con tre anelli per i dati che l'IA segnala — certificazioni, contatti |
 | `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Solo grafica: la sagoma outline del marchio a sbordo dal bordo alto, verso l'ingresso. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
 | `parete-destra.pdf` | Parete destra | 470×220 | ~450×200 | Solo grafica: la stessa sagoma, a sbordo dal bordo alto verso l'ingresso |
 
@@ -71,28 +69,16 @@ base, le onde senza fili) con la sola sigla **AI** in display sulla capsula,
 e accanto le due parole con il tratto d'accento: «Ambulatorio», «Rilevazioni
 a bordo letto».
 
-**Totem 2, lato B: solo istituzionale, tre proposte.** Nessuna novita' di
-prodotto: un gioco con il marchio e il tema della gestione dei dati clinici
-con l'IA (gen BI). Testata come sul lato A — marchio, eyebrow «Gen BI · Dati
-clinici e IA», titolo display — e in calce certificazioni e contatti. Cambia
-il disegno, e con lui il titolo:
-
-1. **Forma** — «I dati clinici prendono forma». Il marchio fatto di punti:
-   le due figure del logo campionate su un reticolo parallelo ai loro lati,
-   cosi' i bordi restano dritti e la fessura fra le due figure resta aperta.
-   Da lontano e' il logo, da vicino una mappa di dati: la tinta di ogni
-   punto (`brand/300` → `brand/600`) e' il suo valore, piu' scura verso la
-   punta; tre anelli sono i dati che l'IA segnala.
-2. **Ordine** — «L'IA da' forma ai dati clinici». Dati sparsi, chiari e
-   disordinati, entrano dal bordo sinistro del totem e convergono nel
-   vertice del marchio a punti, tutto `brand/500` e in ordine.
-3. **Traccia** — «Ogni dato lascia una traccia». Il marchio pieno, grande,
-   posato sulla serie dei dati che attraversa il totem da bordo a bordo: a
-   sinistra i dati raccolti, pieni; dopo il marchio la proiezione dell'IA,
-   tratteggiata e in tinta chiara — la regola del segmento verticale, pieno
-   prima e chiaro dopo, applicata a una serie. Il marchio e' il presente.
-
-Il reticolo dei punti lo genera `src/dot-mark.js`, deterministico: stesso
+**Totem 2, lato B: solo istituzionale.** Nessuna novita' di prodotto: un
+gioco con il marchio e il tema della gestione dei dati clinici con l'IA (gen
+BI). Testata come sul lato A — marchio, eyebrow «Gen BI · Dati clinici e
+IA», titolo «I dati clinici prendono forma» — e in calce certificazioni e
+contatti. Sotto il titolo il **marchio fatto di punti**: le due figure del
+logo campionate su un reticolo parallelo ai loro lati, cosi' i bordi restano
+dritti e la fessura fra le due figure resta aperta. Da lontano e' il logo, da
+vicino una mappa di dati: la tinta di ogni punto (`brand/300` → `brand/600`)
+e' il suo valore, piu' scura verso la punta; tre anelli sono i dati che l'IA
+segnala. Il reticolo lo genera `src/dot-mark.js`, deterministico: stesso
 seme, stesso disegno, stesso PDF. In entrambi i lati B il disegno sta a
 meta' tra il titolo e il piede.
 
@@ -138,24 +124,24 @@ trasparenze. Il file dichiara DeviceCMYK senza output intent: il profilo
 
 ## Da confermare prima di mandare in stampa
 
-1. **Il lato B del totem 2**: va scelta una delle tre proposte (forma,
-   ordine, traccia); le altre due escono dal set. Lato A istituzionale su
-   entrambi i totem, lato B del totem 1 con il microfono AI.
-2. **La cifra del totem A** — oltre 400 installazioni — e' quella indicata
+1. **La cifra del totem A** — oltre 400 installazioni — e' quella indicata
    nel brief. Le tre linee (cartella clinica Gepadial; sedute di dialisi e
    trattamenti domiciliari; ambulatori e telemedicina) sono una scelta per il
    pubblico della SIN.
-3. **Il microfono** e' un wireframe generico — capsula, stelo, base con
+2. **Il microfono** e' un wireframe generico — capsula, stelo, base con
    anello luminoso, onde senza fili — non il disegno del dispositivo reale.
    Se il prodotto ha una forma riconoscibile, il disegno va rifatto su quella.
-4. **La riga certificazioni** e' solo testo: i badge IMQ / SI Cert sono un PNG
+3. **La riga certificazioni** e' solo testo: i badge IMQ / SI Cert sono un PNG
    che ingrandito dieci volte non regge. Se servono, vanno chiesti in vettoriale
    agli enti.
-5. **I totem** non hanno un'area nascosta dichiarata: il contenuto tiene 8 cm
+4. **I totem** non hanno un'area nascosta dichiarata: il contenuto tiene 8 cm
    dal bordo. Se il profilo copre di piu', va detto.
-6. **Il microfono Traccia e l'assistente della cartella** sono raccontati come
-   concetti, senza schermate: e' coerente con la scelta, verbalizzata nella call
-   del 25/9, di non esporre il prototipo a tutti.
+5. **Il microfono AI e la gen BI** sono raccontati come concetti, senza
+   schermate: e' coerente con la scelta, verbalizzata nella call del 25/9, di
+   non esporre il prototipo a tutti.
+6. **Il fondale e la quinta** esistono in due versioni: con la sagoma outline
+   a sbordo (`fondale-1.pdf`, `fondale-2-quinta.pdf`) e con il solo lockup
+   (`--solo-logo`). Va mandata a Scuotto una delle due coppie.
 
 ## Come si rigenera
 

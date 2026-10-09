@@ -380,30 +380,15 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
 .st-drawing { display: block; }
 .st-drawing .silhouette { fill: var(--tr-surface-tint); stroke: var(--tr-ink-900); stroke-width: 2.25; stroke-linejoin: round; stroke-linecap: round; }
 .st-drawing .line { fill: none; stroke: var(--tr-border-soft-2); stroke-width: 2; stroke-linecap: round; }
-.st-drawing .wire { fill: none; stroke: var(--tr-border-soft-2); stroke-width: 5; stroke-linecap: round; }
 .st-drawing .brand { fill: none; stroke: var(--tr-brand-500); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .st-drawing .brand-fill { fill: var(--tr-brand-500); }
-.st-drawing .tint { fill: var(--tr-brand-100); }
-.st-drawing .track { fill: none; stroke: var(--tr-brand-500); stroke-width: 3; stroke-linecap: round; }
-.st-drawing .track--light { stroke: var(--tr-brand-100); }
-.st-drawing .node { fill: var(--tr-brand-500); }
-.st-drawing .node--current { fill: var(--st-paper); stroke: var(--tr-brand-500); stroke-width: 3; }
-.st-drawing .node--next { fill: var(--tr-brand-100); }
-/* Il marchio a punti e i dati sparsi: una tinta per valore, tutte del blu
-   di marca. L'anello e' il dato che l'IA segnala. */
-.st-drawing .l100 { fill: var(--tr-brand-100); }
-.st-drawing .l200 { fill: var(--tr-brand-200); }
+/* Il marchio a punti (dot-mark.js): una tinta per valore, tutte del blu di
+   marca, dal 300 al 600. L'anello e' il dato che l'IA segnala. */
 .st-drawing .l300 { fill: var(--tr-brand-300); }
 .st-drawing .l400 { fill: var(--tr-brand-400); }
 .st-drawing .l500 { fill: var(--tr-brand-500); }
 .st-drawing .l600 { fill: var(--tr-brand-600); }
 .st-drawing .ring { fill: var(--st-paper); stroke: var(--tr-brand-600); stroke-width: 4.5; }
-/* La traccia dei dati: piena fino al presente, tratteggiata e chiara dopo
-   (la proiezione dell'IA) — la regola del segmento verticale applicata a una
-   serie. */
-.st-drawing .trace { fill: none; stroke: var(--tr-brand-500); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
-.st-drawing .trace--next { stroke: var(--tr-brand-300); stroke-dasharray: 20 18; }
-.st-drawing .solid { fill: var(--tr-brand-500); }
 /* Marcatura di prodotto sul disegno: la sigla in display, in blu. */
 .st-drawing .label {
   font-family: var(--tr-font-display);
@@ -454,8 +439,6 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
   text-transform: uppercase;
   color: var(--tr-ink-400);
 }
-.st-drawing .mono { font-family: var(--tr-font-mono); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--tr-brand-500); }
-.st-drawing .mono--ink { fill: var(--tr-ink-400); font-weight: 400; }
 
 /* ==========================================================================
    Piede: firma e certificazioni (superficie pubblica: la riga ci va)
