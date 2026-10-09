@@ -6,27 +6,29 @@
   <link rel="stylesheet" href="stand.css">
   <style>
     /* File 100×200, margine di sicurezza 8 cm. Testata come sul lato A:
-       marchio, eyebrow, titolo display. Poi il wireframe del microfono AI
-       — hardware custom, con la sigla AI sulla capsula e nient'altro —
-       e accanto le due parole: ambulatorio, rilevazioni a bordo letto. */
+       marchio, eyebrow, titolo display. Poi il dispositivo AI, hardware
+       custom: due unita' in wireframe, con il marchio La Traccia stampato
+       sopra e la sigla AI — quella da tavolo accanto a «Ambulatorio», quella
+       portatile accanto a «Rilevazioni a bordo letto». */
     @page { size: 100mm 200mm; }
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
     .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
     .totem__intro { margin-top: 8mm; }
     .totem__intro .st-h1 { --t-display: 8mm; }
-    /* Il blocco del microfono sta a meta' tra il titolo e il piede. */
-    .mic {
+    /* Il blocco del dispositivo sta a meta' tra il titolo e il piede:
+       due righe, un'unita' e la sua parola. */
+    .device {
       margin-top: auto;
       margin-bottom: auto;
       display: grid;
-      grid-template-columns: 40mm 1fr;
-      gap: 6mm;
+      grid-template-columns: 42mm 1fr;
+      column-gap: 6mm;
+      row-gap: 12mm;
       align-items: center;
     }
-    .mic__drawing { width: 40mm; height: auto; }
-    .mic__text { display: flex; flex-direction: column; gap: 10mm; }
-    .mic__item { display: flex; flex-direction: column; gap: 3mm; }
-    .mic__item .st-h1 { --t-display: 4.8mm; }
+    .device__drawing { width: 42mm; height: auto; }
+    .device__item { display: flex; flex-direction: column; gap: 3mm; }
+    .device__item .st-h1 { --t-display: 4.8mm; }
     .totem__foot { padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
     .totem__foot .st-footer { padding-top: 3mm; }
     .st-watermark { width: 92mm; bottom: -30mm; right: -36mm; }
@@ -58,37 +60,48 @@
         <h1 class="st-h1">Modelli IA per la <em>nefrologia</em></h1>
       </section>
 
-      <div class="mic">
-        <!-- Wireframe del microfono AI: capsula con griglia e sigla AI,
-             anello LED, stelo, base con anello luminoso, tasto, onde
-             senza fili. -->
-        <svg class="st-drawing mic__drawing" viewBox="0 0 200 400" role="img" aria-label="Microfono AI, hardware custom">
-          <rect class="silhouette" x="55" y="14" width="90" height="150" rx="45"/>
-          <g class="line">
-            <path d="M74 44h52M66 60h68M64 76h72M66 92h68"/>
-            <path d="M100 28v72M84 32v64M116 32v64"/>
+      <div class="device">
+        <!-- Unita' da tavolo, vista dall'alto: corpo tondo, anello LED,
+             marchio La Traccia stampato, simbolo del microfono, sigla AI. -->
+        <svg class="st-drawing device__drawing" viewBox="0 0 200 200" role="img" aria-label="Unità da tavolo del dispositivo AI La Traccia">
+          <circle class="silhouette" cx="100" cy="100" r="86"/>
+          <circle class="brand" cx="100" cy="100" r="73" stroke-width="3"/>
+          <g class="mark" transform="translate(91 34) scale(0.03)">
+            <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+            <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
           </g>
-          <text class="label" x="100" y="144" text-anchor="middle" font-size="40">AI</text>
-          <ellipse class="brand" cx="100" cy="158" rx="43" ry="8" stroke-width="3"/>
-          <rect class="silhouette" x="89" y="166" width="22" height="16" rx="4"/>
-          <rect class="silhouette" x="94" y="182" width="12" height="126" rx="6"/>
-          <ellipse class="silhouette" cx="100" cy="330" rx="80" ry="26"/>
-          <ellipse class="brand" cx="100" cy="330" rx="60" ry="17" stroke-width="2.5" stroke-dasharray="5 6"/>
-          <circle class="brand-fill" cx="134" cy="324" r="4"/>
+          <g class="brand" stroke-width="3" transform="translate(100 104) scale(1.5)">
+            <rect x="-5" y="-16" width="10" height="18" rx="5"/>
+            <path d="M-10 -2a10 10 0 0 0 20 0"/>
+            <path d="M0 8v5"/>
+            <path d="M-6 13h12"/>
+          </g>
+          <text class="label" x="100" y="160" text-anchor="middle" font-size="26">AI</text>
+        </svg>
+        <div class="device__item">
+          <span class="st-accent-dash"></span>
+          <p class="st-h1">Ambulatorio</p>
+        </div>
+
+        <!-- Unita' portatile: corpo con clip, marchio, sigla AI, LED,
+             onde senza fili. -->
+        <svg class="st-drawing device__drawing" viewBox="0 0 200 140" role="img" aria-label="Unità portatile del dispositivo AI La Traccia">
+          <rect class="silhouette" x="58" y="16" width="34" height="18" rx="6"/>
+          <rect class="silhouette" x="20" y="30" width="110" height="80" rx="18"/>
+          <g class="mark" transform="translate(36 50) scale(0.028)">
+            <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+            <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+          </g>
+          <text class="label" x="104" y="78" text-anchor="middle" font-size="24">AI</text>
+          <circle class="brand-fill" cx="115" cy="96" r="3.5"/>
           <g class="brand" stroke-width="2.5">
-            <path d="M158 40a26 26 0 0 1 0 36"/>
-            <path d="M172 28a44 44 0 0 1 0 60"/>
+            <path d="M150 52a22 22 0 0 1 0 32"/>
+            <path d="M164 40a40 40 0 0 1 0 56"/>
           </g>
         </svg>
-        <div class="mic__text">
-          <div class="mic__item">
-            <span class="st-accent-dash"></span>
-            <p class="st-h1">Ambulatorio</p>
-          </div>
-          <div class="mic__item">
-            <span class="st-accent-dash"></span>
-            <p class="st-h1">Rilevazioni a bordo letto</p>
-          </div>
+        <div class="device__item">
+          <span class="st-accent-dash"></span>
+          <p class="st-h1">Rilevazioni a bordo letto</p>
         </div>
       </div>
 
