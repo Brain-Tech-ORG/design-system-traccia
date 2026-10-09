@@ -2,13 +2,14 @@
 <html lang="it" data-w="100" data-h="200">
 <head>
   <meta charset="utf-8">
-  <title>La Traccia — SIN 2026 — Totem esterno, lato B · Microfono IA, ambulatorio — 100×200 cm (1:10)</title>
+  <title>La Traccia — SIN 2026 — Totem esterno, lato B · Microfono AI, ambulatorio — 100×200 cm (1:10)</title>
   <link rel="stylesheet" href="stand.css">
   <style>
     /* File 100×200, margine di sicurezza 8 cm. Il wireframe del microfono
-       con intelligenza artificiale, nelle convenzioni del disegno tecnico del
-       sistema (silhouette con tratto ink, dettagli in blu), e accanto le due
-       parole: ambulatorio, rilevazioni a bordo letto. Niente altro. */
+       AI — hardware custom, con la sigla AI ben visibile sulla capsula —
+       nelle convenzioni del disegno tecnico del sistema, e accanto le due
+       parole: ambulatorio, rilevazioni a bordo letto. Marchio in testa alla
+       stessa misura del lato istituzionale, sagoma outline a sbordo. */
     @page { size: 100mm 200mm; }
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
     .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
@@ -29,13 +30,19 @@
     .mic__caption { margin-top: 6mm; text-align: center; }
     .totem__foot { padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
     .totem__foot .st-footer { padding-top: 3mm; }
+    .st-watermark { width: 92mm; bottom: -30mm; right: -36mm; }
   </style>
 </head>
 <body>
   <div class="st-sheet st-sheet--totem">
+    <svg class="st-watermark" viewBox="0 0 594 717" aria-hidden="true">
+      <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+      <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+    </svg>
+
     <div class="st-safe totem">
       <header>
-        <div class="st-lockup" data-fit-w="50" role="img" aria-label="La Traccia">
+        <div class="st-lockup" data-fit-w="64" role="img" aria-label="La Traccia">
           <svg class="st-lockup__mark" viewBox="0 0 594 717" aria-hidden="true">
             <path fill="#4194d7" d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
             <path fill="#4194d7" d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
@@ -49,20 +56,22 @@
         <div class="st-eyebrow">
           <span class="st-eyebrow__label">Novità</span>
           <span class="st-eyebrow__line"></span>
-          <span class="st-eyebrow__note">Intelligenza artificiale</span>
+          <span class="st-eyebrow__note">Modelli IA per la nefrologia</span>
         </div>
       </section>
 
       <div class="mic">
         <div>
-          <!-- Wireframe del microfono IA: capsula, anello LED, stelo, base
-               con anello luminoso, tasto, onde senza fili. -->
-          <svg class="st-drawing mic__drawing" viewBox="0 0 200 400" role="img" aria-label="Microfono con intelligenza artificiale">
+          <!-- Wireframe del microfono AI: capsula con griglia e sigla AI,
+               anello LED, stelo, base con anello luminoso, tasto, onde
+               senza fili. -->
+          <svg class="st-drawing mic__drawing" viewBox="0 0 200 400" role="img" aria-label="Microfono AI, hardware custom">
             <rect class="silhouette" x="55" y="14" width="90" height="150" rx="45"/>
             <g class="line">
-              <path d="M74 46h52M66 66h68M64 86h72M66 106h68M74 126h52"/>
-              <path d="M100 28v120M84 32v112M116 32v112"/>
+              <path d="M74 44h52M66 60h68M64 76h72M66 92h68"/>
+              <path d="M100 28v72M84 32v64M116 32v64"/>
             </g>
+            <text class="label" x="100" y="144" text-anchor="middle" font-size="40">AI</text>
             <ellipse class="brand" cx="100" cy="158" rx="43" ry="8" stroke-width="3"/>
             <rect class="silhouette" x="89" y="166" width="22" height="16" rx="4"/>
             <rect class="silhouette" x="94" y="182" width="12" height="126" rx="6"/>
@@ -74,7 +83,7 @@
               <path d="M172 28a44 44 0 0 1 0 60"/>
             </g>
           </svg>
-          <p class="st-mono st-mono--muted st-mono--sm mic__caption" style="margin:0">Microfono IA</p>
+          <p class="st-mono st-mono--muted st-mono--sm mic__caption" style="margin:0">Microfono AI<br>hardware custom</p>
         </div>
         <div class="mic__text">
           <div class="mic__item">

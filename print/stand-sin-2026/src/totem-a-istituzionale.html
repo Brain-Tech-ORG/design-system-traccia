@@ -6,9 +6,9 @@
   <link rel="stylesheet" href="stand.css">
   <style>
     /* File 100×200. L'allestitore non dichiara aree nascoste per i totem:
-       il contenuto tiene comunque 8 cm dal bordo. Marchio in testa, claim
-       di nefrologia e dialisi — qui si parla solo di quello — le tre linee,
-       certificazioni in calce. */
+       il contenuto tiene comunque 8 cm dal bordo. Marchio in testa, la cifra
+       che dice chi siamo — oltre 400 installazioni — le tre linee,
+       certificazioni in calce. Solo nefrologia e dialisi. */
     @page { size: 100mm 200mm; }
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
     .totem {
@@ -17,8 +17,8 @@
       padding: 7mm 8mm 6mm;
     }
     .totem__intro { margin-top: 8mm; }
-    .totem__intro .st-h1 { --t-display: 7mm; }
-    .totem__intro .st-lead { margin-top: var(--s-4); font-size: 4mm; }
+    .totem__intro .st-figure { margin-top: 10mm; --t-figure: 27mm; }
+    .totem__intro .st-lead { margin-top: var(--s-5); font-size: 4mm; }
     .totem__lines { margin-top: 8mm; }
     .totem__lines .st-numbered { padding: 3mm 0; align-items: center; gap: var(--s-4); }
     .totem__lines .st-numbered__title { font-size: 5mm; }
@@ -53,17 +53,20 @@
           <span class="st-eyebrow__line"></span>
           <span class="st-eyebrow__note">Matera</span>
         </div>
-        <h1 class="st-h1">Leader in Italia nel software per la nefrologia e la <em>dialisi</em></h1>
+        <p class="st-figure">
+          <span class="st-figure__over">Oltre</span>
+          <span class="st-figure__number">400</span>
+          <span class="st-figure__label">installazioni</span>
+        </p>
         <p class="st-lead">
-          Progettiamo e manteniamo i sistemi informativi dei reparti di nefrologia e dialisi:
-          software installato, seguito e aggiornato nel tempo.
+          Progettiamo e manteniamo i sistemi informativi dei reparti di nefrologia e dialisi.
         </p>
       </section>
 
       <ol class="st-numbered-list totem__lines">
         <li class="st-numbered">
           <span class="st-circle">01</span>
-          <p class="st-numbered__title">Cartella clinica di nefrologia e dialisi</p>
+          <p class="st-numbered__title">Cartella clinica Gepadial</p>
         </li>
         <li class="st-numbered">
           <span class="st-circle">02</span>

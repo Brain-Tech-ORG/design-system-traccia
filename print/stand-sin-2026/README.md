@@ -23,9 +23,9 @@ raster e senza trasparenze.
 | `fondale-1--solo-logo.pdf` | Parete fondale 1 — variante | 270×220 | ~250×200 | Solo il lockup, senza sagoma |
 | `fondale-2-quinta.pdf` | Parete fondale 2 (quinta) | 220×220 | ~200×200 | Lockup a 168 cm + sagoma outline dall'angolo opposto |
 | `fondale-2-quinta--solo-logo.pdf` | Parete fondale 2 — variante | 220×220 | ~200×200 | Solo il lockup |
-| `totem-a-istituzionale.pdf` | Totem esterni, lato A | 100×200 | — | Marchio, dal 1980, claim di nefrologia e dialisi, le tre linee, certificazioni, contatti |
-| `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | Il wireframe del microfono IA e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
-| `totem-b2-cartella-ia.pdf` | Totem 2, lato B | 100×200 | — | «Nuovo percorso infermieristico personalizzato» e il disegno del percorso |
+| `totem-a-istituzionale.pdf` | Totem esterni, lato A | 100×200 | — | Marchio, «Dal 1980 · Matera», la cifra «oltre 400 installazioni», le tre linee (Gepadial in testa), certificazioni, contatti |
+| `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | «Modelli IA per la nefrologia»: il wireframe del microfono AI (hardware custom, sigla AI sulla capsula) e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
+| `totem-b2-cartella-ia.pdf` | Totem 2, lato B | 100×200 | — | «Cartella clinica Gepadial»: «Nuovo percorso infermieristico personalizzato» e il disegno del percorso |
 | `totem-b-concetti.pdf` | Totem, lato B — variante | 100×200 | — | Le due novita' sullo stesso lato, per avere i due totem identici |
 | `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Solo grafica: la sagoma outline del marchio a sbordo dal bordo alto, verso l'ingresso. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
 | `parete-destra.pdf` | Parete destra | 470×220 | ~450×200 | Solo grafica: la stessa sagoma, a sbordo dal bordo alto verso l'ingresso |
@@ -50,23 +50,28 @@ in basso a sinistra, cosi' i due pannelli si rispondono. Per chi la trova di
 troppo c'e' la variante `--solo-logo`.
 
 **Totem, lato A: chi siamo.** Marchio in testa, eyebrow «Dal 1980 · Matera»,
-il claim — «Leader in Italia nel software per la nefrologia e la dialisi»:
-qui si parla solo di quello, la pubblica amministrazione resta fuori — un
-lead di una frase, tre linee di nefrologia e dialisi come `.tr-numbered-list`,
-e in calce la riga certificazioni, che sta sulle superfici pubbliche, e un
-totem in corsia lo e', con sito e email.
+poi la cifra in evidenza di `.tr-figure` — «oltre», **400**, «installazioni»
+— che dice chi siamo senza claim, un lead di una frase, tre linee di
+nefrologia e dialisi come `.tr-numbered-list` (la cartella clinica si chiama
+Gepadial, e basta il nome), e in calce la riga certificazioni, che sta sulle
+superfici pubbliche, e un totem in corsia lo e', con sito e email.
 
 **Totem, lato B: le novita', in modo grafico e vago.** Nessuna schermata,
-nessuna spiegazione. Sul primo il **wireframe del microfono con intelligenza
-artificiale**, disegnato con le convenzioni del disegno tecnico del sistema
-(`.tr-drawing`: silhouette con tratto `ink/900` e riempimento `surface/tint`,
-dettagli in blu: l'anello LED, l'anello della base, le onde senza fili), e
-accanto le due parole con il tratto d'accento: «Ambulatorio», «Rilevazioni a
-bordo letto». Sul secondo il titolo «Nuovo percorso infermieristico
-personalizzato» e il disegno del percorso: il binario della cronologia
-(`.tr-timeline`) con le tappe fatte piene, quella in corso ad anello, quelle
-da fare in tinta chiara, e accanto a ogni tappa il wireframe di una riga. La
-variante `totem-b-concetti` mette le due novita' sullo stesso lato.
+nessuna spiegazione, e il marchio alla stessa misura del lato A, con la
+sagoma outline a sbordo, perche' anche da questo lato si capisca subito di
+chi e' il totem. L'eyebrow dice «Modelli IA per la nefrologia», non
+«intelligenza artificiale». Sul primo il **wireframe del microfono AI**,
+disegnato con le convenzioni del disegno tecnico del sistema (`.tr-drawing`:
+silhouette con tratto `ink/900` e riempimento `surface/tint`, dettagli in
+blu: l'anello LED, l'anello della base, le onde senza fili) con la sigla
+**AI** in display sulla capsula e la didascalia «hardware custom», e accanto
+le due parole con il tratto d'accento: «Ambulatorio», «Rilevazioni a bordo
+letto». Sul secondo, sotto «Cartella clinica Gepadial», il titolo «Nuovo
+percorso infermieristico personalizzato» e il disegno del percorso: il
+binario della cronologia (`.tr-timeline`) con le tappe fatte piene, quella in
+corso ad anello, quelle da fare in tinta chiara, e accanto a ogni tappa il
+wireframe di una riga. La variante `totem-b-concetti` mette le due novita'
+sullo stesso lato.
 
 **Pareti laterali: solo grafica, e poca.** Niente testo: su ciascuna parete
 la sola sagoma outline del marchio, a sbordo dal bordo alto verso l'ingresso
@@ -113,12 +118,10 @@ trasparenze. Il file dichiara DeviceCMYK senza output intent: il profilo
 1. **Le due facce dei totem.** Qui lato A = istituzionale, lato B = un
    concetto per totem (B1 sul primo, B2 sul secondo). Se i due totem devono
    essere identici, il lato B e' `totem-b-concetti.pdf`.
-2. **Il claim del totem A** riprende quello della vetrina del design system
-   («Leader in Italia nel software per sanita' e pubblica amministrazione»)
-   ristretto alla nefrologia e dialisi: va letto come una frase da approvare,
-   non come un dato. Le tre linee (cartella clinica di nefrologia e dialisi;
-   sedute di dialisi e trattamenti domiciliari; ambulatori e telemedicina)
-   sono una scelta per il pubblico della SIN.
+2. **La cifra del totem A** — oltre 400 installazioni — e' quella indicata
+   nel brief. Le tre linee (cartella clinica Gepadial; sedute di dialisi e
+   trattamenti domiciliari; ambulatori e telemedicina) sono una scelta per il
+   pubblico della SIN.
 3. **Il microfono** e' un wireframe generico — capsula, stelo, base con
    anello luminoso, onde senza fili — non il disegno del dispositivo reale.
    Se il prodotto ha una forma riconoscibile, il disegno va rifatto su quella.

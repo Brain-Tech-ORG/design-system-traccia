@@ -389,6 +389,56 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
 .st-drawing .node { fill: var(--tr-brand-500); }
 .st-drawing .node--current { fill: var(--st-paper); stroke: var(--tr-brand-500); stroke-width: 3; }
 .st-drawing .node--next { fill: var(--tr-brand-100); }
+/* Marcatura di prodotto sul disegno: la sigla in display, in blu. */
+.st-drawing .label {
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-display);
+  letter-spacing: var(--tr-tracking-display);
+  fill: var(--tr-brand-500);
+}
+
+/* ==========================================================================
+   Cifra in evidenza (da .tr-figure): il dato che riassume il totem. Una
+   parola mono sopra, il numero in display con le cifre tabellari, il tratto
+   d'accento sotto, l'etichetta mono a seguire.
+   ========================================================================== */
+.st-figure { display: flex; flex-direction: column; gap: 2mm; margin: 0; }
+.st-figure__over {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--t-mono);
+  line-height: 1;
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-brand-500);
+}
+.st-figure__number {
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-display);
+  font-size: var(--t-figure, calc(var(--t-display) * 3.5));
+  line-height: var(--tr-leading-figure);
+  letter-spacing: var(--tr-tracking-display);
+  color: var(--tr-ink-900);
+  font-variant-numeric: tabular-nums;
+}
+.st-figure__number::after {
+  content: "";
+  display: block;
+  width: var(--dash-w);
+  height: var(--rule-3);
+  margin-top: var(--s-3);
+  border-radius: var(--tr-radius-line);
+  background: var(--tr-brand-500);
+}
+.st-figure__label {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-body);
+  font-size: var(--t-mono);
+  line-height: 1.4;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+}
 .st-drawing .mono { font-family: var(--tr-font-mono); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--tr-brand-500); }
 .st-drawing .mono--ink { fill: var(--tr-ink-400); font-weight: 400; }
 
