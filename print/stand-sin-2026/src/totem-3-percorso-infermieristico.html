@@ -2,33 +2,36 @@
 <html lang="it" data-w="100" data-h="200">
 <head>
   <meta charset="utf-8">
-  <title>La Traccia — SIN 2026 — Totem 3 · Nuovo percorso infermieristico personalizzato — 100×200 cm (1:10)</title>
+  <title>La Traccia — SIN 2026 — Totem 3 · Nuovo percorso infermieristico personalizzabile — 100×200 cm (1:10)</title>
   <link rel="stylesheet" href="stand.css">
   <style>
-    /* Totem 3, proposta. File 100×200, margine di sicurezza 8 cm. Stessa
-       testata dei totem 1 e 2: lockup, eyebrow, titolo display. In mezzo il
-       percorso: parte dal paziente e passa per le cinque fasi del processo
-       di nursing — fatte, in corso, da fare — e la linea tratteggiata lo
-       riporta all'inizio, perche' il percorso si rivaluta e si adatta alla
-       persona. Le fasi sono quelle generali del processo infermieristico:
-       nessuna funzione del prodotto e' dichiarata. */
+    /* Totem 3, variante. File 100×200, margine di sicurezza 8 cm. Stessa
+       testata dei totem 1 e 2: lockup, eyebrow, titolo display. Il concetto
+       e' che il percorso si costruisce sull'azienda ospedaliera invece di
+       essere quello standard: il disegno mette i due a confronto. A
+       sinistra il percorso standard, una linea dritta di tappe uguali, in
+       grigio. A destra quello dell'azienda, in blu: le stesse partenza e
+       arrivo, ma con una deviazione, tappe diverse e una tappa che si
+       aggiunge (il "+"). */
     @page { size: 100mm 200mm; }
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
     .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
     .totem__intro { margin-top: 8mm; }
     .totem__intro .st-h1 { --t-display: 8mm; }
-    .path { margin: auto 0; width: 76mm; height: auto; }
-    .path .track { fill: none; stroke: var(--tr-brand-500); stroke-width: 3; stroke-linecap: round; }
-    .path .track--next { stroke: var(--tr-brand-300); }
-    .path .loop { fill: none; stroke: var(--tr-brand-500); stroke-width: 2; stroke-dasharray: 6 7; stroke-linecap: round; stroke-linejoin: round; }
-    .path .step {
-      font-family: var(--tr-font-display);
-      font-weight: var(--tr-weight-display);
-      letter-spacing: var(--tr-tracking-display);
+    .path { margin: auto 0; width: 84mm; height: auto; }
+    .path .std { fill: none; stroke: var(--tr-border-soft-2); stroke-width: 4; stroke-linecap: round; }
+    .path .std-node { fill: var(--st-paper); stroke: var(--tr-border-soft-2); stroke-width: 4; }
+    .path .own { fill: none; stroke: var(--tr-brand-500); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .path .add { fill: var(--st-paper); stroke: var(--tr-brand-500); stroke-width: 3; stroke-dasharray: 5 5; }
+    .path .add-plus { fill: none; stroke: var(--tr-brand-500); stroke-width: 3.5; stroke-linecap: round; }
+    .path .tag {
+      font-family: var(--tr-font-mono);
+      font-weight: var(--tr-weight-semibold);
+      letter-spacing: var(--tr-tracking-mono-wide);
       text-transform: uppercase;
-      fill: var(--tr-ink-900);
+      fill: var(--tr-ink-400);
     }
-    .path .step--next { fill: var(--tr-ink-400); }
+    .path .tag--brand { fill: var(--tr-brand-500); }
     .totem__foot { padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
     .totem__foot .st-footer { padding-top: 3mm; }
     .st-watermark { width: 92mm; bottom: -30mm; right: -36mm; }
@@ -58,31 +61,34 @@
           <span class="st-eyebrow__line"></span>
           <span class="st-eyebrow__note">Gepadial</span>
         </div>
-        <h1 class="st-h1">Nuovo percorso infermieristico <em>personalizzato</em></h1>
+        <h1 class="st-h1">Nuovo percorso infermieristico <em>personalizzabile</em></h1>
       </section>
 
-      <!-- Il percorso: in testa il paziente; il binario e' pieno fino alla
-           fase in corso e chiaro dopo; fasi fatte piene, in corso ad
-           anello, da fare in tinta chiara. Il tratteggio a sinistra
-           chiude il ciclo: dalla valutazione si torna all'accertamento. -->
-      <svg class="st-drawing path" viewBox="0 0 300 330" role="img" aria-label="Percorso infermieristico personalizzato: accertamento, diagnosi, pianificazione, interventi, valutazione">
-        <circle class="silhouette" cx="64" cy="24" r="16"/>
-        <path class="silhouette" d="M34 76c0-18 13-30 30-30s30 12 30 30z"/>
-        <path class="track" d="M64 84v126"/>
-        <path class="track track--next" d="M64 210v100"/>
-        <path class="loop" d="M64 310H22V110h29"/>
-        <path class="loop" d="M43 103l9 7-9 7" stroke-dasharray="none"/>
-        <circle class="brand-fill" cx="64" cy="110" r="9"/>
-        <circle class="brand-fill" cx="64" cy="160" r="9"/>
-        <circle class="ring" cx="64" cy="210" r="9"/>
-        <circle class="l300" cx="64" cy="260" r="9"/>
-        <circle class="l300" cx="64" cy="310" r="9"/>
-        <g font-size="17">
-          <text class="step" x="92" y="116">Accertamento</text>
-          <text class="step" x="92" y="166">Diagnosi</text>
-          <text class="step" x="92" y="216">Pianificazione</text>
-          <text class="step step--next" x="92" y="266">Interventi</text>
-          <text class="step step--next" x="92" y="316">Valutazione</text>
+      <!-- Standard contro azienda. Stesse partenza e arrivo (y 30 e 250).
+           Sinistra: dritto, tappe uguali, grigio. Destra: il percorso
+           dell'azienda ospedaliera, blu, con una deviazione che aggiunge
+           tappe e una tappa nuova tratteggiata con il "+". -->
+      <svg class="st-drawing path" viewBox="0 0 330 320" role="img" aria-label="Il percorso standard, dritto, accanto al percorso costruito sull'azienda ospedaliera, con tappe proprie">
+        <path class="std" d="M56 30v220"/>
+        <circle class="std-node" cx="56" cy="30" r="11"/>
+        <circle class="std-node" cx="56" cy="85" r="11"/>
+        <circle class="std-node" cx="56" cy="140" r="11"/>
+        <circle class="std-node" cx="56" cy="195" r="11"/>
+        <circle class="std-node" cx="56" cy="250" r="11"/>
+
+        <path class="own" d="M190 30v220"/>
+        <path class="own" d="M190 70h56a20 20 0 0 1 20 20v100a20 20 0 0 1 -20 20h-56"/>
+        <circle class="brand-fill" cx="190" cy="30" r="11"/>
+        <circle class="brand-fill" cx="266" cy="105" r="11"/>
+        <circle class="add" cx="266" cy="160" r="15"/>
+        <path class="add-plus" d="M266 152v16M258 160h16"/>
+        <circle class="ring" cx="190" cy="140" r="11"/>
+        <circle class="brand-fill" cx="190" cy="250" r="11"/>
+
+        <g font-size="13">
+          <text class="tag" x="56" y="292" text-anchor="middle">Standard</text>
+          <text class="tag tag--brand" x="228" y="292" text-anchor="middle">La tua azienda</text>
+          <text class="tag tag--brand" x="228" y="312" text-anchor="middle">ospedaliera</text>
         </g>
       </svg>
 

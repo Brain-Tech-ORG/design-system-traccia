@@ -45,7 +45,7 @@ senza immagini raster e senza trasparenze.
 | `parete-destra.pdf` | Parete destra | 470×220 | ~450×200 | Solo grafica: la stessa sagoma, a sbordo dal bordo alto verso l'ingresso |
 | `totem-1-ambulatorio-ia.pdf` | Totem 1 | 100×200 | — | Eyebrow «Novita' · Hardware custom», titolo «Modelli IA per la nefrologia»; il microfono AI e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
 | `totem-2-dati-ia.pdf` | Totem 2 | 100×200 | — | Eyebrow «Gen BI · Dati clinici e IA», titolo «I dati clinici prendono forma»; il marchio fatto di punti; certificazioni e contatti |
-| `totem-3-percorso-infermieristico.pdf` | Totem 3 · **proposta**, fuori dall'esecutivo | 100×200 | — | Eyebrow «Novita' · Gepadial», titolo «Nuovo percorso infermieristico personalizzato»; il percorso dal paziente per le cinque fasi del processo di nursing, con il ritorno all'inizio |
+| `totem-3-percorso-infermieristico.pdf` | Totem 3 · **variante**, fuori dall'esecutivo | 100×200 | — | Eyebrow «Novita' · Gepadial», titolo «Nuovo percorso infermieristico personalizzabile»; il percorso standard accanto a quello costruito sull'azienda ospedaliera |
 
 Le pagine misurano il nominale a meno di 0,1 mm (Chromium arrotonda i
 millimetri a pixel interi): in opera e' un millimetro su una parete di quasi
@@ -96,15 +96,18 @@ logo, da vicino una mappa di dati: la tinta di ogni punto (`brand/300` →
 dati che l'IA segnala. Il reticolo lo genera `src/dot-mark.js`,
 deterministico: stesso seme, stesso disegno, stesso PDF.
 
-**Totem 3, proposta: il percorso infermieristico.** Stessa testata, eyebrow
-«Novita' · Gepadial» e titolo «Nuovo percorso infermieristico
-personalizzato». Il disegno parte dal paziente e scende per le cinque fasi
-generali del processo di nursing — accertamento, diagnosi, pianificazione,
-interventi, valutazione —: fatte piene, in corso ad anello, da fare in tinta
-chiara; il tratteggio riporta dalla valutazione all'accertamento, perche' il
-percorso si rivaluta sulla persona. Le fasi sono quelle della disciplina, non
-funzioni del prodotto: il racconto resta vago come deciso. Non e' nell'esecutivo
-finche' non si decide se i totem diventano tre.
+**Totem 3, variante: il percorso infermieristico personalizzabile.** Stessa
+testata, eyebrow «Novita' · Gepadial» e titolo «Nuovo percorso
+infermieristico personalizzabile». Il concetto e' che il percorso si
+costruisce sull'azienda ospedaliera invece di essere quello standard, e il
+disegno mette i due a confronto: a sinistra il percorso **standard**, una
+linea dritta di tappe uguali, in grigio; a destra quello di **la tua azienda
+ospedaliera**, in blu, con le stesse partenza e arrivo ma una deviazione,
+tappe proprie e una tappa che si aggiunge (il «+» tratteggiato).
+
+**I totem sono due, le varianti tre.** La scelta e' interna: la tavola
+`proposte/SIN26_totem_tre-varianti.pdf` (A4, una pagina, `node varianti.mjs`)
+le mette affiancate. Finche' non si sceglie, l'esecutivo porta i totem 1 e 2.
 
 Su tutti i totem il disegno sta a meta' tra il titolo e il piede.
 
@@ -167,6 +170,7 @@ cd print/stand-sin-2026
 node build.mjs            # tutte le grafiche
 node build.mjs totem      # solo quelle il cui nome contiene "totem"
 node esecutivo.mjs        # il pacchetto di consegna: esecutivo/ e lo zip
+node varianti.mjs         # la tavola interna delle tre varianti dei totem
 ```
 
 Due generazioni consecutive danno file identici, byte per byte: le date di
