@@ -12,21 +12,22 @@
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
     .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
     .block { margin-top: 8mm; }
+    .block .st-eyebrow + .st-h1 { margin-top: 5mm; }
+    .block .st-h1--title { --t-display: 5mm; }
     .mic {
-      margin-top: 7mm;
+      margin-top: 6mm;
       display: grid;
-      grid-template-columns: 24mm 1fr;
+      grid-template-columns: 22mm 1fr;
       gap: 8mm;
       align-items: center;
     }
-    .mic__drawing { width: 24mm; height: auto; }
+    .mic__drawing { width: 22mm; height: auto; }
     .mic__text { display: flex; flex-direction: column; gap: 6mm; }
     .mic__item { display: flex; flex-direction: column; gap: 2.5mm; }
-    .mic__item .st-h1 { --t-display: 4.6mm; }
-    /* La didascalia qui non ci sta: la sigla AI sulla capsula basta. */
-    .mic__caption { display: none; }
-    .block .st-h1--title { --t-display: 5.4mm; }
-    .path { margin-top: 7mm; width: 58mm; height: auto; margin-left: 2mm; }
+    /* «Rilevazioni a bordo letto» va a capo dopo «a»: due righe pari, non
+       una parola orfana. */
+    .mic__item .st-h1 { --t-display: 4.4mm; max-width: 44mm; }
+    .path { margin-top: 6mm; width: 50mm; height: auto; margin-left: 2mm; }
     .totem__foot { margin-top: auto; padding-top: 6mm; }
     .totem__foot .st-footer { padding-top: 3mm; }
     .st-watermark { width: 92mm; bottom: -30mm; right: -36mm; }
@@ -54,8 +55,8 @@
         <div class="st-eyebrow">
           <span class="st-eyebrow__label">Novità</span>
           <span class="st-eyebrow__line"></span>
-          <span class="st-eyebrow__note">Modelli IA per la nefrologia</span>
         </div>
+        <h1 class="st-h1 st-h1--title">Modelli IA per la <em>nefrologia</em></h1>
         <div class="mic">
           <div>
             <svg class="st-drawing mic__drawing" viewBox="0 0 200 400" role="img" aria-label="Microfono AI, hardware custom">
@@ -76,7 +77,6 @@
                 <path d="M172 28a44 44 0 0 1 0 60"/>
               </g>
             </svg>
-            <p class="st-mono st-mono--muted st-mono--sm mic__caption" style="margin:0">Microfono AI<br>hardware custom</p>
           </div>
           <div class="mic__text">
             <div class="mic__item">

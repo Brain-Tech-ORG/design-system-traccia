@@ -24,7 +24,7 @@ raster e senza trasparenze.
 | `fondale-2-quinta.pdf` | Parete fondale 2 (quinta) | 220×220 | ~200×200 | Lockup a 168 cm + sagoma outline dall'angolo opposto |
 | `fondale-2-quinta--solo-logo.pdf` | Parete fondale 2 — variante | 220×220 | ~200×200 | Solo il lockup |
 | `totem-a-istituzionale.pdf` | Totem esterni, lato A | 100×200 | — | Marchio, «Dal 1980 · Matera», la cifra «oltre 400 installazioni», le tre linee (Gepadial in testa), certificazioni, contatti |
-| `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | «Modelli IA per la nefrologia»: il wireframe del microfono AI (hardware custom, sigla AI sulla capsula) e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
+| `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | Titolo «Modelli IA per la nefrologia»; il wireframe del microfono AI (hardware custom, sigla AI sulla capsula) e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
 | `totem-b2-cartella-ia.pdf` | Totem 2, lato B | 100×200 | — | «Cartella clinica Gepadial»: «Nuovo percorso infermieristico personalizzato» e il disegno del percorso |
 | `totem-b-concetti.pdf` | Totem, lato B — variante | 100×200 | — | Le due novita' sullo stesso lato, per avere i due totem identici |
 | `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Solo grafica: la sagoma outline del marchio a sbordo dal bordo alto, verso l'ingresso. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
@@ -57,21 +57,22 @@ Gepadial, e basta il nome), e in calce la riga certificazioni, che sta sulle
 superfici pubbliche, e un totem in corsia lo e', con sito e email.
 
 **Totem, lato B: le novita', in modo grafico e vago.** Nessuna schermata,
-nessuna spiegazione, e il marchio alla stessa misura del lato A, con la
-sagoma outline a sbordo, perche' anche da questo lato si capisca subito di
-chi e' il totem. L'eyebrow dice «Modelli IA per la nefrologia», non
-«intelligenza artificiale». Sul primo il **wireframe del microfono AI**,
-disegnato con le convenzioni del disegno tecnico del sistema (`.tr-drawing`:
-silhouette con tratto `ink/900` e riempimento `surface/tint`, dettagli in
-blu: l'anello LED, l'anello della base, le onde senza fili) con la sigla
-**AI** in display sulla capsula e la didascalia «hardware custom», e accanto
-le due parole con il tratto d'accento: «Ambulatorio», «Rilevazioni a bordo
-letto». Sul secondo, sotto «Cartella clinica Gepadial», il titolo «Nuovo
-percorso infermieristico personalizzato» e il disegno del percorso: il
-binario della cronologia (`.tr-timeline`) con le tappe fatte piene, quella in
-corso ad anello, quelle da fare in tinta chiara, e accanto a ogni tappa il
-wireframe di una riga. La variante `totem-b-concetti` mette le due novita'
-sullo stesso lato.
+nessuna spiegazione. La testata e' quella del lato A — marchio alla stessa
+misura, eyebrow, titolo display — e la sagoma outline sborda in basso,
+perche' anche da questo lato si capisca subito di chi e' il totem. Sul primo
+il titolo e' «Modelli IA per la nefrologia» (non «intelligenza
+artificiale»), e sotto il **wireframe del microfono AI**, disegnato con le
+convenzioni del disegno tecnico del sistema (`.tr-drawing`: silhouette con
+tratto `ink/900` e riempimento `surface/tint`, dettagli in blu: l'anello
+LED, l'anello della base, le onde senza fili) con la sola sigla **AI** in
+display sulla capsula — nessuna didascalia — e accanto le due parole con il
+tratto d'accento: «Ambulatorio», «Rilevazioni a bordo letto». Sul secondo,
+sotto «Cartella clinica Gepadial», il titolo «Nuovo percorso infermieristico
+personalizzato» e il disegno del percorso: il binario della cronologia
+(`.tr-timeline`) con le tappe fatte piene, quella in corso ad anello, quelle
+da fare in tinta chiara, e accanto a ogni tappa il wireframe di una riga. In
+entrambi il disegno sta a meta' tra il titolo e il piede. La variante
+`totem-b-concetti` mette le due novita' sullo stesso lato.
 
 **Pareti laterali: solo grafica, e poca.** Niente testo: su ciascuna parete
 la sola sagoma outline del marchio, a sbordo dal bordo alto verso l'ingresso

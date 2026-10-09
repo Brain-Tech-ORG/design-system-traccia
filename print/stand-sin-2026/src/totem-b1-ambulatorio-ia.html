@@ -2,22 +2,22 @@
 <html lang="it" data-w="100" data-h="200">
 <head>
   <meta charset="utf-8">
-  <title>La Traccia — SIN 2026 — Totem esterno, lato B · Microfono AI, ambulatorio — 100×200 cm (1:10)</title>
+  <title>La Traccia — SIN 2026 — Totem esterno, lato B · Modelli IA per la nefrologia — 100×200 cm (1:10)</title>
   <link rel="stylesheet" href="stand.css">
   <style>
-    /* File 100×200, margine di sicurezza 8 cm. Il wireframe del microfono
-       AI — hardware custom, con la sigla AI ben visibile sulla capsula —
-       nelle convenzioni del disegno tecnico del sistema, e accanto le due
-       parole: ambulatorio, rilevazioni a bordo letto. Marchio in testa alla
-       stessa misura del lato istituzionale, sagoma outline a sbordo. */
+    /* File 100×200, margine di sicurezza 8 cm. Testata come sul lato A:
+       marchio, eyebrow, titolo display. Poi il wireframe del microfono AI
+       — hardware custom, con la sigla AI sulla capsula e nient'altro —
+       e accanto le due parole: ambulatorio, rilevazioni a bordo letto. */
     @page { size: 100mm 200mm; }
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
     .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
-    /* Poco contenuto: il blocco sta a meta' tra il marchio e il piede. */
-    .totem__body { margin-top: auto; margin-bottom: auto; }
     .totem__intro { margin-top: 8mm; }
+    .totem__intro .st-h1 { --t-display: 8mm; }
+    /* Il blocco del microfono sta a meta' tra il titolo e il piede. */
     .mic {
-      margin-top: 16mm;
+      margin-top: auto;
+      margin-bottom: auto;
       display: grid;
       grid-template-columns: 40mm 1fr;
       gap: 6mm;
@@ -27,7 +27,6 @@
     .mic__text { display: flex; flex-direction: column; gap: 10mm; }
     .mic__item { display: flex; flex-direction: column; gap: 3mm; }
     .mic__item .st-h1 { --t-display: 4.8mm; }
-    .mic__caption { margin-top: 6mm; text-align: center; }
     .totem__foot { padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
     .totem__foot .st-footer { padding-top: 3mm; }
     .st-watermark { width: 92mm; bottom: -30mm; right: -36mm; }
@@ -51,40 +50,36 @@
         </div>
       </header>
 
-      <div class="totem__body">
       <section class="totem__intro">
         <div class="st-eyebrow">
           <span class="st-eyebrow__label">Novità</span>
           <span class="st-eyebrow__line"></span>
-          <span class="st-eyebrow__note">Modelli IA per la nefrologia</span>
         </div>
+        <h1 class="st-h1">Modelli IA per la <em>nefrologia</em></h1>
       </section>
 
       <div class="mic">
-        <div>
-          <!-- Wireframe del microfono AI: capsula con griglia e sigla AI,
-               anello LED, stelo, base con anello luminoso, tasto, onde
-               senza fili. -->
-          <svg class="st-drawing mic__drawing" viewBox="0 0 200 400" role="img" aria-label="Microfono AI, hardware custom">
-            <rect class="silhouette" x="55" y="14" width="90" height="150" rx="45"/>
-            <g class="line">
-              <path d="M74 44h52M66 60h68M64 76h72M66 92h68"/>
-              <path d="M100 28v72M84 32v64M116 32v64"/>
-            </g>
-            <text class="label" x="100" y="144" text-anchor="middle" font-size="40">AI</text>
-            <ellipse class="brand" cx="100" cy="158" rx="43" ry="8" stroke-width="3"/>
-            <rect class="silhouette" x="89" y="166" width="22" height="16" rx="4"/>
-            <rect class="silhouette" x="94" y="182" width="12" height="126" rx="6"/>
-            <ellipse class="silhouette" cx="100" cy="330" rx="80" ry="26"/>
-            <ellipse class="brand" cx="100" cy="330" rx="60" ry="17" stroke-width="2.5" stroke-dasharray="5 6"/>
-            <circle class="brand-fill" cx="134" cy="324" r="4"/>
-            <g class="brand" stroke-width="2.5">
-              <path d="M158 40a26 26 0 0 1 0 36"/>
-              <path d="M172 28a44 44 0 0 1 0 60"/>
-            </g>
-          </svg>
-          <p class="st-mono st-mono--muted st-mono--sm mic__caption" style="margin:0">Microfono AI<br>hardware custom</p>
-        </div>
+        <!-- Wireframe del microfono AI: capsula con griglia e sigla AI,
+             anello LED, stelo, base con anello luminoso, tasto, onde
+             senza fili. -->
+        <svg class="st-drawing mic__drawing" viewBox="0 0 200 400" role="img" aria-label="Microfono AI, hardware custom">
+          <rect class="silhouette" x="55" y="14" width="90" height="150" rx="45"/>
+          <g class="line">
+            <path d="M74 44h52M66 60h68M64 76h72M66 92h68"/>
+            <path d="M100 28v72M84 32v64M116 32v64"/>
+          </g>
+          <text class="label" x="100" y="144" text-anchor="middle" font-size="40">AI</text>
+          <ellipse class="brand" cx="100" cy="158" rx="43" ry="8" stroke-width="3"/>
+          <rect class="silhouette" x="89" y="166" width="22" height="16" rx="4"/>
+          <rect class="silhouette" x="94" y="182" width="12" height="126" rx="6"/>
+          <ellipse class="silhouette" cx="100" cy="330" rx="80" ry="26"/>
+          <ellipse class="brand" cx="100" cy="330" rx="60" ry="17" stroke-width="2.5" stroke-dasharray="5 6"/>
+          <circle class="brand-fill" cx="134" cy="324" r="4"/>
+          <g class="brand" stroke-width="2.5">
+            <path d="M158 40a26 26 0 0 1 0 36"/>
+            <path d="M172 28a44 44 0 0 1 0 60"/>
+          </g>
+        </svg>
         <div class="mic__text">
           <div class="mic__item">
             <span class="st-accent-dash"></span>
@@ -95,7 +90,6 @@
             <p class="st-h1">Rilevazioni a bordo letto</p>
           </div>
         </div>
-      </div>
       </div>
 
       <footer class="totem__foot">

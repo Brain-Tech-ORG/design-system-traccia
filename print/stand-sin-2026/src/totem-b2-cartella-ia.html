@@ -13,11 +13,12 @@
     @page { size: 100mm 200mm; }
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
     .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
-    /* Poco contenuto: il blocco sta a meta' tra il marchio e il piede. */
-    .totem__body { margin-top: auto; margin-bottom: auto; }
+    /* Testata compatta come sul lato A; il disegno sta a meta' tra il
+       titolo e il piede. */
+    .totem__body { display: contents; }
     .totem__intro { margin-top: 8mm; }
     .totem__intro .st-h1 { --t-display: 7.6mm; }
-    .path { margin-top: 16mm; width: 82mm; height: auto; margin-left: 1mm; }
+    .path { margin-top: auto; margin-bottom: auto; width: 82mm; height: auto; margin-left: 1mm; }
     .totem__foot { padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
     .totem__foot .st-footer { padding-top: 3mm; }
     .st-watermark { width: 92mm; bottom: -30mm; right: -36mm; }
