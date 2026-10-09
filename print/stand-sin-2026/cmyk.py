@@ -129,6 +129,9 @@ def main(src, dst, title):
         new = DecodedStreamObject()
         new.set_data(rewrite(contents.get_data()))
         page.replace_contents(new)
+        # Il flusso riscritto esce in chiaro: lo si ricomprime, o un totem
+        # fatto di duecento punti pesa come una fotografia.
+        page.compress_content_streams()
         process_xobjects(page.get("/Resources"), seen)
         check_extgstate(page.get("/Resources"))
     # Senza le date di Chromium: la stessa grafica deve dare lo stesso file,

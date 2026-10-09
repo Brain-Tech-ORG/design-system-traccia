@@ -10,7 +10,32 @@ Le misure sono quelle comunicate dall'allestitore (mail di Progettazione Scuotto
 dell'8/10/2026): **file PDF alta qualita' o vettoriale, profilo CMYK, scala 1:1
 o 1:10**.
 
-## I file da consegnare — `out/`
+## L'esecutivo di stampa — `esecutivo/`
+
+E' il pacchetto da consegnare: **otto PDF, uno per ogni pezzo stampato**, con
+nomi di produzione che dicono numero, pezzo, misura e scala — la scala nel nome
+evita che qualcuno stampi il file a un decimo — piu' la tavola di riepilogo.
+
+| N. | File | Pezzo |
+|---|---|---|
+| 00 | `00_riepilogo-esecutivo.pdf` | Tavola di riepilogo: miniature, file, specifiche, riferimenti (A4 orizzontale, 2 pagine) |
+| 01 | `01_parete-sinistra_420x220cm_scala-1-10.pdf` | Parete sinistra |
+| 02 | `02_parete-fondale-1_270x220cm_scala-1-10.pdf` | Parete fondale 1 |
+| 03 | `03_parete-fondale-2-quinta_220x220cm_scala-1-10.pdf` | Parete fondale 2 (quinta) |
+| 04 | `04_parete-destra_470x220cm_scala-1-10.pdf` | Parete destra |
+| 05 | `05_totem-1-lato-A_100x200cm_scala-1-10.pdf` | Totem 1, lato A |
+| 06 | `06_totem-1-lato-B_100x200cm_scala-1-10.pdf` | Totem 1, lato B |
+| 07 | `07_totem-2-lato-A_100x200cm_scala-1-10.pdf` | Totem 2, lato A (uguale al 05) |
+| 08 | `08_totem-2-lato-B_100x200cm_scala-1-10.pdf` | Totem 2, lato B |
+
+Il lato A dei totem compare due volte perche' i totem sono due: un file per
+pezzo, cosi' in produzione nessuno deve ricordarsi di stamparlo doppio. Il
+fondale e la quinta sono nella versione con la sagoma outline; le varianti
+`--solo-logo` restano in `out/`. Lo zip
+`LaTraccia_SIN26_esecutivo-stampa.zip` contiene la stessa cartella e si
+rigenera con `node esecutivo.mjs`: non sta nel repository.
+
+## Le grafiche — `out/`
 
 Tutti in **scala 1:10**: 1 mm nel file = 1 cm in opera, quindi un PDF da
 270×220 mm e' la parete da 270×220 cm. Sono vettoriali, con i font incorporati
@@ -141,7 +166,8 @@ trasparenze. Il file dichiara DeviceCMYK senza output intent: il profilo
    non esporre il prototipo a tutti.
 6. **Il fondale e la quinta** esistono in due versioni: con la sagoma outline
    a sbordo (`fondale-1.pdf`, `fondale-2-quinta.pdf`) e con il solo lockup
-   (`--solo-logo`). Va mandata a Scuotto una delle due coppie.
+   (`--solo-logo`). L'esecutivo porta la prima; per passare alla seconda basta
+   cambiare la sorgente dei pezzi 02 e 03 in `esecutivo.mjs`.
 
 ## Come si rigenera
 
@@ -149,7 +175,11 @@ trasparenze. Il file dichiara DeviceCMYK senza output intent: il profilo
 cd print/stand-sin-2026
 node build.mjs            # tutte le grafiche
 node build.mjs totem-b    # solo quelle il cui nome contiene "totem-b"
+node esecutivo.mjs        # il pacchetto di consegna: esecutivo/ e lo zip
 ```
+
+Due generazioni consecutive danno file identici, byte per byte: le date di
+Chromium vengono tolte, e nel repository cambia solo cio' che e' cambiato.
 
 Serve Playwright con Chromium (`npm install playwright && npx playwright
 install chromium`) e `python3` con `pypdf`; `pdftoppm` (poppler) per le

@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>La Traccia — SIN 2026 — Esecutivo di stampa: riepilogo</title>
+  <!-- Tavola di riepilogo dell'esecutivo: accompagna i PDF di produzione e
+       dice all'allestitore quale file va su quale superficie, a che scala, e
+       con quali specifiche. A4 orizzontale, due pagine. Le miniature sono le
+       anteprime rasterizzate dai PDF finali (out/anteprime). -->
+  <link rel="stylesheet" href="../../../css/traccia-fonts.css">
+  <link rel="stylesheet" href="../../../tokens/tokens.css">
+  <link rel="stylesheet" href="../../../css/traccia.css">
+  <style>
+    @page { size: 297mm 210mm; margin: 0; }
+    html, body { margin: 0; background: #fff; }
+    body {
+      font-family: var(--tr-font-display);
+      color: var(--tr-ink-600);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page {
+      width: 297mm;
+      height: 210mm;
+      box-sizing: border-box;
+      padding: 11mm 14mm 9mm;
+      display: flex;
+      flex-direction: column;
+      break-after: page;
+      overflow: hidden;
+    }
+    .page:last-child { break-after: auto; }
+
+    /* Testata: marchio a sinistra, riferimento del documento a destra. */
+    .tr-header { padding-bottom: 3.5mm; }
+    .tr-brandmark__logo { height: 7mm; }
+    .tr-brandmark__wordmark { font-size: 4.3mm; }
+    .doc-ref {
+      font-family: var(--tr-font-mono);
+      font-weight: var(--tr-weight-semibold);
+      font-size: 2.7mm;
+      letter-spacing: var(--tr-tracking-mono-mid);
+      text-transform: uppercase;
+      color: var(--tr-brand-500);
+    }
+
+    .intro { margin-top: 6mm; }
+    .intro .tr-eyebrow__label { font-size: 2.9mm; }
+    .intro .tr-eyebrow__note { font-size: 2.6mm; }
+    .intro .tr-h2 { font-size: 8mm; }
+
+    /* Miniature: due righe, ciascuna a una scala sola, dichiarata. */
+    .row { margin-top: 6mm; }
+    .row__head {
+      display: flex;
+      align-items: baseline;
+      gap: 3mm;
+      font-family: var(--tr-font-mono);
+      font-size: 2.6mm;
+      letter-spacing: var(--tr-tracking-mono);
+      text-transform: uppercase;
+      color: var(--tr-ink-400);
+    }
+    .row__head strong { color: var(--tr-ink-900); font-weight: var(--tr-weight-semibold); }
+    .thumbs { margin-top: 3mm; display: flex; align-items: flex-end; gap: 7mm; }
+    .thumb { margin: 0; }
+    .thumb img { display: block; outline: 0.25mm solid var(--tr-border-soft-2); }
+    .thumb figcaption { margin-top: 2.2mm; display: flex; align-items: center; gap: 2mm; }
+    .num {
+      flex: none;
+      width: 5.6mm;
+      height: 5.6mm;
+      border-radius: var(--tr-radius-pill);
+      border: 0.3mm solid var(--tr-brand-500);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--tr-font-mono);
+      font-weight: var(--tr-weight-semibold);
+      font-size: 2.3mm;
+      color: var(--tr-brand-500);
+    }
+    .cap { display: flex; flex-direction: column; gap: 0.6mm; }
+    .cap b {
+      font-family: var(--tr-font-mono);
+      font-weight: var(--tr-weight-semibold);
+      font-size: 2.4mm;
+      letter-spacing: var(--tr-tracking-mono);
+      text-transform: uppercase;
+      color: var(--tr-ink-900);
+    }
+    .cap span {
+      font-family: var(--tr-font-mono);
+      font-size: 2.3mm;
+      letter-spacing: var(--tr-tracking-mono);
+      text-transform: uppercase;
+      color: var(--tr-ink-400);
+    }
+
+    /* Scala 1:60 per le pareti (1 cm in opera = 1/60 cm sul foglio). */
+    .walls img { height: calc(220mm / 60 * 10); }
+    /* Scala 1:30 per i totem. */
+    .totems img { height: calc(200mm / 30 * 10); }
+
+    /* Piede: emittente a sinistra, pagina a destra. */
+    .foot {
+      margin-top: auto;
+      padding-top: 3mm;
+      border-top: 0.25mm solid var(--tr-border-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 6mm;
+      font-family: var(--tr-font-mono);
+      font-size: 2.3mm;
+      letter-spacing: var(--tr-tracking-mono);
+      text-transform: uppercase;
+      color: var(--tr-ink-400);
+    }
+    .foot b { color: var(--tr-ink-600); font-weight: var(--tr-weight-semibold); }
+
+    /* Pagina 2: la tabella dei file a tutta pagina, sotto specifiche e
+       riferimenti affiancati. */
+    table.files { width: 100%; margin-top: 6mm; border-collapse: collapse; }
+    table.files th {
+      text-align: left;
+      font-family: var(--tr-font-mono);
+      font-weight: var(--tr-weight-body);
+      font-size: 2.3mm;
+      letter-spacing: var(--tr-tracking-mono);
+      text-transform: uppercase;
+      color: var(--tr-ink-400);
+      padding: 0 2.5mm 2mm 0;
+      border-bottom: 0.25mm solid var(--tr-border-soft-2);
+    }
+    table.files td {
+      padding: 1.5mm 2.5mm 1.5mm 0;
+      border-bottom: 0.25mm solid var(--tr-border-soft);
+      vertical-align: top;
+      font-size: 2.9mm;
+      line-height: 1.35;
+      color: var(--tr-ink-600);
+    }
+    table.files td.n { width: 8mm; }
+    table.files td.n .num { width: 4.8mm; height: 4.8mm; font-size: 2.1mm; }
+    table.files td { vertical-align: middle; }
+    table.files td.file {
+      font-family: var(--tr-font-mono);
+      font-size: 2.35mm;
+      letter-spacing: 0.02em;
+      color: var(--tr-ink-900);
+      white-space: nowrap;
+    }
+    table.files td.piece { font-weight: var(--tr-weight-semibold); color: var(--tr-ink-900); white-space: nowrap; }
+    table.files th { white-space: nowrap; }
+    table.files td.size {
+      font-family: var(--tr-font-mono);
+      font-size: 2.5mm;
+      white-space: nowrap;
+      color: var(--tr-ink-900);
+    }
+    table.files td.note { font-size: 2.6mm; color: var(--tr-ink-400); }
+
+    .cols { margin-top: 6mm; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12mm; align-items: start; }
+    .specs .tr-eyebrow__label { font-size: 2.6mm; }
+    .specs .tr-datatable { margin-top: 3mm; }
+    /* Etichetta in colonna fissa, valore allineato a sinistra: su due righe
+       un testo allineato a destra si legge a fatica. */
+    .specs .tr-datatable__row {
+      display: grid;
+      grid-template-columns: 26mm minmax(0, 1fr);
+      gap: 4mm;
+      padding: 1.4mm 0;
+    }
+    .specs .tr-datatable__label { font-size: 2.2mm; white-space: nowrap; }
+    .specs .tr-datatable__value {
+      font-family: var(--tr-font-display);
+      font-weight: var(--tr-weight-body);
+      font-size: 2.7mm;
+      letter-spacing: 0;
+      line-height: 1.35;
+      text-align: left;
+    }
+    .specs .tr-datatable__value strong { font-weight: var(--tr-weight-semibold); color: var(--tr-ink-900); }
+  </style>
+</head>
+<body>
+
+  <!-- ============ Pagina 1 · Le grafiche ============ -->
+  <section class="page">
+    <header class="tr-header">
+      <span class="tr-brandmark">
+        <img class="tr-brandmark__logo" src="../../../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
+        <span class="tr-brandmark__wordmark">La Traccia</span>
+      </span>
+      <span class="doc-ref">Esecutivo di stampa · Rev. 01 · 9 ottobre 2026</span>
+    </header>
+
+    <div class="intro">
+      <div class="tr-eyebrow">
+        <span class="tr-eyebrow__label">Allestimento stand</span>
+        <span class="tr-eyebrow__line"></span>
+        <span class="tr-eyebrow__note">Congresso Nazionale SIN 2026 · Hilton Sorrento Palace · 10–13 novembre · spazio 63</span>
+      </div>
+      <h1 class="tr-h2">Esecutivo di stampa dello <em>stand</em></h1>
+    </div>
+
+    <div class="row walls">
+      <div class="row__head"><strong>Pareti</strong><span>Miniature in scala 1:60 fra loro</span></div>
+      <div class="thumbs">
+        <figure class="thumb">
+          <img src="../out/anteprime/parete-sinistra.png" alt="Parete sinistra">
+          <figcaption><span class="num">01</span><span class="cap"><b>Parete sinistra</b><span>420 × 220 cm</span></span></figcaption>
+        </figure>
+        <figure class="thumb">
+          <img src="../out/anteprime/fondale-1.png" alt="Parete fondale 1">
+          <figcaption><span class="num">02</span><span class="cap"><b>Parete fondale 1</b><span>270 × 220 cm</span></span></figcaption>
+        </figure>
+        <figure class="thumb">
+          <img src="../out/anteprime/fondale-2-quinta.png" alt="Parete fondale 2, quinta">
+          <figcaption><span class="num">03</span><span class="cap"><b>Fondale 2 · quinta</b><span>220 × 220 cm</span></span></figcaption>
+        </figure>
+        <figure class="thumb">
+          <img src="../out/anteprime/parete-destra.png" alt="Parete destra">
+          <figcaption><span class="num">04</span><span class="cap"><b>Parete destra</b><span>470 × 220 cm</span></span></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="row totems">
+      <div class="row__head"><strong>Totem esterni</strong><span>Miniature in scala 1:30 fra loro · due totem, due lati ciascuno</span></div>
+      <div class="thumbs">
+        <figure class="thumb">
+          <img src="../out/anteprime/totem-a-istituzionale.png" alt="Totem 1, lato A">
+          <figcaption><span class="num">05</span><span class="cap"><b>Totem 1 · lato A</b><span>100 × 200 cm</span></span></figcaption>
+        </figure>
+        <figure class="thumb">
+          <img src="../out/anteprime/totem-b1-ambulatorio-ia.png" alt="Totem 1, lato B">
+          <figcaption><span class="num">06</span><span class="cap"><b>Totem 1 · lato B</b><span>100 × 200 cm</span></span></figcaption>
+        </figure>
+        <figure class="thumb">
+          <img src="../out/anteprime/totem-a-istituzionale.png" alt="Totem 2, lato A">
+          <figcaption><span class="num">07</span><span class="cap"><b>Totem 2 · lato A</b><span>100 × 200 cm</span></span></figcaption>
+        </figure>
+        <figure class="thumb">
+          <img src="../out/anteprime/totem-b2-dati-ia.png" alt="Totem 2, lato B">
+          <figcaption><span class="num">08</span><span class="cap"><b>Totem 2 · lato B</b><span>100 × 200 cm</span></span></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <span><b>Cooperativa E.D.P. La Traccia</b> · Recinto II Fiorentini, 10 — 75100 Matera · P.IVA 00317370773</span>
+      <span>Rif. preventivo n. 229/26 del 1/10/2026 · Pagina 1 di 2</span>
+    </footer>
+  </section>
+
+  <!-- ============ Pagina 2 · I file e le specifiche ============ -->
+  <section class="page">
+    <header class="tr-header">
+      <span class="tr-brandmark">
+        <img class="tr-brandmark__logo" src="../../../assets/logo-traccia-mark.svg" alt="" aria-hidden="true">
+        <span class="tr-brandmark__wordmark">La Traccia</span>
+      </span>
+      <span class="doc-ref">Esecutivo di stampa · Rev. 01 · 9 ottobre 2026</span>
+    </header>
+
+    <div class="intro">
+      <div class="tr-eyebrow">
+        <span class="tr-eyebrow__label">Consegna</span>
+        <span class="tr-eyebrow__line"></span>
+        <span class="tr-eyebrow__note">Otto file, uno per pezzo stampato</span>
+      </div>
+      <h1 class="tr-h2">I file e le <em>specifiche</em></h1>
+    </div>
+
+      <table class="files">
+        <thead>
+          <tr><th>N.</th><th>File</th><th>Pezzo</th><th>Misura file</th><th>Area visibile</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="n"><span class="num">01</span></td><td class="file">01_parete-sinistra_420x220cm_scala-1-10.pdf</td><td class="piece">Parete sinistra</td><td class="size">420 × 220 cm</td><td class="size">~370 × 200 cm</td><td class="note">Ultimi 30 cm a destra senza grafica, per la giunzione</td></tr>
+          <tr><td class="n"><span class="num">02</span></td><td class="file">02_parete-fondale-1_270x220cm_scala-1-10.pdf</td><td class="piece">Parete fondale 1</td><td class="size">270 × 220 cm</td><td class="size">~250 × 200 cm</td><td class="note">Il logo in grande</td></tr>
+          <tr><td class="n"><span class="num">03</span></td><td class="file">03_parete-fondale-2-quinta_220x220cm_scala-1-10.pdf</td><td class="piece">Fondale 2 · quinta</td><td class="size">220 × 220 cm</td><td class="size">~200 × 200 cm</td><td class="note">Il logo in grande</td></tr>
+          <tr><td class="n"><span class="num">04</span></td><td class="file">04_parete-destra_470x220cm_scala-1-10.pdf</td><td class="piece">Parete destra</td><td class="size">470 × 220 cm</td><td class="size">~450 × 200 cm</td><td class="note">Solo grafica</td></tr>
+          <tr><td class="n"><span class="num">05</span></td><td class="file">05_totem-1-lato-A_100x200cm_scala-1-10.pdf</td><td class="piece">Totem 1 · lato A</td><td class="size">100 × 200 cm</td><td class="size">—</td><td class="note">Istituzionale</td></tr>
+          <tr><td class="n"><span class="num">06</span></td><td class="file">06_totem-1-lato-B_100x200cm_scala-1-10.pdf</td><td class="piece">Totem 1 · lato B</td><td class="size">100 × 200 cm</td><td class="size">—</td><td class="note">Modelli IA per la nefrologia</td></tr>
+          <tr><td class="n"><span class="num">07</span></td><td class="file">07_totem-2-lato-A_100x200cm_scala-1-10.pdf</td><td class="piece">Totem 2 · lato A</td><td class="size">100 × 200 cm</td><td class="size">—</td><td class="note">Istituzionale, uguale al 05</td></tr>
+          <tr><td class="n"><span class="num">08</span></td><td class="file">08_totem-2-lato-B_100x200cm_scala-1-10.pdf</td><td class="piece">Totem 2 · lato B</td><td class="size">100 × 200 cm</td><td class="size">—</td><td class="note">Gen BI, dati clinici</td></tr>
+        </tbody>
+      </table>
+
+    <div class="cols">
+        <div class="specs">
+          <div class="tr-eyebrow"><span class="tr-eyebrow__label">Specifiche</span><span class="tr-eyebrow__line"></span></div>
+          <div class="tr-datatable">
+            <div class="tr-datatable__row"><span class="tr-datatable__label">Formato</span><span class="tr-datatable__value">PDF vettoriale, una pagina per file</span></div>
+            <div class="tr-datatable__row"><span class="tr-datatable__label">Scala</span><span class="tr-datatable__value"><strong>1:10</strong> — 1 mm nel file = 1 cm in opera</span></div>
+            <div class="tr-datatable__row"><span class="tr-datatable__label">Colore</span><span class="tr-datatable__value">CMYK (DeviceCMYK); profilo di stampa a cura della tipografia</span></div>
+            <div class="tr-datatable__row"><span class="tr-datatable__label">Font</span><span class="tr-datatable__value">Incorporati: Archivo, IBM Plex Mono</span></div>
+            <div class="tr-datatable__row"><span class="tr-datatable__label">Immagini</span><span class="tr-datatable__value">Nessuna: solo tracciati e testo, nessuna trasparenza</span></div>
+            <div class="tr-datatable__row"><span class="tr-datatable__label">Abbondanza</span><span class="tr-datatable__value">Non aggiunta: misure dei file come indicate da Scuotto l'8/10/2026</span></div>
+          </div>
+        </div>
+        <div class="specs">
+          <div class="tr-eyebrow"><span class="tr-eyebrow__label">Riferimenti</span><span class="tr-eyebrow__line"></span></div>
+          <div class="tr-datatable">
+            <div class="tr-datatable__row"><span class="tr-datatable__label">Allestitore</span><span class="tr-datatable__value">Alfonso Scuotto Group S.r.l. · preventivo n. 229/26 del 1/10/2026</span></div>
+            <div class="tr-datatable__row"><span class="tr-datatable__label">Referente</span><span class="tr-datatable__value">Emanuele Gravela · egravela@latraccia.it · +39 0835 336836</span></div>
+          </div>
+        </div>
+    </div>
+
+    <footer class="foot">
+      <span><b>Cooperativa E.D.P. La Traccia</b> · Recinto II Fiorentini, 10 — 75100 Matera · P.IVA 00317370773</span>
+      <span>Rif. preventivo n. 229/26 del 1/10/2026 · Pagina 2 di 2</span>
+    </footer>
+  </section>
+
+</body>
+</html>
