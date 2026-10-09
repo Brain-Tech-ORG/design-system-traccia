@@ -23,10 +23,9 @@ raster e senza trasparenze.
 | `fondale-1--solo-logo.pdf` | Parete fondale 1 — variante | 270×220 | ~250×200 | Solo il lockup, senza sagoma |
 | `fondale-2-quinta.pdf` | Parete fondale 2 (quinta) | 220×220 | ~200×200 | Lockup a 168 cm + sagoma outline dall'angolo opposto |
 | `fondale-2-quinta--solo-logo.pdf` | Parete fondale 2 — variante | 220×220 | ~200×200 | Solo il lockup |
-| `totem-a-istituzionale.pdf` | Totem esterni, lato A | 100×200 | — | Marchio, «Dal 1980 · Matera», la cifra «oltre 400 installazioni», le tre linee (Gepadial in testa), certificazioni, contatti |
+| `totem-a-istituzionale.pdf` | Totem 1 e 2, lato A | 100×200 | — | Marchio, «Dal 1980 · Matera», la cifra «oltre 400 installazioni», le tre linee (Gepadial in testa), certificazioni, contatti |
 | `totem-b1-ambulatorio-ia.pdf` | Totem 1, lato B | 100×200 | — | Eyebrow «Novita' · Hardware custom», titolo «Modelli IA per la nefrologia»; il wireframe del microfono AI (sigla AI sulla capsula) e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
-| `totem-b2-cartella-ia.pdf` | Totem 2, lato B | 100×200 | — | «Cartella clinica Gepadial»: «Nuovo percorso infermieristico personalizzato» e il disegno del percorso |
-| `totem-b-concetti.pdf` | Totem, lato B — variante | 100×200 | — | Le due novita' sullo stesso lato, per avere i due totem identici |
+| `totem-b2-dati-ia.pdf` | Totem 2, lato B | 100×200 | — | Solo istituzionale: eyebrow «Gen BI · Gestione dei dati clinici», titolo «I dati clinici, gestiti con l'IA», il marchio come maschera di un grafico, certificazioni, contatti |
 | `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Solo grafica: la sagoma outline del marchio a sbordo dal bordo alto, verso l'ingresso. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
 | `parete-destra.pdf` | Parete destra | 470×220 | ~450×200 | Solo grafica: la stessa sagoma, a sbordo dal bordo alto verso l'ingresso |
 
@@ -68,13 +67,18 @@ tecnico del sistema (`.tr-drawing`: silhouette con tratto `ink/900` e
 riempimento `surface/tint`, dettagli in blu: l'anello LED, l'anello della
 base, le onde senza fili) con la sola sigla **AI** in display sulla capsula,
 e accanto le due parole con il tratto d'accento: «Ambulatorio», «Rilevazioni
-a bordo letto». Sul secondo,
-sotto «Cartella clinica Gepadial», il titolo «Nuovo percorso infermieristico
-personalizzato» e il disegno del percorso: il binario della cronologia
-(`.tr-timeline`) con le tappe fatte piene, quella in corso ad anello, quelle
-da fare in tinta chiara, e accanto a ogni tappa il wireframe di una riga. In
-entrambi il disegno sta a meta' tra il titolo e il piede. La variante
-`totem-b-concetti` mette le due novita' sullo stesso lato.
+a bordo letto».
+
+**Totem 2, lato B: solo istituzionale.** Nessuna novita' di prodotto: un
+gioco con il marchio e il tema della gestione dei dati clinici con l'IA.
+Eyebrow «Gen BI · Gestione dei dati clinici», titolo «I dati clinici,
+gestiti con l'IA», e sotto la firma editoriale del sistema
+(`guidelines/mark-clip.md`): le due path del logo fanno da maschera, con
+l'eco outline dietro, spostata come nel componente — ma al posto della foto
+c'e' un grafico a barre in tinte di marca (`brand/100`, `brand/300`, le
+ultime due in `brand/500`) su una griglia di filetti: i dati dentro la
+traccia. In calce certificazioni e contatti, come sul lato A. In entrambi i
+lati B il disegno sta a meta' tra il titolo e il piede.
 
 **Pareti laterali: solo grafica, e poca.** Niente testo: su ciascuna parete
 la sola sagoma outline del marchio, a sbordo dal bordo alto verso l'ingresso
@@ -118,9 +122,8 @@ trasparenze. Il file dichiara DeviceCMYK senza output intent: il profilo
 
 ## Da confermare prima di mandare in stampa
 
-1. **Le due facce dei totem.** Qui lato A = istituzionale, lato B = un
-   concetto per totem (B1 sul primo, B2 sul secondo). Se i due totem devono
-   essere identici, il lato B e' `totem-b-concetti.pdf`.
+1. **Le due facce dei totem.** Lato A istituzionale su entrambi; lato B:
+   il microfono AI sul totem 1, il marchio con i dati sul totem 2.
 2. **La cifra del totem A** — oltre 400 installazioni — e' quella indicata
    nel brief. Le tre linee (cartella clinica Gepadial; sedute di dialisi e
    trattamenti domiciliari; ambulatori e telemedicina) sono una scelta per il
