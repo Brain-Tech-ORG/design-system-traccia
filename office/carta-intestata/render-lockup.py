@@ -6,7 +6,7 @@ non regge un SVG in intestazione su tutte le versioni. Il lockup entra
 quindi come PNG a 8x, composto qui con le stesse regole di `.tr-brandmark`:
 marchio da `assets/logo-traccia-mark.svg` (tracciati letti dal file, non
 ricopiati), wordmark «traccia» minuscolo in Space Grotesk 700 con tracking
-`--tr-tracking-wordmark` (-0.02em) in `ink/900`. Come nel CSS, scritta e
+`--tr-tracking-wordmark` (-0.02em) in antracite (`--tr-color-wordmark`). Come nel CSS, scritta e
 distanza si contano sull'altezza del marchio: 0,8 e 0,34.
 
 Produce, accanto a questo script:
@@ -24,7 +24,7 @@ FONT = ROOT / "assets/fonts/ttf/SpaceGrotesk-Bold.ttf"
 MARK = ROOT / "assets/logo-traccia-mark.svg"
 
 S = 8                 # 1 px CSS = 8 px immagine
-INK_900 = "#1b1f2a"
+ANTHRACITE = "#383e42"  # --tr-color-wordmark
 BRAND = "#4194d7"
 WORD_RATIO = 0.8     # scritta / altezza del marchio
 GAP_RATIO = 0.34      # distanza / altezza del marchio
@@ -70,7 +70,7 @@ def lockup(mark_px, out):
     base = (H - word) / 2 + (word - asc - desc) / 2 + asc
     x = mark_w + gap
     for c in WORD:
-        d.text((x, base), c, font=font, fill=INK_900, anchor="ls")
+        d.text((x, base), c, font=font, fill=ANTHRACITE, anchor="ls")
         x += font.getlength(c) + ls
     im.save(out)
     print(out.name, im.size)

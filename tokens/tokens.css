@@ -97,6 +97,12 @@
   --tr-ink-900: #1b1f2a; /* testo primario, tratti disegni tecnici */
   --tr-ink-600: #3a4050; /* testo secondario / body */
   --tr-ink-400: #565c6b; /* didascalie e metadati */
+  /* Antracite (RAL 7016): un grigio scuro neutro, piu' morbido di ink/900.
+     E' il colore della scritta «traccia» accanto al marchio, e solo di quella. */
+  --tr-anthracite: #383e42;
+  /* Il wordmark e' sempre antracite, anche sul blu del marchio: li' il marchio
+     passa al bianco, la scritta no. */
+  --tr-color-wordmark: var(--tr-anthracite);
   /* Inchiostro su superficie piena, di marca o di stato. Vale per il cerchietto
      pieno, per l'azione del login e per i pannelli semantici: e' un ruolo, non
      un colore, ed e' il motivo per cui non si scrive #ffffff nei componenti. */

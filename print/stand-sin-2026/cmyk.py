@@ -35,6 +35,7 @@ TABLE = {
     "#1b1f2a": (0.60, 0.50, 0.40, 1.00),  # ink/900 — nero freddo, pieno
     "#3a4050": (0.70, 0.60, 0.45, 0.60),  # ink/600
     "#565c6b": (0.65, 0.55, 0.40, 0.40),  # ink/400
+    "#383e42": (0.65, 0.55, 0.50, 0.60),  # anthracite — wordmark «traccia», grigio neutro
     "#dde2ee": (0.12, 0.08, 0.02, 0.00),  # border/soft
     "#c9cede": (0.20, 0.14, 0.04, 0.02),  # border/soft-2
     "#eff2f9": (0.05, 0.03, 0.00, 0.00),  # surface/tint

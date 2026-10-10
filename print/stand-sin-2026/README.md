@@ -71,8 +71,8 @@ stand il segno pieno resta uno solo, e la quinta gli risponde invece di
 ripeterlo.
 
 **Il wordmark e' «traccia»**: tutto minuscolo, senza «la», in Space Grotesk
-700, come nel design system (`.tr-brandmark`): scritta 0,8 e distanza 0,34
-dell'altezza del marchio. Sui totem il lockup e' largo 54 cm.
+700 e in antracite, come nel design system (`.tr-brandmark`): scritta 0,8 e
+distanza 0,34 dell'altezza del marchio. Sui totem il lockup e' largo 54 cm.
 
 **Totem 1: modelli IA per la nefrologia.** In testa il lockup, eyebrow
 «Novita' · Hardware custom» e titolo display «Modelli IA per la nefrologia»
@@ -151,6 +151,7 @@ perche' la conversione automatica di un blu saturo aggiunge nero e lo spegne:
 | `ink/900` testo primario | `#1b1f2a` | 60 · 50 · 40 · 100 |
 | `ink/600` corpo | `#3a4050` | 70 · 60 · 45 · 60 |
 | `ink/400` didascalie | `#565c6b` | 65 · 55 · 40 · 40 |
+| `anthracite` wordmark «traccia» | `#383e42` | 65 · 55 · 50 · 60 |
 | `border/soft` filetti | `#dde2ee` | 12 · 8 · 2 · 0 |
 
 Il watermark e' un colore pieno, non un'opacita': il PDF resta senza

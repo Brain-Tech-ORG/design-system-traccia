@@ -228,7 +228,7 @@
   line-height: 1;
   letter-spacing: var(--tr-tracking-wordmark);
   text-transform: lowercase;
-  color: var(--tr-ink-900);
+  color: var(--tr-color-wordmark);
 }
 
 /* ========================================================================== 
@@ -2039,7 +2039,7 @@ select.tr-field__control + .tr-field__label,
   font-size: var(--tr-text-lead);
   letter-spacing: var(--tr-tracking-wordmark);
   text-transform: lowercase;
-  color: var(--tr-ink-900);
+  color: var(--tr-color-wordmark);
 }
 .tr-spinner__label {
   font-family: var(--tr-font-mono);
