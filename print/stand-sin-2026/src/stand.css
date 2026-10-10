@@ -1,0 +1,317 @@
+/* ==========================================================================
+   LA TRACCIA — Grafiche di stand (SIN 2026, Sorrento)
+   Scala 1:10 — 1 mm nel file = 1 cm in opera.
+
+   Lo stesso linguaggio delle brochure e delle slide, a un'altra scala: layout
+   aperti, filetti sottili, un solo accento, molto bianco. I colori vengono dai
+   token; qui si definiscono solo le misure, perche' una parete si legge da
+   quattro metri e un totem da due.
+
+   Due formati:
+   - .st-sheet--wall   pareti (fondale, quinta, laterali): letta in cammino,
+                       da 3–6 m; display 22 cm, corpo 5 cm, mono 3,8 cm
+   - .st-sheet--totem  totem esterni: letto da fermi, a 1,5–4 m;
+                       display 10,5 cm, corpo 3,9 cm, mono 3 cm
+   ========================================================================== */
+
+@import url("../../../tokens/tokens.css");
+
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 400; src: url("../../../assets/fonts/ttf/Archivo-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 600; src: url("../../../assets/fonts/ttf/Archivo-SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 800; src: url("../../../assets/fonts/ttf/Archivo-ExtraBold.ttf") format("truetype"); }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; src: url("../../../assets/fonts/ttf/IBMPlexMono-Regular.ttf") format("truetype"); }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 600; src: url("../../../assets/fonts/ttf/IBMPlexMono-SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight: 700; src: url("../../../assets/fonts/ttf/SpaceGrotesk-Bold.ttf") format("truetype"); }
+
+:root {
+  /* In stampa il "paper" e' il supporto: niente tinta di fondo all'1%, che in
+     macchina diventa una velatura sporca. Il piano 0 e' il bianco del tessuto. */
+  --st-paper: #ffffff;
+  /* Watermark: brand/500 a --tr-watermark-opacity (0,16) sul bianco, gia'
+     miscelato. Un colore pieno al posto dell'opacita': il PDF resta senza
+     trasparenze, che in prestampa e' una variabile in meno. */
+  --st-watermark: #e1eef9;
+}
+
+@page { margin: 0; }
+html, body { margin: 0; padding: 0; background: var(--st-paper); }
+
+.st-sheet {
+  position: relative;
+  overflow: clip;
+  width: var(--w);
+  height: var(--h);
+  background: var(--st-paper);
+  color: var(--tr-ink-600);
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-body);
+  line-height: var(--tr-leading-body);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---- Le due scale ---- */
+.st-sheet--wall {
+  --t-display: 22mm;
+  --t-h2: 11mm;
+  --t-lead: 6.5mm;
+  --t-body: 5mm;
+  --t-mono: 3.8mm;
+  --t-mono-sm: 3.2mm;
+  --s-2: 4mm;  --s-3: 6mm;  --s-4: 8mm;  --s-5: 12mm;
+  --s-6: 16mm; --s-7: 24mm; --s-8: 32mm; --s-9: 48mm;
+  --rule-1: 0.4mm; --rule-2: 0.8mm; --rule-3: 1.2mm;
+  --dot: 2.4mm; --dash-w: 28mm;
+  --icon-stroke: 2;
+}
+.st-sheet--totem {
+  --t-display: 10.5mm;
+  --t-h2: 6.5mm;
+  --t-lead: 4.6mm;
+  --t-body: 3.9mm;
+  --t-mono: 3mm;
+  --t-mono-sm: 2.6mm;
+  --s-2: 3mm;  --s-3: 5mm;  --s-4: 7mm;  --s-5: 10mm;
+  --s-6: 14mm; --s-7: 20mm; --s-8: 28mm; --s-9: 40mm;
+  --rule-1: 0.3mm; --rule-2: 0.6mm; --rule-3: 1mm;
+  --dot: 1.8mm; --dash-w: 22mm;
+  --icon-stroke: 2;
+}
+
+/* ---- Area visibile ----
+   L'allestitore nasconde ~10 cm per lato nel profilo dei pannelli. Il
+   contenuto sta dentro .st-safe; lo sfondo riempie tutto il file. */
+.st-safe {
+  position: absolute;
+  top: var(--hide-t, 10mm);
+  right: var(--hide-r, 10mm);
+  bottom: var(--hide-b, 10mm);
+  left: var(--hide-l, 10mm);
+}
+
+/* ==========================================================================
+   Marchio
+   ========================================================================== */
+
+/* Lockup: marchio + wordmark «traccia» affiancati, nelle proporzioni di
+   .tr-brandmark (scritta 0,8 e distanza 0,34 dell'altezza del marchio). Si
+   dimensiona con --mark-h; con data-fit-w="<mm>" lo script in fondo lo porta
+   esattamente a quella larghezza. */
+.st-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--mark-h) * 0.34);
+  --mark-h: 20mm;
+}
+.st-lockup__mark { height: var(--mark-h); width: auto; display: block; flex: none; }
+.st-lockup__word {
+  font-family: var(--tr-font-wordmark);
+  font-weight: var(--tr-weight-wordmark);
+  font-size: calc(var(--mark-h) * 0.8);
+  line-height: 1;
+  letter-spacing: var(--tr-tracking-wordmark);
+  text-transform: lowercase;
+  color: var(--tr-ink-900);
+  white-space: nowrap;
+}
+
+/* Watermark: la sagoma outline del marchio, a sbordo da un angolo, dietro ai
+   contenuti. Il tratto e' proporzionale alla sagoma (6 unita' su 594, come
+   --tr-watermark-stroke sul viewBox 1280). */
+.st-watermark {
+  position: absolute;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+.st-watermark path {
+  fill: none;
+  stroke: var(--st-watermark);
+  stroke-width: 6;
+  stroke-linejoin: round;
+}
+/* Cio' che sta nel foglio e' gia' posizionato (.st-safe e' absolute): basta
+   l'ordine di impilamento, senza toccare position. */
+.st-sheet > :not(.st-watermark) { z-index: 1; }
+
+/* ==========================================================================
+   Tipografia
+   ========================================================================== */
+.st-h1 {
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-display);
+  text-transform: uppercase;
+  letter-spacing: var(--tr-tracking-display);
+  line-height: var(--tr-leading-display);
+  color: var(--tr-ink-900);
+  margin: 0;
+}
+.st-h1 { font-size: var(--t-display); }
+.st-h1 em { font-style: normal; color: var(--tr-brand-500); }
+
+.st-mono {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--t-mono);
+  line-height: 1.4;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-600);
+}
+.st-mono--brand { color: var(--tr-brand-500); }
+.st-mono--muted { color: var(--tr-ink-400); font-weight: var(--tr-weight-body); }
+.st-mono--wide { letter-spacing: var(--tr-tracking-mono-wide); }
+.st-mono--sm { font-size: var(--t-mono-sm); }
+
+/* ==========================================================================
+   Primitive geometriche
+   ========================================================================== */
+.st-accent-dash {
+  display: block;
+  width: var(--dash-w);
+  height: var(--rule-3);
+  background: var(--tr-brand-500);
+  border-radius: var(--tr-radius-line);
+}
+.st-dot {
+  display: inline-block;
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: var(--tr-radius-pill);
+  background: var(--tr-brand-500);
+  flex: none;
+}
+
+/* Eyebrow: etichetta mono blu + filetto 2 che riempie la riga (+ nota) */
+.st-eyebrow { display: flex; align-items: center; gap: var(--s-4); }
+.st-eyebrow__label {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--t-mono);
+  line-height: 1;
+  letter-spacing: var(--tr-tracking-mono-wide);
+  text-transform: uppercase;
+  color: var(--tr-brand-500);
+  white-space: nowrap;
+}
+.st-eyebrow__line { flex: 1 1 auto; height: var(--rule-2); background: var(--tr-border-soft); border-radius: var(--tr-radius-line); }
+.st-eyebrow__note {
+  font-family: var(--tr-font-mono);
+  font-size: var(--t-mono-sm);
+  line-height: 1;
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+  white-space: nowrap;
+}
+.st-eyebrow + * { margin-top: var(--s-4); }
+.st-eyebrow + .st-h1 { margin-top: var(--s-5); }
+
+/* ==========================================================================
+   Disegno schematico (dalle convenzioni di .tr-drawing): silhouette con
+   tratto ink/900 e riempimento surface/tint; dettagli blu.
+   ========================================================================== */
+.st-drawing { display: block; }
+.st-drawing .silhouette { fill: var(--tr-surface-tint); stroke: var(--tr-ink-900); stroke-width: 2.25; stroke-linejoin: round; stroke-linecap: round; }
+.st-drawing .line { fill: none; stroke: var(--tr-border-soft-2); stroke-width: 2; stroke-linecap: round; }
+.st-drawing .brand { fill: none; stroke: var(--tr-brand-500); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.st-drawing .brand-fill { fill: var(--tr-brand-500); }
+/* Il marchio a punti (dot-mark.js): una tinta per valore, tutte del blu di
+   marca, dal 300 al 600. L'anello e' il dato che l'IA segnala. */
+.st-drawing .l300 { fill: var(--tr-brand-300); }
+.st-drawing .l400 { fill: var(--tr-brand-400); }
+.st-drawing .l500 { fill: var(--tr-brand-500); }
+.st-drawing .l600 { fill: var(--tr-brand-600); }
+.st-drawing .ring { fill: var(--st-paper); stroke: var(--tr-brand-600); stroke-width: 4.5; }
+/* Marcatura di prodotto sul disegno: la sigla in display, in blu. */
+.st-drawing .label {
+  font-family: var(--tr-font-display);
+  font-weight: var(--tr-weight-display);
+  letter-spacing: var(--tr-tracking-display);
+  fill: var(--tr-brand-500);
+}
+
+
+/* ==========================================================================
+   Piede: firma e certificazioni (superficie pubblica: la riga ci va)
+   ========================================================================== */
+.st-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-6);
+  padding-top: var(--s-4);
+  border-top: var(--rule-1) solid var(--tr-border-soft);
+}
+.st-footer__contacts { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-5); }
+.st-footer__contact {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--tr-font-mono);
+  font-size: var(--t-mono-sm);
+  letter-spacing: var(--tr-tracking-mono);
+  text-transform: uppercase;
+  color: var(--tr-ink-400);
+  white-space: nowrap;
+}
+.st-footer__contact .st-dot { width: calc(var(--dot) * 0.75); height: calc(var(--dot) * 0.75); }
+.st-certs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3) var(--s-4);
+}
+.st-certs__label {
+  font-family: var(--tr-font-mono);
+  font-weight: var(--tr-weight-semibold);
+  font-size: var(--t-mono-sm);
+  letter-spacing: var(--tr-tracking-mono-mid);
+  text-transform: uppercase;
+  color: var(--tr-brand-500);
+  white-space: nowrap;
+}
+.st-certs__list {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-family: var(--tr-font-mono);
+  font-size: var(--t-mono-sm);
+  line-height: 1.5;
+  letter-spacing: var(--tr-tracking-mono);
+  color: var(--tr-ink-400);
+}
+.st-certs__line { flex: 1 1 auto; min-width: var(--s-6); height: var(--rule-1); background: var(--tr-border-soft); border-radius: var(--tr-radius-line); }
+
+/* ==========================================================================
+   Guide di verifica: solo nello screenshot di controllo (html.guide),
+   mai nel PDF. Area nascosta dal profilo, strisce di giunzione.
+   ========================================================================== */
+.st-guide { display: none; }
+html.guide .st-guide { display: block; position: absolute; z-index: 10; pointer-events: none; }
+html.guide .st-guide--hidden {
+  inset: 0;
+  border-style: solid;
+  border-color: rgba(165, 58, 58, 0.18);
+  border-width: var(--hide-t, 10mm) var(--hide-r, 10mm) var(--hide-b, 10mm) var(--hide-l, 10mm);
+}
+html.guide .st-guide--hidden::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  outline: 0.4mm dashed rgba(165, 58, 58, 0.8);
+}
+html.guide .st-guide--join {
+  background: repeating-linear-gradient(135deg, rgba(165, 58, 58, 0.25) 0 1.5mm, transparent 1.5mm 4mm);
+  outline: 0.4mm solid rgba(165, 58, 58, 0.8);
+}
+html.guide .st-guide__label {
+  position: absolute;
+  font: 600 2.6mm/1 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a53a3a;
+  background: #fff;
+  padding: 1mm 2mm;
+  white-space: nowrap;
+}

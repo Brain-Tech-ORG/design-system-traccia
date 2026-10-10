@@ -12,9 +12,11 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── logo-traccia.svg          Logo (chevron blu, pieno)
 │   ├── logo-traccia-outline.svg  Sagoma outline per watermark negli sfondi
 │   ├── logo-traccia-mark.svg     Solo il marchio, normalizzato: sorgente dello spinner
+│   ├── conchiglia.svg            La conchiglia: solo decorazione di sfondo (tratto blu logo)
+│   ├── conchiglia-mono.svg       La stessa, tratto currentColor (per l'SVG in linea)
 │   ├── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
 │   ├── icons/                    Sorgenti SVG delle icone (stroke currentColor)
-│   ├── fonts/                    Archivo + IBM Plex Mono, sottoinsieme latino, con OFL
+│   ├── fonts/                    Archivo + IBM Plex Mono + Space Grotesk (wordmark), latino, con OFL
 │   └── fonts/ttf/                Gli stessi font in TrueType, per l'incorporazione in Word
 ├── tokens/
 │   ├── tokens.css                Design token come CSS custom properties
@@ -37,6 +39,10 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── carta-intestata.dotx      Carta intestata Word: il modello da usare
 │   ├── carta-intestata.docx      Lo stesso file, apribile come documento
 │   └── carta-intestata/          Il generatore (build.js + build.sh): il .dotx non si edita a mano
+├── tools/
+│   └── conchiglia.py             Generatore della conchiglia: scrive assets/conchiglia*.svg
+├── print/
+│   └── stand-sin-2026/           Grafiche di stand (SIN 2026): sorgenti in scala 1:10, generatore, PDF CMYK in out/
 └── index.html                    Documentazione visiva / showcase
 ```
 
@@ -45,7 +51,7 @@ niente gradienti, niente emoji, molto bianco.
 ```html
 <!-- font: CDN per il web pubblico, oppure css/traccia-fonts.css se il prodotto
      deve reggere senza rete. Vedi "Tipografia · dove stanno i font". -->
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tokens/tokens.css">
 <link rel="stylesheet" href="css/traccia.css">
 <link rel="stylesheet" href="css/traccia-icons.css">
@@ -59,7 +65,14 @@ niente gradienti, niente emoji, molto bianco.
 ## Brand
 
 - **Logo**: chevron/freccia blu (`assets/logo-traccia.svg`). Compare sempre affiancato al wordmark
-  **LA TRACCIA** in maiuscolo con letter-spacing 0.08em (componente `.tr-brandmark`).
+  **traccia** — tutto minuscolo, senza «la», in **Space Grotesk 700** con tracking −0.02em,
+  `ink/900` (componente `.tr-brandmark`, con `assets/logo-traccia-mark.svg`: il marchio a filo,
+  senza il canvas trasparente di `logo-traccia.svg`, che allargherebbe la distanza). Le proporzioni si contano sull'altezza del marchio:
+  scritta 0,8, distanza 0,34 (marchio 28px → scritta 22,4px, distanza 9,5px; nel footer 20px).
+  Il minuscolo sta anche nel CSS (`text-transform: lowercase`), quindi il wordmark resta tale
+  chiunque scriva il testo. La ragione sociale per esteso — Cooperativa E.D.P. La Traccia —
+  non e' il wordmark: resta in Archivo 800 maiuscolo dove compare (piede dei documenti, firma
+  email).
 - **Logo nello sfondo (watermark)**: la sagoma outline del logo
   (`assets/logo-traccia-outline.svg` — stessi tracciati, senza riempimento, tratto blu logo)
   può essere usata negli sfondi delle brochure e delle pagine delle presentazioni:
@@ -69,6 +82,25 @@ niente gradienti, niente emoji, molto bianco.
   scorrimento e spegnerebbe qualunque `position: sticky` all'interno, come la colonna del dato
   del [blocco introduttivo](#blocco-introduttivo)), con varianti di posizione `--top-right` e
   `--bottom-left`.
+- **Conchiglia (solo sfondi)**: la conchiglia dell'immagine aziendale, un ventaglio di petali
+  fatti di archi annidati (`assets/conchiglia.svg`, componente `.tr-seashell`). E' un **asset
+  decorativo e si usa solo negli sfondi**: sta dietro ai contenuti, non porta informazione e
+  non firma la pagina. **Non e' un marchio**: non sostituisce il chevron, non sta accanto al
+  wordmark, non diventa icona, illustrazione o elemento in primo piano. Il perno sta
+  nell'angolo della superficie e il ventaglio si apre verso l'interno; tratto blu logo a
+  opacita' 0,4 (`--tr-seashell-opacity`), nello stesso `.tr-watermark-host` del watermark.
+  Una per superficie, mai nello stesso angolo del watermark, mai nei documenti formali. Il
+  marchio non si specchia, la conchiglia si': `--bottom-left` la ribalta, e due conchiglie
+  speculari sono le due valve di una composizione simmetrica. In grande formato (pareti,
+  pannelli) puo' essere stampata a tinta piena o con i petali nelle tinte del blu, ma resta
+  sfondo: niente testo sopra le sue linee.
+  E' ridisegnata da `tools/conchiglia.py` con una regola sola, al posto del disegno a mano che
+  aveva qualche difetto (un petalino spurio fra il secondo e il terzo lobo, archi a passo
+  irregolare, un groviglio vicino al perno): petali fra raggi a passo quasi costante, ognuno
+  lungo 0,875 del precedente; contorno fatto di lobi che partono tangenti a un raggio e
+  scendono tangenti al successivo; righe interne copie del contorno scalate dal perno a passo
+  lineare, cosi' due archi stanno sempre alla stessa distanza. Il file non si edita a mano: si
+  cambia il generatore e lo si rilancia.
 - **Tono**: tecnico, sobrio, istituzionale ma moderno.
 
 ## Palette
@@ -147,6 +179,9 @@ scegliendo colori nuovi.
 - **Tecnico/etichette — IBM Plex Mono (400–600)**: sempre maiuscolo, tracking 0.06–0.3em, per
   eyebrow/kicker, numerazioni, quote, specifiche, contatti, metadati.
 - **Body — Archivo 400**: 12–14px stampa / 14–16px UI / 24–30px slide, line-height 1.5–1.65, ink/600.
+- **Wordmark — Space Grotesk 700**: solo la scritta «traccia» accanto al marchio
+  (`--tr-font-wordmark`, `--tr-weight-wordmark`, `--tr-tracking-wordmark`). Non e' un
+  carattere di testo: titoli, corpo e interfaccia restano in Archivo.
 - **Slide 16:9 (1920×1080)**: mai testo sotto 17px; titoli 60–92px.
 
 ### Dove stanno i font
@@ -155,7 +190,7 @@ Il CDN non e' l'unica destinazione, ed e' il punto in cui il sistema si era
 fermato troppo presto.
 
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 ```
 
 Quel `<link>` va benissimo per il sito e per tutto cio' che vive in rete. Non va
@@ -173,7 +208,7 @@ I file stanno quindi anche nel repository, e si caricano cosi':
 <link rel="stylesheet" href="tokens/tokens.css">
 ```
 
-`traccia-fonts.css` va **prima** dei token e dei componenti, e contiene tre
+`traccia-fonts.css` va **prima** dei token e dei componenti, e contiene quattro
 `@font-face` pronte:
 
 ```css
@@ -188,7 +223,7 @@ I file stanno quindi anche nel repository, e si caricano cosi':
     U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
-/* + IBM Plex Mono 400 e 600, stessa unicode-range */
+/* + IBM Plex Mono 400 e 600 e Space Grotesk 700 (solo wordmark), stessa unicode-range */
 ```
 
 | Superficie | Font |
@@ -198,13 +233,14 @@ I file stanno quindi anche nel repository, e si caricano cosi':
 | Firma email | nessuno dei due: `Archivo, 'Helvetica Neue', Helvetica, Arial` in linea |
 
 **Il sottoinsieme e' il latino, e basta.** Per l'italiano copre tutto — accenti
-e caporali compresi — e tiene i tre file a **63,7 KB** complessivi:
+e caporali compresi — e tiene i quattro file a **76,4 KB** complessivi:
 
 | File | Peso |
 |---|---|
 | `archivo-latin-var.woff2` | 34,1 KB |
 | `ibm-plex-mono-latin-400.woff2` | 14,4 KB |
 | `ibm-plex-mono-latin-600.woff2` | 15,3 KB |
+| `space-grotesk-latin-700.woff2` (solo wordmark) | 12,5 KB |
 
 Archivo e' variabile: **un file solo copre l'arco 400–800**, quindi i tre pesi
 del sistema non costano tre richieste, e `font-weight` si scrive come sempre.
@@ -212,12 +248,12 @@ Chi deve comporre in vietnamita o in cirillico scarica da Google Fonts anche
 quei sottoinsiemi e aggiunge le `@font-face` con la loro `unicode-range`: il
 meccanismo non cambia.
 
-**Licenza.** Entrambi i caratteri sono **SIL Open Font License 1.1**, quindi
+**Licenza.** Tutti e tre i caratteri sono **SIL Open Font License 1.1**, quindi
 ridistribuibili — e' il motivo per cui possono stare qui dentro. Il testo
-integrale e' in `assets/fonts/OFL-Archivo.txt` e
-`assets/fonts/OFL-IBMPlexMono.txt`, e **va tenuto insieme ai file**, anche nelle
-copie del sistema che finiscono dentro un prodotto: la licenza lo richiede, e
-costa 9 KB.
+integrale e' in `assets/fonts/OFL-Archivo.txt`,
+`assets/fonts/OFL-IBMPlexMono.txt` e `assets/fonts/OFL-SpaceGrotesk.txt`, e
+**va tenuto insieme ai file**, anche nelle copie del sistema che finiscono dentro
+un prodotto: la licenza lo richiede, e costa 13 KB.
 
 `index.html` e le pagine in `examples/` usano la via locale, non il CDN: la
 vetrina di un sistema che serve prodotti offline deve reggere senza rete, e
@@ -581,6 +617,7 @@ card, niente ombre, niente gradienti — piu' le seguenti.
 |---|---|---|
 | Testata | **Cliente** (`.tr-clientmark`) | La pagina e' il suo prodotto: il suo marchio sta in alto a sinistra, affiancato dal nome del prodotto in mono. |
 | Sfondo | La Traccia, sagoma outline (`.tr-watermark`) | Opzionale, opacita' 0,16, a sbordo da un angolo. E' la presenza di marchio "ambientale". |
+| Sfondo | Conchiglia (`.tr-seashell`) | Opzionale, solo decorazione, in un angolo diverso da quello del watermark. Non e' un marchio: non conta nella regola "un solo marchio per lockup". |
 | Footer | La Traccia (`.tr-footer` + `.tr-brandmark`) | Firma del fornitore. La riga certificazioni solo sulle superfici pubbliche, non dentro l'applicazione. |
 
 **Mai i due marchi affiancati nello stesso lockup**: un logo cliente accanto al
@@ -1486,7 +1523,7 @@ seconda ruba il ritaglio alla prima.
       <rect class="tr-spinner__wipe" x="-30" y="-10" width="654" height="760"/>
     </clipPath>
   </svg>
-  <span class="tr-spinner__wordmark">La Traccia</span>
+  <span class="tr-spinner__wordmark">traccia</span>
   <span class="tr-spinner__label">Caricamento</span>
 </div>
 ```

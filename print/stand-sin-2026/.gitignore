@@ -1,0 +1,4 @@
+# Lo zip dell'esecutivo si rigenera con node esecutivo.mjs e si allega:
+# nel repository resta la cartella esecutivo/.
+*.zip
+.zip-staging/

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="it" data-w="100" data-h="200">
+<head>
+  <meta charset="utf-8">
+  <title>La Traccia — SIN 2026 — Totem 3 · Nuovo percorso infermieristico personalizzabile — 100×200 cm (1:10)</title>
+  <link rel="stylesheet" href="stand.css">
+  <style>
+    /* Totem 3, variante. File 100×200, margine di sicurezza 8 cm. Stessa
+       testata dei totem 1 e 2: lockup, eyebrow, titolo display. Il concetto
+       e' che il percorso si costruisce sull'azienda ospedaliera invece di
+       essere quello standard: il disegno mette i due a confronto. A
+       sinistra il percorso standard, una linea dritta di tappe uguali, in
+       grigio. A destra quello dell'azienda, in blu: le stesse partenza e
+       arrivo, ma con una deviazione, tappe diverse e una tappa che si
+       aggiunge (il "+"). */
+    @page { size: 100mm 200mm; }
+    .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
+    .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
+    .totem__intro { margin-top: 8mm; }
+    .totem__intro .st-h1 { --t-display: 8mm; }
+    .path { margin: auto 0; width: 84mm; height: auto; }
+    .path .std { fill: none; stroke: var(--tr-border-soft-2); stroke-width: 4; stroke-linecap: round; }
+    .path .std-node { fill: var(--st-paper); stroke: var(--tr-border-soft-2); stroke-width: 4; }
+    .path .own { fill: none; stroke: var(--tr-brand-500); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .path .add { fill: var(--st-paper); stroke: var(--tr-brand-500); stroke-width: 3; stroke-dasharray: 5 5; }
+    .path .add-plus { fill: none; stroke: var(--tr-brand-500); stroke-width: 3.5; stroke-linecap: round; }
+    .path .tag {
+      font-family: var(--tr-font-mono);
+      font-weight: var(--tr-weight-semibold);
+      letter-spacing: var(--tr-tracking-mono-wide);
+      text-transform: uppercase;
+      fill: var(--tr-ink-400);
+    }
+    .path .tag--brand { fill: var(--tr-brand-500); }
+    .totem__foot { padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
+    .totem__foot .st-footer { padding-top: 3mm; }
+    .st-watermark { width: 92mm; bottom: -30mm; right: -36mm; }
+  </style>
+</head>
+<body>
+  <div class="st-sheet st-sheet--totem">
+    <svg class="st-watermark" viewBox="0 0 594 717" aria-hidden="true">
+      <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+      <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+    </svg>
+
+    <div class="st-safe totem">
+      <header>
+        <div class="st-lockup" data-fit-w="54" role="img" aria-label="La Traccia">
+          <svg class="st-lockup__mark" viewBox="0 0 594 717" aria-hidden="true">
+            <path fill="#4194d7" d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+            <path fill="#4194d7" d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+          </svg>
+          <span class="st-lockup__word">traccia</span>
+        </div>
+      </header>
+
+      <section class="totem__intro">
+        <div class="st-eyebrow">
+          <span class="st-eyebrow__label">Novità</span>
+          <span class="st-eyebrow__line"></span>
+          <span class="st-eyebrow__note">Gepadial</span>
+        </div>
+        <h1 class="st-h1">Nuovo percorso infermieristico <em>personalizzabile</em></h1>
+      </section>
+
+      <!-- Standard contro azienda. Stesse partenza e arrivo (y 30 e 250).
+           Sinistra: dritto, tappe uguali, grigio. Destra: il percorso
+           dell'azienda ospedaliera, blu, con una deviazione che aggiunge
+           tappe e una tappa nuova tratteggiata con il "+". -->
+      <svg class="st-drawing path" viewBox="0 0 330 320" role="img" aria-label="Il percorso standard, dritto, accanto al percorso costruito sull'azienda ospedaliera, con tappe proprie">
+        <path class="std" d="M56 30v220"/>
+        <circle class="std-node" cx="56" cy="30" r="11"/>
+        <circle class="std-node" cx="56" cy="85" r="11"/>
+        <circle class="std-node" cx="56" cy="140" r="11"/>
+        <circle class="std-node" cx="56" cy="195" r="11"/>
+        <circle class="std-node" cx="56" cy="250" r="11"/>
+
+        <path class="own" d="M190 30v220"/>
+        <path class="own" d="M190 70h56a20 20 0 0 1 20 20v100a20 20 0 0 1 -20 20h-56"/>
+        <circle class="brand-fill" cx="190" cy="30" r="11"/>
+        <circle class="brand-fill" cx="266" cy="105" r="11"/>
+        <circle class="add" cx="266" cy="160" r="15"/>
+        <path class="add-plus" d="M266 152v16M258 160h16"/>
+        <circle class="ring" cx="190" cy="140" r="11"/>
+        <circle class="brand-fill" cx="190" cy="250" r="11"/>
+
+        <g font-size="13">
+          <text class="tag" x="56" y="292" text-anchor="middle">Standard</text>
+          <text class="tag tag--brand" x="228" y="292" text-anchor="middle">La tua azienda</text>
+          <text class="tag tag--brand" x="228" y="312" text-anchor="middle">ospedaliera</text>
+        </g>
+      </svg>
+
+      <footer class="totem__foot">
+        <p class="st-mono st-mono--brand" style="margin:0">Chiedi una dimostrazione allo stand</p>
+        <div class="st-footer">
+          <div class="st-footer__contacts">
+            <span class="st-footer__contact"><span class="st-dot"></span>latraccia.it</span>
+            <span class="st-footer__contact"><span class="st-dot"></span>info@latraccia.it</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div class="st-guide st-guide--hidden">
+      <span class="st-guide__label" style="left: 2mm; top: 2mm">Totem 100 × 200 cm · margine di sicurezza 8 cm</span>
+    </div>
+  </div>
+  <script src="stand.js"></script>
+</body>
+</html>

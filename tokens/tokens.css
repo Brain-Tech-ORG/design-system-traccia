@@ -105,11 +105,14 @@
   /* ---- Tipografia · Famiglie ---- */
   --tr-font-display: "Archivo", system-ui, sans-serif;   /* display / UI / body */
   --tr-font-mono: "IBM Plex Mono", ui-monospace, monospace; /* tecnico / etichette */
+  /* Solo il wordmark «traccia», minuscolo: non e' un carattere di testo. */
+  --tr-font-wordmark: "Space Grotesk", var(--tr-font-display);
 
   /* ---- Tipografia · Pesi ---- */
   --tr-weight-body: 400;
   --tr-weight-semibold: 600;
   --tr-weight-display: 800;
+  --tr-weight-wordmark: 700;
 
   /* ---- Tipografia · Tracking ---- */
   --tr-tracking-display: -0.015em; /* titoli maiuscoli */
@@ -122,7 +125,10 @@
   /* Gradino intermedio: etichette brevi che aprono un blocco e vanno
      attraversate, non lette parola per parola (ruoli di firma, credenziali). */
   --tr-tracking-mono-mid: 0.14em;
-  --tr-tracking-wordmark: 0.08em;  /* wordmark LA TRACCIA */
+  --tr-tracking-wordmark: -0.02em; /* wordmark «traccia», minuscolo */
+  /* Ragione sociale in maiuscolo (Cooperativa E.D.P. La Traccia) nel piede
+     dei documenti: e' un nome scritto per esteso, non il wordmark. */
+  --tr-tracking-name: 0.08em;
 
   /* ---- Tipografia · Interlinea ---- */
   --tr-leading-display: 1.08; /* range 1.04–1.15 */
@@ -186,6 +192,9 @@
   /* ---- Watermark logo (sagoma outline negli sfondi) ---- */
   --tr-watermark-opacity: 0.16;  /* opacità della sagoma sul paper */
   --tr-watermark-stroke: 6px;    /* spessore tratto dell'outline (su viewBox 1280) */
+
+  /* ---- Conchiglia (solo decorazione di sfondo, assets/conchiglia.svg) ---- */
+  --tr-seashell-opacity: 0.4;    /* molte linee sottili: piu' della sagoma */
 
   /* ---- Campi di form ---- */
   --tr-field-h: 56px;             /* altezza del campo con etichetta flottante */

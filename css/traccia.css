@@ -208,18 +208,26 @@
   padding-bottom: var(--tr-space-4);
   border-bottom: var(--tr-rule-thin) solid var(--tr-border-soft);
 }
+/* Il lockup si misura sull'altezza del marchio (--tr-brandmark-h): la
+   scritta e' 0,8 di quell'altezza e sta a 0,34 di distanza. «traccia» e'
+   minuscolo, senza «la», in Space Grotesk 700: in minuscolo le lettere sono
+   basse, e alla misura del vecchio maiuscolo sparirebbero accanto al
+   marchio. Il minuscolo e' anche nel CSS, cosi' il wordmark resta tale
+   chiunque scriva il testo. */
 .tr-brandmark {
+  --tr-brandmark-h: 28px;
   display: inline-flex;
   align-items: center;
-  gap: var(--tr-space-3);
+  gap: calc(var(--tr-brandmark-h) * 0.34);
 }
-.tr-brandmark__logo { height: 28px; width: auto; display: block; }
+.tr-brandmark__logo { height: var(--tr-brandmark-h); width: auto; display: block; }
 .tr-brandmark__wordmark {
-  font-family: var(--tr-font-display);
-  font-weight: var(--tr-weight-display);
-  font-size: 17px;
+  font-family: var(--tr-font-wordmark);
+  font-weight: var(--tr-weight-wordmark);
+  font-size: calc(var(--tr-brandmark-h) * 0.8);
+  line-height: 1;
   letter-spacing: var(--tr-tracking-wordmark);
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: var(--tr-ink-900);
 }
 
@@ -538,8 +546,7 @@
   padding-top: var(--tr-space-4);
   border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
 }
-.tr-footer .tr-brandmark__logo { height: 20px; }
-.tr-footer .tr-brandmark__wordmark { font-size: 13px; }
+.tr-footer .tr-brandmark { --tr-brandmark-h: 20px; }
 .tr-footer__contacts {
   display: flex;
   flex-wrap: wrap;
@@ -1842,10 +1849,53 @@ select.tr-field__control + .tr-field__label,
   user-select: none;
   z-index: 0;
 }
-.tr-watermark-host > :not(.tr-watermark) { position: relative; z-index: 1; }
+.tr-watermark-host > :not(.tr-watermark):not(.tr-seashell) { position: relative; z-index: 1; }
 /* Posizioni ricorrenti: angolo alto-destra o basso-sinistra, sempre a sbordo */
 .tr-watermark--top-right { top: -74px; right: -40px; }
 .tr-watermark--bottom-left { bottom: -80px; left: -60px; }
+
+/* ==========================================================================
+   Conchiglia (solo decorazione di sfondo)
+   La conchiglia dell'immagine aziendale (assets/conchiglia.svg, generata da
+   tools/conchiglia.py): un ventaglio di petali fatti di archi annidati.
+   E' un asset decorativo e si usa SOLO negli sfondi: sta dietro ai
+   contenuti, non porta informazione e non firma la pagina. Non e' un
+   marchio: non sostituisce il chevron, non sta accanto al wordmark, non
+   diventa icona, illustrazione o elemento in primo piano.
+
+   Il perno sta nell'angolo della superficie e il ventaglio si apre verso
+   l'interno. Tratto blu logo a --tr-seashell-opacity sul paper: sono molte
+   linee sottili, quindi regge un'opacita' piu' alta della sagoma del
+   watermark. Vive nello stesso .tr-watermark-host del watermark e non
+   intercetta il puntatore.
+
+   Regole: una conchiglia per superficie; mai nello stesso angolo del
+   watermark; mai nei documenti formali (si fotocopiano e si scansionano,
+   come per il watermark). A differenza del marchio si puo' specchiare
+   (--bottom-left): due conchiglie speculari sono le due valve di una
+   composizione simmetrica.
+
+   (Il nome e' .tr-seashell perche' .tr-shell e' gia' il contenitore che
+   tiene il footer in fondo alla pagina.)
+
+   Markup:
+     <div class="tr-watermark-host">
+       <img class="tr-seashell" src="assets/conchiglia.svg" alt="" aria-hidden="true">
+       ...contenuto...
+     </div>
+   ========================================================================== */
+.tr-seashell {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 220px; /* indicativo: scala col formato pagina; l'altezza segue */
+  height: auto;
+  opacity: var(--tr-seashell-opacity);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.tr-seashell--bottom-left { right: auto; left: 0; transform: scaleX(-1); }
 
 /* ========================================================================== 
    15. Tabs
@@ -1984,11 +2034,11 @@ select.tr-field__control + .tr-field__label,
    la pagina. Nelle altre il marchio e' un indicatore dentro un'interfaccia
    gia' firmata, e ripetere la firma non aggiunge nulla. */
 .tr-spinner__wordmark {
-  font-family: var(--tr-font-display);
-  font-weight: var(--tr-weight-display);
-  font-size: var(--tr-text-mono);
+  font-family: var(--tr-font-wordmark);
+  font-weight: var(--tr-weight-wordmark);
+  font-size: var(--tr-text-lead);
   letter-spacing: var(--tr-tracking-wordmark);
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: var(--tr-ink-900);
 }
 .tr-spinner__label {

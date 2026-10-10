@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="it" data-w="420" data-h="220">
+<head>
+  <meta charset="utf-8">
+  <title>La Traccia — SIN 2026 — Parete sinistra — 420×220 cm (1:10)</title>
+  <link rel="stylesheet" href="stand.css">
+  <style>
+    /* File 420×220, area visibile 370×200: 10 cm nascosti per lato, piu' gli
+       ultimi 30 cm a destra senza grafica (giunzione dei pannelli).
+       Niente testo: solo la sagoma outline del marchio, a sbordo dal bordo
+       alto, verso l'ingresso dello stand (la giunzione e' dalla parte del
+       fondale). E' il watermark del sistema, alla scala della parete. */
+    @page { size: 420mm 220mm; }
+    .st-sheet { --w: 420mm; --h: 220mm; --hide-r: 40mm; }
+    .st-watermark { width: 170mm; top: -46mm; left: 34mm; }
+  </style>
+</head>
+<body>
+  <div class="st-sheet st-sheet--wall">
+    <svg class="st-watermark" viewBox="0 0 594 717" aria-hidden="true">
+      <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+      <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+    </svg>
+
+    <div class="st-safe"></div>
+
+    <div class="st-guide st-guide--hidden">
+      <span class="st-guide__label" style="left: 2mm; top: 2mm">Area visibile 370 × 200 cm · 10 cm nascosti per lato</span>
+    </div>
+    <div class="st-guide st-guide--join" style="top: 0; bottom: 0; right: 10mm; width: 30mm">
+      <span class="st-guide__label" style="right: 2mm; top: 12mm; writing-mode: vertical-rl">Giunzione pannelli · 30 cm senza grafica</span>
+    </div>
+  </div>
+  <script src="stand.js"></script>
+</body>
+</html>
