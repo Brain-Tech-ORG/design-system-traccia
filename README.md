@@ -12,7 +12,7 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── logo-traccia.svg          Logo (chevron blu, pieno)
 │   ├── logo-traccia-outline.svg  Sagoma outline per watermark negli sfondi
 │   ├── logo-traccia-mark.svg     Solo il marchio, normalizzato: sorgente dello spinner
-│   ├── conchiglia.svg            La conchiglia, decorazione d'angolo (tratto blu logo)
+│   ├── conchiglia.svg            La conchiglia: solo decorazione di sfondo (tratto blu logo)
 │   ├── conchiglia-mono.svg       La stessa, tratto currentColor (per l'SVG in linea)
 │   ├── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
 │   ├── icons/                    Sorgenti SVG delle icone (stroke currentColor)
@@ -82,18 +82,25 @@ niente gradienti, niente emoji, molto bianco.
   scorrimento e spegnerebbe qualunque `position: sticky` all'interno, come la colonna del dato
   del [blocco introduttivo](#blocco-introduttivo)), con varianti di posizione `--top-right` e
   `--bottom-left`.
-- **Conchiglia**: il secondo segno dell'immagine aziendale. Un ventaglio di petali fatti di
-  archi annidati, con il perno nell'angolo della pagina (`assets/conchiglia.svg`, componente
-  `.tr-shell`). E' ridisegnata da `tools/conchiglia.py` con una regola sola, al posto del
-  disegno a mano che aveva qualche difetto (un petalino spurio fra il secondo e il terzo lobo,
-  archi a passo irregolare, un groviglio vicino al perno): petali fra raggi a passo quasi
-  costante, ognuno lungo 0,875 del precedente; contorno fatto di lobi che partono tangenti a
-  un raggio e scendono tangenti al successivo; righe interne copie del contorno scalate dal
-  perno a passo lineare, cosi' due archi stanno sempre alla stessa distanza. Tratto blu logo a
-  opacita' 0,4 (`--tr-shell-opacity`), dietro ai contenuti in un `.tr-watermark-host`. Una per
-  superficie, mai nello stesso angolo del watermark, mai nei documenti formali. Il marchio
-  non si specchia, la conchiglia si': `--bottom-left` la ribalta, e due conchiglie speculari
-  sono le due valve di una composizione simmetrica.
+- **Conchiglia (solo sfondi)**: la conchiglia dell'immagine aziendale, un ventaglio di petali
+  fatti di archi annidati (`assets/conchiglia.svg`, componente `.tr-seashell`). E' un **asset
+  decorativo e si usa solo negli sfondi**: sta dietro ai contenuti, non porta informazione e
+  non firma la pagina. **Non e' un marchio**: non sostituisce il chevron, non sta accanto al
+  wordmark, non diventa icona, illustrazione o elemento in primo piano. Il perno sta
+  nell'angolo della superficie e il ventaglio si apre verso l'interno; tratto blu logo a
+  opacita' 0,4 (`--tr-seashell-opacity`), nello stesso `.tr-watermark-host` del watermark.
+  Una per superficie, mai nello stesso angolo del watermark, mai nei documenti formali. Il
+  marchio non si specchia, la conchiglia si': `--bottom-left` la ribalta, e due conchiglie
+  speculari sono le due valve di una composizione simmetrica. In grande formato (pareti,
+  pannelli) puo' essere stampata a tinta piena o con i petali nelle tinte del blu, ma resta
+  sfondo: niente testo sopra le sue linee.
+  E' ridisegnata da `tools/conchiglia.py` con una regola sola, al posto del disegno a mano che
+  aveva qualche difetto (un petalino spurio fra il secondo e il terzo lobo, archi a passo
+  irregolare, un groviglio vicino al perno): petali fra raggi a passo quasi costante, ognuno
+  lungo 0,875 del precedente; contorno fatto di lobi che partono tangenti a un raggio e
+  scendono tangenti al successivo; righe interne copie del contorno scalate dal perno a passo
+  lineare, cosi' due archi stanno sempre alla stessa distanza. Il file non si edita a mano: si
+  cambia il generatore e lo si rilancia.
 - **Tono**: tecnico, sobrio, istituzionale ma moderno.
 
 ## Palette
@@ -610,6 +617,7 @@ card, niente ombre, niente gradienti — piu' le seguenti.
 |---|---|---|
 | Testata | **Cliente** (`.tr-clientmark`) | La pagina e' il suo prodotto: il suo marchio sta in alto a sinistra, affiancato dal nome del prodotto in mono. |
 | Sfondo | La Traccia, sagoma outline (`.tr-watermark`) | Opzionale, opacita' 0,16, a sbordo da un angolo. E' la presenza di marchio "ambientale". |
+| Sfondo | Conchiglia (`.tr-seashell`) | Opzionale, solo decorazione, in un angolo diverso da quello del watermark. Non e' un marchio: non conta nella regola "un solo marchio per lockup". |
 | Footer | La Traccia (`.tr-footer` + `.tr-brandmark`) | Firma del fornitore. La riga certificazioni solo sulle superfici pubbliche, non dentro l'applicazione. |
 
 **Mai i due marchi affiancati nello stesso lockup**: un logo cliente accanto al

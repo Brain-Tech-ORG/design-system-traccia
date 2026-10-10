@@ -1849,48 +1849,53 @@ select.tr-field__control + .tr-field__label,
   user-select: none;
   z-index: 0;
 }
-.tr-watermark-host > :not(.tr-watermark):not(.tr-shell) { position: relative; z-index: 1; }
+.tr-watermark-host > :not(.tr-watermark):not(.tr-seashell) { position: relative; z-index: 1; }
 /* Posizioni ricorrenti: angolo alto-destra o basso-sinistra, sempre a sbordo */
 .tr-watermark--top-right { top: -74px; right: -40px; }
 .tr-watermark--bottom-left { bottom: -80px; left: -60px; }
 
 /* ==========================================================================
-   Conchiglia (decorazione d'angolo)
-   Il secondo segno dell'immagine aziendale, accanto al marchio: un ventaglio
-   di petali fatti di archi annidati (assets/conchiglia.svg, generata da
-   tools/conchiglia.py). Il perno sta nell'angolo della pagina e la
-   conchiglia si apre verso l'interno: e' un segno d'angolo, non si
-   centra e non si ritaglia a meta' petalo.
+   Conchiglia (solo decorazione di sfondo)
+   La conchiglia dell'immagine aziendale (assets/conchiglia.svg, generata da
+   tools/conchiglia.py): un ventaglio di petali fatti di archi annidati.
+   E' un asset decorativo e si usa SOLO negli sfondi: sta dietro ai
+   contenuti, non porta informazione e non firma la pagina. Non e' un
+   marchio: non sostituisce il chevron, non sta accanto al wordmark, non
+   diventa icona, illustrazione o elemento in primo piano.
 
-   Tratto blu logo a --tr-shell-opacity sul paper: sono molte linee sottili,
-   quindi regge un'opacita' piu' alta della sagoma del watermark. Sta dietro
-   ai contenuti dentro lo stesso .tr-watermark-host, e non intercetta il
-   puntatore.
+   Il perno sta nell'angolo della superficie e il ventaglio si apre verso
+   l'interno. Tratto blu logo a --tr-seashell-opacity sul paper: sono molte
+   linee sottili, quindi regge un'opacita' piu' alta della sagoma del
+   watermark. Vive nello stesso .tr-watermark-host del watermark e non
+   intercetta il puntatore.
 
    Regole: una conchiglia per superficie; mai nello stesso angolo del
-   watermark; mai nei documenti formali (vale cio' che vale per il
-   watermark: si fotocopia, si scansiona). A differenza del marchio, la
-   conchiglia si puo' specchiare (--bottom-left): due conchiglie speculari
-   sono le due valve, e chiudono una composizione simmetrica.
+   watermark; mai nei documenti formali (si fotocopiano e si scansionano,
+   come per il watermark). A differenza del marchio si puo' specchiare
+   (--bottom-left): due conchiglie speculari sono le due valve di una
+   composizione simmetrica.
+
+   (Il nome e' .tr-seashell perche' .tr-shell e' gia' il contenitore che
+   tiene il footer in fondo alla pagina.)
 
    Markup:
      <div class="tr-watermark-host">
-       <img class="tr-shell" src="assets/conchiglia.svg" alt="" aria-hidden="true">
+       <img class="tr-seashell" src="assets/conchiglia.svg" alt="" aria-hidden="true">
        ...contenuto...
      </div>
    ========================================================================== */
-.tr-shell {
+.tr-seashell {
   position: absolute;
   right: 0;
   bottom: 0;
   width: 220px; /* indicativo: scala col formato pagina; l'altezza segue */
   height: auto;
-  opacity: var(--tr-shell-opacity);
+  opacity: var(--tr-seashell-opacity);
   pointer-events: none;
   user-select: none;
   z-index: 0;
 }
-.tr-shell--bottom-left { right: auto; left: 0; transform: scaleX(-1); }
+.tr-seashell--bottom-left { right: auto; left: 0; transform: scaleX(-1); }
 
 /* ========================================================================== 
    15. Tabs

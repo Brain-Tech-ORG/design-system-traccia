@@ -4,6 +4,9 @@
 Genera assets/conchiglia.svg (tratto blu logo) e assets/conchiglia-mono.svg
 (tratto currentColor, per l'SVG in linea che prende il colore dal contesto).
 
+E' un asset solo di decorazione degli sfondi (componente .tr-seashell): non
+e' un marchio e non va in primo piano.
+
 La conchiglia dell'immagine aziendale e' un ventaglio di petali attorno a un
 perno, ognuno riempito di archi annidati. L'originale era disegnato a mano e
 aveva qualche difetto: un petalino spurio fra il secondo e il terzo lobo,

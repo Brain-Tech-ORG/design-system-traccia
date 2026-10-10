@@ -109,6 +109,17 @@ tappe proprie e una tappa che si aggiunge (il «+» tratteggiato).
 `proposte/SIN26_totem_tre-varianti.pdf` (A4, una pagina, `node varianti.mjs`)
 le mette affiancate. Finche' non si sceglie, l'esecutivo porta i totem 1 e 2.
 
+**Pareti laterali: quattro varianti con piu' colore.** L'ufficio commerciale
+ha chiesto piu' azzurro aziendale sulle pareti laterali. La tavola interna
+`proposte/SIN26_pareti-laterali_quattro-varianti.pdf` (A4, due pagine) mostra
+le pareti aperte attorno al fondale in quattro varianti: 1 blocco (banda
+verticale piena a tutta altezza verso l'ingresso, attraversata dalla sagoma
+del marchio), 2 parete piena nel blu del logo, 3 conchiglia in linee blu,
+speculare sulle due pareti, 4 conchiglia con i petali nelle tinte del blu solo
+sulla parete sinistra, destra bianca. La conchiglia e' l'asset di sfondo del
+design system (`assets/conchiglia.svg`). Finche' non si sceglie, l'esecutivo
+porta le pareti con la sola sagoma.
+
 Su tutti i totem il disegno sta a meta' tra il titolo e il piede.
 
 **Pareti laterali: solo grafica, e poca.** Niente testo: su ciascuna parete
