@@ -73,9 +73,8 @@ niente gradienti, niente emoji, molto bianco.
   chiunque scriva il testo. La ragione sociale per esteso — Cooperativa E.D.P. La Traccia —
   non e' il wordmark: resta in Archivo 800 maiuscolo dove compare (piede dei documenti, firma
   email).
-  La scritta e' **sempre antracite**, anche sul blu del marchio: li' il marchio passa al bianco
-  e la scritta no. Sul blu `brand/500` l'antracite sta a 3,3:1, sopra la soglia di 3:1 del testo
-  grande: la scritta non scende sotto i 14pt (19px), che per un lockup e' gia' il minimo.
+  La scritta e' **antracite sui fondi chiari**. **Sul blu del marchio e' sempre bianca**, come il
+  marchio accanto (`--tr-color-wordmark-on-brand`): mai antracite sul blu.
 - **Logo nello sfondo (watermark)**: la sagoma outline del logo
   (`assets/logo-traccia-outline.svg` — stessi tracciati, senza riempimento, tratto blu logo)
   può essere usata negli sfondi delle brochure e delle pagine delle presentazioni:
