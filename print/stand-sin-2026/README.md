@@ -111,12 +111,14 @@ le mette affiancate. Finche' non si sceglie, l'esecutivo porta i totem 1 e 2.
 
 **Pareti laterali: quattro varianti con piu' colore.** L'ufficio commerciale
 ha chiesto piu' azzurro aziendale sulle pareti laterali. La tavola interna
-`proposte/SIN26_pareti-laterali_quattro-varianti.pdf` (A4, due pagine) mostra
-le pareti aperte attorno al fondale in quattro varianti: 1 blocco (banda
+`proposte/SIN26_pareti-laterali_cinque-varianti.pdf` (A4, tre pagine) mostra
+le pareti aperte attorno al fondale in cinque varianti: 1 blocco (banda
 verticale piena a tutta altezza verso l'ingresso, attraversata dalla sagoma
 del marchio), 2 parete piena nel blu del logo, 3 conchiglia in linee blu,
 speculare sulle due pareti, 4 conchiglia con i petali nelle tinte del blu solo
-sulla parete sinistra, destra bianca. La conchiglia e' l'asset di sfondo del
+sulla parete sinistra, destra bianca, 5 wireframe del marchio (due sagome
+sovrapposte in solo contorno: a destra fondo blu logo e linee azzurre, a
+sinistra i colori invertiti, fondo bianco e linee blu). La conchiglia e' l'asset di sfondo del
 design system (`assets/conchiglia.svg`). Finche' non si sceglie, l'esecutivo
 porta le pareti con la sola sagoma.
 
