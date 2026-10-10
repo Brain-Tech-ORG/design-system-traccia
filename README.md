@@ -12,6 +12,8 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── logo-traccia.svg          Logo (chevron blu, pieno)
 │   ├── logo-traccia-outline.svg  Sagoma outline per watermark negli sfondi
 │   ├── logo-traccia-mark.svg     Solo il marchio, normalizzato: sorgente dello spinner
+│   ├── conchiglia.svg            La conchiglia, decorazione d'angolo (tratto blu logo)
+│   ├── conchiglia-mono.svg       La stessa, tratto currentColor (per l'SVG in linea)
 │   ├── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
 │   ├── icons/                    Sorgenti SVG delle icone (stroke currentColor)
 │   ├── fonts/                    Archivo + IBM Plex Mono + Space Grotesk (wordmark), latino, con OFL
@@ -37,6 +39,8 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── carta-intestata.dotx      Carta intestata Word: il modello da usare
 │   ├── carta-intestata.docx      Lo stesso file, apribile come documento
 │   └── carta-intestata/          Il generatore (build.js + build.sh): il .dotx non si edita a mano
+├── tools/
+│   └── conchiglia.py             Generatore della conchiglia: scrive assets/conchiglia*.svg
 ├── print/
 │   └── stand-sin-2026/           Grafiche di stand (SIN 2026): sorgenti in scala 1:10, generatore, PDF CMYK in out/
 └── index.html                    Documentazione visiva / showcase
@@ -78,6 +82,18 @@ niente gradienti, niente emoji, molto bianco.
   scorrimento e spegnerebbe qualunque `position: sticky` all'interno, come la colonna del dato
   del [blocco introduttivo](#blocco-introduttivo)), con varianti di posizione `--top-right` e
   `--bottom-left`.
+- **Conchiglia**: il secondo segno dell'immagine aziendale. Un ventaglio di petali fatti di
+  archi annidati, con il perno nell'angolo della pagina (`assets/conchiglia.svg`, componente
+  `.tr-shell`). E' ridisegnata da `tools/conchiglia.py` con una regola sola, al posto del
+  disegno a mano che aveva qualche difetto (un petalino spurio fra il secondo e il terzo lobo,
+  archi a passo irregolare, un groviglio vicino al perno): petali fra raggi a passo quasi
+  costante, ognuno lungo 0,875 del precedente; contorno fatto di lobi che partono tangenti a
+  un raggio e scendono tangenti al successivo; righe interne copie del contorno scalate dal
+  perno a passo lineare, cosi' due archi stanno sempre alla stessa distanza. Tratto blu logo a
+  opacita' 0,4 (`--tr-shell-opacity`), dietro ai contenuti in un `.tr-watermark-host`. Una per
+  superficie, mai nello stesso angolo del watermark, mai nei documenti formali. Il marchio
+  non si specchia, la conchiglia si': `--bottom-left` la ribalta, e due conchiglie speculari
+  sono le due valve di una composizione simmetrica.
 - **Tono**: tecnico, sobrio, istituzionale ma moderno.
 
 ## Palette

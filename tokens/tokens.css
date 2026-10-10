@@ -193,6 +193,9 @@
   --tr-watermark-opacity: 0.16;  /* opacità della sagoma sul paper */
   --tr-watermark-stroke: 6px;    /* spessore tratto dell'outline (su viewBox 1280) */
 
+  /* ---- Conchiglia (decorazione d'angolo, assets/conchiglia.svg) ---- */
+  --tr-shell-opacity: 0.4;       /* molte linee sottili: piu' della sagoma */
+
   /* ---- Campi di form ---- */
   --tr-field-h: 56px;             /* altezza del campo con etichetta flottante */
   --tr-field-h-compact: 40px;     /* variante compatta: filtri in barra, senza etichetta interna */
