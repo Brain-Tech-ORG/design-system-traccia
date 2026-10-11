@@ -119,7 +119,9 @@ speculare sulle due pareti, 4 conchiglia con i petali nelle tinte del blu solo
 sulla parete sinistra, destra bianca, 5 wireframe del marchio (due sagome
 sovrapposte in solo contorno: a destra fondo blu logo e linee azzurre, a
 sinistra i colori invertiti, fondo bianco e linee blu). La conchiglia e' l'asset di sfondo del
-design system (`assets/conchiglia.svg`). Finche' non si sceglie, l'esecutivo
+design system (`assets/conchiglia.svg`): nelle varianti 3 e 4 prende il posto della sagoma,
+non si aggiunge, perche' conchiglia e triangoli non stanno mai sulla stessa parete (README del
+sistema, «Conchiglia o triangoli, mai insieme»). Finche' non si sceglie, l'esecutivo
 porta le pareti con la sola sagoma.
 
 Su tutti i totem il disegno sta a meta' tra il titolo e il piede.
