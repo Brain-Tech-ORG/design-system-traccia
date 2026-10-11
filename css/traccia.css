@@ -1866,14 +1866,17 @@ select.tr-field__control + .tr-field__label,
    Il perno sta nell'angolo della superficie e il ventaglio si apre verso
    l'interno. Tratto blu logo a --tr-seashell-opacity sul paper: sono molte
    linee sottili, quindi regge un'opacita' piu' alta della sagoma del
-   watermark. Vive nello stesso .tr-watermark-host del watermark e non
-   intercetta il puntatore.
+   watermark. Usa lo stesso contenitore del watermark (.tr-watermark-host),
+   che la posiziona e la ritaglia, e non intercetta il puntatore.
 
-   Regole: una conchiglia per superficie; mai nello stesso angolo del
-   watermark; mai nei documenti formali (si fotocopiano e si scansionano,
-   come per il watermark). A differenza del marchio si puo' specchiare
-   (--bottom-left): due conchiglie speculari sono le due valve di una
-   composizione simmetrica.
+   Regole: una conchiglia per superficie; MAI nella stessa pagina dei
+   triangoli — la sagoma .tr-watermark, il wireframe del marchio, ogni
+   triangolo o chevron di sfondo: si sceglie l'una o gli altri (README,
+   "Conchiglia o triangoli, mai insieme"); mai nei documenti formali (si
+   fotocopiano e si scansionano, come per il watermark). Il chevron pieno
+   del lockup non conta: e' la firma, non uno sfondo. A differenza del
+   marchio si puo' specchiare (--bottom-left): due conchiglie speculari
+   sono le due valve di una composizione simmetrica.
 
    (Il nome e' .tr-seashell perche' .tr-shell e' gia' il contenitore che
    tiene il footer in fondo alla pagina.)
@@ -1896,6 +1899,12 @@ select.tr-field__control + .tr-field__label,
   z-index: 0;
 }
 .tr-seashell--bottom-left { right: auto; left: 0; transform: scaleX(-1); }
+
+/* Conchiglia o triangoli, mai insieme: se lo stesso contenitore porta anche
+   la sagoma, la conchiglia non si disegna. Il figlio diretto, non un
+   discendente qualunque: una pagina col watermark puo' contenere il campione
+   di un'altra superficie (come la vetrina in index.html), che resta a se'. */
+.tr-watermark-host:has(> .tr-watermark) > .tr-seashell { display: none; }
 
 /* ========================================================================== 
    15. Tabs

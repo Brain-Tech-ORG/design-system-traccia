@@ -200,7 +200,8 @@
   --tr-watermark-opacity: 0.16;  /* opacità della sagoma sul paper */
   --tr-watermark-stroke: 6px;    /* spessore tratto dell'outline (su viewBox 1280) */
 
-  /* ---- Conchiglia (solo decorazione di sfondo, assets/conchiglia.svg) ---- */
+  /* ---- Conchiglia (solo decorazione di sfondo, assets/conchiglia.svg) ----
+     Mai nella stessa pagina della sagoma del watermark o di altri triangoli. */
   --tr-seashell-opacity: 0.4;    /* molte linee sottili: piu' della sagoma */
 
   /* ---- Campi di form ---- */

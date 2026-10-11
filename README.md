@@ -83,15 +83,19 @@ niente gradienti, niente emoji, molto bianco.
   (position relative + overflow **clip**, non hidden: hidden creerebbe un contesto di
   scorrimento e spegnerebbe qualunque `position: sticky` all'interno, come la colonna del dato
   del [blocco introduttivo](#blocco-introduttivo)), con varianti di posizione `--top-right` e
-  `--bottom-left`.
+  `--bottom-left`. Mai nella stessa pagina della conchiglia: vedi
+  [Conchiglia o triangoli, mai insieme](#conchiglia-o-triangoli-mai-insieme).
 - **Conchiglia (solo sfondi)**: la conchiglia dell'immagine aziendale, un ventaglio di petali
   fatti di archi annidati (`assets/conchiglia.svg`, componente `.tr-seashell`). E' un **asset
   decorativo e si usa solo negli sfondi**: sta dietro ai contenuti, non porta informazione e
   non firma la pagina. **Non e' un marchio**: non sostituisce il chevron, non sta accanto al
   wordmark, non diventa icona, illustrazione o elemento in primo piano. Il perno sta
   nell'angolo della superficie e il ventaglio si apre verso l'interno; tratto blu logo a
-  opacita' 0,4 (`--tr-seashell-opacity`), nello stesso `.tr-watermark-host` del watermark.
-  Una per superficie, mai nello stesso angolo del watermark, mai nei documenti formali. Il
+  opacita' 0,4 (`--tr-seashell-opacity`), dentro un `.tr-watermark-host` (lo stesso
+  contenitore del watermark, che la posiziona e la ritaglia). Una per superficie, **mai nella
+  stessa pagina dei triangoli** — la sagoma del watermark o qualunque altro triangolo
+  decorativo, vedi [Conchiglia o triangoli, mai insieme](#conchiglia-o-triangoli-mai-insieme) —
+  mai nei documenti formali. Il
   marchio non si specchia, la conchiglia si': `--bottom-left` la ribalta, e due conchiglie
   speculari sono le due valve di una composizione simmetrica. In grande formato (pareti,
   pannelli) puo' essere stampata a tinta piena o con i petali nelle tinte del blu, ma resta
@@ -104,6 +108,33 @@ niente gradienti, niente emoji, molto bianco.
   lineare, cosi' due archi stanno sempre alla stessa distanza. Il file non si edita a mano: si
   cambia il generatore e lo si rilancia.
 - **Tono**: tecnico, sobrio, istituzionale ma moderno.
+
+### Conchiglia o triangoli, mai insieme
+
+Il sistema ha due famiglie di decorazione di sfondo, e **una pagina ne porta una sola**:
+
+| Famiglia | Cosa comprende |
+|---|---|
+| **Conchiglia** | `assets/conchiglia.svg` (`.tr-seashell`), anche specchiata o stampata a tinta piena |
+| **Triangoli** | la sagoma outline del marchio (`.tr-watermark`), il wireframe del marchio, ogni triangolo o chevron usato come richiamo del logo |
+
+La conchiglia e i triangoli **non stanno mai nella stessa pagina**: facciata di un
+documento, slide, schermata, pannello o parete di uno stand. Non basta metterli in angoli
+diversi: il ventaglio di archi e le figure a spigolo sono due linguaggi, e affiancati si
+fanno concorrenza invece di fare sfondo. Si sceglie uno dei due, e l'altro resta fuori
+dalla pagina.
+
+In un documento di piu' pagine le due famiglie possono alternarsi, una per pagina — per
+esempio la sagoma sulla copertina e la conchiglia sulla pagina di chiusura — ma mai
+sovrapporsi. Due conchiglie speculari (le due valve) restano una conchiglia sola.
+
+**Il marchio non conta.** Il chevron pieno del lockup `.tr-brandmark` in testata o nel piede
+non e' decorazione: e' la firma, e sta su ogni pagina accanto a qualunque sfondo. La regola
+riguarda solo i triangoli usati come sfondo.
+
+In CSS c'e' una protezione: se in uno stesso `.tr-watermark-host` compaiono sia
+`.tr-watermark` sia `.tr-seashell`, la conchiglia non si disegna. Non sostituisce la scelta:
+la segnala, facendo sparire l'elemento che non doveva esserci.
 
 ## Palette
 
@@ -345,7 +376,8 @@ titolo, con la parola chiave finale in `<em>`.
 - **Cerchietti numerati** 24–52px (`.tr-circle`): tinta + cifra mono blu, solo bordo blu
   (`--outline`) o pieno blu (`--solid`).
 - **Dot bullet**: pallino pieno blu 6–13px + voce mono (`.tr-dot`, `.tr-dotlist`).
-- **Triangoli/chevron** solo come richiamo del logo, con parsimonia.
+- **Triangoli/chevron** solo come richiamo del logo, con parsimonia, e mai nella stessa
+  pagina della conchiglia ([Conchiglia o triangoli, mai insieme](#conchiglia-o-triangoli-mai-insieme)).
 - **Foto**: render/scontornati PNG fluttuano sul fondo pagina (`.tr-photo-float`,
   object-fit contain); le foto ambientate stanno in cornice arrotondata 22–36px con bordo
   1px `border/soft` e padding 7–14px (`.tr-photo-frame`).
@@ -620,7 +652,7 @@ card, niente ombre, niente gradienti — piu' le seguenti.
 |---|---|---|
 | Testata | **Cliente** (`.tr-clientmark`) | La pagina e' il suo prodotto: il suo marchio sta in alto a sinistra, affiancato dal nome del prodotto in mono. |
 | Sfondo | La Traccia, sagoma outline (`.tr-watermark`) | Opzionale, opacita' 0,16, a sbordo da un angolo. E' la presenza di marchio "ambientale". |
-| Sfondo | Conchiglia (`.tr-seashell`) | Opzionale, solo decorazione, in un angolo diverso da quello del watermark. Non e' un marchio: non conta nella regola "un solo marchio per lockup". |
+| Sfondo | Conchiglia (`.tr-seashell`) | Opzionale, solo decorazione, **in alternativa** alla sagoma: mai nella stessa pagina ([Conchiglia o triangoli, mai insieme](#conchiglia-o-triangoli-mai-insieme)). Non e' un marchio: non conta nella regola "un solo marchio per lockup". |
 | Footer | La Traccia (`.tr-footer` + `.tr-brandmark`) | Firma del fornitore. La riga certificazioni solo sulle superfici pubbliche, non dentro l'applicazione. |
 
 **Mai i due marchi affiancati nello stesso lockup**: un logo cliente accanto al
