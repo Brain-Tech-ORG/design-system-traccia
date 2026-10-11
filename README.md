@@ -66,13 +66,15 @@ niente gradienti, niente emoji, molto bianco.
 
 - **Logo**: chevron/freccia blu (`assets/logo-traccia.svg`). Compare sempre affiancato al wordmark
   **traccia** — tutto minuscolo, senza «la», in **Space Grotesk 700** con tracking −0.02em,
-  `ink/900` (componente `.tr-brandmark`, con `assets/logo-traccia-mark.svg`: il marchio a filo,
+  in **antracite** `#383e42` (`--tr-color-wordmark`, RAL 7016) (componente `.tr-brandmark`, con `assets/logo-traccia-mark.svg`: il marchio a filo,
   senza il canvas trasparente di `logo-traccia.svg`, che allargherebbe la distanza). Le proporzioni si contano sull'altezza del marchio:
   scritta 0,8, distanza 0,34 (marchio 28px → scritta 22,4px, distanza 9,5px; nel footer 20px).
   Il minuscolo sta anche nel CSS (`text-transform: lowercase`), quindi il wordmark resta tale
   chiunque scriva il testo. La ragione sociale per esteso — Cooperativa E.D.P. La Traccia —
   non e' il wordmark: resta in Archivo 800 maiuscolo dove compare (piede dei documenti, firma
   email).
+  La scritta e' **antracite sui fondi chiari**. **Sul blu del marchio e' sempre bianca**, come il
+  marchio accanto (`--tr-color-wordmark-on-brand`): mai antracite sul blu.
 - **Logo nello sfondo (watermark)**: la sagoma outline del logo
   (`assets/logo-traccia-outline.svg` — stessi tracciati, senza riempimento, tratto blu logo)
   può essere usata negli sfondi delle brochure e delle pagine delle presentazioni:
@@ -117,6 +119,7 @@ niente gradienti, niente emoji, molto bianco.
 | `ink/900` | `#1b1f2a` | Testo primario, tratti dei disegni tecnici |
 | `ink/600` | `#3a4050` | Testo secondario / body |
 | `ink/400` | `#565c6b` | Didascalie e metadati |
+| `anthracite` | `#383e42` | **Solo il wordmark** «traccia» (RAL 7016), tramite `--tr-color-wordmark` |
 | `paper` | `#fbfbfd` | **Piano 0**: lo sfondo della pagina |
 | `surface` | `#ffffff` | **Piano 1**: card e pannelli — vedi [Superfici](#superfici) |
 | `state/danger` | `#a53a3a` | **Solo UI software**: errore, campo non valido |

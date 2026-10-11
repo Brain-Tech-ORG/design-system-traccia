@@ -111,7 +111,7 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
   line-height: 1;
   letter-spacing: var(--tr-tracking-wordmark);
   text-transform: lowercase;
-  color: var(--tr-ink-900);
+  color: var(--tr-color-wordmark);
   white-space: nowrap;
 }
 
