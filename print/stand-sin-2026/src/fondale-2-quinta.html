@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="it" data-w="220" data-h="220">
+<head>
+  <meta charset="utf-8">
+  <title>La Traccia — SIN 2026 — Parete fondale 2 (quinta) — 220×220 cm (1:10)</title>
+  <link rel="stylesheet" href="stand.css">
+  <style>
+    /* File 220×220, area visibile 200×200: 10 cm nascosti per lato.
+       Niente testo. La sagoma outline del marchio, alla stessa misura e alla
+       stessa altezza del marchio pieno del fondale 1: l'eco del marchio, in
+       tinta chiara, cosi' sul fondo il segno da riconoscere resta uno solo. */
+    @page { size: 220mm 220mm; }
+    .st-sheet { --w: 220mm; --h: 220mm; }
+    .quinta__echo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      height: 170mm;
+      width: auto;
+      transform: translate(-50%, -50%);
+      overflow: visible;
+      display: block;
+    }
+    .quinta__echo path {
+      fill: none;
+      stroke: var(--st-watermark);
+      stroke-width: 6;
+      stroke-linejoin: round;
+    }
+  </style>
+</head>
+<body>
+  <div class="st-sheet st-sheet--wall">
+    <div class="st-safe">
+      <svg class="quinta__echo" viewBox="0 0 594 717" aria-hidden="true">
+        <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+        <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+      </svg>
+    </div>
+
+    <div class="st-guide st-guide--hidden">
+      <span class="st-guide__label" style="left: 2mm; top: 2mm">Area visibile 200 × 200 cm · 10 cm nascosti per lato</span>
+    </div>
+  </div>
+  <script src="stand.js"></script>
+</body>
+</html>

@@ -359,8 +359,8 @@
 }
 
 /* ---- Identificazione dell'emittente ----
-   Tre righe, tre domande diverse, tre voci diverse: CHI emette (voce del
-   wordmark, ink/900: l'unico testo del piede a contrasto pieno), DOVE ha
+   Tre righe, tre domande diverse, tre voci diverse: CHI emette (Archivo
+   800 maiuscolo, ink/900: l'unico testo del piede a contrasto pieno), DOVE ha
    sede (in frase, perche' un indirizzo si trascrive e il maiuscolo gli
    toglie la sagoma delle parole), CON QUALE identificativo (mono, perche'
    e' un codice). Non una riga sola con dei punti medi in mezzo: la P.IVA in
@@ -392,7 +392,7 @@
   font-family: var(--tr-font-display);
   font-weight: var(--tr-weight-display);
   font-size: 12.5px;
-  letter-spacing: var(--tr-tracking-wordmark);
+  letter-spacing: var(--tr-tracking-name);
   text-transform: uppercase;
   color: var(--tr-ink-900);
   line-height: 1.25;

@@ -118,10 +118,12 @@ const CO = {
 // costruzione. Il filetto si ferma sul gutter: e' cio' che dice che l'angolo
 // e' riservato e non dimenticato. Pagine interne: lockup ridotto e filetto
 // pieno — il timbro si appone una volta sola.
+// La larghezza si legge dal PNG (IHDR): cambia il wordmark, non lo script.
+const pngRatio = (file) => { const b = fs.readFileSync(file); return b.readUInt32BE(16) / b.readUInt32BE(20); };
 const LOCKUP_H = 8.0;                             // 28px CSS -> ~7,4mm; arrotondato alla carta
-const LOCKUP_W = LOCKUP_H * 1239 / 224;
+const LOCKUP_W = LOCKUP_H * pngRatio(here("brandmark-lockup.png"));
 const SMALL_H = 5.6;                              // 20px CSS
-const SMALL_W = SMALL_H * 961 / 160;
+const SMALL_W = SMALL_H * pngRatio(here("brandmark-lockup-small.png"));
 
 const headerFirst = new Header({ children: [
   spacer(120),

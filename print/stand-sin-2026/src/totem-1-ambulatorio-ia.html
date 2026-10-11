@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="it" data-w="100" data-h="200">
+<head>
+  <meta charset="utf-8">
+  <title>La Traccia — SIN 2026 — Totem 1 · Modelli IA per la nefrologia — 100×200 cm (1:10)</title>
+  <link rel="stylesheet" href="stand.css">
+  <style>
+    /* Totem 1. File 100×200, margine di sicurezza 8 cm. In testa marchio,
+       eyebrow e titolo display, come sul totem 2. Poi il wireframe del microfono AI
+       — hardware custom, con la sigla AI sulla capsula e nient'altro —
+       e accanto le due parole: ambulatorio, rilevazioni a bordo letto. */
+    @page { size: 100mm 200mm; }
+    .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
+    .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
+    .totem__intro { margin-top: 8mm; }
+    .totem__intro .st-h1 { --t-display: 8mm; }
+    /* Il blocco del microfono sta a meta' tra il titolo e il piede. */
+    .mic {
+      margin-top: auto;
+      margin-bottom: auto;
+      display: grid;
+      grid-template-columns: 40mm 1fr;
+      gap: 6mm;
+      align-items: center;
+    }
+    .mic__drawing { width: 40mm; height: auto; }
+    .mic__text { display: flex; flex-direction: column; gap: 10mm; }
+    .mic__item { display: flex; flex-direction: column; gap: 3mm; }
+    .mic__item .st-h1 { --t-display: 4.8mm; }
+    .totem__foot { padding-top: 6mm; display: flex; flex-direction: column; gap: 3mm; }
+    .totem__foot .st-footer { padding-top: 3mm; }
+    .st-watermark { width: 92mm; bottom: -30mm; right: -36mm; }
+  </style>
+</head>
+<body>
+  <div class="st-sheet st-sheet--totem">
+    <svg class="st-watermark" viewBox="0 0 594 717" aria-hidden="true">
+      <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+      <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+    </svg>
+
+    <div class="st-safe totem">
+      <header>
+        <div class="st-lockup" data-fit-w="54" role="img" aria-label="La Traccia">
+          <svg class="st-lockup__mark" viewBox="0 0 594 717" aria-hidden="true">
+            <path fill="#4194d7" d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+            <path fill="#4194d7" d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+          </svg>
+          <span class="st-lockup__word">traccia</span>
+        </div>
+      </header>
+
+      <section class="totem__intro">
+        <div class="st-eyebrow">
+          <span class="st-eyebrow__label">Novità</span>
+          <span class="st-eyebrow__line"></span>
+          <span class="st-eyebrow__note">Hardware custom</span>
+        </div>
+        <h1 class="st-h1">Modelli IA per la <em>nefrologia</em></h1>
+      </section>
+
+      <div class="mic">
+        <!-- Wireframe del microfono AI: capsula con griglia e sigla AI,
+             anello LED, stelo, base con anello luminoso, tasto, onde
+             senza fili. -->
+        <svg class="st-drawing mic__drawing" viewBox="0 0 200 400" role="img" aria-label="Microfono AI, hardware custom">
+          <rect class="silhouette" x="55" y="14" width="90" height="150" rx="45"/>
+          <g class="line">
+            <path d="M74 44h52M66 60h68M64 76h72M66 92h68"/>
+            <path d="M100 28v72M84 32v64M116 32v64"/>
+          </g>
+          <text class="label" x="100" y="144" text-anchor="middle" font-size="40">AI</text>
+          <ellipse class="brand" cx="100" cy="158" rx="43" ry="8" stroke-width="3"/>
+          <rect class="silhouette" x="89" y="166" width="22" height="16" rx="4"/>
+          <rect class="silhouette" x="94" y="182" width="12" height="126" rx="6"/>
+          <ellipse class="silhouette" cx="100" cy="330" rx="80" ry="26"/>
+          <ellipse class="brand" cx="100" cy="330" rx="60" ry="17" stroke-width="2.5" stroke-dasharray="5 6"/>
+          <circle class="brand-fill" cx="134" cy="324" r="4"/>
+          <g class="brand" stroke-width="2.5">
+            <path d="M158 40a26 26 0 0 1 0 36"/>
+            <path d="M172 28a44 44 0 0 1 0 60"/>
+          </g>
+        </svg>
+        <div class="mic__text">
+          <div class="mic__item">
+            <span class="st-accent-dash"></span>
+            <p class="st-h1">Ambulatorio</p>
+          </div>
+          <div class="mic__item">
+            <span class="st-accent-dash"></span>
+            <p class="st-h1">Rilevazioni a bordo letto</p>
+          </div>
+        </div>
+      </div>
+
+      <footer class="totem__foot">
+        <p class="st-mono st-mono--brand" style="margin:0">Chiedi una dimostrazione allo stand</p>
+        <div class="st-footer">
+          <div class="st-footer__contacts">
+            <span class="st-footer__contact"><span class="st-dot"></span>latraccia.it</span>
+            <span class="st-footer__contact"><span class="st-dot"></span>info@latraccia.it</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div class="st-guide st-guide--hidden">
+      <span class="st-guide__label" style="left: 2mm; top: 2mm">Totem 100 × 200 cm · margine di sicurezza 8 cm</span>
+    </div>
+  </div>
+  <script src="stand.js"></script>
+</body>
+</html>
