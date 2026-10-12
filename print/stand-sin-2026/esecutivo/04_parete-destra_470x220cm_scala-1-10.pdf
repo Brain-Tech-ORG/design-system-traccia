@@ -25,10 +25,11 @@ endobj
 /ExtGState <<
 /G3 4 0 R
 /G4 5 0 R
+/G5 6 0 R
 >>
 >>
 /MediaBox [ 0 0 1332 624 ]
-/Contents 6 0 R
+/Contents 7 0 R
 /StructParents 0
 /Tabs /S
 /Parent 2 0 R
@@ -46,7 +47,7 @@ endobj
 /ca 1
 /LC 0
 /LJ 1
-/LW 6
+/LW 3.6600001
 /ML 4
 /SA true
 /BM /Normal
@@ -54,15 +55,27 @@ endobj
 endobj
 6 0 obj
 <<
-/Filter /FlateDecode
-/Length 247
+/CA 1
+/ca 1
+/LC 0
+/LJ 1
+/LW 4.1199999
+/ML 4
+/SA true
+/BM /Normal
 >>
-stream
-xœ¥‘=N1…{ŸÂ5ÒšØós
-*DÁFüHì ±Ü_ÂñdÄ,¢#iübç}o2$Úcaò}¢ƒ,’qYá”X,ú?•7nû÷ênï_¿¢Åµl*xy†xpŸqjfŒb½QÖj£÷tƒÿT‡ğ9`yÇÀi€µ_\m‰«NôÊ9QÉYñdYÉoŒ,ÄŒ‰’í‰®ôÈ•G.î•â‘JŠ%¸‚uw5¦êšñêI8j“B2OÉüŒÄË¿lÎğÀM}¢röé5TÅ’û4º¡)/¯7ˆ™nh+Ş÷?0=¯57#uwóGÚüñ¨ß;¬nt
-endstream
 endobj
 7 0 obj
+<<
+/Filter /FlateDecode
+/Length 289
+>>
+stream
+xœåR»N1ìó®‘ÎÄv'_@Aµ¢àN<¤»Eâø	'›ÕDDIR¬'öÎÌÎYj_}p‚™×ğ‰µ÷¯•7"lûöênï^>z‹Ì2a¸<…ç°8O;UUÖZ0‰ië=ŞÀÛ_DÌEh‰hÑ%Ç3<Í¦h75ÙŠÍVÆòÍU1Ó˜òp¶#Ij¨)H+ÆÊ¬Úı¢?#òÕÃŒ›÷Ô¼S5ìIæØÃ´
+ˆšc‚s÷C½VÎÈãÕ?C‘½ü‰æ^ÃC ">a”|zíÈ §:H. BËëMD2¶c’½ïip~ÅTÅÙİTŸŸÕ]éá%©ÂTFx;J«‡ç4ä÷ r$û]túO¢[Â'²Í²
+endstream
+endobj
+8 0 obj
 <<
 /Title (La Traccia \204 SIN 2026 \204 Parete destra \204 470\327220 cm \0501\07210\051)
 /Creator (design\055system\055traccia \057 print\057stand\055sin\0552026)
@@ -72,21 +85,22 @@ endobj
 >>
 endobj
 xref
-0 8
+0 9
 0000000000 65535 f 
 0000000015 00000 n 
 0000000136 00000 n 
 0000000195 00000 n 
-0000000413 00000 n 
-0000000452 00000 n 
-0000000530 00000 n 
-0000000849 00000 n 
+0000000423 00000 n 
+0000000462 00000 n 
+0000000548 00000 n 
+0000000634 00000 n 
+0000000995 00000 n 
 trailer
 <<
-/Size 8
+/Size 9
 /Root 1 0 R
-/Info 7 0 R
+/Info 8 0 R
 >>
 startxref
-1192
+1338
 %%EOF
