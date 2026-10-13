@@ -2,8 +2,9 @@
 //
 // Il PDF di base (base/ambulatorio-ai-rev02-originale.pdf) arriva gia' composto:
 // il sorgente delle sue pagine non e' nel repo. La copertina invece si rifa' qui,
-// da copertina.html, e sostituisce la prima pagina; le pagine 2-8 restano quelle
-// del PDF di base, byte per byte.
+// da copertina.html, e sostituisce la prima pagina. L'ultima pagina resta quella
+// del PDF di base, con in piu' la foto di ultima.html messa sotto il contenuto.
+// Le pagine 2-7 restano quelle del PDF di base, byte per byte.
 //
 //   node build.mjs
 //
@@ -28,6 +29,7 @@ const { chromium } = (() => {
 const outDir = resolve(here, 'out');
 if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 const coverPdf = resolve(outDir, '.copertina.pdf');
+const lastPdf = resolve(outDir, '.ultima.pdf');
 const finalPdf = resolve(outDir, 'ambulatorio-ai.pdf');
 
 const browser = await chromium.launch();
@@ -37,15 +39,23 @@ try {
   await page.evaluate(() => document.fonts.ready);
   // @page { size: A4 } in copertina.html: stessa misura del PDF di base.
   await page.pdf({ path: coverPdf, preferCSSPageSize: true, printBackground: true });
+
+  // La foto dell'ultima pagina e' un livello trasparente (omitBackground).
+  await page.goto(pathToFileURL(resolve(here, 'ultima.html')).href, { waitUntil: 'load' });
+  await page.evaluate(() => document.fonts.ready);
+  await page.pdf({ path: lastPdf, preferCSSPageSize: true, printBackground: true, omitBackground: true });
 } finally {
   await browser.close();
 }
 
 execFileSync('python3', ['-I', resolve(here, 'innesta.py'),
-  resolve(here, 'base/ambulatorio-ai-rev02-originale.pdf'), coverPdf, finalPdf], { stdio: 'inherit' });
+  resolve(here, 'base/ambulatorio-ai-rev02-originale.pdf'), coverPdf, lastPdf, finalPdf], { stdio: 'inherit' });
 rmSync(coverPdf, { force: true });
+rmSync(lastPdf, { force: true });
 
-// Anteprima dal PDF finale, non dalla pagina HTML.
-execFileSync('pdftoppm', ['-r', '110', '-f', '1', '-l', '1', '-png', '-singlefile', finalPdf,
-  resolve(outDir, 'anteprima-copertina')]);
+// Anteprime dal PDF finale, non dalle pagine HTML.
+for (const [n, nome] of [[1, 'copertina'], [8, 'ultima']]) {
+  execFileSync('pdftoppm', ['-r', '110', '-f', String(n), '-l', String(n), '-png', '-singlefile', finalPdf,
+    resolve(outDir, `anteprima-${nome}`)]);
+}
 console.log('✓ out/ambulatorio-ai.pdf');

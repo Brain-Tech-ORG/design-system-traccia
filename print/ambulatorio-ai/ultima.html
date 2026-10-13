@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Ambulatorio AI — foto dell'ultima pagina</title>
+<!-- Livello con la sola foto decorativa dell'ultima pagina: sfondo trasparente,
+     foglio A4. build.mjs lo stampa e innesta.py lo mette SOTTO il contenuto
+     della pagina 8, cosi' testo e filigrana restano sopra la foto.
+     La banda in cima alla pagina e' vuota (la prima riga di contenuto, il
+     marchio, sta a y = 465px): la foto occupa quello spazio entro i margini. -->
+<link rel="stylesheet" href="../../tokens/tokens.css">
+<link rel="stylesheet" href="../../css/traccia.css">
+<style>
+  @page { size: A4; margin: 0; }
+  html, body { margin: 0; height: 1122px; overflow: hidden; background: transparent; }
+  .sheet { position: relative; width: var(--tr-doc-w); height: 1122px; }
+
+  /* Foto ambientata nella cornice del sistema (.tr-photo-frame), a filo dei
+     margini del documento e della testata della copertina (56px dall'alto). */
+  .sheet .tr-photo-frame {
+    position: absolute;
+    left: var(--tr-doc-pad-x);
+    top: var(--tr-doc-pad-top);
+    width: calc(var(--tr-doc-w) - 2 * var(--tr-doc-pad-x));
+    height: 354px;
+  }
+  .sheet .tr-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Primo piano sullo schermo: parte da x = 392 dell'immagine (1448 × 1086),
+       cioe' dopo il cavo, e tiene dall'alto fino a meta' del corpo. */
+    object-view-box: inset(12.9% 0 35.5% 27.1%);
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="tr-photo-frame">
+    <img src="foto/traccia-mic.jpg" alt="Primo piano dello schermo di Traccia Mic, con il microfono e la scritta Connessione">
+  </div>
+</div>
+</body>
+</html>
