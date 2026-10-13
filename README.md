@@ -42,6 +42,7 @@ niente gradienti, niente emoji, molto bianco.
 ├── tools/
 │   └── conchiglia.py             Generatore della conchiglia: scrive assets/conchiglia*.svg
 ├── print/
+│   ├── ambulatorio-ai/           Brochure «Ambulatorio AI · GepaDial» (rev. 02): copertina con la foto del Traccia Mic, generatore, PDF in out/
 │   └── stand-sin-2026/           Grafiche di stand (SIN 2026): sorgenti in scala 1:10, generatore, PDF CMYK in out/
 └── index.html                    Documentazione visiva / showcase
 ```

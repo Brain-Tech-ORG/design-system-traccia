@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Ambulatorio AI — copertina</title>
+<!-- Copertina di «Ambulatorio AI · GepaDial» (rev. 02), foglio A4 a 96 dpi.
+     Si stampa con build.mjs, che la sostituisce alla prima pagina del PDF di
+     base. Font, token e componenti sono quelli del design system. -->
+<link rel="stylesheet" href="../../css/traccia-fonts.css">
+<link rel="stylesheet" href="../../tokens/tokens.css">
+<link rel="stylesheet" href="../../css/traccia.css">
+<style>
+  @page { size: A4; margin: 0; }
+  html, body { margin: 0; height: 1122px; overflow: hidden; background: var(--tr-surface); }
+
+  /* ---- Foglio ---- */
+  .cover {
+    position: relative;
+    width: var(--tr-doc-w);
+    height: var(--tr-doc-h);
+    padding: var(--tr-doc-pad-top) var(--tr-doc-pad-x) var(--tr-doc-pad-bottom);
+    box-sizing: border-box;
+    background: var(--tr-surface);
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
+  }
+
+  /* La sagoma del marchio in filigrana: sborda in alto a destra, dietro la testata. */
+  .cover .tr-watermark { width: 468px; top: -99px; right: -74px; }
+
+  /* ---- Testata ---- */
+  .cover__head { padding-bottom: 16px; }
+  .cover__lockup { display: inline-flex; align-items: center; gap: 12px; }
+  .cover__mark { width: 47px; height: 28px; object-fit: contain; display: block; }
+  .cover__name {
+    font-weight: var(--tr-weight-display);
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--tr-ink-900);
+  }
+  .cover__tag {
+    color: var(--tr-brand-600);
+    font-size: 12px;
+    letter-spacing: var(--tr-tracking-mono-wide);
+  }
+
+  /* ---- Eyebrow + titolo ---- */
+  .cover__kicker { margin-top: 28px; }
+  .cover__kicker .tr-eyebrow__label { font-size: 12px; }
+  .cover__kicker .tr-eyebrow__note { font-size: 11px; }
+  .cover__title { margin-top: 14px; font-size: 44px; }
+
+  /* ---- Introduzione ---- */
+  .cover__intro {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--cover-photo-w);
+    column-gap: 28px;
+    align-items: stretch;
+    --cover-photo-w: 212px;
+  }
+  .cover__intro-text { display: flex; flex-direction: column; justify-content: space-between; }
+  .cover__lede { margin: 0; color: var(--tr-ink-600); font-size: 16px; line-height: 24px; }
+  .cover__chips { display: flex; flex-wrap: wrap; gap: 8px var(--tr-space-3); margin-top: 20px; }
+  .cover__chips .tr-chip { font-size: 11px; line-height: 16px; padding: 5px 14px 7px; }
+
+  /* ---- Diagramma ---- */
+  .cover__diagram { display: block; margin-top: 14px; width: 666px; height: 270px; }
+  .cover__diagram text { font-family: var(--tr-font-mono); text-transform: none; }
+  .d-cap  { font-size: 11px; letter-spacing: 0.06em; fill: var(--tr-brand-600); font-weight: 400; }
+  .d-lab  { font-size: 9px;  letter-spacing: 0.08em; fill: var(--tr-brand-600); font-weight: 600; }
+  .d-sec  { font-size: 9.5px; letter-spacing: 0.08em; fill: var(--tr-brand-600); font-weight: 600; }
+  .d-ttl  { font-size: 9.5px; letter-spacing: 0.08em; fill: var(--tr-ink-900); font-weight: 600; }
+
+  /* ---- Processo ---- */
+  .cover__steps { margin-top: 22px; }
+  .cover__steps .tr-step { gap: 10px; }
+  .cover__steps .tr-circle { margin-bottom: 2px; }
+  .cover__steps .tr-step__title { font-size: 13px; }
+  .cover__steps .tr-step__sub { font-size: 12px; line-height: 20px; }
+  .cover__steps .tr-circle { font-size: 11px; }
+
+  /* ---- Piede ---- */
+  .cover__specs { margin-top: 20px; }
+  .cover__specs .tr-specs__item { font-size: 11px; }
+  .cover__specs .tr-dot { transform: translateY(1px); }
+  .cover__foot {
+    margin-top: auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 12px;
+    border-top: var(--tr-rule-thin) solid var(--tr-border-soft);
+    font-family: var(--tr-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tr-tracking-mono);
+    text-transform: uppercase;
+    color: var(--tr-ink-400);
+  }
+
+  /* Foto ambientata: cornice arrotondata, bordo 1px border/soft (vedi .tr-photo-frame).
+     Altezza = quella del testo accanto; il ritaglio resta centrato sul dispositivo. */
+  .cover__photo { margin: 0; display: flex; }
+  .cover__photo .tr-photo-frame { flex: 1; display: flex; padding: 7px; border-radius: 22px; }
+  .cover__photo img {
+    flex: 1; min-width: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    object-view-box: inset(5.2% 13.7% 6.7% 26.9%);
+    border-radius: 15px;
+  }
+</style>
+</head>
+<body>
+<main class="cover tr-page tr-watermark-host">
+  <img class="tr-watermark tr-watermark--top-right" src="../../assets/logo-traccia-outline.svg" alt="">
+
+  <header class="tr-header cover__head">
+    <span class="cover__lockup">
+      <img class="cover__mark" src="../../assets/logo-traccia-mark.svg" alt="">
+      <span class="cover__name">La Traccia</span>
+    </span>
+    <span class="tr-mono tr-mono--brand cover__tag">GepaDial · Ambulatorio AI</span>
+  </header>
+
+  <div class="tr-eyebrow cover__kicker">
+    <span class="tr-eyebrow__label">Nefrologia · Ambulatorio</span>
+    <span class="tr-eyebrow__line"></span>
+    <span class="tr-eyebrow__note">Rev. 02 · Ottobre 2026</span>
+  </div>
+
+  <h1 class="tr-h1 cover__title">Più tempo al paziente,<br>meno alla <em>tastiera</em></h1>
+
+  <section class="cover__intro">
+    <div class="cover__intro-text">
+      <p class="tr-body cover__lede">Ambulatorio AI è il modulo di GepaDial che ascolta la visita nefrologica, la trascrive e prepara il referto per la firma. Mentre il medico parla con il paziente, il sistema compila le sezioni, segnala allergie e dosaggi, calcola gli score. I modelli, addestrati sulla nefrologia, risiedono nell'azienda ospedaliera. La decisione resta del medico.</p>
+      <div class="cover__chips">
+        <span class="tr-chip">Trascrizione in tempo reale</span>
+        <span class="tr-chip">Avvisi clinici</span>
+        <span class="tr-chip">Modelli on-premise</span>
+        <span class="tr-chip">FSE 2.0</span>
+      </div>
+    </div>
+    <figure class="cover__photo">
+      <div class="tr-photo-frame">
+        <img src="foto/traccia-mic.jpg" alt="Traccia Mic, il dispositivo da tavolo con schermo rotondo, collegato con un cavo USB-C, appoggiato su una scrivania">
+      </div>
+    </figure>
+  </section>
+
+  <svg class="cover__diagram" viewBox="0 0 666 270" role="img"
+       aria-label="Il dialogo tra medico e paziente viene trascritto e strutturato nel referto ambulatoriale, pronto per la firma">
+    <defs>
+      <pattern id="grille" width="4" height="4" patternUnits="userSpaceOnUse">
+        <rect width="4" height="4" fill="#e9ecf5"/>
+        <path d="M0 .5H4M.5 0V4" stroke="#565c6b" stroke-opacity=".28" stroke-width="1"/>
+      </pattern>
+    </defs>
+
+    <!-- Il dialogo -->
+    <circle cx="100" cy="80" r="60" fill="#eff2f9" stroke="#1b1f2a" stroke-width="2.25"/>
+    <circle cx="100" cy="80" r="49" fill="none" stroke="#565c6b" stroke-width="1.25"/>
+    <circle cx="100" cy="80" r="35" fill="url(#grille)" stroke="#565c6b" stroke-width="1"/>
+    <g fill="#1b1f2a">
+      <circle cx="100"   cy="38"   r="1.6"/><circle cx="129.7" cy="50.3"  r="1.6"/>
+      <circle cx="142"   cy="80"   r="1.6"/><circle cx="129.7" cy="109.7" r="1.6"/>
+      <circle cx="100"   cy="122"  r="1.6"/><circle cx="70.3"  cy="109.7" r="1.6"/>
+      <circle cx="58"    cy="80"   r="1.6"/><circle cx="70.3"  cy="50.3"  r="1.6"/>
+    </g>
+    <text class="d-cap" x="100" y="166" text-anchor="middle">DIALOGO</text>
+    <text class="d-cap" x="100" y="182" text-anchor="middle">MEDICO · PAZIENTE</text>
+
+    <!-- Onde: tre archi di ±40° attorno a (166, 80) -->
+    <g fill="none" stroke="#8fc0e7" stroke-width="1.5" stroke-linecap="round">
+      <path d="M182.85 65.86A22 22 0 0 1 182.85 94.14"/>
+      <path d="M196.64 54.29A40 40 0 0 1 196.64 105.71"/>
+      <path d="M210.43 42.72A58 58 0 0 1 210.43 117.28"/>
+    </g>
+
+    <!-- Trascrive e struttura -->
+    <path d="M231.85 80H303.85" fill="none" stroke="#4194d7" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 8"/>
+    <path d="M298 74 306 80 298 86" fill="none" stroke="#4194d7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="d-lab" x="267.5" y="68"  text-anchor="middle">TRASCRIVE</text>
+    <text class="d-lab" x="267.5" y="100" text-anchor="middle">E STRUTTURA</text>
+
+    <!-- Il referto -->
+    <rect x="320" y="12" width="262" height="226" rx="14" fill="#eff2f9" stroke="#1b1f2a" stroke-width="2.25"/>
+    <text class="d-ttl" x="338" y="37">REFERTO AMBULATORIALE</text>
+    <rect x="500" y="24" width="66" height="18" rx="9" fill="none" stroke="#4194d7" stroke-width="1"/>
+    <text class="d-sec" x="533" y="36.5" text-anchor="middle">HL7 CDA2</text>
+    <path d="M338 49H564" stroke="#c9cede" stroke-width="1"/>
+
+    <text class="d-sec" x="338" y="68">ANAMNESI</text>
+    <rect x="338" y="74"  width="200" height="3.5" rx="1.75" fill="#c9cede"/>
+    <rect x="338" y="82"  width="150" height="3.5" rx="1.75" fill="#c9cede"/>
+    <text class="d-sec" x="338" y="102">ESAME OBIETTIVO</text>
+    <rect x="338" y="108" width="180" height="3.5" rx="1.75" fill="#c9cede"/>
+    <rect x="338" y="116" width="120" height="3.5" rx="1.75" fill="#c9cede"/>
+    <text class="d-sec" x="338" y="136">ESAMI</text>
+    <rect x="486" y="126" width="78" height="18" rx="9" fill="none" stroke="#4194d7" stroke-width="1"/>
+    <text class="d-sec" x="525" y="138.5" text-anchor="middle">KFRE · eGFR</text>
+    <rect x="338" y="142" width="130" height="3.5" rx="1.75" fill="#c9cede"/>
+    <rect x="338" y="150" width="96"  height="3.5" rx="1.75" fill="#c9cede"/>
+    <text class="d-sec" x="338" y="170">TERAPIA</text>
+    <rect x="338" y="176" width="226" height="22" rx="2" fill="#ffffff"/>
+    <rect x="338" y="176" width="3" height="22" fill="#4194d7"/>
+    <text class="d-sec" x="349" y="190.5">AVVISO · DOSE E FUNZIONE RENALE</text>
+    <text class="d-sec" x="338" y="218">FOLLOW-UP</text>
+    <rect x="338" y="224" width="160" height="3.5" rx="1.75" fill="#c9cede"/>
+    <text class="d-cap" x="451" y="262" text-anchor="middle">REFERTO PRONTO PER LA FIRMA</text>
+  </svg>
+
+  <div class="tr-steps tr-steps--linked cover__steps">
+    <div class="tr-step"><span class="tr-circle">01</span><h2 class="tr-step__title">Contesto</h2><p class="tr-step__sub">Allergie, terapie, esami e ultime visite già in vista</p></div>
+    <div class="tr-step"><span class="tr-circle">02</span><h2 class="tr-step__title">Visita</h2><p class="tr-step__sub">Il medico parla; il sistema trascrive e compila</p></div>
+    <div class="tr-step"><span class="tr-circle">03</span><h2 class="tr-step__title">Validazione</h2><p class="tr-step__sub">Avvisi accettati o ignorati, sezioni corrette</p></div>
+    <div class="tr-step"><span class="tr-circle">04</span><h2 class="tr-step__title">Firma</h2><p class="tr-step__sub">Referto CDA2 al repository e al FSE</p></div>
+  </div>
+
+  <div class="tr-specs cover__specs">
+    <span class="tr-specs__item"><span class="tr-dot"></span>Nefrologia</span>
+    <span class="tr-specs__item"><span class="tr-dot"></span>HL7 CDA2</span>
+    <span class="tr-specs__item"><span class="tr-dot"></span>KFRE · eGFR</span>
+    <span class="tr-specs__item"><span class="tr-dot"></span>Italiano</span>
+    <span class="tr-specs__item"><span class="tr-dot"></span>Audio: 0 s</span>
+  </div>
+
+  <footer class="cover__foot">
+    <span>Cooperativa E.D.P. La Traccia · Matera</span>
+    <span>01 / 08</span>
+  </footer>
+</main>
+</body>
+</html>
