@@ -76,6 +76,10 @@ html, body { margin: 0; padding: 0; background: var(--st-paper); }
   --rule-1: 0.3mm; --rule-2: 0.6mm; --rule-3: 1mm;
   --dot: 1.8mm; --dash-w: 22mm;
   --icon-stroke: 2;
+  /* Base in alluminio del totem: l'allestitore (Scuotto, 13/10) chiede di
+     lasciare liberi almeno 10-15 cm in fondo al pannello. Il contenuto si
+     ferma a 15 cm dal bordo basso: testi e contatti stanno sopra la base. */
+  --st-base: 15mm;
 }
 
 /* ---- Area visibile ----

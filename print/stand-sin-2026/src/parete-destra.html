@@ -6,19 +6,28 @@
   <link rel="stylesheet" href="stand.css">
   <style>
     /* File 470×220, area visibile 450×200: 10 cm nascosti per lato.
-       Niente testo: solo la sagoma outline del marchio, a sbordo dal bordo
-       alto, verso l'ingresso dello stand — specchiata nella posizione, non
-       nel disegno: il marchio non si ribalta. */
+       Niente testo e niente logo: fondo blu logo e due sagome del marchio
+       sovrapposte, solo in contorno, in azzurro (brand/400), a sbordo dal
+       bordo alto e da quello dell'ingresso (a destra). Le sagome non sono
+       ribaltate. E' la variante 5 delle pareti laterali: la parete sinistra
+       porta le stesse grafiche a colori invertiti. */
     @page { size: 470mm 220mm; }
-    .st-sheet { --w: 470mm; --h: 220mm; }
-    .st-watermark { width: 170mm; top: -46mm; right: 34mm; }
+    .st-sheet { --w: 470mm; --h: 220mm; background: var(--tr-brand-500); }
+    .st-wire { position: absolute; left: 0; top: 0; z-index: 0; }
+    .st-wire g { fill: none; stroke: var(--tr-brand-400); stroke-linejoin: round; }
   </style>
 </head>
 <body>
   <div class="st-sheet st-sheet--wall">
-    <svg class="st-watermark" viewBox="0 0 594 717" aria-hidden="true">
-      <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
-      <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+    <svg class="st-wire" viewBox="0 0 470 220" width="470mm" height="220mm" aria-hidden="true">
+      <g transform="translate(292.74 -13.47) scale(0.3283)" stroke-width="3.66">
+        <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+        <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+      </g>
+      <g transform="translate(356.41 101.51) scale(0.2912)" stroke-width="4.12">
+        <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+        <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+      </g>
     </svg>
 
     <div class="st-safe"></div>

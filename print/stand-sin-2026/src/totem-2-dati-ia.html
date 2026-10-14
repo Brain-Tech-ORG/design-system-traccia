@@ -13,7 +13,7 @@
        contatti. */
     @page { size: 100mm 200mm; }
     .st-sheet { --w: 100mm; --h: 200mm; --hide-t: 0; --hide-r: 0; --hide-b: 0; --hide-l: 0; }
-    .totem { display: flex; flex-direction: column; padding: 7mm 8mm 6mm; }
+    .totem { display: flex; flex-direction: column; padding: 7mm 8mm var(--st-base); }
     .totem__intro { margin-top: 8mm; }
     .totem__intro .st-h1 { --t-display: 8mm; }
     .hero { margin: auto 0 auto 9mm; width: 66mm; height: auto; }
@@ -64,7 +64,10 @@
     </div>
 
     <div class="st-guide st-guide--hidden">
-      <span class="st-guide__label" style="left: 2mm; top: 2mm">Totem 100 × 200 cm · margine di sicurezza 8 cm</span>
+      <span class="st-guide__label" style="left: 2mm; top: 2mm">Totem 100 × 200 cm · margine di sicurezza 7–8 cm</span>
+    </div>
+    <div class="st-guide st-guide--join" style="left: 0; right: 0; bottom: 0; height: 15mm">
+      <span class="st-guide__label" style="left: 2mm; bottom: 2mm">Base in alluminio · 15 cm liberi</span>
     </div>
   </div>
   <script src="dot-mark.js"></script>

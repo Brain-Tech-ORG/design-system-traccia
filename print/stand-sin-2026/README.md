@@ -19,7 +19,7 @@ decimo), piu' la tavola di riepilogo.
 
 | N. | File | Pezzo |
 |---|---|---|
-| 00 | `00_riepilogo-esecutivo.pdf` | Tavola di riepilogo: miniature, file, specifiche, riferimenti (A4 orizzontale, 2 pagine, rev. 03) |
+| 00 | `00_riepilogo-esecutivo.pdf` | Tavola di riepilogo: miniature, file, specifiche, riferimenti (A4 orizzontale, 2 pagine, rev. 05) |
 | 01 | `01_parete-sinistra_420x220cm_scala-1-10.pdf` | Parete sinistra |
 | 02 | `02_parete-fondale-1_270x220cm_scala-1-10.pdf` | Parete fondale 1 |
 | 03 | `03_parete-fondale-2-quinta_220x220cm_scala-1-10.pdf` | Parete fondale 2 (quinta) |
@@ -41,10 +41,10 @@ senza immagini raster e senza trasparenze.
 |---|---|---|---|---|
 | `fondale-1.pdf` | Parete fondale 1 | 270×220 | ~250×200 | Solo il marchio, pieno, alto 170 cm, al centro: niente testo |
 | `fondale-2-quinta.pdf` | Parete fondale 2 (quinta) | 220×220 | ~200×200 | La sagoma outline del marchio, alla stessa misura e altezza: niente testo |
-| `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Solo grafica: la sagoma outline a sbordo dal bordo alto, verso l'ingresso. Gli ultimi 30 cm a destra (giunzione) sono bianchi |
-| `parete-destra.pdf` | Parete destra | 470×220 | ~450×200 | Solo grafica: la stessa sagoma, a sbordo dal bordo alto verso l'ingresso |
-| `totem-1-ambulatorio-ia.pdf` | Totem 1 | 100×200 | — | Eyebrow «Novita' · Hardware custom», titolo «Modelli IA per la nefrologia»; il microfono AI e accanto «Ambulatorio» e «Rilevazioni a bordo letto» |
-| `totem-2-dati-ia.pdf` | Totem 2 | 100×200 | — | Eyebrow «Gen BI · Dati clinici e IA», titolo «I dati clinici prendono forma»; il marchio fatto di punti; certificazioni e contatti |
+| `parete-sinistra.pdf` | Parete sinistra | 420×220 | ~370×200 | Fondo bianco e due sagome del marchio in solo contorno, blu logo, spostate verso il centro. Gli ultimi 30 cm a destra (giunzione) senza grafica |
+| `parete-destra.pdf` | Parete destra | 470×220 | ~450×200 | Fondo blu logo e le stesse due sagome del marchio in solo contorno, azzurro (`brand/400`), a sbordo dal bordo alto e dall'ingresso |
+| `totem-1-ambulatorio-ia.pdf` | Totem 1 | 100×200 | — | Eyebrow «Novita' · Hardware custom», titolo «Modelli IA per la nefrologia»; il microfono AI e accanto «Ambulatorio» e «Rilevazioni a bordo letto»; contatti a 15 cm dal bordo basso |
+| `totem-2-dati-ia.pdf` | Totem 2 | 100×200 | — | Eyebrow «Gen BI · Dati clinici e IA», titolo «I dati clinici prendono forma»; il marchio fatto di punti; certificazioni e contatti, a 15 cm dal bordo basso |
 | `totem-3-percorso-infermieristico.pdf` | Totem 3 · **variante**, fuori dall'esecutivo | 100×200 | — | Eyebrow «Novita' · Gepadial», titolo «Nuovo percorso infermieristico personalizzabile»; il percorso standard accanto a quello costruito sull'azienda ospedaliera |
 
 Le pagine misurano il nominale a meno di 0,1 mm (Chromium arrotonda i
@@ -105,29 +105,46 @@ linea dritta di tappe uguali, in grigio; a destra quello di **la tua azienda
 ospedaliera**, in blu, con le stesse partenza e arrivo ma una deviazione,
 tappe proprie e una tappa che si aggiunge (il «+» tratteggiato).
 
-**I totem sono due, le varianti tre.** La scelta e' interna: la tavola
-`proposte/SIN26_totem_tre-varianti.pdf` (A4, una pagina, `node varianti.mjs`)
-le mette affiancate. Finche' non si sceglie, l'esecutivo porta i totem 1 e 2.
+**I totem sono due, le varianti tre: scelti il microfono e «forma».** La
+tavola interna `proposte/SIN26_totem_tre-varianti.pdf` (A4, una pagina,
+`node varianti.mjs`) mette le tre varianti affiancate. Marco Maurizzi (11/10)
+ha scelto il totem dell'ambulatorio con il microfono e l'IA e quello con
+lo slogan «I dati clinici prendono forma»: sono i totem 1 e 2 dell'esecutivo.
+Il totem del percorso infermieristico resta in `out/` come variante, fuori
+dall'esecutivo.
 
-**Pareti laterali: quattro varianti con piu' colore.** L'ufficio commerciale
-ha chiesto piu' azzurro aziendale sulle pareti laterali. La tavola interna
-`proposte/SIN26_pareti-laterali_cinque-varianti.pdf` (A4, tre pagine) mostra
-le pareti aperte attorno al fondale in cinque varianti: 1 blocco (banda
-verticale piena a tutta altezza verso l'ingresso, attraversata dalla sagoma
-del marchio), 2 parete piena nel blu del logo, 3 conchiglia in linee blu,
-speculare sulle due pareti, 4 conchiglia con i petali nelle tinte del blu solo
-sulla parete sinistra, destra bianca, 5 wireframe del marchio (due sagome
-sovrapposte in solo contorno: a destra fondo blu logo e linee azzurre, a
-sinistra i colori invertiti, fondo bianco e linee blu). La conchiglia e' l'asset di sfondo del
-design system (`assets/conchiglia.svg`). Finche' non si sceglie, l'esecutivo
-porta le pareti con la sola sagoma.
+**Pareti laterali: scelta la variante 5.** L'ufficio commerciale aveva
+chiesto piu' azzurro aziendale sulle pareti laterali. La tavola interna
+`proposte/SIN26_pareti-laterali_cinque-varianti.pdf` (A4, tre pagine) metteva
+le pareti aperte attorno al fondale in cinque varianti: 1 blocco, 2 parete
+piena, 3 conchiglia, 4 conchiglia a colori, 5 wireframe del marchio. Ha
+vinto la 5 (12/10): e' una variante al logo singolo e movimenta l'immagine
+senza appesantire lo stand. La conchiglia resta nel design system come asset
+di sfondo (`assets/conchiglia.svg`) ma non e' sull'esecutivo.
+
+**La base dei totem (13/10).** Scuotto consiglia di alzare i testi in fondo
+al pannello, per lasciare liberi almeno 10-15 cm per la base in alluminio. Sui
+tre totem il contenuto si ferma ora a **15 cm** dal bordo basso
+(`--st-base`, in `stand.css`): la fascia compare tratteggiata in
+`out/verifica-ingombri/`. Sotto la fascia resta solo il fondo; la sagoma outline
+del totem 1 e' sfondo e puo' passarci.
 
 Su tutti i totem il disegno sta a meta' tra il titolo e il piede.
 
-**Pareti laterali: solo grafica, e poca.** Niente testo: su ciascuna parete
-la sola sagoma outline del marchio, a sbordo dal bordo alto verso l'ingresso
-dello stand — a sinistra sulla parete sinistra, a destra su quella destra. La
-posizione e' specchiata, il disegno no: il marchio non si ribalta.
+**Pareti laterali: il wireframe del marchio (variante 5).** Niente testo e
+niente logo: due sagome del marchio sovrapposte, solo in contorno, come un
+disegno tecnico. La parete destra ha il fondo blu logo e le linee azzurre
+(`brand/400`); la parete sinistra ha gli stessi disegni a colori invertiti,
+fondo bianco e linee blu logo. Il blu pieno sta cosi' su una parete sola e
+lo stand non si chiude: gli spazi sono piccoli, e la moquette grigia con
+troppo blu rischia di risultare opprimente. Le sagome non si ribaltano.
+
+Sulla parete sinistra i disegni sono spostati di circa mezzo metro verso il
+centro rispetto al bordo dell'ingresso: nella parte bassa il mobiletto della
+macchina del caffe' rischia di coprirli (indicazione di Marco Maurizzi,
+11/10). Sulla parete destra restano a sbordo dal bordo, come nel disegno di
+partenza. Le sagome sono decorative: se un televisore o un mobile ne copre una
+parte, non si perde un messaggio.
 
 ### Scala tipografica
 
@@ -168,14 +185,23 @@ trasparenze. Il file dichiara DeviceCMYK senza output intent: il profilo
 2. **La riga certificazioni** del totem 2 e' solo testo: i badge IMQ / SI
    Cert sono un PNG che ingrandito dieci volte non regge. Se servono, vanno
    chiesti in vettoriale agli enti.
-3. **I totem** non hanno un'area nascosta dichiarata: il contenuto tiene 8 cm
-   dal bordo. Se il profilo copre di piu', va detto.
+3. **I totem** non hanno un'area nascosta dichiarata: il contenuto tiene 7-8 cm
+   dai bordi laterali e alto, e 15 cm dal basso (la base, da Scuotto).
 4. **Il microfono AI e la gen BI** sono raccontati come concetti, senza
    schermate: e' coerente con la scelta, verbalizzata nella call del 25/9, di
    non esporre il prototipo a tutti.
 5. **La quinta** porta l'eco chiara del marchio. Se la si vuole con il
    marchio pieno come il fondale, e' la stessa pagina con il riempimento al
    posto del tratto.
+6. **Televisori e arredi.** Scuotto (13/10): in planimetria il centro del
+   monitor sta a 2 m dall'inizio della parete, sia a sinistra sia a destra; il
+   mobiletto del punto caffe' e' profondo circa 50 cm; la posizione del
+   monitor si puo' cambiare in montaggio. Il disegno e' decorativo e il
+   monitor ne copre una parte: se non va bene, conviene spostare il monitor,
+   non il disegno. Da chiarire da dove si conta l'«inizio» della parete.
+7. **Abbondanza.** Scuotto (13/10) conferma che e' gia' inclusa nelle
+   misure che ha fornito: il blu pieno della parete destra arriva al bordo del
+   file e il file e' idoneo.
 
 ## Come si rigenera
 

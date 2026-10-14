@@ -7,19 +7,29 @@
   <style>
     /* File 420×220, area visibile 370×200: 10 cm nascosti per lato, piu' gli
        ultimi 30 cm a destra senza grafica (giunzione dei pannelli).
-       Niente testo: solo la sagoma outline del marchio, a sbordo dal bordo
-       alto, verso l'ingresso dello stand (la giunzione e' dalla parte del
-       fondale). E' il watermark del sistema, alla scala della parete. */
+       Niente testo e niente logo: fondo bianco e le stesse due sagome del
+       marchio della parete destra, solo in contorno, in blu logo: i colori
+       sono invertiti. Le sagome sono spostate di circa mezzo metro verso il
+       centro della parete rispetto al bordo dell'ingresso: nella parte bassa
+       il mobiletto della macchina del caffe' rischia di coprirle. Non
+       ribaltate; il fondo bianco e' il supporto. */
     @page { size: 420mm 220mm; }
     .st-sheet { --w: 420mm; --h: 220mm; --hide-r: 40mm; }
-    .st-watermark { width: 170mm; top: -46mm; left: 34mm; }
+    .st-wire { position: absolute; left: 0; top: 0; z-index: 0; }
+    .st-wire g { fill: none; stroke: var(--tr-brand-500); stroke-linejoin: round; }
   </style>
 </head>
 <body>
   <div class="st-sheet st-sheet--wall">
-    <svg class="st-watermark" viewBox="0 0 594 717" aria-hidden="true">
-      <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
-      <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+    <svg class="st-wire" viewBox="0 0 420 220" width="420mm" height="220mm" aria-hidden="true">
+      <g transform="translate(60.00 -13.47) scale(0.3283)" stroke-width="3.66">
+        <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+        <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+      </g>
+      <g transform="translate(123.67 101.51) scale(0.2912)" stroke-width="4.12">
+        <path d="M197.4 0.6 593 351.7 396.1 526.2 0.5 175.2Z"/>
+        <path d="M183.2 714.5C183.7 649.2 183.8 531.5 183.1 362.4L386 538.4C386 538.4 185.3 716.3 183.2 714.5Z"/>
+      </g>
     </svg>
 
     <div class="st-safe"></div>
