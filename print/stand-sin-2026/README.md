@@ -156,7 +156,7 @@ pareti, per quando dovesse servire — sta in `src/stand.css`.
 ### Colore
 
 In stampa il `paper` e' il supporto: il fondo e' bianco puro (0/0/0/0), non la
-tinta `#fbfbfd` dello schermo, che in macchina diventerebbe una velatura. I
+tinta `#f2f4f8` dello schermo, che in macchina diventerebbe una velatura. I
 colori del sistema hanno una ricetta CMYK fissa (`cmyk.py`), decisa a mano
 perche' la conversione automatica di un blu saturo aggiunge nero e lo spegne:
 

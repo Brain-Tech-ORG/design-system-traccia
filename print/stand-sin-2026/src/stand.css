@@ -24,7 +24,7 @@
 @font-face { font-family: "Space Grotesk"; font-style: normal; font-weight: 700; src: url("../../../assets/fonts/ttf/SpaceGrotesk-Bold.ttf") format("truetype"); }
 
 :root {
-  /* In stampa il "paper" e' il supporto: niente tinta di fondo all'1%, che in
+  /* In stampa il "paper" e' il supporto: niente tinta di fondo, che in
      macchina diventa una velatura sporca. Il piano 0 e' il bianco del tessuto. */
   --st-paper: #ffffff;
   /* Watermark: brand/500 a --tr-watermark-opacity (0,16) sul bianco, gia'

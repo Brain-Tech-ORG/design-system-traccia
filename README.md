@@ -114,13 +114,13 @@ niente gradienti, niente emoji, molto bianco.
 | `brand/100` | `#d0e4f5` | Tinta pallida decorativa |
 | `brand/600` | `#2f7ab8` | Tinta scura, stesso hue: testo piccolo e fondi pieni con testo bianco (4,6:1) |
 | `brand/700` | `#266296` | Tinta scura, stesso hue: hover delle superfici piene |
-| `surface/tint` | `#eff2f9` | Solo riempimenti piccoli (cerchietti, silhouette). **Non e' un piano**: le card usano `surface` |
+| `surface/tint` | `#e8ecf5` | Solo riempimenti piccoli (cerchietti, silhouette). **Non e' un piano**: le card usano `surface` |
 | `border/soft` | `#dde2ee` / `#c9cede` | Filetti e bordi leggeri |
 | `ink/900` | `#1b1f2a` | Testo primario, tratti dei disegni tecnici |
 | `ink/600` | `#3a4050` | Testo secondario / body |
 | `ink/400` | `#565c6b` | Didascalie e metadati |
 | `anthracite` | `#383e42` | **Solo il wordmark** «traccia» (RAL 7016), tramite `--tr-color-wordmark` |
-| `paper` | `#fbfbfd` | **Piano 0**: lo sfondo della pagina |
+| `paper` | `#f2f4f8` | **Piano 0**: lo sfondo della pagina |
 | `surface` | `#ffffff` | **Piano 1**: card e pannelli — vedi [Superfici](#superfici) |
 | `state/danger` | `#a53a3a` | **Solo UI software**: errore, campo non valido |
 | `state/warning` | `#99631d` | **Solo UI software**: avviso, azione da confermare |
@@ -137,8 +137,13 @@ raccolgono contenuto — card, pannelli — stanno un gradino sopra, in bianco.
 
 | Piano | Token | Cosa ci sta |
 |---|---|---|
-| 0 · pagina | `paper` `#fbfbfd` | Il fondo su cui si legge |
+| 0 · pagina | `paper` `#f2f4f8` | Il fondo su cui si legge |
 | 1 · componente | `surface` `#ffffff` | Card, pannelli galleggianti |
+
+Il gradino deve vedersi: `paper` sta a **1,10:1** dal bianco. A 1,03:1, il valore
+precedente (`#fbfbfd`), una card spariva sulla maggior parte degli schermi.
+`surface/tint` scende insieme e resta un gradino sotto la pagina (1,08:1),
+cosi' il cerchietto appoggiato sul paper non perde il proprio disco.
 
 E' cosi' che un gruppo si stacca **senza bordo e senza ombra**: lo separa il
 piano su cui poggia. E' la stessa idea dei filetti — separare con il minimo —
@@ -1649,14 +1654,14 @@ arcobaleno. Tre ruoli per ogni gradino, ognuno con la sua soglia verificata:
 
 | # | Hue | Fondo | Filetto | Testo | Testo su fondo / su paper | Filetto su fondo |
 |---|---|---|---|---|---|---|
-| 1 | 246.1° | `#e5f6ff` | `#648fb6` | `#2b6899` | 5.37:1 / 5.76:1 | 3.07:1 |
-| 2 | 23.6° | `#ffedea` | `#b67a76` | `#944a47` | 5.57:1 / 6.11:1 | 3.07:1 |
-| 3 | 161.1° | `#e4faed` | `#5e987a` | `#1d7450` | 5.20:1 / 5.51:1 | 3.08:1 |
-| 4 | 298.6° | `#f6f0ff` | `#9282b4` | `#6b5594` | 5.58:1 / 6.04:1 | 3.08:1 |
-| 5 | 76.1° | `#fff1df` | `#a68657` | `#835a0e` | 5.50:1 / 5.90:1 | 3.06:1 |
-| 6 | 213.6° | `#dff9ff` | `#4e95a5` | `#007185` | 5.16:1 / 5.49:1 | 3.10:1 |
-| 7 | 351.1° | `#ffecf6` | `#b07992` | `#8d496a` | 5.62:1 / 6.14:1 | 3.10:1 |
-| 8 | 128.6° | `#eef8e4` | `#7b9261` | `#526e2b` | 5.29:1 / 5.62:1 | 3.11:1 |
+| 1 | 246.1° | `#e5f6ff` | `#648fb6` | `#2b6899` | 5.37:1 / 5.38:1 | 3.07:1 |
+| 2 | 23.6° | `#ffedea` | `#b67a76` | `#944a47` | 5.57:1 / 5.73:1 | 3.07:1 |
+| 3 | 161.1° | `#e4faed` | `#5e987a` | `#1d7450` | 5.20:1 / 5.20:1 | 3.08:1 |
+| 4 | 298.6° | `#f6f0ff` | `#9282b4` | `#6b5594` | 5.58:1 / 5.69:1 | 3.08:1 |
+| 5 | 76.1° | `#fff1df` | `#a68657` | `#835a0e` | 5.50:1 / 5.55:1 | 3.06:1 |
+| 6 | 213.6° | `#dff9ff` | `#4e95a5` | `#007185` | 5.16:1 / 5.15:1 | 3.10:1 |
+| 7 | 351.1° | `#ffecf6` | `#b07992` | `#8d496a` | 5.62:1 / 5.79:1 | 3.10:1 |
+| 8 | 128.6° | `#eef8e4` | `#7b9261` | `#526e2b` | 5.29:1 / 5.26:1 | 3.11:1 |
 | 0 | — | `surface/tint` | `border/soft-2` | `ink/600` | oltre l'ottava categoria |  |
 
 Il testo e' verificato a >= 4,5:1 **sia sul proprio fondo sia sul paper della
@@ -2185,7 +2190,7 @@ audit vengono confusi di continuo. Il template li tiene volutamente lontani.
 |---|---|
 | **Niente watermark** | La sagoma outline nasce per brochure e slide, dove la pagina si guarda. Un documento si fotocopia, si scansiona e si passa all'OCR: al 16% sotto il testo sporca il numero di protocollo e confonde il riconoscimento. L'emittente e' gia' dichiarato in testata e nel piede |
 | **Niente chip** | Era l'unica forma chiusa e bordata di una pagina il cui linguaggio vieta i box: in stampa una pillola col filetto blu si legge come un campo da compilare. Il tipo di documento usa l'eyebrow, che e' la voce del sistema per i kicker |
-| **Il fondo e' bianco, non `paper`** | `brand/600` su `paper` misura 4,42:1 e non passa la soglia di 4,5:1 che il sistema si impone; su bianco misura 4,57:1. Con una riga rientrano sopra la soglia tutte le etichette mono blu del foglio — e la carta, del resto, e' bianca davvero |
+| **Il fondo e' bianco, non `paper`** | `brand/600` su `paper` misura 4,15:1 e non passa la soglia di 4,5:1 che il sistema si impone; su bianco misura 4,57:1. Con una riga rientrano sopra la soglia tutte le etichette mono blu del foglio — e la carta, del resto, e' bianca davvero |
 | **Il marchio e' il mark, non il lockup** | `logo-traccia.svg` ha un canvas trasparente: a 28px l'inchiostro comincia 12px dentro il margine, e il primo elemento del foglio non sarebbe allineato a niente. `logo-traccia-mark.svg` parte a filo |
 | **`Spett.le` e `c.a.` non sono in mono** | Non sono etichette di sistema, sono la lingua della lettera, e [si scrivono in frase](#dove-finisce-il-maiuscolo). Il blocco del destinatario e' l'unico punto del foglio in cui parla una persona a un'altra |
 

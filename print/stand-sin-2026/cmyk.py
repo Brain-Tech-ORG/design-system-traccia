@@ -38,8 +38,8 @@ TABLE = {
     "#383e42": (0.65, 0.55, 0.50, 0.60),  # anthracite — wordmark «traccia», grigio neutro
     "#dde2ee": (0.12, 0.08, 0.02, 0.00),  # border/soft
     "#c9cede": (0.20, 0.14, 0.04, 0.02),  # border/soft-2
-    "#eff2f9": (0.05, 0.03, 0.00, 0.00),  # surface/tint
-    "#fbfbfd": (0.00, 0.00, 0.00, 0.00),  # paper: in stampa e' il supporto
+    "#e8ecf5": (0.05, 0.03, 0.00, 0.00),  # surface/tint
+    "#f2f4f8": (0.00, 0.00, 0.00, 0.00),  # paper: in stampa e' il supporto
     "#ffffff": (0.00, 0.00, 0.00, 0.00),
     "#000000": (0.00, 0.00, 0.00, 1.00),
 }

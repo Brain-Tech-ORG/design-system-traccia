@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="0 0 1440 720" role="img" aria-labelledby="title desc">
   <title id="title">Palette semantica UI La Traccia</title>
   <desc id="desc">Cinque famiglie cromatiche per informazione, successo, allerta, errore e allarme critico.</desc>
-  <rect width="1440" height="720" fill="#fbfbfd"/>
+  <rect width="1440" height="720" fill="#f2f4f8"/>
   <style>
     .sans{font-family:Arial,Helvetica,sans-serif}
     .mono{font-family:"Courier New",monospace}
