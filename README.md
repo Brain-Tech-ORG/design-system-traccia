@@ -12,6 +12,7 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── logo-traccia.svg          Logo (chevron blu, pieno)
 │   ├── logo-traccia-outline.svg  Sagoma outline per watermark negli sfondi
 │   ├── logo-traccia-mark.svg     Solo il marchio, normalizzato: sorgente dello spinner
+│   ├── logo-traccia-lockup.svg   Logo completo: marchio + TRACCIA, per i file che viaggiano (fondi chiari)
 │   ├── conchiglia.svg            La conchiglia: solo decorazione di sfondo (tratto blu logo)
 │   ├── conchiglia-mono.svg       La stessa, tratto currentColor (per l'SVG in linea)
 │   ├── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
@@ -40,7 +41,8 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── carta-intestata.docx      Lo stesso file, apribile come documento
 │   └── carta-intestata/          Il generatore (build.js + build.sh): il .dotx non si edita a mano
 ├── tools/
-│   └── conchiglia.py             Generatore della conchiglia: scrive assets/conchiglia*.svg
+│   ├── conchiglia.py             Generatore della conchiglia: scrive assets/conchiglia*.svg
+│   └── lockup/                   Generatore del logo completo: scrive assets/logo-traccia-lockup.svg (con il font sorgente)
 ├── print/
 │   └── stand-sin-2026/           Grafiche di stand (SIN 2026): sorgenti in scala 1:10, generatore, PDF CMYK in out/
 └── index.html                    Documentazione visiva / showcase
@@ -64,8 +66,8 @@ niente gradienti, niente emoji, molto bianco.
 
 ## Brand
 
-- **Logo**: chevron/freccia blu (`assets/logo-traccia.svg`). Compare sempre affiancato al wordmark
-  **traccia** — tutto minuscolo, senza «la», in **Space Grotesk 700** con tracking −0.02em,
+- **Logo**: chevron/freccia blu (`assets/logo-traccia.svg`). Nelle interfacce e nei documenti compare
+  affiancato al wordmark **traccia** — tutto minuscolo, senza «la», in **Space Grotesk 700** con tracking −0.02em,
   in **antracite** `#383e42` (`--tr-color-wordmark`, RAL 7016) (componente `.tr-brandmark`, con `assets/logo-traccia-mark.svg`: il marchio a filo,
   senza il canvas trasparente di `logo-traccia.svg`, che allargherebbe la distanza). Le proporzioni si contano sull'altezza del marchio:
   scritta 0,8, distanza 0,34 (marchio 28px → scritta 22,4px, distanza 9,5px; nel footer 20px).
@@ -74,7 +76,26 @@ niente gradienti, niente emoji, molto bianco.
   non e' il wordmark: resta in Archivo 800 maiuscolo dove compare (piede dei documenti, firma
   email).
   La scritta e' **antracite sui fondi chiari**. **Sul blu del marchio e' sempre bianca**, come il
-  marchio accanto (`--tr-color-wordmark-on-brand`): mai antracite sul blu.
+  marchio accanto (`--tr-color-wordmark-on-brand`): mai antracite sul blu. E' il **lockup
+  compatto**; il logo che viaggia come file e' il logo completo, qui sotto.
+- **Logo completo**: marchio e scritta in un solo SVG (`assets/logo-traccia-lockup.svg`), per i
+  casi in cui il logo viaggia come file — la presentazione di un partner, un documento di terzi,
+  una stampa — e non come componente. La scritta e' **TRACCIA**, maiuscolo esteso, in
+  **Archivo Expanded Black** obliquo di 12°, di un solo colore (**ink/400** `#565c6b`,
+  `--tr-ink-400`: nessun blu dentro il testo) e convertita in tracciati, quindi il file non
+  dipende da nessun font. Sfondo trasparente, **solo per fondi chiari**: non esiste una
+  versione per fondi scuri. Le proporzioni stanno sul marchio: l'altezza delle maiuscole e'
+  meta' di quella del triangolo piccolo, dal suo bordo alto alla quota del suo vertice destro,
+  e la scritta poggia su quella quota; l'ultima lettera finisce a 0,45 volte l'altezza delle
+  maiuscole dal lato sinistro del triangolo, con la parola che entra sotto lo sbalzo della
+  barra. La **linea di intermezzo** e' un taglio orizzontale al 45% dell'altezza delle
+  maiuscole, spesso il 5,5%, e attraversa solo alcune lettere (la T, le due C e l'ultima A): R,
+  A e I restano intere. Sotto i 50 px circa di altezza del marchio il taglio si impasta e si
+  legge come un difetto: nelle interfacce, nelle testate e nei piedi si usa il lockup
+  compatto `.tr-brandmark`, non questo. Non si ricolora, non si deforma, non si ridisegna a
+  mano: il file e' scritto da `tools/lockup/lockup.py` (marchio da
+  `assets/logo-traccia-mark.svg`, font sorgente e licenza OFL nella stessa cartella) e non si
+  edita — si cambia il generatore e lo si rilancia.
 - **Logo nello sfondo (watermark)**: la sagoma outline del logo
   (`assets/logo-traccia-outline.svg` — stessi tracciati, senza riempimento, tratto blu logo)
   può essere usata negli sfondi delle brochure e delle pagine delle presentazioni:
@@ -189,7 +210,9 @@ scegliendo colori nuovi.
 - **Body — Archivo 400**: 12–14px stampa / 14–16px UI / 24–30px slide, line-height 1.5–1.65, ink/600.
 - **Wordmark — Space Grotesk 700**: solo la scritta «traccia» accanto al marchio
   (`--tr-font-wordmark`, `--tr-weight-wordmark`, `--tr-tracking-wordmark`). Non e' un
-  carattere di testo: titoli, corpo e interfaccia restano in Archivo.
+  carattere di testo: titoli, corpo e interfaccia restano in Archivo. Nel logo completo la
+  scritta e' invece TRACCIA in Archivo Expanded Black, ma come tracciati e non come testo:
+  nemmeno quello e' un carattere da usare in pagina.
 - **Slide 16:9 (1920×1080)**: mai testo sotto 17px; titoli 60–92px.
 
 ### Dove stanno i font
