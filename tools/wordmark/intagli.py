@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
-"""Il taglio del wordmark «traccia»: la parola tagliata dalla freccia.
+"""Il taglio del wordmark «traccia»: le lettere tagliate come il marchio.
 
 La scritta accanto al marchio e' testo vivo (Space Grotesk 700, minuscolo,
 tracking -0.02em): resta selezionabile, leggibile dagli screen reader, e il
 colore lo decide il CSS (antracite sui fondi chiari, bianco sul blu). Il
 taglio non cambia niente di questo: e' una maschera sopra il testo.
 
-Il taglio racconta una cosa sola: la freccia e' passata attraverso la
-parola. Per questo non e' un segno a se': sta tutto sul marchio.
+Il marchio e' una freccia tagliata: un taglio bianco, in diagonale, la divide
+in due pezzi. La scritta porta lo stesso taglio, e tutto si legge sul marchio:
 
-- E' orizzontale, nella direzione in cui punta la freccia.
-- E' all'altezza della punta del marchio. Nel lockup (.tr-brandmark:
-  scritta alta 0,8 del marchio, centrata) la linea della punta prosegue
-  nella parola: il taglio parte da li'.
-- E' spesso quanto il taglio bianco che divide il marchio in due pezzi:
-  e' lo stesso taglio.
-- Attraversa tutta la parola, ogni lettera che incontra: una freccia non
-  salta le lettere.
-- Dove lascerebbe una scheggia (un pezzo di lettera sotto l'1% della
-  lettera: succede all'estremita' dell'arco delle «a»), la scheggia si
-  toglie.
+- il taglio e' diagonale, inclinato come il taglio del marchio (circa 41
+  gradi, scende verso destra);
+- e' spesso quanto il taglio del marchio, nelle proporzioni del lockup
+  (.tr-brandmark: scritta alta 0,8 del marchio);
+- e' uno per lettera, e passa per il centro della lettera: a meta' della
+  x-height, al centro del suo ingombro;
+- taglia solo la t e le due c. R, a e i restano intere: la a e' stata
+  provata e scartata;
+- resta nella propria lettera: non arriva alle lettere vicine;
+- dove lascerebbe una scheggia (un pezzo di lettera sotto l'1% della
+  lettera), la scheggia si toglie.
 
-Punta e spessore si leggono da assets/logo-traccia-mark.svg: se cambia il
+Angolo e spessore si leggono da assets/logo-traccia-mark.svg: se cambia il
 marchio, si rilancia lo script e il taglio lo segue.
 
 Lo script compone la parola come il browser (HarfBuzz, kerning attivo,
@@ -54,31 +54,35 @@ MARK = ROOT / "assets/logo-traccia-mark.svg"
 CSS = ROOT / "css/traccia.css"
 
 WORD = "traccia"
-TRACKING = -0.02     # --tr-tracking-wordmark, in em
-WORD_RATIO = 0.8     # altezza della scritta (1em) / altezza del marchio, come .tr-brandmark
-SLIVER = 0.01        # un pezzo di lettera sotto l'1% della lettera e' una scheggia
-SLIVER_PAD = 4       # margine attorno alla scheggia tolta, unita' del font
-STEPS = 24           # segmenti per curva, per riconoscere le schegge
+TRACKING = -0.02         # --tr-tracking-wordmark, in em
+WORD_RATIO = 0.8         # altezza della scritta (1em) / altezza del marchio, come .tr-brandmark
+CUT_LETTERS = (0, 3, 4)  # t, c, c
+CUT_AT = 0.5             # centro del taglio, in x-height sopra la linea di base
+SLIVER = 0.01            # un pezzo di lettera sotto l'1% della lettera e' una scheggia
+SLIVER_PAD = 4           # margine attorno alla scheggia tolta, unita' del font
+STEPS = 24               # segmenti per curva, per riconoscere le schegge
 
 
 def mark_geometry():
-    """Dal marchio: altezza, quota della punta e spessore del taglio interno."""
+    """Dal marchio: altezza, spessore e inclinazione del taglio interno."""
     svg = MARK.read_text()
     h = float(re.search(r'viewBox="([^"]+)"', svg).group(1).split()[3])
     paths = re.findall(r' d="([^"]+)"', svg)
     assert len(paths) == 2, "assets/logo-traccia-mark.svg: attesi due tracciati (barra e triangolo)"
     bar, tri = ([(n[i], n[i + 1]) for i in range(0, len(n), 2)]
                 for n in ([float(v) for v in re.findall(r"-?\d+(?:\.\d+)?", d)] for d in paths))
-    tip = max(bar, key=lambda p: p[0])
-    # il taglio interno: fra il lato basso della barra (dal vertice a sinistra
-    # a quello piu' in basso) e il lato alto del triangolo (dal vertice in alto
-    # a quello a destra). Non sono del tutto paralleli: si prende la media.
+    # il taglio interno sta fra il lato basso della barra (dal vertice a
+    # sinistra a quello piu' in basso) e il lato alto del triangolo (dal
+    # vertice in alto a quello a destra). I due lati non sono del tutto
+    # paralleli: spessore e inclinazione sono la media.
     a, b = min(bar, key=lambda p: p[0]), max(bar, key=lambda p: p[1])
     top, right = min(tri, key=lambda p: p[1]), max(tri, key=lambda p: p[0])
     length = math.hypot(b[0] - a[0], b[1] - a[1])
     nx, ny = -(b[1] - a[1]) / length, (b[0] - a[0]) / length
     gap = sum((q[0] - a[0]) * nx + (q[1] - a[1]) * ny for q in (top, right)) / 2
-    return {"h": h, "tip_y": tip[1], "gap": gap}
+    angle = (math.degrees(math.atan2(b[1] - a[1], b[0] - a[0]))
+             + math.degrees(math.atan2(right[1] - top[1], right[0] - top[0]))) / 2
+    return {"h": h, "gap": gap, "angle": angle}
 
 
 def _glyph_geometry(glyph_set, name):
@@ -152,49 +156,60 @@ def font_data():
     order, gs = tt.getGlyphOrder(), tt.getGlyphSet()
     letters, x = [], 0.0
     for info, pos in zip(buf.glyph_infos, buf.glyph_positions):
-        letters.append({"x": x, "geom": _glyph_geometry(gs, order[info.codepoint])})
+        geom = _glyph_geometry(gs, order[info.codepoint])
+        x0, _, x1, _ = geom.bounds
+        letters.append({"x": x, "geom": geom, "ink": (x + x0, x + x1)})
         x += pos.x_advance + TRACKING * upm
     baseline = (upm - asc - desc) / 2 + asc          # dall'alto della riga alta 1em, come il browser
-    return {"upm": upm, "baseline": baseline, "width": x, "letters": letters}
+    return {"upm": upm, "xh": os2.sxHeight, "baseline": baseline, "width": x, "letters": letters}
 
 
 def cut(fd=None, mk=None):
-    """Il taglio, in unita' del font.
+    """I tagli, in unita' del font, rispetto all'origine di ogni lettera (y in su).
 
-    Restituisce la fascia sopra la linea di base (da, a) e le schegge da
-    togliere: (indice della lettera, (x0, y0, x1, y1) rispetto all'origine
-    della lettera, y in su).
+    Restituisce le lame, (indice della lettera, vertici del poligono), e le
+    schegge da togliere, (indice della lettera, (x0, y0, x1, y1)).
     """
     from shapely.affinity import translate
-    from shapely.geometry import box
+    from shapely.geometry import Polygon, box
 
     fd = fd or font_data()
     mk = mk or mark_geometry()
-    em = WORD_RATIO * mk["h"]                 # la riga della scritta, in unita' del marchio
-    k = fd["upm"] / em                        # unita' del marchio -> unita' del font
-    centre = fd["baseline"] - (mk["tip_y"] - (mk["h"] - em) / 2) * k   # sopra la linea di base
-    half = mk["gap"] * k / 2
-    band = (centre - half, centre + half)
+    letters = fd["letters"]
+    half = mk["gap"] * fd["upm"] / (WORD_RATIO * mk["h"]) / 2   # unita' del marchio -> del font
+    a = math.radians(mk["angle"])
+    ux, uy = math.cos(a), -math.sin(a)      # lungo il taglio: scende verso destra (qui y va in su)
+    nx, ny = -uy, ux                        # di traverso
+    far = 2 * fd["upm"]
 
-    slivers = []
-    blade = box(-1e5, band[0], 1e5, band[1])
-    for i, letter in enumerate(fd["letters"]):
-        g = letter["geom"]
+    blades, slivers = [], []
+    for i in CUT_LETTERS:
+        g, gx = letters[i]["geom"], letters[i]["x"]
+        x0, _, x1, _ = g.bounds
+        cx, cy = (x0 + x1) / 2, CUT_AT * fd["xh"]
+        blade = Polygon([(cx + sx * ux * far + sn * nx * half, cy + sx * uy * far + sn * ny * half)
+                         for sx, sn in ((-1, -1), (1, -1), (1, 1), (-1, 1))])
+        # la lama resta nella cella della lettera: si ferma a meta' strada
+        # dalle lettere vicine
+        lo = (letters[i - 1]["ink"][1] + letters[i]["ink"][0]) / 2 - gx if i > 0 else -far
+        hi = (letters[i]["ink"][1] + letters[i + 1]["ink"][0]) / 2 - gx if i + 1 < len(letters) else far
+        blade = blade.intersection(box(lo, -far, hi, far))
+        neighbours = [translate(letters[j]["geom"], letters[j]["x"] - gx)
+                      for j in (i - 1, i + 1) if 0 <= j < len(letters)]
+        assert not any(blade.intersects(n) for n in neighbours), f"il taglio della lettera {i} tocca una vicina"
+        blades.append((i, list(blade.exterior.coords)[:-1]))
+
         rest = g.difference(blade)
         pieces = list(rest.geoms) if rest.geom_type == "MultiPolygon" else [rest]
         keep = [p for p in pieces if p.area >= SLIVER * g.area]
         for p in pieces:
             if p.area >= SLIVER * g.area:
                 continue
-            x0, y0, x1, y1 = p.bounds
-            patch = box(x0 - SLIVER_PAD, y0 - SLIVER_PAD, x1 + SLIVER_PAD, y1 + SLIVER_PAD)
-            assert not any(patch.intersects(q) for q in keep), f"la scheggia della lettera {i} tocca la lettera"
-            for j in (i - 1, i + 1):
-                if 0 <= j < len(fd["letters"]):
-                    other = translate(fd["letters"][j]["geom"], fd["letters"][j]["x"] - letter["x"])
-                    assert not patch.intersects(other), f"la scheggia della lettera {i} tocca la lettera {j}"
+            px0, py0, px1, py1 = p.bounds
+            patch = box(px0 - SLIVER_PAD, py0 - SLIVER_PAD, px1 + SLIVER_PAD, py1 + SLIVER_PAD)
+            assert not any(patch.intersects(q) for q in keep + neighbours), f"la scheggia della lettera {i} tocca altro"
             slivers.append((i, patch.bounds))
-    return {"band": band, "slivers": slivers}
+    return {"blades": blades, "slivers": slivers}
 
 
 def num(n):
@@ -203,13 +218,15 @@ def num(n):
 
 def mask_svg(fd, ct):
     """Maschera alfa della riga (larga quanto la scritta, alta 1em): opaco
-    dove il testo resta, trasparente nel taglio e nelle schegge."""
-    from shapely.geometry import box
+    dove il testo resta, trasparente nei tagli e nelle schegge."""
+    from shapely.geometry import Polygon, box
     from shapely.ops import unary_union
 
     w, h, base = fd["width"], fd["upm"], fd["baseline"]
-    lo, hi = ct["band"]
-    holes = [box(-10, base - hi, w + 10, base - lo)]
+    holes = []
+    for i, pts in ct["blades"]:
+        x = fd["letters"][i]["x"]
+        holes.append(Polygon([(x + px, base - py) for px, py in pts]))
     for i, (x0, y0, x1, y1) in ct["slivers"]:
         x = fd["letters"][i]["x"]
         holes.append(box(x + x0, base - y1, x + x1, base - y0))
@@ -217,8 +234,7 @@ def mask_svg(fd, ct):
     d = ""
     for poly in (opaque.geoms if opaque.geom_type == "MultiPolygon" else [opaque]):
         for ring in (poly.exterior, *poly.interiors):
-            pts = list(ring.coords)[:-1]
-            d += "M" + " ".join(f"{num(px)} {num(py)}" for px, py in pts) + "Z"
+            d += "M" + " ".join(f"{num(px)} {num(py)}" for px, py in list(ring.coords)[:-1]) + "Z"
     return (f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {num(w)} {num(h)}' "
             f"preserveAspectRatio='none'><path fill-rule='evenodd' d='{d}'/></svg>")
 
@@ -244,6 +260,5 @@ if __name__ == "__main__":
     new, n = re.subn(r"/\* intagli:inizio.*?/\* intagli:fine \*/", lambda _: css_block(fd, ct), css, flags=re.S)
     assert n == 1, "css/traccia.css: attesi i commenti intagli:inizio / intagli:fine una volta"
     CSS.write_text(new)
-    lo, hi = ct["band"]
-    print(f"taglio a {num((lo + hi) / 2)} unita' sopra la linea di base, spesso {num(hi - lo)}; "
-          f"{len(ct['slivers'])} schegge tolte; scritto {CSS.relative_to(ROOT)}")
+    print(f"tagli diagonali a {num(mk['angle'])} gradi, spessi {num(mk['gap'] * fd['upm'] / (WORD_RATIO * mk['h']))} "
+          f"unita', su {len(ct['blades'])} lettere; {len(ct['slivers'])} schegge tolte; scritto {CSS.relative_to(ROOT)}")

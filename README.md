@@ -76,16 +76,16 @@ niente gradienti, niente emoji, molto bianco.
   email).
   La scritta e' **antracite sui fondi chiari**. **Sul blu del marchio e' sempre bianca**, come il
   marchio accanto (`--tr-color-wordmark-on-brand`): mai antracite sul blu.
-- **Il taglio del wordmark**: la parola e' **tagliata dalla freccia**. Un solo taglio orizzontale,
-  nella direzione in cui punta il marchio, **all'altezza della sua punta**: nel lockup la linea della
-  punta prosegue nella parola e la attraversa tutta, lettera per lettera (una freccia non salta le
-  lettere). Lo spessore e' quello del **taglio bianco che divide il marchio** in due pezzi: e' lo
-  stesso taglio. Dove resterebbe una scheggia di lettera (l'estremita' dell'arco delle «a») la
-  scheggia si toglie. Nel CSS e' una maschera sopra il testo vivo (`.tr-brandmark__wordmark`,
+- **Il taglio del wordmark**: la scritta porta **lo stesso taglio del marchio**. Un taglio
+  diagonale per lettera, **solo sulla t e sulle due c** (r, a e i restano intere), inclinato come
+  il taglio bianco che divide il marchio in due pezzi (circa 41°, scende verso destra) e spesso
+  quanto lui, nelle proporzioni del lockup. Passa per il centro della lettera (a meta' della
+  x-height) e non arriva alle lettere vicine; dove resterebbe una scheggia di lettera, la scheggia
+  si toglie. Nel CSS e' una maschera sopra il testo vivo (`.tr-brandmark__wordmark`,
   `.tr-spinner__wordmark`): il testo resta selezionabile e il colore resta quello della scritta. La
-  maschera la scrive `tools/wordmark/intagli.py`, che legge punta e spessore da
+  maschera la scrive `tools/wordmark/intagli.py`, che legge angolo e spessore da
   `assets/logo-traccia-mark.svg` e le lettere dal font: vale solo per Space Grotesk 700 con il
-  tracking del wordmark. Lo stesso script da' il taglio al PNG della carta intestata. Alle misure di
+  tracking del wordmark. Lo stesso script da' i tagli al PNG della carta intestata. Alle misure di
   testata e piede (marchio 28 e 20px) il taglio e' sottile quanto quello del marchio e sugli schermi
   a densita' 1x si legge appena: e' la proporzione del marchio, non un difetto da correggere
   ingrossandolo.
