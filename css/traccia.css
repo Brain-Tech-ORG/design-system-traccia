@@ -1757,7 +1757,7 @@ select.tr-field__control + .tr-field__label,
   padding: 10px;
   background: transparent;
 }
-.tr-photo-frame img {
+.tr-photo-frame > img { /* solo la foto incorniciata, non le img dei componenti annidati */
   display: block;
   width: 100%;
   height: auto;
