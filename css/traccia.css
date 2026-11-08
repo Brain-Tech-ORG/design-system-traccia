@@ -209,11 +209,18 @@
   border-bottom: var(--tr-rule-thin) solid var(--tr-border-soft);
 }
 /* Il lockup si misura sull'altezza del marchio (--tr-brandmark-h): la
-   scritta e' 0,8 di quell'altezza e sta a 0,34 di distanza. «traccia» e'
-   minuscolo, senza «la», in Space Grotesk 700: in minuscolo le lettere sono
-   basse, e alla misura del vecchio maiuscolo sparirebbero accanto al
-   marchio. Il minuscolo e' anche nel CSS, cosi' il wordmark resta tale
-   chiunque scriva il testo. */
+   scritta ha corpo 0,5 di quell'altezza (maiuscole alte 0,36) e sta a 0,34
+   di distanza. La scritta e' TRACCIA, maiuscolo, in Servetica Medium: uno
+   stencil, e i tagli sono quelli del font (la barra della T staccata, la
+   pancia della R e il triangolo delle A aperti).
+
+   Non e' testo composto: e' disegnata. Arriva come maschera
+   (--tr-wordmark, scritta da tools/wordmark/wordmark.py) e si colora con il
+   colore del testo: antracite sui fondi chiari, bianco sul blu. Il testo del
+   markup («traccia») resta, fuori vista, per gli screen reader. Come per le
+   icone mascherate, in contrasto forzato la si ridipinge con un colore di
+   sistema (in fondo al file), e in stampa il colore si tiene: e' un fondo, e
+   senza quella riga il browser lo scarterebbe. */
 .tr-brandmark {
   --tr-brandmark-h: 28px;
   display: inline-flex;
@@ -221,30 +228,29 @@
   gap: calc(var(--tr-brandmark-h) * 0.34);
 }
 .tr-brandmark__logo { height: var(--tr-brandmark-h); width: auto; display: block; }
-.tr-brandmark__wordmark {
-  font-family: var(--tr-font-wordmark);
-  font-weight: var(--tr-weight-wordmark);
-  font-size: calc(var(--tr-brandmark-h) * 0.8);
-  line-height: 1;
-  letter-spacing: var(--tr-tracking-wordmark);
-  text-transform: lowercase;
-  color: var(--tr-color-wordmark);
-}
-/* Il taglio: le lettere tagliate come il marchio. Un taglio diagonale per
-   lettera, solo su t, c e c, inclinato e spesso come il taglio bianco che
-   divide il marchio, passante per il centro della lettera. E' una maschera
-   sopra il testo vivo: il testo resta selezionabile e il colore resta al CSS
-   (antracite, bianco sul blu). La calcola tools/wordmark/intagli.py dal
-   marchio e dal font: vale solo per Space Grotesk 700 con il tracking del
-   wordmark, quindi la scritta non va composta in un altro carattere. */
-/* intagli:inizio — scritto da tools/wordmark/intagli.py, non editare a mano */
+.tr-brandmark__wordmark { font-size: calc(var(--tr-brandmark-h) * 0.5); }
 .tr-brandmark__wordmark,
 .tr-spinner__wordmark {
-  --tr-wordmark-cut: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3284 1000' preserveAspectRatio='none'%3E%3Cpath fill-rule='evenodd' d='M0 1000 3284 1000 3284 0 0 0 0 390.8 459 793.4 459 833.7 30.2 457.5 30.2 458 22 458 22 450.3 0 431ZM2499 874 1930 374.8 1930 334.6 2499 833.8ZM1930 871.4 1375 384.5 1375 344.3 1930 831.2Z'/%3E%3C/svg%3E");
-  -webkit-mask: var(--tr-wordmark-cut) left center / 100% 1em no-repeat;
-          mask: var(--tr-wordmark-cut) left center / 100% 1em no-repeat;
+  display: block;
+  flex: none;
+  height: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: 100%;
+  color: var(--tr-color-wordmark);
+  background-color: currentColor;
+  -webkit-mask: var(--tr-wordmark) center / 100% 100% no-repeat;
+          mask: var(--tr-wordmark) center / 100% 100% no-repeat;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
 }
-/* intagli:fine */
+/* wordmark:inizio — scritto da tools/wordmark/wordmark.py, non editare a mano */
+.tr-brandmark__wordmark,
+.tr-spinner__wordmark {
+  --tr-wordmark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4353 1000'%3E%3Cpath fill-rule='evenodd' d='M11 111H587V3H11ZM236 714H361V173H236ZM669 0V714H794V102H997Q1054 102 1083 122Q1121 148 1121 211Q1121 325 999 325H854V420H978Q1061 420 1092 465Q1120 506 1120 609Q1120 683 1139 714H1273Q1234 672 1234 526Q1234 451 1197 410Q1169 380 1128 375V373Q1246 334 1246 193Q1246 101 1187 51Q1126 0 1010 0ZM1565 0 1424 368H1543L1629 123H1632L1739 430H1401L1291 714H1420L1487 525H1772L1839 714H1973L1698 0ZM2522 227Q2486 85 2344 85Q2237 85 2178 170Q2127 244 2127 357Q2127 470 2178 544Q2237 629 2344 629Q2424 629 2473 574Q2517 525 2526 442H2648Q2640 571 2557 651Q2473 731 2344 731Q2189 731 2093 621Q2002 516 2002 357Q2002 199 2093 94Q2189 -17 2344 -17Q2468 -17 2550 47Q2635 114 2647 227ZM3244 227Q3208 85 3066 85Q2959 85 2900 170Q2849 244 2849 357Q2849 470 2900 544Q2959 629 3066 629Q3146 629 3195 574Q3239 525 3248 442H3370Q3362 571 3279 651Q3195 731 3066 731Q2911 731 2815 621Q2724 516 2724 357Q2724 199 2815 94Q2911 -17 3066 -17Q3190 -17 3272 47Q3357 114 3369 227ZM3484 0H3609V714H3484ZM3954 0 3813 368H3932L4018 123H4021L4128 430H3790L3680 714H3809L3876 525H4161L4228 714H4362L4087 0Z'/%3E%3C/svg%3E");
+  width: 4.353em;
+}
+/* wordmark:fine */
 
 /* ==========================================================================
    2 · Eyebrow / kicker
@@ -2048,14 +2054,9 @@ select.tr-field__control + .tr-field__label,
 /* Il wordmark accompagna il solo Riempimento: e' l'unica variante che occupa
    la pagina. Nelle altre il marchio e' un indicatore dentro un'interfaccia
    gia' firmata, e ripetere la firma non aggiunge nulla. */
-.tr-spinner__wordmark {
-  font-family: var(--tr-font-wordmark);
-  font-weight: var(--tr-weight-wordmark);
-  font-size: var(--tr-text-lead);
-  letter-spacing: var(--tr-tracking-wordmark);
-  text-transform: lowercase;
-  color: var(--tr-color-wordmark);
-}
+/* Corpo: lo stesso rapporto del lockup rispetto alla misura di prima (0,5
+   invece di 0,8), cosi' la scritta resta grande quanto era. */
+.tr-spinner__wordmark { font-size: calc(var(--tr-text-lead) * 0.625); }
 .tr-spinner__label {
   font-family: var(--tr-font-mono);
   font-size: var(--tr-text-caption);
@@ -2262,6 +2263,10 @@ select.tr-field__control + .tr-field__label,
 
 /* Il colore non e' piu' un canale: resta la posizione, che infatti bastava. */
 @media (forced-colors: active) {
+  /* La scritta del logo e' una maschera: il sistema sostituirebbe il fondo e
+     sparirebbe. Si ridipinge con un colore di sistema: la forma resta. */
+  .tr-brandmark__wordmark,
+  .tr-spinner__wordmark { background-color: CanvasText; }
   .tr-switch { border-color: CanvasText; background: Canvas; }
   .tr-switch::before { background: CanvasText; }
   .tr-switch[aria-checked="true"] { border-color: Highlight; background: Highlight; }

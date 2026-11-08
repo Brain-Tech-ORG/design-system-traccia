@@ -16,10 +16,12 @@
    da Google Fonts anche quei sottoinsiemi e aggiunge le @font-face con la
    propria unicode-range: il meccanismo e' lo stesso.
 
-   SPACE GROTESK E' SOLO IL WORDMARK. Un peso (700), un uso: la scritta
-   «traccia» accanto al marchio (.tr-brandmark, .tr-spinner__wordmark). Non
-   e' un carattere di testo del sistema: titoli, corpo e interfaccia restano
-   in Archivo.
+   SPACE GROTESK RESTA SOLO PER LO STAND SIN 2026. Era il wordmark
+   «traccia»; il wordmark del marchio ora e' TRACCIA, disegnata in tracciati
+   (vedi .tr-brandmark), e non usa nessun font. Space Grotesk 700 resta per
+   le grafiche dello stand, che portano la scritta precedente. Non e' un
+   carattere di testo del sistema: titoli, corpo e interfaccia restano in
+   Archivo.
 
    ARCHIVO E' VARIABILE. Un file solo copre l'intero arco 400–800, quindi i tre
    pesi del sistema (body 400, semibold 600, display 800) non costano tre

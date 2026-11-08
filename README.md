@@ -12,11 +12,12 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── logo-traccia.svg          Logo (chevron blu, pieno)
 │   ├── logo-traccia-outline.svg  Sagoma outline per watermark negli sfondi
 │   ├── logo-traccia-mark.svg     Solo il marchio, normalizzato: sorgente dello spinner
+│   ├── logo-traccia-completo.svg Logo completo: marchio + TRACCIA in tracciati (fondi chiari)
 │   ├── conchiglia.svg            La conchiglia: solo decorazione di sfondo (tratto blu logo)
 │   ├── conchiglia-mono.svg       La stessa, tratto currentColor (per l'SVG in linea)
 │   ├── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
 │   ├── icons/                    Sorgenti SVG delle icone (stroke currentColor)
-│   ├── fonts/                    Archivo + IBM Plex Mono + Space Grotesk (wordmark), latino, con OFL
+│   ├── fonts/                    Archivo + IBM Plex Mono + Space Grotesk (solo stand SIN 2026), latino, con OFL
 │   └── fonts/ttf/                Gli stessi font in TrueType, per l'incorporazione in Word
 ├── tokens/
 │   ├── tokens.css                Design token come CSS custom properties
@@ -41,7 +42,7 @@ niente gradienti, niente emoji, molto bianco.
 │   └── carta-intestata/          Il generatore (build.js + build.sh): il .dotx non si edita a mano
 ├── tools/
 │   ├── conchiglia.py             Generatore della conchiglia: scrive assets/conchiglia*.svg
-│   └── wordmark/intagli.py       Il taglio del wordmark: scrive la maschera in css/traccia.css
+│   └── wordmark/wordmark.py      Il wordmark TRACCIA in tracciati: scrive il logo completo e la maschera CSS
 ├── print/
 │   └── stand-sin-2026/           Grafiche di stand (SIN 2026): sorgenti in scala 1:10, generatore, PDF CMYK in out/
 └── index.html                    Documentazione visiva / showcase
@@ -65,30 +66,29 @@ niente gradienti, niente emoji, molto bianco.
 
 ## Brand
 
-- **Logo**: chevron/freccia blu (`assets/logo-traccia.svg`). Compare sempre affiancato al wordmark
-  **traccia** — tutto minuscolo, senza «la», in **Space Grotesk 700** con tracking −0.02em,
-  in **antracite** `#383e42` (`--tr-color-wordmark`, RAL 7016) (componente `.tr-brandmark`, con `assets/logo-traccia-mark.svg`: il marchio a filo,
-  senza il canvas trasparente di `logo-traccia.svg`, che allargherebbe la distanza). Le proporzioni si contano sull'altezza del marchio:
-  scritta 0,8, distanza 0,34 (marchio 28px → scritta 22,4px, distanza 9,5px; nel footer 20px).
-  Il minuscolo sta anche nel CSS (`text-transform: lowercase`), quindi il wordmark resta tale
-  chiunque scriva il testo. La ragione sociale per esteso — Cooperativa E.D.P. La Traccia —
-  non e' il wordmark: resta in Archivo 800 maiuscolo dove compare (piede dei documenti, firma
-  email).
+- **Logo**: chevron/freccia blu (`assets/logo-traccia.svg`). Compare sempre affiancato alla scritta
+  **TRACCIA** — maiuscolo, senza «LA», in **Servetica Medium**, in **antracite** `#383e42`
+  (`--tr-color-wordmark`, RAL 7016) (componente `.tr-brandmark`, con `assets/logo-traccia-mark.svg`:
+  il marchio a filo, senza il canvas trasparente di `logo-traccia.svg`, che allargherebbe la
+  distanza). Le proporzioni si contano sull'altezza del marchio: scritta di corpo 0,5 (maiuscole
+  alte 0,36), distanza 0,34, nessun tracking (marchio 28px → corpo 14px, distanza 9,5px; nel
+  footer 20px). Il logo completo come file, per quando viaggia (presentazioni, documenti di terzi,
+  stampa), e' `assets/logo-traccia-completo.svg`. La ragione sociale per esteso — Cooperativa
+  E.D.P. La Traccia — non e' il wordmark: resta in Archivo 800 maiuscolo dove compare (piede dei
+  documenti, firma email).
   La scritta e' **antracite sui fondi chiari**. **Sul blu del marchio e' sempre bianca**, come il
   marchio accanto (`--tr-color-wordmark-on-brand`): mai antracite sul blu.
-- **Il taglio del wordmark**: la scritta porta **lo stesso taglio del marchio**. Un taglio
-  diagonale per lettera, **solo sulla t e sulle due c** (r, a e i restano intere), inclinato come
-  il taglio bianco che divide il marchio in due pezzi (circa 41°, scende verso destra) e spesso
-  quanto lui, nelle proporzioni del lockup. Passa per il centro della lettera (a meta' della
-  x-height) e non arriva alle lettere vicine; dove resterebbe una scheggia di lettera, la scheggia
-  si toglie. Nel CSS e' una maschera sopra il testo vivo (`.tr-brandmark__wordmark`,
-  `.tr-spinner__wordmark`): il testo resta selezionabile e il colore resta quello della scritta. La
-  maschera la scrive `tools/wordmark/intagli.py`, che legge angolo e spessore da
-  `assets/logo-traccia-mark.svg` e le lettere dal font: vale solo per Space Grotesk 700 con il
-  tracking del wordmark. Lo stesso script da' i tagli al PNG della carta intestata. Alle misure di
-  testata e piede (marchio 28 e 20px) il taglio e' sottile quanto quello del marchio e sugli schermi
-  a densita' 1x si legge appena: e' la proporzione del marchio, non un difetto da correggere
-  ingrossandolo.
+- **La scritta e' disegnata, non composta**: Servetica e' uno stencil e i tagli sono quelli del
+  font: in TRACCIA la barra della T e' staccata dall'asta, la pancia della R e il triangolo delle A
+  sono aperti. Nel sistema entrano i tracciati delle sette lettere, non il font:
+  `tools/wordmark/wordmark.py` li scrive nel logo completo e, come maschera, in `css/traccia.css`
+  (`--tr-wordmark`). Il componente la colora con il colore del testo; il testo del markup
+  («traccia») resta, fuori vista, per gli screen reader. In contrasto forzato si ridipinge con
+  `CanvasText`, in stampa il colore si tiene. Il PNG della carta intestata si ricava dal logo
+  completo. **Il font non sta nel repository**: il file di Servetica (Zenze Media, 2011; marchio
+  di Cleanvertising.com) non porta una licenza per l'uso commerciale e permette l'incorporamento
+  solo per anteprima e stampa. Prima di usarlo altrove, o di rigenerare la scritta, la licenza va
+  chiarita con l'autore.
 - **Logo nello sfondo (watermark)**: la sagoma outline del logo
   (`assets/logo-traccia-outline.svg` — stessi tracciati, senza riempimento, tratto blu logo)
   può essere usata negli sfondi delle brochure e delle pagine delle presentazioni:
@@ -133,7 +133,7 @@ niente gradienti, niente emoji, molto bianco.
 | `ink/900` | `#1b1f2a` | Testo primario, tratti dei disegni tecnici |
 | `ink/600` | `#3a4050` | Testo secondario / body |
 | `ink/400` | `#565c6b` | Didascalie e metadati |
-| `anthracite` | `#383e42` | **Solo il wordmark** «traccia» (RAL 7016), tramite `--tr-color-wordmark` |
+| `anthracite` | `#383e42` | **Solo il wordmark** TRACCIA (RAL 7016), tramite `--tr-color-wordmark` |
 | `paper` | `#f2f4f8` | **Piano 0**: lo sfondo della pagina |
 | `surface` | `#ffffff` | **Piano 1**: card e pannelli — vedi [Superfici](#superfici) |
 | `state/danger` | `#a53a3a` | **Solo UI software**: errore, campo non valido |
@@ -201,9 +201,10 @@ scegliendo colori nuovi.
 - **Tecnico/etichette — IBM Plex Mono (400–600)**: sempre maiuscolo, tracking 0.06–0.3em, per
   eyebrow/kicker, numerazioni, quote, specifiche, contatti, metadati.
 - **Body — Archivo 400**: 12–14px stampa / 14–16px UI / 24–30px slide, line-height 1.5–1.65, ink/600.
-- **Wordmark — Space Grotesk 700**: solo la scritta «traccia» accanto al marchio
-  (`--tr-font-wordmark`, `--tr-weight-wordmark`, `--tr-tracking-wordmark`). Non e' un
-  carattere di testo: titoli, corpo e interfaccia restano in Archivo.
+- **Wordmark — Servetica Medium, in tracciati**: solo la scritta TRACCIA accanto al marchio,
+  disegnata (vedi Brand). Non e' un carattere del sistema e non si compone: titoli, corpo e
+  interfaccia restano in Archivo. Space Grotesk 700 (`--tr-font-wordmark` e i token collegati)
+  resta solo per le grafiche dello stand SIN 2026, che portano il wordmark precedente «traccia».
 - **Slide 16:9 (1920×1080)**: mai testo sotto 17px; titoli 60–92px.
 
 ### Dove stanno i font
@@ -245,7 +246,7 @@ I file stanno quindi anche nel repository, e si caricano cosi':
     U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
-/* + IBM Plex Mono 400 e 600 e Space Grotesk 700 (solo wordmark), stessa unicode-range */
+/* + IBM Plex Mono 400 e 600 e Space Grotesk 700 (solo stand SIN 2026), stessa unicode-range */
 ```
 
 | Superficie | Font |
@@ -262,7 +263,7 @@ e caporali compresi — e tiene i quattro file a **76,4 KB** complessivi:
 | `archivo-latin-var.woff2` | 34,1 KB |
 | `ibm-plex-mono-latin-400.woff2` | 14,4 KB |
 | `ibm-plex-mono-latin-600.woff2` | 15,3 KB |
-| `space-grotesk-latin-700.woff2` (solo wordmark) | 12,5 KB |
+| `space-grotesk-latin-700.woff2` (solo stand SIN 2026) | 12,5 KB |
 
 Archivo e' variabile: **un file solo copre l'arco 400–800**, quindi i tre pesi
 del sistema non costano tre richieste, e `font-weight` si scrive come sempre.
