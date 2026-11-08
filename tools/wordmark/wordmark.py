@@ -16,7 +16,16 @@ converte le sette lettere in tracciati e scrive:
 - in css/traccia.css, fra i commenti `wordmark:inizio` e `wordmark:fine`, la
   scritta come maschera (SVG in data URI) e la sua larghezza in em. Il
   componente la colora con il colore del testo (antracite sui fondi chiari,
-  bianco sul blu); il testo «traccia» del markup resta per gli screen reader.
+  bianco sul blu); il testo «traccia» del markup resta per gli screen reader;
+- i nomi dei prodotti e delle piattaforme di proprieta' (PRODUCTS, qui
+  sotto), con le stesse regole della scritta: maiuscolo, nessun tracking. Per
+  ognuno un file assets/prodotti/<nome>.svg (antracite, per fondi chiari) e,
+  fra `nomi:inizio` e `nomi:fine` in css/traccia.css, la maschera e il
+  rapporto larghezza/altezza della classe .tr-productmark--<nome>. Il
+  riquadro dei nomi e' stretto sulle lettere: in altezza va dalle maiuscole
+  alla linea di base, piu' la sporgenza delle lettere tonde (18 unita'), in
+  larghezza dal primo all'ultimo segno. Un prodotto nuovo si aggiunge a
+  PRODUCTS e si rilancia lo script.
 
 Proporzioni, quelle della prova scelta l'8/11/2026:
 
@@ -52,6 +61,14 @@ CSS = ROOT / "css/traccia.css"
 LOCKUP = ROOT / "assets/logo-traccia-completo.svg"
 
 WORD = "TRACCIA"
+PRODUCTS = {             # classe / file -> nome come si disegna
+    "gepadial": "GEPADIAL",
+    "teledial": "TELEDIAL",
+    "lurto": "LURTO",
+    "gedon": "GEDON",
+}
+OVERSHOOT = 18           # sporgenza delle lettere tonde oltre maiuscole e linea di base (O, G, C: 17-18)
+PRODUCTS_DIR = ROOT / "assets/prodotti"
 SIZE = 0.5               # corpo della scritta / altezza del marchio
 GAP = 0.34               # distanza dal marchio / altezza del marchio
 BRAND = "#4194d7"        # --tr-brand-500, il blu del marchio
@@ -63,7 +80,7 @@ def num(n, digits=2):
     return "0" if s in ("-0", "") else s
 
 
-def word(transform=(1, 0, 0, 1, 0, 0)):
+def word(transform=(1, 0, 0, 1, 0, 0), text=WORD):
     """TRACCIA in tracciati. Coordinate della riga alta 1em (unita' del font,
     y verso il basso, linea di base come nel browser), poi `transform`."""
     import uharfbuzz as hb
@@ -80,7 +97,7 @@ def word(transform=(1, 0, 0, 1, 0, 0)):
     baseline = (upm - asc - desc) / 2 + asc
 
     buf = hb.Buffer()
-    buf.add_str(WORD)
+    buf.add_str(text)
     buf.guess_segment_properties()
     hb.shape(hb.Font(hb.Face(hb.Blob.from_file_path(str(FONT)))), buf)
 
@@ -94,7 +111,62 @@ def word(transform=(1, 0, 0, 1, 0, 0)):
         tf = (a, b, -c, -d, a * gx + c * gy + e, b * gx + d * gy + f)
         gs[order[info.codepoint]].draw(TransformPen(pen, tf))
         x += pos.x_advance
-    return {"d": pen.getCommands(), "width": x, "upm": upm}
+    return {"d": pen.getCommands(), "width": x, "upm": upm, "baseline": baseline,
+            "cap": os2.sCapHeight, "ink": _ink(tt, buf)}
+
+
+def _ink(tt, buf):
+    """Primo e ultimo segno della parola, in unita' del font."""
+    from fontTools.pens.boundsPen import BoundsPen
+
+    gs, order = tt.getGlyphSet(), tt.getGlyphOrder()
+    x, x0, x1 = 0, None, None
+    for info, pos in zip(buf.glyph_infos, buf.glyph_positions):
+        pen = BoundsPen(gs)
+        gs[order[info.codepoint]].draw(pen)
+        if pen.bounds:
+            x0 = x + pen.bounds[0] if x0 is None else x0
+            x1 = x + pen.bounds[2]
+        x += pos.x_advance
+    return x0, x1
+
+
+def product(text):
+    """Un nome di prodotto nel riquadro stretto: (d, larghezza, altezza),
+    unita' del font, origine nell'angolo in alto a sinistra."""
+    probe = word(text=text)
+    x0, x1 = probe["ink"]
+    top = probe["baseline"] - probe["cap"] - OVERSHOOT          # dall'alto della riga
+    w = word((1, 0, 0, 1, -x0, -top), text=text)
+    return w["d"], x1 - x0, probe["cap"] + 2 * OVERSHOOT, probe["cap"]
+
+
+def product_svg(text, d, w, h):
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {num(w)} {num(h)}" '
+        f'width="{num(w)}" height="{num(h)}" role="img" aria-label="{text.capitalize()}">\n'
+        f"  <title>{text.capitalize()}</title>\n"
+        f"  <desc>{text} in Servetica Medium, in tracciati. Per fondi chiari. "
+        "Scritto da tools/wordmark/wordmark.py.</desc>\n"
+        f'  <path fill="{TEXT}" fill-rule="evenodd" d="{d}"/>\n'
+        "</svg>\n"
+    )
+
+
+def products_css_block():
+    lines = ["/* nomi:inizio — scritto da tools/wordmark/wordmark.py, non editare a mano */"]
+    box = None
+    for slug, text in PRODUCTS.items():
+        d, w, h, cap = product(text)
+        box = h / cap
+        mask = (f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {num(w)} {num(h)}'>"
+                f"<path fill-rule='evenodd' d='{d}'/></svg>")
+        uri = "data:image/svg+xml," + quote(mask, safe=" =:/'.,-")
+        lines.append(f'.tr-productmark--{slug} {{\n  --tr-productmark: url("{uri}");\n'
+                     f"  --tr-productmark-ratio: {num(w / cap, 4)};\n}}")
+    lines.insert(1, f".tr-productmark {{ --tr-productmark-box: {num(box, 4)}; }}")
+    lines.append("/* nomi:fine */")
+    return "\n".join(lines)
 
 
 def mark():
@@ -146,5 +218,12 @@ if __name__ == "__main__":
     css = CSS.read_text()
     new, n = re.subn(r"/\* wordmark:inizio.*?/\* wordmark:fine \*/", lambda _: css_block(), css, flags=re.S)
     assert n == 1, "css/traccia.css: attesi i commenti wordmark:inizio / wordmark:fine una volta"
+    new, n = re.subn(r"/\* nomi:inizio.*?/\* nomi:fine \*/", lambda _: products_css_block(), new, flags=re.S)
+    assert n == 1, "css/traccia.css: attesi i commenti nomi:inizio / nomi:fine una volta"
     CSS.write_text(new)
-    print(f"scritti {LOCKUP.relative_to(ROOT)} e il wordmark in {CSS.relative_to(ROOT)}")
+    PRODUCTS_DIR.mkdir(exist_ok=True)
+    for slug, text in PRODUCTS.items():
+        d, w, h, _ = product(text)
+        (PRODUCTS_DIR / f"{slug}.svg").write_text(product_svg(text, d, w, h))
+    print(f"scritti {LOCKUP.relative_to(ROOT)}, {len(PRODUCTS)} nomi in {PRODUCTS_DIR.relative_to(ROOT)} "
+          f"e le maschere in {CSS.relative_to(ROOT)}")
