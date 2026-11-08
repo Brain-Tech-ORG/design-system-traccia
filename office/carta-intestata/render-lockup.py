@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Rasterizza il lockup (marchio + wordmark) e il solo marchio per Word.
 
-Word non compone un lockup: non allinea un SVG a un testo con tracking, e
-non regge un SVG in intestazione su tutte le versioni. Il lockup entra
-quindi come PNG a 8x, composto qui con le stesse regole di `.tr-brandmark`:
-marchio da `assets/logo-traccia-mark.svg` (tracciati letti dal file, non
-ricopiati), wordmark «traccia» minuscolo in Space Grotesk 700 con tracking
-`--tr-tracking-wordmark` (-0.02em) in antracite (`--tr-color-wordmark`). Come nel CSS, scritta e
-distanza si contano sull'altezza del marchio: 0,8 e 0,34.
+Word non compone un lockup: non allinea un SVG a un testo, e non regge un
+SVG in intestazione su tutte le versioni. Il lockup entra quindi come PNG a
+8x, ricavato da `assets/logo-traccia-completo.svg`: il logo completo, marchio
+e scritta TRACCIA gia' in tracciati, con le proporzioni di `.tr-brandmark`
+(scritta di corpo 0,5 e distanza 0,34 dell'altezza del marchio). Lo scrive
+tools/wordmark/wordmark.py; qui lo si legge e basta, quindi serve solo Pillow.
 
 Produce, accanto a questo script:
   brandmark-lockup.png        testata prima pagina   (marchio 28px, come .tr-brandmark)
@@ -16,21 +15,17 @@ Produce, accanto a questo script:
 """
 import re
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageChops, ImageDraw
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
-FONT = ROOT / "assets/fonts/ttf/SpaceGrotesk-Bold.ttf"
 MARK = ROOT / "assets/logo-traccia-mark.svg"
+LOCKUP = ROOT / "assets/logo-traccia-completo.svg"
 
 S = 8                 # 1 px CSS = 8 px immagine
-ANTHRACITE = "#383e42"  # --tr-color-wordmark
 BRAND = "#4194d7"
-WORD_RATIO = 0.8     # scritta / altezza del marchio
-GAP_RATIO = 0.34      # distanza / altezza del marchio
-TRACKING = -0.02      # --tr-tracking-wordmark
-WORD = "traccia"
 VB_W, VB_H = 594, 717 # viewBox di logo-traccia-mark.svg
+STEPS = 16            # segmenti per curva
 
 
 def mark_polygons():
@@ -52,26 +47,81 @@ def draw_mark(draw, x0, height):
     return w
 
 
+def rings(d):
+    """Un tracciato SVG (comandi assoluti M L H V Q C Z, come li scrive
+    wordmark.py) in anelli di punti, con le curve appiattite."""
+    toks = re.findall(r"[MLHVQCZ]|-?\d*\.?\d+", d)
+    out, cur, cmd, i = [], [], None, 0
+    x = y = 0.0
+
+    def take(n):
+        nonlocal i
+        vals = [float(v) for v in toks[i:i + n]]
+        i += n
+        return vals
+
+    while i < len(toks):
+        if toks[i].isalpha():
+            cmd = toks[i]
+            i += 1
+            if cmd == "Z":
+                if cur:
+                    out.append(cur)
+                cur = []
+                continue
+        if cmd == "M":
+            if cur:
+                out.append(cur)
+            x, y = take(2)
+            cur = [(x, y)]
+            cmd = "L"                       # le coppie dopo M sono linee
+        elif cmd == "L":
+            x, y = take(2)
+            cur.append((x, y))
+        elif cmd == "H":
+            (x,) = take(1)
+            cur.append((x, y))
+        elif cmd == "V":
+            (y,) = take(1)
+            cur.append((x, y))
+        elif cmd == "Q":
+            x1, y1, x2, y2 = take(4)
+            for k in range(1, STEPS + 1):
+                t = k / STEPS
+                m = 1 - t
+                cur.append((m * m * x + 2 * m * t * x1 + t * t * x2, m * m * y + 2 * m * t * y1 + t * t * y2))
+            x, y = x2, y2
+        elif cmd == "C":
+            x1, y1, x2, y2, x3, y3 = take(6)
+            for k in range(1, STEPS + 1):
+                t = k / STEPS
+                m = 1 - t
+                cur.append((m**3 * x + 3 * m * m * t * x1 + 3 * m * t * t * x2 + t**3 * x3,
+                            m**3 * y + 3 * m * m * t * y1 + 3 * m * t * t * y2 + t**3 * y3))
+            x, y = x3, y3
+        else:
+            raise ValueError(f"comando SVG non previsto: {cmd}")
+    if cur:
+        out.append(cur)
+    return out
+
+
 def lockup(mark_px, out):
-    word = mark_px * WORD_RATIO * S
-    font = ImageFont.truetype(str(FONT), round(word))
-    ls = TRACKING * word
-    mark_h = mark_px * S
-    mark_w = mark_h * VB_W / VB_H
-    gap = mark_h * GAP_RATIO
-    text_w = sum(font.getlength(c) + ls for c in WORD) - ls
-    W, H = int(mark_w + gap + text_w) + 2, int(mark_h)
+    svg = LOCKUP.read_text()
+    vb_w, vb_h = (float(v) for v in re.search(r'viewBox="([^"]+)"', svg).group(1).split()[2:])
+    k = mark_px * S / vb_h
+    W, H = int(vb_w * k) + 2, int(mark_px * S)
     im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    d = ImageDraw.Draw(im)
-    draw_mark(d, 0, mark_h)
-    # come il CSS (line-height 1, align-items center): si centra la riga, e
-    # la linea di base cade a meta' interlinea piu' l'ascendente
-    asc, desc = font.getmetrics()
-    base = (H - word) / 2 + (word - asc - desc) / 2 + asc
-    x = mark_w + gap
-    for c in WORD:
-        d.text((x, base), c, font=font, fill=ANTHRACITE, anchor="ls")
-        x += font.getlength(c) + ls
+    paths = re.findall(r'<path fill="([^"]+)"(?: fill-rule="evenodd")? d="([^"]+)"', svg)
+    assert len(paths) == 3, "logo-traccia-completo.svg: attesi tre tracciati (barra, triangolo, scritta)"
+    for fill, d in paths:
+        # riempimento pari-dispari, come nel file: un anello dentro un altro e' un buco
+        mask = Image.new("1", (W, H), 0)
+        for ring in rings(d):
+            m = Image.new("1", (W, H), 0)
+            ImageDraw.Draw(m).polygon([(px * k, py * k) for px, py in ring], fill=1)
+            mask = ImageChops.logical_xor(mask, m)
+        im.paste(fill, mask=mask)
     im.save(out)
     print(out.name, im.size)
 
