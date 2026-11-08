@@ -7,9 +7,10 @@ quindi come PNG a 8x, composto qui con le stesse regole di `.tr-brandmark`:
 marchio da `assets/logo-traccia-mark.svg` (tracciati letti dal file, non
 ricopiati), wordmark «traccia» minuscolo in Space Grotesk 700 con tracking
 `--tr-tracking-wordmark` (-0.02em) in antracite (`--tr-color-wordmark`). Come nel CSS, scritta e
-distanza si contano sull'altezza del marchio: 0,8 e 0,34. Gli intagli (la
-linea di intermezzo su t, c, c e ultima a) vengono da tools/wordmark/intagli.py,
-con le stesse regole della maschera CSS.
+distanza si contano sull'altezza del marchio: 0,8 e 0,34. Il taglio della
+parola (la freccia che la attraversa) viene da tools/wordmark/intagli.py, con
+le stesse regole della maschera CSS: qui la fascia si prende direttamente dal
+marchio disegnato, cosi' resta allineata alla punta.
 
 Produce, accanto a questo script:
   brandmark-lockup.png        testata prima pagina   (marchio 28px, come .tr-brandmark)
@@ -36,7 +37,7 @@ WORD = "traccia"
 VB_W, VB_H = 594, 717 # viewBox di logo-traccia-mark.svg
 
 sys.path.insert(0, str(ROOT / "tools/wordmark"))
-import intagli  # noqa: E402  (richiede fonttools e uharfbuzz)
+import intagli  # noqa: E402  (richiede fonttools, uharfbuzz e shapely)
 
 
 def mark_polygons():
@@ -80,15 +81,16 @@ def lockup(mark_px, out):
         xs.append(x)
         d.text((x, base), c, font=font, fill=ANTHRACITE, anchor="ls")
         x += font.getlength(c) + ls
-    # gli intagli: si svuota la fascia del taglio nell'ingombro di ogni lettera
-    # tagliata (le lettere vicine non ci arrivano: lo verifica intagli.py)
-    fd = intagli.font_data()
+    # il taglio: la linea della punta del marchio attraverso tutta la parola,
+    # spessa quanto il taglio interno del marchio; poi le schegge
+    fd, mk = intagli.font_data(), intagli.mark_geometry()
+    ct = intagli.cut(fd, mk)
+    k_mark = mark_h / mk["h"]
+    tip, half = mk["tip_y"] * k_mark, mk["gap"] * k_mark / 2
+    d.rectangle((mark_w + gap, tip - half, W, tip + half), fill=(0, 0, 0, 0))
     k = word / fd["upm"]
-    lo, hi = intagli.band(fd["xh"])
-    for i in intagli.CUT_LETTERS:
-        x0, x1 = fd["letters"][i]["rel"]
-        d.rectangle((xs[i] + (x0 - intagli.PAD) * k, base - hi * k,
-                     xs[i] + (x1 + intagli.PAD) * k, base - lo * k), fill=(0, 0, 0, 0))
+    for i, (x0, y0, x1, y1) in ct["slivers"]:
+        d.rectangle((xs[i] + x0 * k, base - y1 * k, xs[i] + x1 * k, base - y0 * k), fill=(0, 0, 0, 0))
     im.save(out)
     print(out.name, im.size)
 
