@@ -230,8 +230,23 @@
   text-transform: lowercase;
   color: var(--tr-color-wordmark);
 }
+/* Gli intagli: la linea di intermezzo del logo esteso, riportata sulle
+   minuscole. Un taglio orizzontale al 45% della x-height, spesso il 5,5%,
+   solo su t, c, c e ultima a. E' una maschera sopra il testo vivo: il testo
+   resta selezionabile e il colore resta al CSS (antracite, bianco sul blu).
+   La maschera e' calcolata sul font da tools/wordmark/intagli.py: le
+   posizioni valgono solo per Space Grotesk 700 con il tracking del wordmark,
+   quindi la scritta non va composta in un altro carattere. */
+/* intagli:inizio — scritto da tools/wordmark/intagli.py, non editare a mano */
+.tr-brandmark__wordmark,
+.tr-spinner__wordmark {
+  --tr-wordmark-cuts: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3284 1000' preserveAspectRatio='none'%3E%3Cpath fill-rule='evenodd' d='M0 0H3284V1000H0ZM18 613.9H420V640.7H18ZM1386 613.9H1908V640.7H1386ZM1952 613.9H2474V640.7H1952ZM2756 613.9H3290V640.7H2756Z'/%3E%3C/svg%3E");
+  -webkit-mask: var(--tr-wordmark-cuts) left center / 100% 1em no-repeat;
+          mask: var(--tr-wordmark-cuts) left center / 100% 1em no-repeat;
+}
+/* intagli:fine */
 
-/* ========================================================================== 
+/* ==========================================================================
    2 · Eyebrow / kicker
    etichetta mono blu + filetto stondato 2px che riempie la riga;
    variante con nota mono grigia in coda a destra

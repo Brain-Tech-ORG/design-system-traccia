@@ -7,7 +7,9 @@ quindi come PNG a 8x, composto qui con le stesse regole di `.tr-brandmark`:
 marchio da `assets/logo-traccia-mark.svg` (tracciati letti dal file, non
 ricopiati), wordmark «traccia» minuscolo in Space Grotesk 700 con tracking
 `--tr-tracking-wordmark` (-0.02em) in antracite (`--tr-color-wordmark`). Come nel CSS, scritta e
-distanza si contano sull'altezza del marchio: 0,8 e 0,34.
+distanza si contano sull'altezza del marchio: 0,8 e 0,34. Gli intagli (la
+linea di intermezzo su t, c, c e ultima a) vengono da tools/wordmark/intagli.py,
+con le stesse regole della maschera CSS.
 
 Produce, accanto a questo script:
   brandmark-lockup.png        testata prima pagina   (marchio 28px, come .tr-brandmark)
@@ -16,6 +18,7 @@ Produce, accanto a questo script:
 """
 import re
 from pathlib import Path
+import sys
 from PIL import Image, ImageDraw, ImageFont
 
 HERE = Path(__file__).resolve().parent
@@ -31,6 +34,9 @@ GAP_RATIO = 0.34      # distanza / altezza del marchio
 TRACKING = -0.02      # --tr-tracking-wordmark
 WORD = "traccia"
 VB_W, VB_H = 594, 717 # viewBox di logo-traccia-mark.svg
+
+sys.path.insert(0, str(ROOT / "tools/wordmark"))
+import intagli  # noqa: E402  (richiede fonttools e uharfbuzz)
 
 
 def mark_polygons():
@@ -69,9 +75,20 @@ def lockup(mark_px, out):
     asc, desc = font.getmetrics()
     base = (H - word) / 2 + (word - asc - desc) / 2 + asc
     x = mark_w + gap
+    xs = []
     for c in WORD:
+        xs.append(x)
         d.text((x, base), c, font=font, fill=ANTHRACITE, anchor="ls")
         x += font.getlength(c) + ls
+    # gli intagli: si svuota la fascia del taglio nell'ingombro di ogni lettera
+    # tagliata (le lettere vicine non ci arrivano: lo verifica intagli.py)
+    fd = intagli.font_data()
+    k = word / fd["upm"]
+    lo, hi = intagli.band(fd["xh"])
+    for i in intagli.CUT_LETTERS:
+        x0, x1 = fd["letters"][i]["rel"]
+        d.rectangle((xs[i] + (x0 - intagli.PAD) * k, base - hi * k,
+                     xs[i] + (x1 + intagli.PAD) * k, base - lo * k), fill=(0, 0, 0, 0))
     im.save(out)
     print(out.name, im.size)
 

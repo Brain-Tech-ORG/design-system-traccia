@@ -40,7 +40,8 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── carta-intestata.docx      Lo stesso file, apribile come documento
 │   └── carta-intestata/          Il generatore (build.js + build.sh): il .dotx non si edita a mano
 ├── tools/
-│   └── conchiglia.py             Generatore della conchiglia: scrive assets/conchiglia*.svg
+│   ├── conchiglia.py             Generatore della conchiglia: scrive assets/conchiglia*.svg
+│   └── wordmark/intagli.py       Intagli del wordmark: scrive la maschera in css/traccia.css
 ├── print/
 │   └── stand-sin-2026/           Grafiche di stand (SIN 2026): sorgenti in scala 1:10, generatore, PDF CMYK in out/
 └── index.html                    Documentazione visiva / showcase
@@ -75,6 +76,15 @@ niente gradienti, niente emoji, molto bianco.
   email).
   La scritta e' **antracite sui fondi chiari**. **Sul blu del marchio e' sempre bianca**, come il
   marchio accanto (`--tr-color-wordmark-on-brand`): mai antracite sul blu.
+- **Intagli del wordmark**: la scritta porta la linea di intermezzo del logo esteso, riportata
+  sulle minuscole: un taglio orizzontale al 45% della x-height dalla linea di base, spesso il 5,5%,
+  **solo su t, c, c e ultima a** (r, prima a e i restano intere). Nel CSS e' una maschera sopra il
+  testo vivo (`.tr-brandmark__wordmark`, `.tr-spinner__wordmark`): il testo resta selezionabile e
+  il colore resta quello della scritta. La maschera la scrive `tools/wordmark/intagli.py` a partire
+  dal font, e vale solo per Space Grotesk 700 con il tracking del wordmark; lo stesso script da' i
+  tagli al PNG della carta intestata. Alle misure di testata e piede (marchio 28 e 20px) il taglio e' sottile e sugli schermi
+  a densita' 1x si legge appena: e' la proporzione del logo esteso, non un difetto da correggere
+  ingrossandolo.
 - **Logo nello sfondo (watermark)**: la sagoma outline del logo
   (`assets/logo-traccia-outline.svg` — stessi tracciati, senza riempimento, tratto blu logo)
   può essere usata negli sfondi delle brochure e delle pagine delle presentazioni:
