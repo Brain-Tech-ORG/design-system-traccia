@@ -13,6 +13,7 @@ niente gradienti, niente emoji, molto bianco.
 │   ├── logo-traccia-outline.svg  Sagoma outline per watermark negli sfondi
 │   ├── logo-traccia-mark.svg     Solo il marchio, normalizzato: sorgente dello spinner
 │   ├── logo-traccia-completo.svg Logo completo: marchio + TRACCIA in tracciati (fondi chiari)
+│   ├── prodotti/                 Nomi dei prodotti in tracciati (gepadial, teledial, lurto, gedon)
 │   ├── conchiglia.svg            La conchiglia: solo decorazione di sfondo (tratto blu logo)
 │   ├── conchiglia-mono.svg       La stessa, tratto currentColor (per l'SVG in linea)
 │   ├── certificazioni.png        Badge certificazioni (IMQ / SI Cert)
@@ -42,7 +43,7 @@ niente gradienti, niente emoji, molto bianco.
 │   └── carta-intestata/          Il generatore (build.js + build.sh): il .dotx non si edita a mano
 ├── tools/
 │   ├── conchiglia.py             Generatore della conchiglia: scrive assets/conchiglia*.svg
-│   └── wordmark/wordmark.py      Il wordmark TRACCIA in tracciati: scrive il logo completo e la maschera CSS
+│   └── wordmark/wordmark.py      TRACCIA e i nomi dei prodotti in tracciati: SVG e maschere CSS
 ├── print/
 │   └── stand-sin-2026/           Grafiche di stand (SIN 2026): sorgenti in scala 1:10, generatore, PDF CMYK in out/
 └── index.html                    Documentazione visiva / showcase
@@ -89,6 +90,33 @@ niente gradienti, niente emoji, molto bianco.
   di Cleanvertising.com) non porta una licenza per l'uso commerciale e permette l'incorporamento
   solo per anteprima e stampa. Prima di usarlo altrove, o di rigenerare la scritta, la licenza va
   chiarita con l'autore.
+- **Nomi dei prodotti e delle piattaforme**: i nomi delle piattaforme di proprieta' — **Gepadial,
+  Teledial, Lurto, Gedon** — si scrivono come la scritta del marchio: **Servetica Medium, maiuscolo,
+  nessun tracking**, disegnati in tracciati, antracite sui fondi chiari e bianchi sul blu
+  (`--tr-color-wordmark`, `--tr-color-wordmark-on-brand`). Componente `.tr-productmark` con la
+  classe del nome; i file per l'uso fuori dal CSS stanno in `assets/prodotti/`.
+
+  ```html
+  <span class="tr-productmark tr-productmark--gepadial">Gepadial</span>
+  ```
+
+  | Quando | Quando no |
+  |---|---|
+  | Dove il nome **e' il titolo** del prodotto: barra dell'applicazione, pagina di accesso, schermata di avvio, copertina di manuali e presentazioni del prodotto, materiali e stand | **Nel testo corrente**: li' il nome resta nel carattere del testo, con l'iniziale maiuscola («i dati di Gepadial…») |
+  | Una volta per superficie, nel punto che identifica il prodotto | **Titoli, sottotitoli, interfaccia**: restano in Archivo. Servetica non e' un carattere da titoli: vale solo per i nomi di proprieta' |
+  | | Parole che non sono nomi di proprieta' (moduli, funzioni, slogan): mai |
+
+  - **Misura**: si conta sull'altezza delle maiuscole (`--tr-productmark-h`). Tre gradini:
+    `--sm` 14px (barra dell'applicazione, menu), base 20px, `--lg` 32px (accesso, avvio),
+    `--xl` 56px (copertina, slide, stand). **Minimo 10px**: sotto, i tagli dello stencil spariscono.
+  - **Il nome del prodotto non e' il marchio La Traccia**: non sta accanto al chevron nello stesso
+    lockup e non lo sostituisce. La firma della cooperativa (`.tr-brandmark`) resta nel piede o in
+    coda, come per qualsiasi superficie.
+  - **Colore**: solo antracite o bianco. Mai blu: il blu e' del marchio, e un nome blu accanto al
+    chevron sembrerebbe parte del logo.
+  - **Un prodotto nuovo** si aggiunge all'elenco `PRODUCTS` di `tools/wordmark/wordmark.py` e si
+    rilancia lo script: scrive il file in `assets/prodotti/` e la classe `.tr-productmark--<nome>`.
+    Serve il file del font, che non sta nel repository (vedi sopra).
 - **Logo nello sfondo (watermark)**: la sagoma outline del logo
   (`assets/logo-traccia-outline.svg` — stessi tracciati, senza riempimento, tratto blu logo)
   può essere usata negli sfondi delle brochure e delle pagine delle presentazioni:
@@ -205,6 +233,7 @@ scegliendo colori nuovi.
   disegnata (vedi Brand). Non e' un carattere del sistema e non si compone: titoli, corpo e
   interfaccia restano in Archivo. Space Grotesk 700 (`--tr-font-wordmark` e i token collegati)
   resta solo per le grafiche dello stand SIN 2026, che portano il wordmark precedente «traccia».
+  Lo stesso vale per i nomi dei prodotti (`.tr-productmark`, vedi Brand): disegnati, mai composti.
 - **Slide 16:9 (1920×1080)**: mai testo sotto 17px; titoli 60–92px.
 
 ### Dove stanno i font

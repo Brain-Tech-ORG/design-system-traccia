@@ -252,6 +252,62 @@
 }
 /* wordmark:fine */
 
+/* Nomi dei prodotti e delle piattaforme di proprieta' (Gepadial, Teledial,
+   Lurto, Gedon): si scrivono come la scritta del marchio, TRACCIA. Servetica
+   Medium, maiuscolo, nessun tracking, disegnati in tracciati; antracite sui
+   fondi chiari, bianco sul blu (il colore del testo). Si usano dove il nome
+   e' il titolo del prodotto: barra dell'applicazione, pagina di accesso,
+   copertina, schermata di avvio. Nel testo corrente il nome resta nel
+   carattere del testo («Gepadial»), e i titoli restano in Archivo.
+
+   Si misura sull'altezza delle maiuscole (--tr-productmark-h). Il riquadro
+   e' stretto sulle lettere, con la sola sporgenza delle tonde: allineato al
+   centro di una riga, il nome sta al centro. Sotto i 10px di maiuscole i
+   tagli dello stencil spariscono: e' la misura minima.
+
+   Markup: <span class="tr-productmark tr-productmark--gepadial">Gepadial</span>
+   Il testo resta, fuori vista, per gli screen reader. Un nome nuovo si
+   aggiunge in tools/wordmark/wordmark.py (PRODUCTS), non qui. */
+.tr-productmark {
+  --tr-productmark-h: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  flex: none;
+  height: calc(var(--tr-productmark-h) * var(--tr-productmark-box));
+  width: calc(var(--tr-productmark-h) * var(--tr-productmark-ratio));
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: 100%;
+  color: var(--tr-color-wordmark);
+  background-color: currentColor;
+  -webkit-mask: var(--tr-productmark) center / 100% 100% no-repeat;
+          mask: var(--tr-productmark) center / 100% 100% no-repeat;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+.tr-productmark--sm { --tr-productmark-h: 14px; }   /* barra dell'applicazione, menu */
+.tr-productmark--lg { --tr-productmark-h: 32px; }   /* pagina di accesso, schermata di avvio */
+.tr-productmark--xl { --tr-productmark-h: 56px; }   /* copertina, slide, stand */
+/* nomi:inizio — scritto da tools/wordmark/wordmark.py, non editare a mano */
+.tr-productmark { --tr-productmark-box: 1.0504; }
+.tr-productmark--gepadial {
+  --tr-productmark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4837 750'%3E%3Cpath fill-rule='evenodd' d='M656 732H576L557 648Q468 749 342 749Q187 749 91 639Q0 534 0 375Q0 217 91 112Q187 1 342 1Q463 1 546 63Q634 129 648 245H526Q517 178 463 139Q413 103 342 103Q235 103 176 188Q125 262 125 375Q125 488 176 562Q235 647 342 647Q437 649 489 595Q540 544 542 451H352V356H656ZM792 18H1306V126H917V313H1277V415H917V624H1313V732H792ZM1423 18V732H1548V120H1733Q1856 120 1856 238Q1856 300 1814 331Q1781 356 1731 356H1612V458H1738Q1874 458 1936 382Q1981 326 1981 239Q1981 151 1936 95Q1874 18 1738 18ZM2207 18 2066 386H2185L2271 141H2274L2381 448H2043L1933 732H2062L2129 543H2414L2481 732H2615L2340 18ZM2807 121H2930Q3066 121 3122 194Q3167 254 3167 376Q3167 497 3122 557Q3066 630 2930 630H2864V732H2978Q3134 732 3217 628Q3292 533 3292 376Q3292 218 3217 123Q3134 19 2978 19H2682V732H2807ZM3404 18H3529V732H3404ZM3874 18 3733 386H3852L3938 141H3941L4048 448H3710L3600 732H3729L3796 543H4081L4148 732H4282L4007 18ZM4349 18H4474V624H4837V732H4349Z'/%3E%3C/svg%3E");
+  --tr-productmark-ratio: 6.7745;
+}
+.tr-productmark--teledial {
+  --tr-productmark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4647 750'%3E%3Cpath fill-rule='evenodd' d='M0 129H576V21H0ZM225 732H350V191H225ZM658 18H1172V126H783V313H1143V415H783V624H1179V732H658ZM1288 18H1413V624H1776V732H1288ZM1862 18H2376V126H1987V313H2347V415H1987V624H2383V732H1862ZM2617 121H2740Q2876 121 2932 194Q2977 254 2977 376Q2977 497 2932 557Q2876 630 2740 630H2674V732H2788Q2944 732 3027 628Q3102 533 3102 376Q3102 218 3027 123Q2944 19 2788 19H2492V732H2617ZM3214 18H3339V732H3214ZM3684 18 3543 386H3662L3748 141H3751L3858 448H3520L3410 732H3539L3606 543H3891L3958 732H4092L3817 18ZM4159 18H4284V624H4647V732H4159Z'/%3E%3C/svg%3E");
+  --tr-productmark-ratio: 6.5084;
+}
+.tr-productmark--lurto {
+  --tr-productmark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3223 750'%3E%3Cpath fill-rule='evenodd' d='M0 18H125V624H488V732H0ZM566 18H691V434Q691 531 714 573Q751 641 859 641Q967 641 1004 573Q1027 531 1027 434V18H1152V475Q1152 609 1072 681Q995 749 859 749Q723 749 647 681Q566 609 566 475ZM1296 18V732H1421V120H1624Q1681 120 1710 140Q1748 166 1748 229Q1748 343 1626 343H1481V438H1605Q1688 438 1719 483Q1747 524 1747 627Q1747 701 1766 732H1900Q1861 690 1861 544Q1861 469 1824 428Q1796 398 1755 393V391Q1873 352 1873 211Q1873 119 1814 69Q1753 18 1637 18ZM1917 129H2493V21H1917ZM2142 732H2267V191H2142ZM3132 111Q3036 0 2881 0Q2725 0 2629 111Q2538 217 2538 375Q2538 534 2629 639Q2725 749 2881 749Q2998 749 3085 683L3001 610Q2950 647 2881 647Q2773 647 2714 562Q2663 488 2663 375Q2663 261 2714 187Q2773 102 2881 102Q2988 102 3047 187Q3098 261 3098 375Q3098 492 3043 567L3129 642Q3223 536 3223 375Q3223 217 3132 111Z'/%3E%3C/svg%3E");
+  --tr-productmark-ratio: 4.514;
+}
+.tr-productmark--gedon {
+  --tr-productmark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3480 750'%3E%3Cpath fill-rule='evenodd' d='M656 732H576L557 648Q468 749 342 749Q187 749 91 639Q0 534 0 375Q0 217 91 112Q187 1 342 1Q463 1 546 63Q634 129 648 245H526Q517 178 463 139Q413 103 342 103Q235 103 176 188Q125 262 125 375Q125 488 176 562Q235 647 342 647Q437 649 489 595Q540 544 542 451H352V356H656ZM792 18H1306V126H917V313H1277V415H917V624H1313V732H792ZM1547 121H1670Q1806 121 1862 194Q1907 254 1907 376Q1907 497 1862 557Q1806 630 1670 630H1604V732H1718Q1874 732 1957 628Q2032 533 2032 376Q2032 218 1957 123Q1874 19 1718 19H1422V732H1547ZM2701 111Q2605 0 2450 0Q2294 0 2198 111Q2107 217 2107 375Q2107 534 2198 639Q2294 749 2450 749Q2567 749 2654 683L2570 610Q2519 647 2450 647Q2342 647 2283 562Q2232 488 2232 375Q2232 261 2283 187Q2342 102 2450 102Q2557 102 2616 187Q2667 261 2667 375Q2667 492 2612 567L2698 642Q2792 536 2792 375Q2792 217 2701 111ZM2900 19V732H3019V208H3022L3303 662V456L3032 19ZM3361 19V732H3480V19Z'/%3E%3C/svg%3E");
+  --tr-productmark-ratio: 4.8739;
+}
+/* nomi:fine */
+
 /* ==========================================================================
    2 · Eyebrow / kicker
    etichetta mono blu + filetto stondato 2px che riempie la riga;
@@ -2266,7 +2322,8 @@ select.tr-field__control + .tr-field__label,
   /* La scritta del logo e' una maschera: il sistema sostituirebbe il fondo e
      sparirebbe. Si ridipinge con un colore di sistema: la forma resta. */
   .tr-brandmark__wordmark,
-  .tr-spinner__wordmark { background-color: CanvasText; }
+  .tr-spinner__wordmark,
+  .tr-productmark { background-color: CanvasText; }
   .tr-switch { border-color: CanvasText; background: Canvas; }
   .tr-switch::before { background: CanvasText; }
   .tr-switch[aria-checked="true"] { border-color: Highlight; background: Highlight; }
