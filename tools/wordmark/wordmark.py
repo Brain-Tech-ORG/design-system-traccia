@@ -33,7 +33,7 @@ Proporzioni, quelle della prova scelta l'8/11/2026:
   0,357 del marchio (714 unita' su 1000);
 - nessun tracking; la crenatura e' quella del font (HarfBuzz, come il
   browser: in TRACCIA non ci sono coppie crenate);
-- distanza dal marchio 0,34 della sua altezza;
+- distanza dal marchio 0,24 della sua altezza (nel file del logo completo);
 - la riga della scritta (alta 1em, linea di base a 714/1000 dall'alto, come
   nel browser con line-height 1) e' centrata sul marchio.
 
@@ -70,7 +70,7 @@ PRODUCTS = {             # classe / file -> nome come si disegna
 OVERSHOOT = 18           # sporgenza delle lettere tonde oltre maiuscole e linea di base (O, G, C: 17-18)
 PRODUCTS_DIR = ROOT / "assets/prodotti"
 SIZE = 0.5               # corpo della scritta / altezza del marchio
-GAP = 0.34               # distanza dal marchio / altezza del marchio
+GAP = 0.24               # distanza dal marchio / altezza del marchio (nel logo completo; il CSS .tr-brandmark usa ancora 0,34)
 BRAND = "#4194d7"        # --tr-brand-500, il blu del marchio
 TEXT = "#383e42"         # --tr-color-wordmark, antracite (RAL 7016)
 
