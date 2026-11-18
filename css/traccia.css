@@ -209,7 +209,7 @@
   border-bottom: var(--tr-rule-thin) solid var(--tr-border-soft);
 }
 /* Il lockup si misura sull'altezza del marchio (--tr-brandmark-h): la
-   scritta ha corpo 0,5 di quell'altezza (maiuscole alte 0,36) e sta a 0,34
+   scritta ha corpo 0,5 di quell'altezza (maiuscole alte 0,36) e sta a 0,24
    di distanza. La scritta e' TRACCIA, maiuscolo, in Servetica Medium: uno
    stencil, e i tagli sono quelli del font (la barra della T staccata, la
    pancia della R e il triangolo delle A aperti).
@@ -225,7 +225,7 @@
   --tr-brandmark-h: 28px;
   display: inline-flex;
   align-items: center;
-  gap: calc(var(--tr-brandmark-h) * 0.34);
+  gap: calc(var(--tr-brandmark-h) * 0.24);
 }
 .tr-brandmark__logo { height: var(--tr-brandmark-h); width: auto; display: block; }
 .tr-brandmark__wordmark { font-size: calc(var(--tr-brandmark-h) * 0.5); }

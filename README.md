@@ -72,7 +72,7 @@ niente gradienti, niente emoji, molto bianco.
   (`--tr-color-wordmark`, RAL 7016) (componente `.tr-brandmark`, con `assets/logo-traccia-mark.svg`:
   il marchio a filo, senza il canvas trasparente di `logo-traccia.svg`, che allargherebbe la
   distanza). Le proporzioni si contano sull'altezza del marchio: scritta di corpo 0,5 (maiuscole
-  alte 0,36), distanza 0,34, nessun tracking (marchio 28px → corpo 14px, distanza 9,5px; nel
+  alte 0,36), distanza 0,24, nessun tracking (marchio 28px → corpo 14px, distanza 6,7px; nel
   footer 20px). Il logo completo come file, per quando viaggia (presentazioni, documenti di terzi,
   stampa), e' `assets/logo-traccia-completo.svg`. La ragione sociale per esteso — Cooperativa
   E.D.P. La Traccia — non e' il wordmark: resta in Archivo 800 maiuscolo dove compare (piede dei
